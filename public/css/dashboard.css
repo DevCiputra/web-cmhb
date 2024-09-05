@@ -1,0 +1,693 @@
+:root {
+    --font-family-sans-serif: "Open Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+*, *::before, *::after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+nav {
+    display: block;
+}
+
+body {
+    margin: 0;
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #515151;
+    text-align: left;
+    background-color: #F5F6FA;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: #3f84fc;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a:hover {
+    color: #0458eb;
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "Nunito", sans-serif;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+h1, .h1 {
+    font-size: 2.5rem;
+    font-weight: normal;
+}
+
+.dashboard {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    min-height: 100vh;
+}
+
+.dashboard-app {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-flex: 2;
+    -webkit-flex-grow: 2;
+    -ms-flex-positive: 2;
+    flex-grow: 2;
+    margin-top: 84px;
+}
+
+.dashboard-content {
+    -webkit-box-flex: 2;
+    -webkit-flex-grow: 2;
+    -ms-flex-positive: 2;
+    flex-grow: 2;
+    padding: 35px;
+}
+
+.dashboard-nav {
+    min-width: 238px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+    background-color: #373193;
+}
+
+.dashboard-compact .dashboard-nav {
+    display: none;
+}
+
+.dashboard-nav header {
+    min-height: 84px;
+    padding: 8px 27px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.dashboard-nav header .menu-toggle {
+    display: none;
+    margin-right: auto;
+}
+
+.dashboard-nav a {
+    color: #515151;
+}
+
+.dashboard-nav a:hover {
+    text-decoration: none;
+}
+
+.dashboard-nav {
+    background-color: #fff;
+}
+
+.dashboard-nav a {
+    color: #01254b;
+}
+
+.brand-logo {
+    font-family: "Nunito", sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    color: #515151;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.brand-logo:focus, .brand-logo:active, .brand-logo:hover {
+    color: #dbdbdb;
+    text-decoration: none;
+}
+
+.brand-logo i {
+    color: #d2d1d1;
+    font-size: 27px;
+    margin-right: 10px;
+}
+
+.dashboard-nav-list {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.dashboard-nav-item {
+    min-height: 56px;
+    padding: 8px 20px 8px 70px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    letter-spacing: 0.02em;
+    transition: ease-out 0.5s;
+}
+
+.dashboard-nav-item i {
+    width: 36px;
+    font-size: 19px;
+    margin-left: -40px;
+}
+
+.dashboard-nav-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.active {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-nav-dropdown {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.dashboard-nav-dropdown.show {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.dashboard-nav-dropdown.show > .dashboard-nav-dropdown-toggle {
+    font-weight: bold;
+}
+
+.dashboard-nav-dropdown.show > .dashboard-nav-dropdown-toggle:after {
+    -webkit-transform: none;
+    -o-transform: none;
+    transform: none;
+}
+
+.dashboard-nav-dropdown.show > .dashboard-nav-dropdown-menu {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.dashboard-nav-dropdown-toggle:after {
+    content: "";
+    margin-left: auto;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid rgba(81, 81, 81, 0.8);
+    -webkit-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.dashboard-nav .dashboard-nav-dropdown-toggle:after {
+    border-top-color: rgba(255, 255, 255, 0.72);
+}
+
+.dashboard-nav-dropdown-menu {
+    display: none;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.dashboard-nav-dropdown-item {
+    min-height: 40px;
+    padding: 8px 20px 8px 70px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    transition: ease-out 0.5s;
+}
+
+.dashboard-nav-dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.menu-toggle {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    color: #023770;
+}
+
+.menu-toggle:hover, .menu-toggle:active, .menu-toggle:focus {
+    text-decoration: none;
+    color: #567aa0;
+}
+
+.menu-toggle i {
+    font-size: 20px;
+}
+
+.dashboard-toolbar {
+    min-height: 84px;
+    background-color: #fff;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 8px 27px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.nav-item-divider {
+    height: 1px;
+    margin: 1rem 0;
+    overflow: hidden;
+    background-color: rgba(236, 238, 239, 0.3);
+}
+
+/* CARD*/
+.cards-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start !important; /* Menyelaraskan kartu ke kiri */
+}
+
+
+.card-header{
+    font-weight: 600;
+    margin-bottom: 24px;
+    padding-top: 20px !important;
+    padding-left: 24px;
+    padding-right: 24px;
+    background-color: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    text-align: left;
+    border-radius: 10px !important;
+}
+
+.fw-normal {
+    font-weight: 600 !important; /* Adjust the weight */
+    font-size: 28px !important;  /* Adjust the size */
+}
+
+.card {
+    flex: 1 1 calc(25% - 15px); /* Menyesuaikan ukuran kartu dengan jarak antar kartu */
+    margin-bottom: 24px; /* Jarak antara baris kartu */
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    max-width: 100%;
+    border: none;
+    overflow: hidden;
+    text-align: left;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    height: 350px;
+    /* display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0; */
+}
+
+.card-img-top {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: 0% 10%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card-body {
+    padding: 15px;
+    height: calc(100% - 150px);
+    overflow: hidden;
+    position: relative; /* Ensure header-container is positioned relative to this */
+    background-color: #fff;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px; /* Adjust as needed */
+}
+
+.title {
+    color: #023770;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.price {
+    font-size: 1rem;
+    color: #666;    
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.icon-group {
+    display: flex;
+    gap: 0.8rem; /* Adjust spacing between icons */
+}
+
+.icon-group .btn {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.icon-group .pencil-icon,
+.icon-group .eye-icon {
+    width: 24px; /* Adjust size as needed */
+    height: 24px;
+}
+
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.btn-action {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    color: #fff;
+    font-size: 1rem;
+    background-color: #023770;
+    width: 90px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.mb-3 {
+    color: #023770;
+    font-weight: 600;
+    margin-top: 22px;
+}
+
+@media (min-width: 992px) {
+    .dashboard-app {
+        margin-left: 238px;
+    }
+
+    .dashboard-toolbar {
+        left: 238px;
+    }
+
+    .dashboard-compact .dashboard-toolbar {
+        left: 0;
+    }
+
+    .dashboard-compact .dashboard-app {
+        margin-left: 0;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .dashboard-content {
+        padding: 25px 15px;
+    }
+
+    .col-md-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    /* Adjust the width and margins of input, select, and button */
+    .card-header input {
+        max-width: 100%; /* Full width on mobile */
+        font-size: 1rem; /* Smaller font size */
+        padding: 6px; /* Adjust padding for smaller input */
+    }
+
+    .card-header select {
+        max-width: 100%; /* Full width on mobile */
+        font-size: 1rem; /* Smaller font size */
+        padding: 6px; /* Adjust padding for smaller select */
+    }
+
+    .card-header button {
+        max-width: 100%; /* Full width on mobile */
+        font-size: 1rem; /* Smaller font size */
+        padding: 6px 10px; /* Adjust padding for smaller button */
+    }
+
+    .card-header .d-flex {
+        flex-direction: column; /* Stack items vertically on mobile */
+        align-items: flex-start;
+    }
+
+    .card-header .d-flex input,
+    .card-header .d-flex select,
+    .card-header .d-flex button {
+        width: 100%; /* Ensure elements take full width */
+        margin-bottom: 8px; /* Space between elements */
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboard-nav {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1070;
+    }
+
+    .dashboard-nav.mobile-show {
+        display: block;
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboard-nav header .menu-toggle {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+    }
+}
+
+/* CARD */
+
+/* Media query untuk layar dengan lebar maksimal 1221px */
+@media (min-width: 769px) and (max-width: 1221px) {
+    .card {
+        /* Atur lebar card */
+        max-width: 100%;
+        margin: 0 auto; /* Pusatkan card secara horizontal */
+    }
+    .title, .price, .description {
+        font-size: 0.8rem;
+    }
+
+    .icon-group .pencil-icon,
+    .icon-group .eye-icon {
+        width: 16px; /* Adjust size as needed */
+        height: 16px;
+    }
+
+    .card-header {
+        /* Atur ukuran font di header card */
+        font-size: 1rem; 
+    }
+
+    .card-body {
+        /* Atur ukuran font di body card */
+        font-size: 0.5rem;
+    }
+
+    .btn-action {
+        /* Atur ukuran tombol di card */
+        font-size: 0.8rem; 
+        padding: 0.3rem 0.6rem; 
+        border-radius: 8px; 
+        width: 90px;
+    }
+}
+
+
+/* Style for Form Input Fields */
+form .form-control {
+    
+    font-size: 16px; /* Increase font size for better readability */
+    border-radius: 8px; /* Add some border radius for a rounded look */
+    border: 1px solid #ced4da; /* Adjust border color */
+    background-color: #fff;
+    color: #023770; /* Text color */
+}
+
+form .form-control::placeholder {
+    color: #6c757d; /* Placeholder text color */
+    opacity: 1;
+}
+
+form .form-control:focus {
+    border-color: #80bdff; /* Change border color on focus */
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Add a shadow effect on focus */
+}
+
+/* Style for Labels */
+form .form-label {
+    font-size: 18px; /* Increase label font size */
+    font-weight: 600; /* Make label text bold */
+    color: #023770; /* Label text color */
+    margin-bottom: 8px;
+}
+
+/* Style for Submit Buttons */
+form button[type="submit"] {
+    padding: 15px 20px; /* Increase padding for buttons */
+    font-size: 14px; /* Increase button text size */
+    border-radius: 8px; /* Rounded corners for buttons */
+    font-weight: bold;
+    background-color: #007858; /* Primary button color */
+    color: #fff; /* Button text color */
+}
+
+form button[type="submit"]:hover {
+    background-color: #005f46; /* Darker shade on hover */
+}
+
+/* Style for Textarea */
+form textarea.form-control {
+    padding: 12px; /* Increase padding for textarea */
+    font-size: 16px; /* Increase font size */
+    border-radius: 8px; /* Add border radius */
+    border: 1px solid #ced4da;
+    background-color: #fff;
+        color: #023770;
+}
+
+/* Checkbox and Time Input Styling */
+form .form-check-label {
+    font-size: 16px; /* Font size for checkbox labels */
+    color: #023770; /* Checkbox label color */
+}
+
+form .form-check-input {
+    margin-right: 10px; /* Space between checkbox and label */
+    transform: scale(1.2); /* Enlarge checkbox */
+}
+
+form .d-flex .form-control {
+    padding: 8px; /* Padding for time inputs */
+    font-size: 16px; /* Font size for time inputs */
+    border-radius: 6px; /* Rounded corners */
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    color: #023770;
+}
+
+.note-editable {
+    color: #000000 !important; /* Force the text color to be black */
+}
+
+

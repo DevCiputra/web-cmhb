@@ -1,0 +1,882 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+body {
+    background-color: #fff;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* .floating-img1 {
+    position: absolute; 
+    z-index: 10; 
+    width: 200px; 
+    height: auto; 
+}
+.floating-img2 {
+    position: absolute; 
+    z-index: 10; 
+    width: 220px; 
+    height: auto; 
+} */
+
+
+
+/* HERO SECTION */
+.hero-section {
+    position: relative;
+    width: 100vw; /* Full width */
+    padding: 10rem 0; /* Padding atas dan bawah */
+    position: relative;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+    background: #F4F9FF;
+    border-radius: 0px 0px 0px 38rem; /* Radius bawah kiri dan kanan */
+    /* padding-bottom: 50px; */
+}
+
+
+.hero-content {
+    max-width: 1440px; /* Lebar maksimum konten */
+    margin: 0 auto; /* Center the content */
+    padding: 0 15px; /* Padding left and right */
+}
+
+.hero-text h1 {
+    font-size: 4rem;
+    font-weight: 500 !important;
+    color: #023770;
+}
+
+.hero-text p {
+    font-size: 1.125rem;
+    color: #666666;
+}
+
+.hero-buttons {
+    margin-top: 2rem;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Icon Card Styles */
+.icon-card {
+    position: absolute;
+    bottom: -50px; /* Adjust to align with the image */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #5C4FFF !important; /* Background color matching the image */
+    /* background-color: #a39df6; */
+    border-radius: 20px; /* Softer border-radius */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 20px;
+    width: 1000px; /* Fixed width to match the design */
+    height: 110px; /* Fixed height to match the design */
+    color: #3B3E5B; /* Text color matching the design */
+    text-align: center;
+}
+.card-content {
+    display: flex;
+    justify-content: space-between; /* Space evenly between elements */
+    align-items: center;
+    height: 100%;
+    padding: 0 30px; /* Padding to ensure content is not too close to the edges */
+}
+
+.icon-text {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    color: #3B3E5B; /* Color matching the design */
+    margin: 0 20px; /* Spacing between icon-text elements */
+}
+
+.icon-text i {
+    color: #fff; /* Icon color */
+    font-size: 36px; /* Increased icon size for better visibility */
+    margin-right: 15px; /* Space between the icon and the text */
+}
+
+.icon-text div {
+    display: flex;
+    flex-direction: column; /* Stack the strong and p elements vertically */
+    text-align: left; /* Align text to the left */
+}
+
+.icon-text strong {
+    font-size: 22px; /* Increased text size for emphasis */
+    color: #fff; /* Darker text for emphasis */
+    line-height: 1.2;
+}
+
+.icon-text p {
+    margin: 0;
+    font-size: 16px; /* Slightly larger text size for better readability */
+    color: #E3EFFF; /* Secondary color */
+    line-height: 1.2;
+}
+
+
+
+/* DOCTOR SECTION */
+.doctor-section {
+    margin-top: 18rem; 
+}
+
+.doctor-text h1 {
+    font-size: 4rem;
+    font-weight: 500 !important;
+    margin-left: auto; /* Center align text */
+    margin-right: auto; /* Center align text */
+    color: #023770;
+}
+
+.doctor-text p {
+    font-size: 1.125rem;
+    color: #666666;
+    margin-left: auto; /* Center align text */
+    margin-right: auto; /* Center align text */
+}
+
+.doctor-buttons {
+    margin-left: auto; /* Center align buttons */
+    margin-top: 2rem;
+    margin-right: auto; /* Center align buttons */
+}
+
+.doctor-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+
+/* RESERVATION SECTION */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.reservation-section {
+    margin-top: 12rem; /* Jarak atas (margin top) */
+    text-align: center;
+    background: rgb(244,249,255);
+    background: linear-gradient(360deg, rgba(244,249,255,1) 0%, rgba(227,239,255,1) 12%, rgba(255,255,255,1) 75%); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw; /* Lebar penuh viewport */
+    position: relative; /* Mempertahankan elemen dalam konteks tata letaknya */
+    left: 50%; /* Posisi ke kanan 50% */
+    right: 50%; /* Posisi ke kiri 50% */
+    transform: translateX(-50%); /* Memastikan elemen berada di tengah secara horizontal */
+}
+
+
+
+/* Perbesar ruang container khusus untuk reservation section */
+.reservation-section .container {
+    max-width: 1440px; /* Atur lebar maksimum yang lebih besar */
+    margin: 0 auto; /* Memastikan container tetap berada di tengah */
+}
+
+/* Anda bisa menyesuaikan nilai max-width dan padding sesuai kebutuhan */
+
+
+
+.reservation-section h1 {
+    font-size: 3rem;
+    font-weight: 500 !important;
+    color: #023770;
+    margin-bottom: 1rem;
+}
+
+.reservation-section p {
+    font-size: 1.125rem;
+    color: #666666;
+    margin-bottom: 2rem;
+}
+
+/* Card Specific Styles */
+#card-mcu, #card-home-service {
+    height: 250px;
+}
+
+#card-poliklinik {
+    height: 510px;
+}
+
+/* General Reservation Item Styles */
+.reservation-item {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.reservation-content {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Ensure image fully covers the card */
+.reservation-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+}
+
+.reservation-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    text-align: left;
+}
+
+.reservation-info .tagline {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    color: #d1e0e5;
+    display: block;
+}
+
+.reservation-info h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+
+/* PROMO SECTION*/
+.promotion-section {
+    margin-top: 12rem;
+    text-align: center;
+}
+
+.promotion-section h1 {
+    font-size: 3rem;
+    font-weight: 500 !important;
+    color: #023770;
+    margin-bottom: 1rem;
+}
+
+.promotion-section p {
+    font-size: 1.125rem;
+    color: #666666;
+    margin-bottom: 2rem;
+}
+
+.row {
+    display: flex;
+    justify-content: center; /* Center the cards horizontally */
+    flex-wrap: wrap; /* Ensure cards wrap if they exceed container width */
+}
+
+.promotion-item {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center; /* Center the content within the column */
+    max-width: 450px; /* Set a maximum width for the cards */
+}
+
+.promotion-content {
+    max-width: 400px;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    text-align: left;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.promotion-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* INFO SECTION */
+.info-section {
+    padding: 2rem;
+    margin-top: 12rem;
+    background-color: #E3EFFF;
+    border-radius: 24px;
+    text-align: center;
+    width: 100vw; /* Full width of the viewport */
+    position: relative; /* Maintain element in its layout context */
+    left: 50%; /* Position to the right by 50% */
+    right: 50%; /* Position to the left by 50% */
+    transform: translateX(-50%); /* Ensure the element is horizontally centered */
+    background-image: url('../images/vector1.png'); /* Add the vector image as background */
+    background-position: left top; /* Position the image at the top left */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-size:25%; /* Ensure the image fits within the section */
+    background-blend-mode:overlay;
+
+}
+
+.info-content {
+    position: relative; /* Maintain the card's context over the background image */
+    max-width: 100%; /* Full width of the column */
+    max-height: 100%; /* Full height of the column */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    text-align: left;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    color: #023770;
+    z-index: 1; /* Ensure content is above the background image */
+}
+
+
+.info-section h1 {
+    font-size: 3rem;
+    font-weight: 500 !important;
+    color: #023770;
+    margin-bottom: 1rem;
+}
+
+.info-section p {
+    font-size: 1.125rem;
+    color: #666666;
+    margin-bottom: 2rem;
+}
+
+.info-item {
+    margin-bottom: 2rem;
+}
+
+.info-content {
+    max-width: 100%; /* Full width of the column */
+    max-height: 100%; /* Full height of the column */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    text-align: left;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    color: #023770;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px; /* Adjust height as needed */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 10px;
+}
+
+.card-body {
+    flex: 1; /* Allows the body to take up the remaining space in the card */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Pushes the content to the top and bottom */
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: #023770;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align icon to the right */
+}
+
+.chevron-icon {
+    width: 20px; /* Adjust size as needed */
+    height: auto;
+    margin-left: 2px;
+    display: inline-block;
+}
+
+.badge-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1; /* Ensure badge is above the image */
+}
+
+.badge {
+    background-color: rgba(2, 55, 112, 0.562); 
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+/* FEATURE SECTION */
+.feature-section {
+    margin-top: 8rem;
+    margin-bottom: 8rem;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.feature-section h1 {
+    font-size: 3rem;
+    font-weight: 500 !important;
+    color: #023770;
+    margin-bottom: 1rem;
+}
+
+.feature-section p {
+    font-size: 1.125rem;
+    color: #666666;
+    margin-bottom: 2rem;
+}
+
+.feature-item {
+    padding: 2rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    text-align: left;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #023770;
+}
+
+.feature-title {
+    font-weight: 500;
+}
+
+/* EMERGENCY SECTION */
+/* Emergency FAB container */
+.emergency-fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 1050; 
+    transition: opacity 0.3s ease;
+}
+
+/* Main FAB button style */
+.emergency-fab .btn {
+    width: 70px; /* Ukuran lingkaran */
+    height: 70px; /* Ukuran lingkaran */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Ukuran ikon */
+    padding: 0;
+    border-radius: 50%; /* Pastikan tombol bulat */
+}
+
+/* Khusus untuk tombol merah utama */
+.fab-btn {
+    color: white;
+    border-radius: 50%;
+}
+
+/* Style untuk tombol-tombol sub-menu */
+.emergency-buttons a {
+    width: 60px; /* Ukuran lingkaran */
+    height: 60px; /* Ukuran lingkaran */
+    font-size: 1.5rem; /* Ukuran ikon */
+    opacity: 0; /* Sembunyikan tombol saat collapse */
+    transform: translateY(-10px); /* Sedikit geser ke atas */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Tambahkan transisi untuk animasi */
+}
+
+/* Expand style untuk tombol-tombol sub-menu */
+.emergency-buttons.expand a {
+    opacity: 1; /* Tampilkan tombol saat expand */
+    transform: translateY(0); /* Kembalikan posisi ke normal */
+}
+
+/* Animation for hover effect on FAB */
+.fab-btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    opacity: 1;
+}
+
+.btn-outline-success {
+    background-color: #28a745; /* Mengatur background menjadi hijau */
+    border-color: #28a745; /* Mengatur border menjadi hijau */
+    color: white; /* Mengatur warna ikon menjadi putih */
+}
+
+.btn-outline-success:hover {
+    background-color: #218838; /* Mengatur background menjadi hijau lebih gelap saat di-hover */
+    border-color: #218838; /* Mengatur border menjadi hijau lebih gelap saat di-hover */
+    color: white; /* Menjaga warna ikon tetap putih saat di-hover */
+}
+
+
+/* Media Queries for Tablet View (Portrait & Landscape) */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    /* HERO SECTION */
+    .hero-section {
+        margin-top: -4rem; /* Adjust padding */
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem; /* Adjust font size */
+    }
+
+    .hero-text p {
+        font-size: 1rem; /* Adjust font size */
+    }
+
+    .hero-buttons {
+        margin-top: 0.8rem; /* Adjust margin */
+        font-size: 4px;
+    }
+
+    .icon-card {
+        width: 90%; /* Adjust width for tablet view */
+        height: auto; /* Auto height to accommodate content */
+        bottom: -40px; /* Adjust position as needed */
+    }
+
+    .card-content {
+        padding: 0 15px; /* Adjust padding for tablet view */
+    }
+
+    .icon-text {
+        margin: 0 15px; /* Adjust spacing for tablet view */
+    }
+
+    .icon-text i {
+        font-size: 30px; /* Adjust icon size for tablet view */
+    }
+
+    .icon-text strong {
+        font-size: 20px; /* Adjust font size for strong text */
+    }
+
+    .icon-text p {
+        font-size: 14px; /* Adjust font size for paragraph text */
+    }
+
+    /* DOCTOR SECTION */
+    .doctor-section {
+        margin-top: 8rem; /* Adjust padding */
+    }
+
+    .doctor-text h1 {
+        font-size: 2.5rem; /* Adjust font size */
+    }
+
+    .doctor-text p {
+        font-size: 1.125rem; /* Adjust font size */
+    }
+
+    .doctor-buttons {
+        margin-top: 1rem; /* Adjust margin */
+    }
+
+    /* RESERVATION SECTION */
+    .reservation-section h1 {
+        font-size: 2.25rem; /* Adjust font size */
+    }
+
+    .reservation-section p {
+        font-size: 1.125rem; /* Adjust font size */
+    }
+
+    /* INFO SECTION */
+    .info-section .row {
+        display: flex;
+        flex-wrap: wrap; /* Ensure items wrap if needed */
+        gap: 1rem; /* Adjust gap between items */
+    }
+
+    .info-section{
+        background-size:35%;
+        background-repeat: repeat;
+    }
+
+    .info-section .col-lg-4, .info-section .col-md-6 {
+        flex: 1 1 calc(33.333% - 1rem); /* Adjust width and margin */
+        max-width: calc(33.333% - 1rem); /* Ensure items fit within row */
+    }
+
+    .info-item {
+        margin-bottom: 1rem; /* Adjust bottom margin */
+    }
+
+    .info-content {
+        display: flex;
+        flex-direction: column; /* Ensure content is stacked vertically */
+        height: 100%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-img-top {
+        height: 200px; /* Set a consistent height for images */
+        object-fit: cover; /* Ensure images cover the area without distortion */
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column; /* Stack content vertically */
+        justify-content: space-between; /* Space out content */
+    }
+
+    /* FEATURE SECTION */
+    .feature-section h1 {
+        font-size: 2.25rem; /* Adjust font size */
+    }
+
+    .feature-section p {
+        font-size: 1.125rem; /* Adjust font size */
+    }
+
+    /* PROMO SECTION */
+    .promotion-section h1 {
+        font-size: 2.25rem; /* Adjust font size */
+    }
+
+    .promotion-section p {
+        font-size: 1.125rem; /* Adjust font size */
+    }
+
+    .btn.btn-semua {
+        font-size: 1rem !important; /* Mengurangi ukuran font */
+        margin-top: 0 !important; /* Menyesuaikan margin untuk tampilan yang lebih kompak */
+        margin-bottom: 5px !important;
+    }
+
+    .btn.btn-semua .chevron-icon {
+        width: 14px !important; /* Mengurangi ukuran ikon jika diperlukan */
+        height: auto !important;
+    }
+
+    /* EMERGENCY SECTION */
+    .emergency-card h1 {
+        font-size: 2rem; /* Adjust font size */
+    }
+
+    .emergency-buttons a {
+        font-size: 1rem;
+        width: 12rem;
+    }
+}
+
+
+
+
+
+/* Media Queries for Mobile View */
+@media (max-width: 768px) {
+    .hero-section .row,
+    .doctor-section .row {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    .hero-text h1, .doctor-text h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-text p, .doctor-text p {
+        font-size: 1rem;
+    }
+
+    .hero-buttons, .doctor-buttons {
+        margin-top: 1.5rem;
+    }
+
+    .hero-image, .doctor-image {
+        margin-bottom: 1.5rem; /* Reduced margin */
+    }
+
+    .hero-buttons .btn, .doctor-buttons .btn {
+        display: block;
+        margin: 0.5rem 0;
+        width: 100%;
+    }
+
+    .icon-card {
+        width: 80%; /* Full width on mobile */
+        height: 35%; /* Auto height to accommodate content */
+        box-shadow: none; /* Remove shadow for a cleaner look on mobile */
+        border-radius: 10px; /* Slightly smaller border-radius for mobile */
+        margin-bottom: 20px; /* Ensure space below the card */
+        position: relative; /* Reset position to relative */
+    }
+
+    .card-content {
+        display: flex; /* Use flexbox for layout */
+        flex-direction: column; /* Stack items vertically */
+        align-items:flex-start; /* Center align items horizontally */
+        padding: 15px; /* Add padding for better spacing */
+        box-sizing: border-box; /* Include padding in the element’s total width and height */
+    }
+
+    .icon-text {
+        margin: 15px 0; /* Evenly spaced margin for each icon-text block */
+        text-align: center; /* Center align text */
+    }
+
+    .icon-text i {
+        font-size: 32px; /* Adjust icon size */
+        margin-bottom: 8px; /* Spacing between icon and text */
+    }
+
+    .icon-text strong {
+        font-size: 18px; /* Font size for strong text */
+        display: block; /* Ensure strong text is on its own line */
+    }
+
+    .icon-text p {
+        font-size: 14px; /* Font size for paragraph text */
+        margin: 0; /* Remove margin to prevent extra spacing */
+    }
+
+    .reservation-section .row {
+        flex-direction: column;
+    }
+    
+    .col-md-5, .col-md-7 {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+
+    .reservation-section h1, .promotion-section h1, .info-section h1, .feature-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .reservation-section p, .promotion-section p, .info-section p, .feature-section p{
+        font-size: 1rem;
+    }
+
+    .reservation-section h2 {
+        font-size: 1rem;
+    }
+
+    #card-mcu, #card-home-service, #card-poliklinik {
+        height: 150px; /* Set equal heights for all cards on small screens */
+    }
+
+    .promotion-item {
+        max-height: 400px;
+        max-width: 250px;
+    }
+
+    .info-section{
+        background-size:35%;
+        background-repeat: repeat;
+    }
+    
+    .info-item {
+        max-height: 400px;
+        max-width: 250px;
+        margin: auto;
+    }
+
+    .btn.btn-semua {
+        font-size: 0.9rem !important; /* Mengurangi ukuran font lebih lanjut */
+        margin-top: 0 !;
+        margin-bottom: 5px !important;
+    }
+
+    .btn.btn-semua .chevron-icon {
+        width: 12px !important; /* Mengurangi ukuran ikon untuk tampilan mobile */
+        height: auto !important;
+    }
+
+    .btn-link {
+        font-size: 0.875rem;
+    }
+
+    .feature-item {
+        padding: 1rem;
+    }
+
+    .feature-item h5 {
+        font-size: 1.25rem;
+    }
+
+    .feature-item .btn {
+        font-size: 0.875rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .emergency-card h1 {
+        font-size: 1.5rem;
+    }
+
+    .emergency-buttons a {
+        font-size: 0.8rem;
+        padding: 1rem;
+    }
+
+    /* Reduced vertical spacing */
+    .hero-section{
+        margin-top: -8rem;
+    }
+
+    .doctor-section, 
+    .reservation-section, 
+    .promotion-section, 
+    .info-section, 
+    .feature-section {
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .footer {
+        padding-top: 1.75rem;
+        padding-bottom: 1.75rem;
+    }
+}
+
+
+/* .reservation-item, .feature-item, .promotion-item, .info-item, .doctor-image {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reservation-item:hover, .feature-item:hover, .promotion-item:hover, .info-item:hover, .doctor-image:hover {
+    transform: scale(1.1); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
+    z-index: 1; 
+} */
+
+
+
+
+
+
+

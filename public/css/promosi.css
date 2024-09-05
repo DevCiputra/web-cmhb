@@ -1,0 +1,206 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+body {
+    margin: 0;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* HEADER SECTION */
+.header-section {
+    text-align: center;
+}
+
+.header-section h1 {
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #023770;
+    margin-bottom: 1rem;
+}
+
+.header-section p {
+    font-size: 1rem;
+    color: #666666;
+    margin-bottom: 2rem;
+}
+
+/* CARD FILTER */
+.card-filter {
+    border-radius: 10px;
+    box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04);
+    margin-bottom: 2rem;
+}
+
+.filter-card-body {
+    padding: 20px;
+}
+
+/* PROMOTION CARDS */
+.promotion-item {
+    margin-bottom: 50px; 
+    margin-top: 20px;
+    transition: transform 0.3s ease;
+    display: flex;
+    justify-content: center;
+}
+
+.promotion-item:hover {
+    transform: translateY(-20px);
+}
+
+.promotion-content {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    width: 95%; /* Increased width for larger card size */
+    max-width: 320px; /* Increased maximum width */
+}
+
+
+.promotion-content img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.pagination-container {
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
+
+/* EMERGENCY SECTION */
+/* Emergency FAB container */
+.emergency-fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 1050; 
+    transition: opacity 0.3s ease;
+}
+
+/* Main FAB button style */
+.emergency-fab .btn {
+    width: 70px; /* Ukuran lingkaran */
+    height: 70px; /* Ukuran lingkaran */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Ukuran ikon */
+    padding: 0;
+    border-radius: 50%; /* Pastikan tombol bulat */
+}
+
+/* Khusus untuk tombol merah utama */
+.fab-btn {
+    color: white;
+    border-radius: 50%;
+}
+
+/* Style untuk tombol-tombol sub-menu */
+.emergency-buttons a {
+    width: 60px; /* Ukuran lingkaran */
+    height: 60px; /* Ukuran lingkaran */
+    font-size: 1.5rem; /* Ukuran ikon */
+    opacity: 0; /* Sembunyikan tombol saat collapse */
+    transform: translateY(-10px); /* Sedikit geser ke atas */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Tambahkan transisi untuk animasi */
+}
+
+/* Expand style untuk tombol-tombol sub-menu */
+.emergency-buttons.expand a {
+    opacity: 1; /* Tampilkan tombol saat expand */
+    transform: translateY(0); /* Kembalikan posisi ke normal */
+}
+
+/* Animation for hover effect on FAB */
+.fab-btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    opacity: 1;
+}
+
+.btn-outline-success {
+    background-color: #28a745; /* Mengatur background menjadi hijau */
+    border-color: #28a745; /* Mengatur border menjadi hijau */
+    color: white; /* Mengatur warna ikon menjadi putih */
+}
+
+.btn-outline-success:hover {
+    background-color: #218838; /* Mengatur background menjadi hijau lebih gelap saat di-hover */
+    border-color: #218838; /* Mengatur border menjadi hijau lebih gelap saat di-hover */
+    color: white; /* Menjaga warna ikon tetap putih saat di-hover */
+}
+
+/* Media Query for tablets and smaller screens */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* General container adjustments */
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* EMERGENCY SECTION */
+    .emergency-card h1 {
+        font-size: 2rem; /* Adjust font size */
+    }
+
+    .card-filter {
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-card-body {
+        padding: 15px;
+    }
+
+    .emergency-buttons a {
+        font-size: 1rem;
+        width: 12rem;
+    }    
+
+    .pagination-container {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .header-section h1 {
+        margin-top: 40px;
+        font-size: 1.5rem;
+    }
+    
+    .header-section p {
+        font-size: 1rem;
+
+    }
+
+    .pagination-container {
+        margin-top: 10px;
+    }
+
+    .emergency-card h1 {
+        font-size: 1.5rem;
+    }
+
+    .emergency-buttons a {
+        font-size: 0.8rem;
+        padding: 1rem;
+    }
+
+}

@@ -1,0 +1,205 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #F9F9FC;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* info Detail Container */
+.info-detail {
+    background-color: white;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04);
+    width: 100%; /* Full width */
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.info-header {
+    margin-bottom: 30px;
+}
+
+.info-title {
+    color: #023770;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.info-meta {
+    font-size: 16px;
+    color: #666666;
+}
+
+.category {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.publish-date {
+    display: block;
+    font-style: italic;
+}
+
+/* info Image */
+/* info Image */
+.info-image {
+    max-width: 60%; /* Batasi lebar gambar maksimal menjadi 80% dari lebar container */
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid #E9ECEF;
+    object-fit: cover;
+    margin: 20px auto; /* Pusatkan gambar dan tambahkan margin atas/bawah */
+    display: block; /* Pastikan gambar dianggap sebagai elemen blok untuk margin auto bekerja */
+}
+
+
+/* info Content */
+.info-content {
+    margin-top: 4rem;
+    font-size: 16px;
+    color: #3A3A3A;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* EMERGENCY SECTION */
+/* Emergency FAB container */
+.emergency-fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 1050; 
+    transition: opacity 0.3s ease;
+}
+
+/* Main FAB button style */
+.emergency-fab .btn {
+    width: 70px; /* Ukuran lingkaran */
+    height: 70px; /* Ukuran lingkaran */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Ukuran ikon */
+    padding: 0;
+    border-radius: 50%; /* Pastikan tombol bulat */
+}
+
+/* Khusus untuk tombol merah utama */
+.fab-btn {
+    color: white;
+    border-radius: 50%;
+}
+
+/* Style untuk tombol-tombol sub-menu */
+.emergency-buttons a {
+    width: 60px; /* Ukuran lingkaran */
+    height: 60px; /* Ukuran lingkaran */
+    font-size: 1.5rem; /* Ukuran ikon */
+    opacity: 0; /* Sembunyikan tombol saat collapse */
+    transform: translateY(-10px); /* Sedikit geser ke atas */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Tambahkan transisi untuk animasi */
+}
+
+/* Expand style untuk tombol-tombol sub-menu */
+.emergency-buttons.expand a {
+    opacity: 1; /* Tampilkan tombol saat expand */
+    transform: translateY(0); /* Kembalikan posisi ke normal */
+}
+
+/* Animation for hover effect on FAB */
+.fab-btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    opacity: 1;
+}
+
+.btn-outline-success {
+    background-color: #28a745; /* Mengatur background menjadi hijau */
+    border-color: #28a745; /* Mengatur border menjadi hijau */
+    color: white; /* Mengatur warna ikon menjadi putih */
+}
+
+.btn-outline-success:hover {
+    background-color: #218838; /* Mengatur background menjadi hijau lebih gelap saat di-hover */
+    border-color: #218838; /* Mengatur border menjadi hijau lebih gelap saat di-hover */
+    color: white; /* Menjaga warna ikon tetap putih saat di-hover */
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    .info-detail, .emergency-card {
+        max-width: 1200px; /* Same width for both containers */
+    }
+
+    /* EMERGENCY SECTION */
+    .emergency-card h1 {
+        font-size: 2rem; /* Adjust font size */
+    }
+
+    .emergency-buttons a {
+        font-size: 1rem;
+        width: 12rem;
+    }  
+
+}
+
+@media (max-width: 768px) {
+    /* General Container Padding */
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* info Detail Container */
+    .info-detail {
+        padding: 15px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .info-title {
+        font-size: 22px;
+    }
+
+    .info-meta {
+        font-size: 14px;
+    }
+
+    .info-content {
+        font-size: 14px;
+    } 
+
+    .info-image {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Emergency Section */
+    .emergency-section {
+        padding-bottom: 5rem;
+    }
+
+    .emergency-card h1 {
+        font-size: 1.8rem;
+    }
+
+    .emergency-buttons a {
+        font-size: 1rem;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}

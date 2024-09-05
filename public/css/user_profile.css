@@ -1,0 +1,248 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #F9F9FC;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 80px;
+}
+
+.profile-header {
+    background-color: #ffffff;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 2rem;
+    border-radius: 10px;
+    position: relative; /* Allows the icon to be positioned absolutely within this container */
+    box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04);
+}
+
+.profile-header img:first-of-type {
+    border-radius: 50%;
+    border: 4px solid #023770; /* Border for profile image */
+    width: 120px; /* Size of profile image */
+    height: 120px;
+}
+
+.profile-header h5 {
+    margin-top: 1rem;
+    font-size: 1.8rem;
+    color: #023770;  /* Darker color for the name */
+    font-weight: bold;
+}
+
+.profile-header p {
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.profile-info {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 1.5rem;
+    box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04);
+}
+
+.profile-info h6 {
+    font-size: 1.2rem;
+    font-weight: bold;  
+    margin-bottom: 1rem;
+    color: #023770; /* Color for section titles */
+}
+
+.profile-info p {
+    border: none;
+    border-bottom: 1px solid #ced4da;
+    border-radius: 0;
+    background-color: #ffffff;
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.edit-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    width: 24px; /* Size of the icon */
+    height: 24px;
+    border: none; /* Ensure no border */
+    background: none; /* Remove any default background */
+}
+
+.edit-icon:hover {
+    filter: brightness(85%);
+}
+
+/* EMERGENCY SECTION */
+/* Emergency FAB container */
+.emergency-fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 1050; 
+    transition: opacity 0.3s ease;
+}
+
+/* Main FAB button style */
+.emergency-fab .btn {
+    width: 70px; /* Ukuran lingkaran */
+    height: 70px; /* Ukuran lingkaran */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Ukuran ikon */
+    padding: 0;
+    border-radius: 50%; /* Pastikan tombol bulat */
+}
+
+/* Khusus untuk tombol merah utama */
+.fab-btn {
+    color: white;
+    border-radius: 50%;
+}
+
+/* Style untuk tombol-tombol sub-menu */
+.emergency-buttons a {
+    width: 60px; /* Ukuran lingkaran */
+    height: 60px; /* Ukuran lingkaran */
+    font-size: 1.5rem; /* Ukuran ikon */
+    opacity: 0; /* Sembunyikan tombol saat collapse */
+    transform: translateY(-10px); /* Sedikit geser ke atas */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Tambahkan transisi untuk animasi */
+}
+
+/* Expand style untuk tombol-tombol sub-menu */
+.emergency-buttons.expand a {
+    opacity: 1; /* Tampilkan tombol saat expand */
+    transform: translateY(0); /* Kembalikan posisi ke normal */
+}
+
+/* Animation for hover effect on FAB */
+.fab-btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    opacity: 1;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    /* Breadcrumb Container */
+    .breadcrumb-container {
+        margin-top: 60px;
+    }
+
+    /* EMERGENCY SECTION */
+    .emergency-card h1 {
+        font-size: 2rem; /* Adjust font size */
+    }
+
+    .emergency-buttons a {
+        font-size: 1rem;
+        width: 12rem;
+    }  
+
+}
+
+@media (max-width: 768px) {
+    /* General Container Padding */
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+        /* Emergency Section */
+    .emergency-section {
+        padding-bottom: 5rem;
+    }
+
+    .emergency-card h1 {
+        font-size: 1.8rem;
+    }
+
+    .emergency-buttons a {
+        font-size: 1rem;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
+
+.btn-outline-success {
+    background-color: #28a745; /* Mengatur background menjadi hijau */
+    border-color: #28a745; /* Mengatur border menjadi hijau */
+    color: white; /* Mengatur warna ikon menjadi putih */
+}
+
+.btn-outline-success:hover {
+    background-color: #218838; /* Mengatur background menjadi hijau lebih gelap saat di-hover */
+    border-color: #218838; /* Mengatur border menjadi hijau lebih gelap saat di-hover */
+    color: white; /* Menjaga warna ikon tetap putih saat di-hover */
+}
+
+/* Modal Header */
+.modal-header {
+    border-bottom: 2px solid #023770; /* Accent border color */
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Modal Body */
+.modal-body {
+    background-color: #ffffff; /* Light background for the body */
+}
+
+.form-label {
+    font-weight: bold;
+    color: #023770; /* Darker color for labels */
+}
+
+.form-control {
+    border: 1px solid #ced4da; /* Light border color */
+    border-radius: 8px; /* Rounded corners */
+}
+
+textarea.form-control {
+    resize: vertical; /* Allow vertical resizing only */
+}
+
+/* Modal Footer */
+.modal-footer {
+    background-color: #f8f9fa; /* Light background for the footer */
+    border-top: 2px solid #023770; /* Accent border color */
+}
+
+.btn-primary {
+    background-color: #007858; /* Green background */
+    border-color: #007858; /* Green border */
+    border-radius: 12px; /* Rounded corners */
+}
+
+.btn-primary:hover {
+    background-color: #005f43; /* Darker green on hover */
+}
+
+.btn-secondary {
+    background-color: #6c757d; /* Gray background */
+    border-radius: 12px; /* Rounded corners */
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+    border-color: #5a6268; /* Darker gray border on hover */
+}
+
+

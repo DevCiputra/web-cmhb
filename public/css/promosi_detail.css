@@ -1,0 +1,246 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #F9F9FC;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* promosi Detail Container */
+.promosi-detail {
+    background-color: white;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04);
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+/* Breadcrumb Container */
+.breadcrumb-container {
+    margin-bottom: 30px;
+}
+
+.breadcrumb {
+    background: none;
+    font-size: 14px;
+}
+
+/* promosi Package Section */
+.promosi-package {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.title {
+    color: #023770;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-weight: bolder;
+    font-size: 18px;
+    color: #666666;
+    margin-bottom: 20px;
+}
+
+.promosi-photo img {
+    height: 600px; /* Fixed height */
+    width: 400px; /* Fixed width */
+    object-fit: contain; /* Ensure the entire image fits within the fixed dimensions */
+    border-radius: 10px;
+    border: 2px solid #E9ECEF;
+    object-position: center; 
+}
+
+
+/* Promo Description Section */
+.promosi-description h4,
+.promosi-info h4 {
+    color: #023770;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.promosi-description ul,
+.promosi-info ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.promosi-description li,
+.promosi-info li {
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+    color: #3A3A3A;
+}
+
+.promosi-description li::before,
+.promosi-info li::before {
+    content: "•";
+    color: #007858 !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 20px;
+}
+
+
+/* EMERGENCY SECTION */
+/* Emergency FAB container */
+.emergency-fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 1050; 
+    transition: opacity 0.3s ease;
+}
+
+/* Main FAB button style */
+.emergency-fab .btn {
+    width: 70px; /* Ukuran lingkaran */
+    height: 70px; /* Ukuran lingkaran */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Ukuran ikon */
+    padding: 0;
+    border-radius: 50%; /* Pastikan tombol bulat */
+}
+
+/* Khusus untuk tombol merah utama */
+.fab-btn {
+    color: white;
+    border-radius: 50%;
+}
+
+/* Style untuk tombol-tombol sub-menu */
+.emergency-buttons a {
+    width: 60px; /* Ukuran lingkaran */
+    height: 60px; /* Ukuran lingkaran */
+    font-size: 1.5rem; /* Ukuran ikon */
+    opacity: 0; /* Sembunyikan tombol saat collapse */
+    transform: translateY(-10px); /* Sedikit geser ke atas */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Tambahkan transisi untuk animasi */
+}
+
+/* Expand style untuk tombol-tombol sub-menu */
+.emergency-buttons.expand a {
+    opacity: 1; /* Tampilkan tombol saat expand */
+    transform: translateY(0); /* Kembalikan posisi ke normal */
+}
+
+/* Animation for hover effect on FAB */
+.fab-btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    opacity: 1;
+}
+
+.btn-outline-success {
+    background-color: #28a745; /* Mengatur background menjadi hijau */
+    border-color: #28a745; /* Mengatur border menjadi hijau */
+    color: white; /* Mengatur warna ikon menjadi putih */
+}
+
+.btn-outline-success:hover {
+    background-color: #218838; /* Mengatur background menjadi hijau lebih gelap saat di-hover */
+    border-color: #218838; /* Mengatur border menjadi hijau lebih gelap saat di-hover */
+    color: white; /* Menjaga warna ikon tetap putih saat di-hover */
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    /* Breadcrumb Container */
+    .breadcrumb-container {
+        margin-top: 60px;
+    }
+
+    /* EMERGENCY SECTION */
+    .emergency-card h1 {
+        font-size: 2rem; /* Adjust font size */
+    }
+
+    .emergency-buttons a {
+        font-size: 1rem;
+        width: 12rem;
+    }  
+
+}
+
+@media (max-width: 768px) {
+    /* General Container Padding */
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* promosi Detail Container */
+    .promosi-detail {
+        padding: 15px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    /* Breadcrumb Container */
+    .breadcrumb-container {
+        margin-top: 40px;
+    }
+
+    .title {
+        font-size: 22px;
+    }
+
+   .price {
+        font-size: 14px;
+    }
+
+    .promosi-description h4,
+    .promosi-info h4 {
+        font-size: 18px;
+    }
+
+    .promosi-description li,
+    .promosi-info li {
+        font-size: 14px;
+    }
+
+    .promosi-photo img {
+        width: 300px;
+        height: 200px;
+    }
+    
+
+
+        /* Emergency Section */
+    .emergency-section {
+        padding-bottom: 5rem;
+    }
+
+    .emergency-card h1 {
+        font-size: 1.8rem;
+    }
+
+    .emergency-buttons a {
+        font-size: 1rem;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}

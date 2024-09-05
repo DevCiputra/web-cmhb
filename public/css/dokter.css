@@ -1,0 +1,293 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+body {
+    margin: 0;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* HEADER SECTION */
+.header-section {
+    text-align: center;
+}
+
+.header-section h1 {
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #023770;
+    margin-bottom: 1rem;
+}
+
+.header-section p {
+    font-size: 1rem;
+    color: #666666;
+    margin-bottom: 2rem;
+}
+
+/* CARD FILTER */
+.card-filter {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem; /* Add spacing between the filter card and doctor cards */
+}
+
+.filter-card-body {
+    padding: 20px;
+}
+
+/* CARD DOCTOR */
+.doctor-cards-container .col-md-3 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.doctor-card {
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    max-width: 100%; /* Ensure the card fits within its container */
+    border: none;
+    overflow: hidden; /* Hide overflow content if necessary */
+    text-align: left;
+    margin-bottom: 40px;
+    height: 400px; /* Set a fixed height for the doctor card */
+}
+
+.doctor-card-img-top {
+    width: 100%;
+    height: 200px; /* Set the image height to take up part of the card */
+    object-fit: cover;
+    object-position: 0% 10%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.doctor-card-body {
+    padding: 15px;
+    height: calc(100% - 200px); /* Adjust the content height relative to the image height */
+    overflow: hidden; /* Hide overflow if the content is too long */
+}
+
+.name {
+    color: #023770;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.specialist {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+/* Button Styles */
+.btn-profil {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    color: #023770;
+    font-size: 1rem;
+}
+
+/* Ensure doctor cards fit well on smaller screens */
+.doctor-cards-container {
+    margin-top: 2rem; /* Add spacing between the filter card and the doctor cards */
+}
+
+.pagination-container {
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
+
+/* EMERGENCY SECTION */
+/* Emergency FAB container */
+.emergency-fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 1050; 
+    transition: opacity 0.3s ease;
+}
+
+/* Main FAB button style */
+.emergency-fab .btn {
+    width: 70px; /* Ukuran lingkaran */
+    height: 70px; /* Ukuran lingkaran */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Ukuran ikon */
+    padding: 0;
+    border-radius: 50%; /* Pastikan tombol bulat */
+}
+
+/* Khusus untuk tombol merah utama */
+.fab-btn {
+    color: white;
+    border-radius: 50%;
+}
+
+/* Style untuk tombol-tombol sub-menu */
+.emergency-buttons a {
+    width: 60px; /* Ukuran lingkaran */
+    height: 60px; /* Ukuran lingkaran */
+    font-size: 1.5rem; /* Ukuran ikon */
+    opacity: 0; /* Sembunyikan tombol saat collapse */
+    transform: translateY(-10px); /* Sedikit geser ke atas */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Tambahkan transisi untuk animasi */
+}
+
+/* Expand style untuk tombol-tombol sub-menu */
+.emergency-buttons.expand a {
+    opacity: 1; /* Tampilkan tombol saat expand */
+    transform: translateY(0); /* Kembalikan posisi ke normal */
+}
+
+/* Animation for hover effect on FAB */
+.fab-btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    opacity: 1;
+}
+
+.btn-outline-success {
+    background-color: #28a745; /* Mengatur background menjadi hijau */
+    border-color: #28a745; /* Mengatur border menjadi hijau */
+    color: white; /* Mengatur warna ikon menjadi putih */
+}
+
+.btn-outline-success:hover {
+    background-color: #218838; /* Mengatur background menjadi hijau lebih gelap saat di-hover */
+    border-color: #218838; /* Mengatur border menjadi hijau lebih gelap saat di-hover */
+    color: white; /* Menjaga warna ikon tetap putih saat di-hover */
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .doctor-card {
+        height: 350px; /* Reduce the height of the card */
+    }
+    
+    .doctor-card-img-top {
+        height: 160px; /* Reduce the image height */
+    }
+    
+    .doctor-card-body {
+        padding: 10px; /* Reduce padding inside the card */
+        height: calc(100% - 160px); /* Adjust content height relative to image height */
+    }
+
+    .name {
+        font-size: 1.1rem; /* Reduce the font size for the name */
+    }
+
+    .specialist {
+        font-size: 0.9rem; /* Reduce the font size for the specialist title */
+    }
+
+    .btn-profil {
+        font-size: 0.9rem; /* Reduce the button font size */
+        bottom: 10px; /* Adjust the button position */
+        right: 10px; /* Adjust the button position */
+    }
+
+    .pagination-container {
+        margin-top: 10px;
+    }
+
+        /* EMERGENCY SECTION */
+        .emergency-card h1 {
+            font-size: 2rem; /* Adjust font size */
+        }
+    
+        .emergency-buttons a {
+            font-size: 1rem;
+            width: 12rem;
+        }
+}
+
+/* Additional Styles for specific cases */
+@media (max-width: 992px) {
+    .doctor-card {
+        max-width: 100%;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .header-section h1 {
+        margin-top: 40px;
+        font-size: 1.5rem;
+    }
+    
+    .header-section p {
+        font-size: 1rem;
+
+    }
+
+    .doctor-cards-container .col-md-3 {
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 20px; /* Add spacing between the cards */
+    }
+
+    .doctor-card {
+        width: 80%; /* Make the card slightly smaller than full width */
+        margin: 0 auto; /* Center the card on the screen */
+        height: 300px; /* Adjust the card height */
+    }
+
+    .doctor-card-img-top {
+        height: 160px; /* Reduce the image height */
+    }
+
+    .doctor-card-body {
+        padding: 10px; 
+        height: calc(100% - 150px); /* Adjust content height relative to image height */
+    }
+
+    .name {
+        font-size: 1.1rem;
+    }
+
+    .specialist {
+        font-size: 0.9rem; 
+    }
+
+    .btn-profil {
+        font-size: 0.9rem; 
+        bottom: 10px; 
+        right: 10px; 
+    }
+
+    .pagination-container {
+        margin-top: 10px;
+    }
+
+    .emergency-card h1 {
+        font-size: 1.5rem;
+    }
+
+    .emergency-buttons a {
+        font-size: 0.8rem;
+        padding: 1rem;
+    }
+
+}
+
+
+
+
+
+
