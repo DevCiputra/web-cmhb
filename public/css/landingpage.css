@@ -11,20 +11,20 @@
 body {
     background-color: #fff;
     margin: 0;
-    font-family: 'Poppins', sans-serif;
+     font-family: 'Poppins', sans-serif;
 }
 
 /* .floating-img1 {
-    position: absolute; 
-    z-index: 10; 
-    width: 200px; 
-    height: auto; 
+    position: absolute;
+    z-index: 10;
+    width: 200px;
+    height: auto;
 }
 .floating-img2 {
-    position: absolute; 
-    z-index: 10; 
-    width: 220px; 
-    height: auto; 
+    position: absolute;
+    z-index: 10;
+    width: 220px;
+    height: auto;
 } */
 
 
@@ -131,7 +131,7 @@ body {
 
 /* DOCTOR SECTION */
 .doctor-section {
-    margin-top: 18rem; 
+    margin-top: 18rem;
 }
 
 .doctor-text h1 {
@@ -176,7 +176,7 @@ a:hover {
     margin-top: 12rem; /* Jarak atas (margin top) */
     text-align: center;
     background: rgb(244,249,255);
-    background: linear-gradient(360deg, rgba(244,249,255,1) 0%, rgba(227,239,255,1) 12%, rgba(255,255,255,1) 75%); 
+    background: linear-gradient(360deg, rgba(244,249,255,1) 0%, rgba(227,239,255,1) 12%, rgba(255,255,255,1) 75%);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -430,7 +430,7 @@ a:hover {
 }
 
 .badge {
-    background-color: rgba(2, 55, 112, 0.562); 
+    background-color: rgba(2, 55, 112, 0.562);
     color: white;
     padding: 5px 10px;
     border-radius: 10px;
@@ -482,7 +482,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    z-index: 1050; 
+    z-index: 1050;
     transition: opacity 0.3s ease;
 }
 
@@ -768,7 +768,7 @@ a:hover {
     .reservation-section .row {
         flex-direction: column;
     }
-    
+
     .col-md-5, .col-md-7 {
         flex-basis: 100%;
         max-width: 100%;
@@ -799,7 +799,7 @@ a:hover {
         background-size:35%;
         background-repeat: repeat;
     }
-    
+
     .info-item {
         max-height: 400px;
         max-width: 250px;
@@ -848,10 +848,10 @@ a:hover {
         margin-top: -8rem;
     }
 
-    .doctor-section, 
-    .reservation-section, 
-    .promotion-section, 
-    .info-section, 
+    .doctor-section,
+    .reservation-section,
+    .promotion-section,
+    .info-section,
     .feature-section {
         margin-top: 1rem;
         margin-bottom: 2rem;
@@ -869,9 +869,9 @@ a:hover {
 }
 
 .reservation-item:hover, .feature-item:hover, .promotion-item:hover, .info-item:hover, .doctor-image:hover {
-    transform: scale(1.1); 
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
-    z-index: 1; 
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1;
 } */
 
 

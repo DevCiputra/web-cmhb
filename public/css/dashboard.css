@@ -31,6 +31,7 @@ body {
     color: #515151;
     text-align: left;
     background-color: #F5F6FA;
+      font-family: 'Poppins', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -436,7 +437,7 @@ h1, .h1 {
 
 .price {
     font-size: 1rem;
-    color: #666;    
+    color: #666;
     margin-bottom: 0.5rem;
 }
 
@@ -595,7 +596,7 @@ h1, .h1 {
 
     .card-header {
         /* Atur ukuran font di header card */
-        font-size: 1rem; 
+        font-size: 1rem;
     }
 
     .card-body {
@@ -605,9 +606,9 @@ h1, .h1 {
 
     .btn-action {
         /* Atur ukuran tombol di card */
-        font-size: 0.8rem; 
-        padding: 0.3rem 0.6rem; 
-        border-radius: 8px; 
+        font-size: 0.8rem;
+        padding: 0.3rem 0.6rem;
+        border-radius: 8px;
         width: 90px;
     }
 }
@@ -615,7 +616,7 @@ h1, .h1 {
 
 /* Style for Form Input Fields */
 form .form-control {
-    
+
     font-size: 16px; /* Increase font size for better readability */
     border-radius: 8px; /* Add some border radius for a rounded look */
     border: 1px solid #ced4da; /* Adjust border color */

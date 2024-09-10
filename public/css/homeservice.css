@@ -10,7 +10,7 @@
 
 body {
     margin: 0;
-    font-family: 'DM Sans', sans-serif;
+      font-family: 'Poppins', sans-serif;
 }
 
 /* HEADER SECTION */
@@ -86,7 +86,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    z-index: 1050; 
+    z-index: 1050;
     transition: opacity 0.3s ease;
 }
 
@@ -168,7 +168,7 @@ body {
         margin-top: 40px;
         font-size: 1.5rem;
     }
-    
+
     .header-section p {
         font-size: 1rem;
 

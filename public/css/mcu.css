@@ -10,7 +10,7 @@
 
 body {
     margin: 0;
-    font-family: 'DM Sans', sans-serif;
+   font-family: 'Poppins', sans-serif;
 }
 
 /* HEADER SECTION */
@@ -84,7 +84,7 @@ body {
 
 .price {
     font-size: 1rem;
-    color: #666;    
+    color: #666;
 }
 
 .description {
@@ -121,7 +121,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    z-index: 1050; 
+    z-index: 1050;
     transition: opacity 0.3s ease;
 }
 
@@ -246,7 +246,7 @@ body {
         .emergency-card h1 {
             font-size: 2rem; /* Adjust font size */
         }
-    
+
         .emergency-buttons a {
             font-size: 1rem;
             width: 12rem;
@@ -267,7 +267,7 @@ body {
         margin-top: 40px;
         font-size: 1.5rem;
     }
-    
+
     .header-section p {
         font-size: 1rem;
 
@@ -290,7 +290,7 @@ body {
     }
 
     .mcu-card-body {
-        padding: 10px; 
+        padding: 10px;
         height: calc(100% - 150px); /* Adjust content height relative to image height */
     }
 
@@ -299,17 +299,17 @@ body {
     }
 
     .price {
-        font-size: 0.9rem; 
+        font-size: 0.9rem;
     }
 
     .description {
-        font-size: 0.9rem; 
+        font-size: 0.9rem;
     }
 
     .btn-selengkapnya {
-        font-size: 0.9rem; 
-        bottom: 10px; 
-        right: 10px; 
+        font-size: 0.9rem;
+        bottom: 10px;
+        right: 10px;
     }
 
     .pagination-container {

@@ -10,7 +10,7 @@
 
 body {
     margin: 0;
-    font-family: 'DM Sans', sans-serif;
+     font-family: 'Poppins', sans-serif;
 }
 
 /* HEADER SECTION */
@@ -116,7 +116,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    z-index: 1050; 
+    z-index: 1050;
     transition: opacity 0.3s ease;
 }
 
@@ -177,11 +177,11 @@ body {
     .doctor-card {
         height: 350px; /* Reduce the height of the card */
     }
-    
+
     .doctor-card-img-top {
         height: 160px; /* Reduce the image height */
     }
-    
+
     .doctor-card-body {
         padding: 10px; /* Reduce padding inside the card */
         height: calc(100% - 160px); /* Adjust content height relative to image height */
@@ -209,7 +209,7 @@ body {
         .emergency-card h1 {
             font-size: 2rem; /* Adjust font size */
         }
-    
+
         .emergency-buttons a {
             font-size: 1rem;
             width: 12rem;
@@ -230,7 +230,7 @@ body {
         margin-top: 40px;
         font-size: 1.5rem;
     }
-    
+
     .header-section p {
         font-size: 1rem;
 
@@ -253,7 +253,7 @@ body {
     }
 
     .doctor-card-body {
-        padding: 10px; 
+        padding: 10px;
         height: calc(100% - 150px); /* Adjust content height relative to image height */
     }
 
@@ -262,13 +262,13 @@ body {
     }
 
     .specialist {
-        font-size: 0.9rem; 
+        font-size: 0.9rem;
     }
 
     .btn-profil {
-        font-size: 0.9rem; 
-        bottom: 10px; 
-        right: 10px; 
+        font-size: 0.9rem;
+        bottom: 10px;
+        right: 10px;
     }
 
     .pagination-container {

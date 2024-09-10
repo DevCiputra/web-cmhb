@@ -3,7 +3,7 @@
     box-sizing: border-box;
 }
 body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #F9F9FC;
 }
 
@@ -60,7 +60,7 @@ body {
     object-fit: contain; /* Ensure the entire image fits within the fixed dimensions */
     border-radius: 10px;
     border: 2px solid #E9ECEF;
-    object-position: center; 
+    object-position: center;
 }
 
 
@@ -108,7 +108,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    z-index: 1050; 
+    z-index: 1050;
     transition: opacity 0.3s ease;
 }
 
@@ -180,7 +180,7 @@ body {
     .emergency-buttons a {
         font-size: 1rem;
         width: 12rem;
-    }  
+    }
 
 }
 
@@ -225,7 +225,7 @@ body {
         width: 300px;
         height: 200px;
     }
-    
+
 
 
         /* Emergency Section */

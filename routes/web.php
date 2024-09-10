@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\LandingPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,21 +15,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('landingpage');
-});
+// MODUL LANDING PAGE
 
-Route::get('/dokter', function () {
-    return view('dokter');
-});
+Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
+Route::get('/doctor', [LandingPageController::class, 'doctor'])->name('doctor');
+Route::get('/medical-check-up', [LandingPageController::class, 'medicalCheckUp'])->name('medical-check-up');
+Route::get('/home-service', [LandingPageController::class, 'homeService'])->name('home-service');
+Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('polyclinic');
+Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
+Route::get('/information', [LandingPageController::class, 'information'])->name('information');
+
+
+// END MODUL
+
+// MODUL ACCOUNT
+
+Route::get(
+    '/account',
+    [AccountController::class, 'index']
+)->name('account-index');
+
+// END MODUL
 
 Route::get('/profile', function () {
     return view('dokter_profile');
 });
 
-Route::get('/mcu', function () {
-    return view('mcu');
-});
+
 
 Route::get('/mcu_detail', function () {
     return view('mcu_detail');
@@ -37,9 +51,7 @@ Route::get('/poliklinik', function () {
     return view('poliklinik');
 });
 
-Route::get('/homeservice', function () {
-    return view('homeservice');
-});
+
 
 Route::get('/promosi', function () {
     return view('promosi');
@@ -128,7 +140,7 @@ Route::get('/view_artikel', function () {
 });
 
 Route::get('/dashboard_promosi', function () {
-    return view('manajemen_data.informasi.kontens.data_promosi');  
+    return view('manajemen_data.informasi.kontens.data_promosi');
 });
 
 Route::get('/tambah_promosi', function () {
