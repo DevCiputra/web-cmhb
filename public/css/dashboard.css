@@ -388,38 +388,24 @@ h1, .h1 {
     text-align: left;
     margin-top: 24px;
     margin-bottom: 24px;
-    height: 350px;
-    /* display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0; */
+    /* Menghapus pengaturan tinggi tetap agar tinggi kartu fleksibel sesuai konten */
 }
 
 .card-img-top {
     width: 100%;
-    height: 180px;
+    height: auto; /* Mengubah tinggi gambar agar menyesuaikan dengan lebar card */
     object-fit: cover;
-    object-position: 0% 10%;
+    object-position: center;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
 
 .card-body {
     padding: 15px;
-    height: calc(100% - 150px);
-    overflow: hidden;
-    position: relative; /* Ensure header-container is positioned relative to this */
     background-color: #fff;
+    /* Menghapus pengaturan tinggi agar body card fleksibel sesuai konten */
 }
+
 
 .header-container {
     display: flex;

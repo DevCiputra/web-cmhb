@@ -1,7 +1,14 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\InformationController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\MasterController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +32,6 @@ Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('p
 Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
 Route::get('/information', [LandingPageController::class, 'information'])->name('information');
 
-
 // END MODUL
 
 // MODUL ACCOUNT
@@ -47,15 +53,6 @@ Route::get('/mcu_detail', function () {
     return view('mcu_detail');
 });
 
-Route::get('/poliklinik', function () {
-    return view('poliklinik');
-});
-
-
-
-Route::get('/promosi', function () {
-    return view('promosi');
-});
 
 Route::get('/promosi_detail', function () {
     return view('promosi_detail');
@@ -82,10 +79,103 @@ Route::get('/register', function () {
 });
 
 
-// DASHBOARD
-Route::get('/dashboard_mcu', function () {
-    return view('manajemen_data.reservasi.kontens.data_mcu');
-});
+// MODUL DASHBOARD
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard-page');
+
+// END MODUL
+
+
+// MODUL RESERVATION
+
+// mcu
+Route::get('/reservation-mcu', [ReservationController::class, 'indexMcu'])->name('reservation.mcu.index');
+// end
+
+// poly
+Route::get('/reservation-polyclinic', [ReservationController::class, 'indexPoly'])->name('reservation.poly.index');
+// end
+
+// service
+Route::get('/reservation-homeservice', [ReservationController::class, 'indexHomeService'])->name('reservation.homeservice.index');
+// end
+
+// END MODUL
+
+// MODUL INFORMATION
+
+// article
+Route::get('/information-article', [InformationController::class, 'indexArticle'])->name('information.article.index');
+// end
+
+// promote
+Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.article.index');
+// end
+
+// END MODUL
+
+// MODUL DOCTOR
+
+Route::get('/doctor-data', [DoctorController::class, 'indexDataDoctor'])->name('doctor.data.index');
+
+// END MODUL
+
+
+// MODUL MASTER DATA
+
+// user
+Route::get('/master-user', [UserController::class, 'index'])->name('user.data.index');
+Route::get('/master-user/create', [UserController::class, 'create'])->name('user.data.create'); // Form tambah user baru
+Route::post('/master-user', [UserController::class, 'store'])->name('user.data.store'); // Menyimpan user baru
+Route::get('/master-user/{id}/edit', [UserController::class, 'edit'])->name('user.data.edit'); // Form edit user
+Route::put('/master-user/{id}', [UserController::class, 'update'])->name('user.data.update'); // Update data user
+Route::delete('/master-user/{id}', [UserController::class, 'destroy'])->name('user.data.destroy'); // Hapus user
+// end
+
+// role routes
+Route::get('/master-role', [RoleController::class, 'index'])->name('role.data.index');
+Route::get('/master-role/create', [RoleController::class, 'create'])->name('role.data.create');
+Route::post('/master-role/store', [RoleController::class, 'store'])->name('role.data.store');
+Route::get('/master-role/edit/{id}', [RoleController::class, 'edit'])->name('role.data.edit');
+Route::put('/master-role/update/{id}', [RoleController::class, 'update'])->name('role.data.update');
+Route::delete('/master-role/destroy/{id}', [RoleController::class, 'destroy'])->name('role.data.destroy');
+// end
+
+// informationcmh
+Route::get(
+    '/master-info-cmh',
+    [MasterController::class, 'indexInformation']
+)->name('information.data.index');
+Route::get('/master-info-cmh/create', [MasterController::class, 'createInformation'])->name('information.data.create');
+Route::post('/master-info-cmh', [MasterController::class, 'storeInformation'])->name('information.data.store');
+
+// Route untuk menampilkan form edit
+Route::get('/master-info-cmh/{id}/edit', [MasterController::class, 'editInformation'])->name('information.data.edit');
+
+// Route untuk menangani pembaruan data
+Route::put('/master-info-cmh/{id}', [MasterController::class, 'updateInformation'])->name('information.data.update');
+
+// Route untuk menghapus data
+Route::delete('/master-info-cmh/{id}', [MasterController::class, 'destroyInformation'])->name('information.data.destroy');
+
+
+// end
+
+// galerycmh
+Route::get(
+    '/master-gallery-cmh',
+    [MasterController::class, 'indexGallery']
+)->name('gallery.data.index');
+
+Route::get('/master-gallery-cmh/create', [MasterController::class, 'createGallery'])->name('gallery.data.create');
+Route::post('/master-gallery-cmh/store', [MasterController::class, 'storeGallery'])->name('gallery.data.store');
+Route::get('/master-gallery-cmh/edit/{id}', [MasterController::class, 'editGallery'])->name('gallery.data.edit');
+Route::put('/master-gallery-cmh/update/{id}', [MasterController::class, 'updateGallery'])->name('gallery.data.update');
+Route::delete('/master-gallery-cmh/destroy/{id}', [MasterController::class, 'destroyGallery'])->name('gallery.data.destroy');
+// end
+
+// END MODUL
+
 
 Route::get('/tambah_mcu', function () {
     return view('manajemen_data.reservasi.forms.form_tambahmcu');

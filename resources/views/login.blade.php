@@ -16,7 +16,7 @@
     <div class="container-fluid">
         <div class="row w-100">
             <!-- Left Section (Login Form) -->
-            <div class="col-lg-6 d-flex align-items-center justify-content-center auth-form-container">
+            <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center auth-form-container">
                 <div class="auth-form text-center">
                     <h2>Welcome back</h2>
                     <p>Please enter your details.</p>
@@ -24,16 +24,16 @@
                         <div class="mb-3 text-start">
                             <label for="email" class="form-label">Email</label>
                             <div class="input-group">
-                                <div class="input-group-text"><i class="fa-solid fa-envelope"></i></div>
+                                <div class="input-group-text"><i class="fas fa-envelope"></i></div>
                                 <input type="email" class="form-control" id="email" name="email" required autofocus>
                             </div>
                         </div>
                         <div class="mb-3 text-start">
                             <label for="password" class="form-label">Password</label>
                             <div class="input-group">
-                                <div class="input-group-text"><i class="fa-solid fa-lock"></i></div>
+                                <div class="input-group-text"><i class="fas fa-lock"></i></div>
                                 <input type="password" class="form-control" id="password" name="password" required>
-                                <div class="input-group-text"><i class="fa-solid fa-eye-slash"></i></div>
+                                <div class="input-group-text"><i class="fas fa-eye-slash"></i></div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mb-3">
@@ -41,16 +41,14 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Sign in</button>
                     </form>
-                    <p class="text-center mt-4">Don’t have an account? <a href="/register" class="text-primary">Sign
-                            up</a></p>
+                    <p class="text-center mt-4">Don’t have an account? <a href="/register" class="text-primary">Sign up</a></p>
                 </div>
             </div>
-            
 
             <!-- Right Section (Background with Circular Gradient) -->
-            <div class="col-lg-6 full-image-section">
+            <div class="col-12 col-lg-6 full-image-section">
                 <div class="position-relative">
-                    <img src="images/logo.png" alt="Logo" class="logo">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
                     <div class="circle"></div>
                 </div>
             </div>

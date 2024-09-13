@@ -2,22 +2,23 @@ body, html {
     height: 100%;
     margin: 0;
     padding: 0;
-      font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 .container-fluid {
-    height: 100%;
+    display: flex;
+    flex-wrap: wrap; /* Allow the columns to wrap on smaller screens */
+    align-items: stretch;
+    justify-content: center;
+    height: 100vh;
     margin: 0;
     padding: 0;
 }
 
-
 .auth-form-container {
-    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50vw;
     position: relative;
     background-image: url('../images/vector4.png');
     background-repeat: repeat-y;
@@ -33,7 +34,7 @@ body, html {
     width: 100%;
     height: 100%;
     background-color: rgba(251, 251, 251, 0.8); /* White color with 50% transparency */
-    z-index: 1; /* Ensure it sits above the background image */
+    z-index: 1;
 }
 
 .auth-form {
@@ -41,11 +42,9 @@ body, html {
     background-color: #fff;
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: relative; /* Ensure the form is above the overlay */
-    z-index: 2; /* Ensure it sits above the overlay */
+    position: relative;
+    z-index: 2;
 }
-
-
 
 .auth-form h2 {
     font-weight: 600;
@@ -66,6 +65,7 @@ body, html {
 .auth-form .btn-primary:hover {
     background-color: #567AA0;
     border-color: #567AA0;
+    cursor: pointer;
 }
 
 .auth-form .input-group-text {
@@ -79,22 +79,13 @@ body, html {
     border-radius: 0 0.375rem 0.375rem 0;
 }
 
-.auth-form .form-check-input {
-    border-radius: 0.25rem;
-}
-
-.auth-form a.text-primary {
-    color: #2C5888 !important;
-}
-
 .full-image-section {
     background-color: #f7f7fb;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    height: 100vh; /* Menutupi seluruh tinggi viewport */
-    width: 50vw;  /* Menutupi seluruh lebar viewport */
+    height: 100vh;
 }
 
 .full-image-section .position-relative {
@@ -119,13 +110,6 @@ body, html {
     height: 450px;
     border-radius: 50%;
     filter: blur(50px);
-}
-
-.container-fluid {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
 }
 
 /* For tablet screens: width between 769px and 1024px */
@@ -158,7 +142,6 @@ body, html {
         display: none; /* Hide the image section */
     }
 }
-
 
 /* For mobile screens: width 768px or less */
 @media (max-width: 768px) {
@@ -193,4 +176,3 @@ body, html {
         display: none;
     }
 }
-
