@@ -15,8 +15,8 @@
                     <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Medical Check Up</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href=" ">Reservasi</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="#">Reservasi</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Medical Check Up</li>
                         </ol>
                     </nav>
@@ -27,15 +27,8 @@
                     <!-- Search Box -->
                     <input type="text" class="form-control" placeholder="Cari data" style="max-width: 200px;">
 
-                    <!-- Dropdown Category -->
-                    <select class="form-select">
-                        <option selected>Pilih Kategori</option>
-                        <option value="1">Kategori 1</option>
-                        <option value="2">Kategori 2</option>
-                    </select>
-
                     <!-- Add Button -->
-                    <a href="/tambah_mcu" style="text-decoration: none;">
+                    <a href="{{ route('reservation.mcu.create') }}" style="text-decoration: none;">
                         <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none;">
                             <img src="{{ asset('icons/plus.svg') }}" width="16" height="16" style="filter: invert(100%); margin-right: 8px;" alt="Plus Icon">
                             Tambah
@@ -44,108 +37,43 @@
                 </div>
             </div>
         </div>
+
         <!-- Cards Container -->
         <div class="row cards-container">
+            @foreach($services as $service)
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/mcu1.jpg') }}" alt="MCU Image">
+                    @php
+                    // Pastikan $service->media tidak null dan memiliki data
+                    $media = !empty($service->medias) ? $service->medias->first() : null;
+                    @endphp
+
+                    @if($media)
+                    <img class="card-img-top" src="{{ Storage::url('service_photos/' . $media->name) }}" alt="Service Image">
+                    @else
+                    <img class="card-img-top" src="{{ asset('images/default.jpg') }}" alt="Default Image">
+                    @endif
+
                     <div class="card-body">
-                        <div class="header-container">
-                            <h5 class="title">Nama Paket MCU</h5>
-                            <div class="icon-group">
-                                <a href="/edit_mcu" class="btn btn-edit">
-                                    <img src="{{ asset('icons/pencil-square.svg') }}" alt="Pencil Square"
-                                        class="pencil-icon">
-                                </a>
-                                <a href="/view_mcu" class="btn btn-view">
-                                    <img src="{{ asset('icons/eye.svg') }}" alt="Eye" class="eye-icon">
-                                </a>
-                            </div>
+                        <h5 class="title">{{ $service->title }}</h5>
+                        <div class="icon-group">
+                            <a href="{{ route('reservation.mcu.edit', $service->id) }}" class="btn btn-edit">
+                                <img src="{{ asset('icons/pencil-square.svg') }}" alt="Pencil Square" class="pencil-icon">
+                            </a>
                         </div>
-                        <b class="price">Rp. 500.000</b>
-                        <p class="description">Some quick example text to build on the card.</p>
+                        <b class="price">Rp. {{ number_format($service->price, 0, ',', '.') }}</b>
+                        <p class="description">{{ $service->description }}</p>
                         <a href="#" class="btn btn-action">
                             Publish
                         </a>
                     </div>
                 </div>
+
             </div>
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/mcu1.jpg') }}" alt="MCU Image">
-                    <div class="card-body">
-                        <div class="header-container">
-                            <h5 class="title">Nama Paket MCU</h5>
-                            <div class="icon-group">
-                                <a href="/edit_mcu" class="btn btn-edit">
-                                    <img src="{{ asset('icons/pencil-square.svg') }}" alt="Pencil Square"
-                                        class="pencil-icon">
-                                </a>
-                                <a href="/view_mcu" class="btn btn-view">
-                                    <img src="{{ asset('icons/eye.svg') }}" alt="Eye" class="eye-icon">
-                                </a>
-                            </div>
-                        </div>
-                        <b class="price">Rp. 500.000</b>
-                        <p class="description">Some quick example text to build on the card.</p>
-                        <a href="#" class="btn btn-action">
-                            Publish
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/mcu1.jpg') }}" alt="MCU Image">
-                    <div class="card-body">
-                        <div class="header-container">
-                            <h5 class="title">Nama Paket MCU</h5>
-                            <div class="icon-group">
-                                <a href="/edit_mcu" class="btn btn-edit">
-                                    <img src="{{ asset('icons/pencil-square.svg') }}" alt="Pencil Square"
-                                        class="pencil-icon">
-                                </a>
-                                <a href="/view_mcu" class="btn btn-view">
-                                    <img src="{{ asset('icons/eye.svg') }}" alt="Eye" class="eye-icon">
-                                </a>
-                            </div>
-                        </div>
-                        <b class="price">Rp. 500.000</b>
-                        <p class="description">Some quick example text to build on the card.</p>
-                        <a href="#" class="btn btn-action">
-                            Publish
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/mcu1.jpg') }}" alt="MCU Image">
-                    <div class="card-body">
-                        <div class="header-container">
-                            <h5 class="title">Nama Paket MCU</h5>
-                            <div class="icon-group">
-                                <a href="/edit_mcu" class="btn btn-edit">
-                                    <img src="{{ asset('icons/pencil-square.svg') }}" alt="Pencil Square"
-                                        class="pencil-icon">
-                                </a>
-                                <a href="/view_mcu" class="btn btn-view">
-                                    <img src="{{ asset('icons/eye.svg') }}" alt="Eye" class="eye-icon">
-                                </a>
-                            </div>
-                        </div>
-                        <b class="price">Rp. 500.000</b>
-                        <p class="description">Some quick example text to build on the card.</p>
-                        <a href="#" class="btn btn-action">
-                            Publish
-                        </a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>
-
 @endsection
 
 @push('scripts')
