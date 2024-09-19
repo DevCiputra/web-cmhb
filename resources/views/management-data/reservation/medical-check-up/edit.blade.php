@@ -12,7 +12,7 @@
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div class="d-flex flex-column">
-                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B; font-weight:">Edit Paket MCU</h4>
+                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Edit Paket MCU</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
@@ -29,15 +29,15 @@
         <div class="card"
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-body" style="padding: 2rem;">
-                <form action="{{ route('reservation.mcu.edit', $service->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('reservation.mcu.update', $service->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-
+                    <input type="hidden" name="page" value="{{ $services->currentPage() }}">
                     <!-- Nama MCU -->
                     <div class="mb-3">
                         <label for="namaMCU" class="form-label">Nama Paket</label>
-                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="namaMCU" placeholder="Masukkan Nama MCU" value="{{ old('name', $mcu->name) }}">
-                        @error('name')
+                        <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="namaMCU" placeholder="Masukkan Nama MCU" value="{{ old('title', $service->title) }}">
+                        @error('title')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -45,7 +45,7 @@
                     <!-- Harga MCU -->
                     <div class="mb-3">
                         <label for="hargaMCU" class="form-label">Harga Paket</label>
-                        <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" id="hargaMCU" placeholder="Masukkan Harga Paket" value="{{ old('price', $mcu->price) }}">
+                        <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" id="hargaMCU" placeholder="Masukkan Harga Paket" value="{{ old('price', $service->price) }}">
                         @error('price')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -54,19 +54,45 @@
                     <!-- Deskripsi MCU -->
                     <div class="mb-3">
                         <label for="deskripsiMCU" class="form-label">Deskripsi MCU</label>
-                        <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="deskripsiMCU" rows="4" placeholder="Masukkan Deskripsi MCU">{{ old('description', $mcu->description) }}</textarea>
+                        <input id="deskripsiMCU" type="hidden" name="description" value="{{ old('description', $service->description) }}">
+                        <trix-editor input="deskripsiMCU" placeholder="Masukkan Deskripsi MCU"></trix-editor>
                         @error('description')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
+                    <!-- Informasi Penting MCU -->
+                    <div class="mb-3">
+                        <label for="infoPentingMCU" class="form-label">Informasi Penting MCU</label>
+                        <input id="infoPentingMCU" type="hidden" name="special_information" value="{{ old('special_information', $service->special_information) }}">
+                        <trix-editor input="infoPentingMCU" placeholder="Masukkan Informasi Penting MCU"></trix-editor>
+                        @error('special_information')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+
                     <!-- Foto Paket -->
                     <div class="mb-3">
                         <label for="fotoMCU" class="form-label">Upload Media MCU</label>
                         <input type="file" name="media" class="form-control @error('media') is-invalid @enderror" id="fotoMCU" accept="image/*">
-                        @if($mcu->media)
-                        <small class="text-muted">File saat ini: <a href="{{ asset('storage/' . $mcu->media) }}" target="_blank">{{ $mcu->media }}</a></small>
+
+                        @if($service->medias && $service->medias->isNotEmpty())
+                        @php
+                        // Mengambil media pertama yang terhubung dengan service
+                        $media = $service->medias->first();
+                        @endphp
+                        <!-- Menampilkan preview gambar -->
+                        <div class="mt-2">
+                            <small class="text-muted">File saat ini:</small>
+                            <div class="mb-2">
+                                <img src="{{ Storage::url('service_photos/mcu/' . $media->name) }}" alt="Preview Media" style="max-width: 150px; height: auto;">
+                            </div>
+                            <small>{{ $media->name }}</small>
+                            <small class="text-muted">Jika Anda ingin mengubah media, silakan upload file baru.</small>
+                        </div>
                         @endif
+
                         @error('media')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -75,8 +101,8 @@
                     <!-- URL Reservasi -->
                     <div class="mb-3">
                         <label for="urlReservasi" class="form-label">URL Reservasi</label>
-                        <input type="text" name="reservation_url" class="form-control @error('reservation_url') is-invalid @enderror" id="urlReservasi" placeholder="Masukkan URL Reservasi" value="{{ old('reservation_url', $mcu->reservation_url) }}">
-                        @error('reservation_url')
+                        <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" id="urlReservasi" placeholder="Masukkan URL Reservasi" value="{{ old('address', $service->address) }}">
+                        @error('address')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -92,6 +118,7 @@
         </div>
     </div>
 </div>
+@endsection
 
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -118,4 +145,26 @@
         });
     });
 </script>
+@endpush
+
+@push('styles')
+
+<!-- Custom CSS -->
+<style>
+    /* Batasi lebar Trix Editor */
+    trix-editor {
+        min-height: 150px;
+        max-width: 100%;
+        width: 100%;
+        white-space: pre-wrap;
+        /* Agar teks tidak terus melebar ke samping */
+        word-wrap: break-word;
+        /* Memastikan teks wrap */
+    }
+
+    /* Nonaktifkan auto bold pada input lama */
+    input[type="hidden"] {
+        font-weight: normal;
+    }
+</style>
 @endpush

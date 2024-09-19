@@ -107,6 +107,13 @@ Route::get('/reservation-mcu/create', [ReservationController::class, 'createMcu'
 Route::post('/reservation-mcu', [ReservationController::class, 'storeMcu'])->name('reservation.mcu.store');
 Route::get('/reservation-mcu/{service}/edit', [ReservationController::class, 'editMcu'])->name('reservation.mcu.edit');
 Route::put('/reservation-mcu/{service}', [ReservationController::class, 'updateMcu'])->name('reservation.mcu.update');
+Route::patch('/reservation-mcu/publish/{service}', [ReservationController::class, 'publishMcu'])->name('reservation.mcu.publish');
+Route::delete('/reservation-mcu/{service}', [ReservationController::class, 'destroyMcu'])->name('reservation.mcu.destroy');
+Route::patch('reservation/mcu/restore/{id}', [ReservationController::class, 'restoreMcu'])->name('reservation.mcu.restore');
+Route::get('/reservation-mcu/{id}', [ReservationController::class, 'detailMcu'])->name('reservation.mcu.detail');
+Route::patch('/reservation-mcu/unpublish/{service}', [ReservationController::class, 'unpublishMcu'])->name('reservation.mcu.unpublish');
+
+
 // end
 
 // poly
