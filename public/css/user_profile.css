@@ -42,17 +42,72 @@ body {
     margin-bottom: 1rem;
 }
 
-.profile-info {
+.tab-bar {
     background-color: #ffffff;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 2rem;
+    border-radius: 10px;
+    position: relative; /* Allows the icon to be positioned absolutely within this container */
+    box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04);
+}
+.tab-bar .nav-link {
+    background-color: #ffffff; /* Mengubah latar belakang menjadi putih */
+    color: #023770; /* Warna teks biru gelap untuk tab */
+    border-color: #ced4da; /* Border abu-abu agar tampilan lebih bersih */
+}
+
+.tab-bar .nav-link.active {
+    background-color: #ffffff; /* Pastikan tab yang aktif juga tetap berwarna putih */
+    color: #023770; /* Warna teks untuk tab aktif */
+    border-color: #023770; /* Border biru gelap untuk tab aktif */
+}
+
+.tab-bar .nav-link:hover {
+    background-color: #f8f9fa; /* Warna latar belakang saat hover */
+    color: #023770; /* Warna teks saat hover */
+    border-color: #023770; /* Border biru gelap saat hover */
+}
+
+/* Apply styles specifically to nav-profile */
+.nav-profile {
+    background-color: #ffffff !important; /* Ensures the background color is white */
+}
+
+.nav-profile .nav {
+    background-color: #ffffff !important; /* Ensures the background color of the nav element is white */
+}
+
+.nav-profile .nav-link {
+    background-color: #ffffff !important; /* White background for nav-link within nav-profile */
+    color: #023770 !important; /* Dark blue color for text */
+    border-color: #ced4da !important; /* Light grey border color */
+}
+
+.nav-profile .nav-link.active {
+     background-color: #ffffff !important; /* White background for active tab */
+    color: #023770 !important; /* Dark blue color for active tab text */
+    border-color: #023770 !important; /* Dark blue border color for active tab */
+}
+
+.nav-profile .nav-link:hover {
+    background-color: #f8f9fa !important; /* Light grey background on hover */
+    color: #023770 !important; /* Dark blue color for text on hover */
+    border-color: #023770 !important; /* Dark blue border color on hover */
+}
+
+
+
+
+.profile-info {
     padding: 1.5rem;
     border-radius: 10px;
     margin-top: 1.5rem;
-    box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04);
 }
 
 .profile-info h6 {
     font-size: 1.2rem;
-    font-weight: bold;
+    font-weight: bold;  
     margin-bottom: 1rem;
     color: #023770; /* Color for section titles */
 }
@@ -80,6 +135,74 @@ body {
 .edit-icon:hover {
     filter: brightness(85%);
 }
+.nav-tabs .nav-link {
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Styles for the consultation bookings list */
+.consultation-list {
+    margin-top: 1rem;
+}
+
+.booking-item {
+    display: flex;
+    align-items: flex-start; /* Align items at the start to accommodate multi-line text */
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #ced4da;
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.booking-info {
+    display: flex;
+    flex-direction: column; /* Stack the code and details vertically */
+}
+
+.booking-details {
+    display: flex;
+    align-items: center; /* Align items horizontally */
+    gap: 0.5rem; /* Space between date and time */
+}
+
+.booking-code {
+    font-weight: bold;
+    color: #023770;
+}
+
+.booking-date {
+    color: #6c757d;
+    font-size: 0.875rem; /* Slightly smaller font size */
+}
+
+.booking-time {
+    color: #6c757d;
+    font-size: 0.875rem; /* Slightly smaller font size */
+}
+
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    color: #ffffff;
+}
+
+.badge-success {
+    background-color: #28a745; /* Green */
+}
+
+.badge-warning {
+    background-color: #ffc107; /* Yellow */
+}
+
+.badge-danger {
+    background-color: #dc3545; /* Red */
+}
+
+
+
 
 /* EMERGENCY SECTION */
 /* Emergency FAB container */
@@ -176,6 +299,25 @@ body {
         text-align: center;
         margin-bottom: 10px;
     }
+        .nav-profile .nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: nowrap;
+            margin-bottom: 0;
+        }
+        
+        .nav-profile .nav-tabs .nav-link {
+            flex: 1;
+            text-align: center;
+            font-size: 14px; /* Smaller font size */
+            padding: 6px 8px; /* Reduced padding for smaller screens */
+            margin-right: 2px; /* Small margin between elements */
+        }
+    
+        .nav-profile .nav-tabs .nav-link:last-child {
+            margin-right: 0; /* Remove margin for the last element */
+        }
+    
 }
 
 .btn-outline-success {

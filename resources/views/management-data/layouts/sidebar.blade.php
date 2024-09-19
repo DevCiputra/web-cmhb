@@ -17,6 +17,7 @@
                   <a href="/reservation-mcu" class="dashboard-nav-dropdown-item">MCU</a>
                   <a href="/reservation-polyclinic" class="dashboard-nav-dropdown-item">Pendaftaran Poli</a>
                   <a href="/reservation-homeservice" class="dashboard-nav-dropdown-item">Home Service</a>
+                  <a href="/reservation-online-consultation" class="dashboard-nav-dropdown-item">Konsultasi Online</a>
               </div>
           </div>
           <div class='dashboard-nav-dropdown'>

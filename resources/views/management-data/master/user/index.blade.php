@@ -1,6 +1,6 @@
 @extends('management-data.layouts.app')
 
-@section('title', 'User')
+@section('title', 'Konsultasi Online')
 
 @section('content')
 

@@ -22,6 +22,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//RESERVASI ONLINE
+Route::get('/online-consultation', function () {
+    return view('landing-page.contents.consultation');
+});
+
+Route::get('/consultation-form', function () {
+    return view('consultation-form');
+});
+
+Route::get('/consultation-confirmation', function () {
+    return view('consultation-confirmation');
+});
+
+Route::get('/consultation-invoice', function () {
+    return view('consultation-invoice');
+});
+
 // MODUL LANDING PAGE
 
 Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
@@ -47,12 +64,9 @@ Route::get('/profile', function () {
     return view('dokter_profile');
 });
 
-
-
 Route::get('/mcu_detail', function () {
     return view('mcu_detail');
 });
-
 
 Route::get('/promosi_detail', function () {
     return view('promosi_detail');
@@ -70,7 +84,7 @@ Route::get('/user_profile', function () {
     return view('user_profile');
 });
 
-Route::get('/login', function () {
+Route::get('/login', function () { 
     return view('login');
 });
 
@@ -87,24 +101,28 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 
 // MODUL RESERVATION
-
 // mcu
 Route::get('/reservation-mcu', [ReservationController::class, 'indexMcu'])->name('reservation.mcu.index');
 Route::get('/reservation-mcu/create', [ReservationController::class, 'createMcu'])->name('reservation.mcu.create');
 Route::post('/reservation-mcu', [ReservationController::class, 'storeMcu'])->name('reservation.mcu.store');
 Route::get('/reservation-mcu/{service}/edit', [ReservationController::class, 'editMcu'])->name('reservation.mcu.edit');
 Route::put('/reservation-mcu/{service}', [ReservationController::class, 'updateMcu'])->name('reservation.mcu.update');
-
 // end
 
 // poly
 Route::get('/reservation-polyclinic', [ReservationController::class, 'indexPoly'])->name('reservation.poly.index');
 // end
 
-// service
+// home service
 Route::get('/reservation-homeservice', [ReservationController::class, 'indexHomeService'])->name('reservation.homeservice.index');
 // end
 
+// online consultation
+Route::get('/reservation-online-consultation', [ReservationController::class, 'indexConsultation'])->name('reservation.onlineconsultation.index');
+Route::get('/reservation-online-consultation/detail', [ReservationController::class, 'detailConsultation'])->name('reservation.onlineconsultation.detail');
+Route::get('/reservation-online-consultation/invoice', [ReservationController::class, 'invoiceConsultation'])->name('reservation.onlineconsultation.invoice');
+
+// end
 // END MODUL
 
 // MODUL INFORMATION

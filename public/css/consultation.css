@@ -1,0 +1,460 @@
+/* General form styling */
+
+/* General Styles */
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* HEADER SECTION */
+.header-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header-section h1 {
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #023770;
+    margin-bottom: 1rem;
+}
+
+.header-section p {
+    font-size: 1rem;
+    color: #666666;
+    margin-bottom: 2rem;
+}
+
+/* Form Section */
+.card-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 80px;
+}
+
+.card-form h2 {
+    font-size: 1.875rem;
+    color: #00528C;
+    margin-bottom: 20px;
+    text-align: left; /* Left-align heading */
+}
+
+.card-form p {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 30px;
+    text-align: left; /* Left-align paragraph */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+    text-align: left; /* Left-align labels */
+}
+
+.form-control {
+    width: 100%;
+    height: 48px; /* Height increased for better spacing */
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #495057;
+    background-color: #fff;
+    box-shadow: none;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+    text-align: left; /* Ensure text inside input is left-aligned */
+}
+
+.form-control:focus {
+    border-color: #00528C;
+    box-shadow: none;
+}
+
+/* Time Selection Section */
+.time-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.time-select .day {
+    display: flex;
+    align-items: center;
+}
+
+.time-select input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.time-select .time {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 20px;
+}
+
+.time-select .time input {
+    width: 90px;
+    height: 40px;
+    padding: 5px;
+    font-size: 1rem;
+    text-align: left; /* Ensure time inputs are left-aligned */
+}
+
+/* Consultation Fee */
+.consultation-fee {
+    font-size: 3rem ;
+    font-weight: 600;
+    color: #00528C;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: left; /* Left-align consultation fee */
+}
+
+/* Note and Reservation Button */
+.note {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 20px;
+    text-align: left; /* Left-align note */
+}
+
+.reservation-button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.reservation-button button {
+    background-color: #00528C;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.reservation-button button:hover {
+    background-color: #003f6f;
+}.form-label {
+    color: #023770;
+    font-weight: 500;
+}
+
+.form-control:focus {
+    border-color: #00528C;
+    box-shadow: none;
+}
+
+.btn-primary {
+    background-color: #00528C;
+    border-color: #00528C;
+    border-radius: 50px;
+}
+
+.btn-primary:hover {
+    background-color: #003f6f;
+    border-color: #003f6f;
+}
+
+.header-section {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.header-section h1 {
+    color: #023770;
+    font-weight: bold;
+}
+
+.header-section p {
+    color: #666666;
+}
+
+.form-container {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Styles for file input */
+.form-group input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+    height: auto; /* Adjust height */
+}
+
+.form-group input[type="file"]::-webkit-file-upload-button {
+    background-color: #007858;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.form-group input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #005a44;
+}
+
+.form-group input[type="file"]::file-selector-button {
+    background-color: #007858;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.form-group input[type="file"]::file-selector-button:hover {
+    background-color: #005a44;
+}
+
+
+/* Invoice Container */
+.invoice-container {
+    background-color: #fff;
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Header Styles */
+.invoice-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 150px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    color: #023770;
+    font-size: 28px;
+    margin: 10px 0;
+}
+
+p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+/* Invoice Details */
+.invoice-details {
+    margin-bottom: 20px;
+}
+
+.invoice-details .row {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.invoice-details .row p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.order-id p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Important Info */
+.important-info {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.important-info strong {
+    color: #023770;
+}
+
+.important-info .data a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.important-info .data a:hover {
+    text-decoration: underline;
+}
+
+/* Form Fields */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    font-weight: bold;
+    color: #023770;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-text {
+    color: #555;
+    font-size: 14px;
+}
+
+.form-check {
+    margin-bottom: 10px;
+}
+
+.form-check-label {
+    font-size: 14px;
+}
+
+/* Invoice Summary Table */
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.invoice-table th, .invoice-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.invoice-table th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+.invoice-table td {
+    font-size: 14px;
+}
+
+/* Invoice Summary */
+.invoice-summary {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+}
+
+.invoice-summary .row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.invoice-summary p {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.invoice-summary p strong {
+    color: #023770;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+
+    .header-section h1 {
+        margin-top: 40px;
+        font-size: 1.5rem;
+    }
+    
+    .header-section p {
+        font-size: 1rem;
+
+    }
+    .consultation-form {
+        padding: 20px;
+    }
+
+    .time-select {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .time-select .time {
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    .consultation-fee {
+        text-align: left;
+        font-size: 1.25rem;
+    }
+
+    .reservation-button {
+        justify-content: center;
+    }
+
+    /* Full width button on smaller screens */
+    .form-group.text-end button {
+        width: 100%; /* Full width */
+        border-radius: 12px; /* Retain the same border-radius */
+        height: 48px; /* Ensure height remains consistent */
+        background-color: #007858; /* Button background color */
+        border-color: #007858; /* Button border color */
+    }
+
+    .invoice-card {
+        padding: 1.5rem;
+    }
+
+    .invoice-card h4 {
+        font-size: 1.5rem;
+    }
+
+    .invoice-card h5 {
+        font-size: 1.125rem;
+    }
+
+    .invoice-card p {
+        font-size: 0.875rem;
+    }
+
+    .invoice-card .btn-primary {
+        width: 100%;
+        padding: 12px 0;
+        border-radius: 8px;
+        font-size: 1rem;
+    }
+}

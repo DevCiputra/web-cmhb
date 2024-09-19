@@ -33,6 +33,7 @@ body {
 .hero-section {
     position: relative;
     width: 100vw; /* Full width */
+    margin-top: -24px;
     padding: 10rem 0; /* Padding atas dan bawah */
     position: relative;
     left: 50%;
@@ -176,7 +177,7 @@ a:hover {
     margin-top: 12rem; /* Jarak atas (margin top) */
     text-align: center;
     background: rgb(244,249,255);
-    background: linear-gradient(360deg, rgba(244,249,255,1) 0%, rgba(227,239,255,1) 12%, rgba(255,255,255,1) 75%);
+    background: linear-gradient(360deg, rgba(244,249,255,1) 0%, rgba(227,239,255,1) 12%, rgba(255,255,255,1) 75%); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -213,12 +214,8 @@ a:hover {
 }
 
 /* Card Specific Styles */
-#card-mcu, #card-home-service {
+#card-mcu, #card-home-service, #card-poliklinik, #card-konsultasi {
     height: 250px;
-}
-
-#card-poliklinik {
-    height: 510px;
 }
 
 /* General Reservation Item Styles */
@@ -539,6 +536,39 @@ a:hover {
     color: white; /* Menjaga warna ikon tetap putih saat di-hover */
 }
 
+/* Unique Style for Invoice Card */
+.invoice-card {
+    box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04);
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.invoice-card .card-body {
+    padding: 2rem;
+}
+
+.invoice-card h4, .invoice-card h5 {
+    color: #023770;
+}
+
+.invoice-card .mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.invoice-card .btn-primary {
+    background-color: #007858;
+    border-color: #007858;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.invoice-card .btn-primary:hover {
+    background-color: #005f46;
+    border-color: #005f46;
+}
 
 /* Media Queries for Tablet View (Portrait & Landscape) */
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -695,9 +725,6 @@ a:hover {
 }
 
 
-
-
-
 /* Media Queries for Mobile View */
 @media (max-width: 768px) {
     .hero-section .row,
@@ -768,7 +795,7 @@ a:hover {
     .reservation-section .row {
         flex-direction: column;
     }
-
+    
     .col-md-5, .col-md-7 {
         flex-basis: 100%;
         max-width: 100%;
@@ -786,7 +813,7 @@ a:hover {
         font-size: 1rem;
     }
 
-    #card-mcu, #card-home-service, #card-poliklinik {
+    #card-mcu, #card-home-service, #card-poliklinik, #card-konsultasi {
         height: 150px; /* Set equal heights for all cards on small screens */
     }
 
@@ -799,7 +826,7 @@ a:hover {
         background-size:35%;
         background-repeat: repeat;
     }
-
+    
     .info-item {
         max-height: 400px;
         max-width: 250px;
@@ -848,10 +875,10 @@ a:hover {
         margin-top: -8rem;
     }
 
-    .doctor-section,
-    .reservation-section,
-    .promotion-section,
-    .info-section,
+    .doctor-section, 
+    .reservation-section, 
+    .promotion-section, 
+    .info-section, 
     .feature-section {
         margin-top: 1rem;
         margin-bottom: 2rem;
@@ -860,7 +887,7 @@ a:hover {
     .footer {
         padding-top: 1.75rem;
         padding-bottom: 1.75rem;
-    }
+    }   
 }
 
 

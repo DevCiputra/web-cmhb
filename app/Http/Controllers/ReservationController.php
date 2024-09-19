@@ -109,4 +109,20 @@ class ReservationController extends Controller
     {
         return view('management-data.reservation.home-service.index');
     }
+
+    public function indexConsultation()
+    {
+        return view('management-data.reservation.online-consultation.index');
+    }
+
+    public function detailConsultation()
+    {
+        return view('management-data.reservation.online-consultation.detail');
+    }
+
+    public function invoiceConsultation()
+    {
+        return view('management-data.reservation.online-consultation.invoice');
+    }
+    
 }

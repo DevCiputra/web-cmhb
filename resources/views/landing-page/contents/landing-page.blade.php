@@ -75,7 +75,7 @@
             <h1>Reservasi</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar elementum tempus hac tellus
                 libero accumsan.</p>
-            <div class="row">
+            <div class="row justify-content-center">
                 <!-- Column 1 -->
                 <div class="col-md-5 d-flex flex-column">
                     <a href="/medical-check-up" class="reservation-item mb-3" id="card-mcu">
@@ -96,7 +96,7 @@
                     </a>
                 </div>
                 <!-- Column 2 -->
-                <div class="col-md-7">
+                <div class="col-md-5 d-flex flex-column">
                     <a href="/polyclinic" class="reservation-item mb-3" id="card-poliklinik">
                         <div class="reservation-content">
                             <img src="{{ asset('images/poliklinik.jpg') }}" alt="Pendaftaran Poliklinik"
@@ -106,11 +106,18 @@
                             </div>
                         </div>
                     </a>
+                    <a href="/online-consultation" class="reservation-item mb-3" id="card-konsultasi">
+                        <div class="reservation-content">
+                            <img src="{{ asset('images/konsul.jpg') }}" alt="Konsultasi Online" class="img-fluid">
+                            <div class="reservation-info">
+                                <h2>Konsultasi Online</h2>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Promotion Section -->
     <div id="promotion" class="promotion-section">
         <div class="container-fluid">
