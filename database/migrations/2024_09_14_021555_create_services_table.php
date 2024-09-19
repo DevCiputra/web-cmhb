@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
+            $table->text('special_information');
             $table->foreignId('service_category_id')->constrained('service_categories')->onDelete('cascade');
             $table->string('address');
             $table->boolean('is_published');

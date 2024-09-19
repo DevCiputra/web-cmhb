@@ -12,7 +12,7 @@
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div class="d-flex flex-column">
-                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B; font-weight:">Tambah Paket MCU</h4>
+                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Tambah Paket MCU</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
@@ -29,21 +29,9 @@
         <div class="card"
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-body" style="padding: 2rem;">
-
-                {{-- Tampilkan Pesan Error Jika Ada --}}
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-
                 <form action="{{ route('reservation.mcu.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-
+                    <input type="hidden" name="page" value="{{ $services->currentPage() }}">
                     <!-- Nama MCU -->
                     <div class="mb-3">
                         <label for="namaMCU" class="form-label">Nama Paket</label>
@@ -69,22 +57,41 @@
                     <!-- Deskripsi MCU -->
                     <div class="mb-3">
                         <label for="deskripsiMCU" class="form-label">Deskripsi MCU</label>
-                        <textarea class="form-control @error('description') is-invalid @enderror" id="deskripsiMCU" name="description" rows="4" placeholder="Masukkan Deskripsi MCU">{{ old('description') }}</textarea>
+                        <input id="deskripsiMCU" type="hidden" name="description" value="{{ old('description') }}">
+                        <trix-editor input="deskripsiMCU" placeholder="Masukkan Deskripsi MCU"></trix-editor>
                         @error('description')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
                         @enderror
                     </div>
-                    <!-- Foto Paket -->
+
+                    <!-- Informasi Penting MCU -->
                     <div class="mb-3">
-                        <label for="fotoMCU" class="form-label">Upload Media MCU</label>
-                        <input type="file" class="form-control @error('photo') is-invalid @enderror" id="fotoMCU" name="photo" accept="image/*">
-                        @error('photo')
+                        <label for="infoPentingMCU" class="form-label">Informasi Penting MCU</label>
+                        <input id="infoPentingMCU" type="hidden" name="special_information" value="{{ old('special_information') }}">
+                        <trix-editor input="infoPentingMCU" placeholder="Masukkan Informasi Penting MCU"></trix-editor>
+                        @error('special_information')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
                         @enderror
+                    </div>
+
+                    <!-- Foto Paket -->
+                    <div class="mb-3">
+                        <label for="fotoMCU" class="form-label">Upload Media MCU</label>
+                        <input type="file" class="form-control @error('media') is-invalid @enderror" id="fotoMCU" name="media" accept="image/*">
+                        @error('media')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+
+                        <!-- Preview Gambar -->
+                        <div id="imagePreview" class="mt-2">
+                            <!-- Preview gambar akan ditampilkan di sini -->
+                        </div>
                     </div>
 
                     <!-- URL Reservasi -->
@@ -110,11 +117,9 @@
         </div>
     </div>
 </div>
+@endsection
 
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-
 <script>
     const mobileScreen = window.matchMedia("(max-width: 990px )");
     $(document).ready(function() {
@@ -134,8 +139,27 @@
                 $(".dashboard").toggleClass("dashboard-compact");
             }
         });
+
+        // JavaScript untuk Preview Gambar
+        $('#fotoMCU').on('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imagePreview').html(`
+                        <img src="${e.target.result}" alt="Preview Media" style="max-width: 150px; height: auto;">
+                        <small>${file.name}</small>
+                    `);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                $('#imagePreview').html('');
+            }
+        });
     });
 </script>
 @endpush
 
-@endsection
+@push('styles')
+<!-- Tidak perlu menambahkan CDN Trix lagi karena sudah ada di file app -->
+@endpush
