@@ -84,7 +84,7 @@
                             <a href="{{ route('reservation.mcu.detail', $service->id) }}" class="btn btn-info btn-sm">View Details</a>
                             @else
                             <div class="icon-group">
-                                <a href="{{ route('reservation.mcu.edit', $service->id) }}" class="btn btn-edit btn-sm">
+                                <a href="{{ route('reservation.mcu.edit', ['service' => $service->id, 'page' => request()->input('page', 1)]) }}" class="btn btn-edit btn-sm">
                                     <img src="{{ asset('icons/pencil-square.svg') }}" alt="Pencil Square" class="pencil-icon">
                                 </a>
                             </div>
