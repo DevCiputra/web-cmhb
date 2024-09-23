@@ -1,8 +1,8 @@
-<head>
-    <link href="{{ asset('css/dokter_profile.css') }}" rel="stylesheet">
-</head>
+@extends('management-data.layouts.app')
 
-@include('manajemen_data.layouts.dashboard')
+@section('title', 'Tambah Data Dokter')
+
+@section('content')
 
 <div class='dashboard-app'>
     <header class='dashboard-toolbar'>
@@ -12,7 +12,7 @@
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div class="d-flex flex-column">
-                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B; font-weight:">Profile Dokter</h4>
+                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Profile Dokter</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
@@ -35,7 +35,7 @@
                         <img src="{{ asset('images/dokter1.jpg') }}" alt="Doctor Photo">
                     </div>
                 </div>
-    
+
                 <!-- Doctor Education Section -->
                 <div class="doctor-education">
                     <h4>Riwayat Pendidikan</h4>
@@ -45,7 +45,7 @@
                         <li class="education-item">Riwayat Pendidikan 3</li>
                     </ul>
                 </div>
-    
+
                 <!-- Doctor Schedule Section -->
                 <div class="doctor-schedule">
                     <h4>Jadwal Praktek</h4>
@@ -55,7 +55,7 @@
                         <li class="schedule-item">Sabtu: 10:00 – 13:00</li>
                     </ul>
                 </div>
-    
+
                 <!-- Doctor Profile Video Section -->
                 <div class="doctor-profile-video">
                     <h4>Video Profile</h4>
@@ -64,7 +64,7 @@
                         Your browser does not support the video tag.
                     </video>
                 </div>
-    
+
                 <!-- Doctor Success Rate Section -->
                 <div class="doctor-success-rate">
                     <h4>Angka Keberhasilan Operasi</h4>
@@ -76,7 +76,38 @@
             </div>
         </div>
 
-       
+
     </div>
 </div>
+@endsection
 
+@push('styles')
+<link href="{{ asset('css/dokter_profile.css') }}" rel="stylesheet">
+@endpush
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<script>
+    const mobileScreen = window.matchMedia("(max-width: 990px )");
+    $(document).ready(function() {
+        $(".dashboard-nav-dropdown-toggle").click(function() {
+            $(this).closest(".dashboard-nav-dropdown")
+                .toggleClass("show")
+                .find(".dashboard-nav-dropdown")
+                .removeClass("show");
+            $(this).parent()
+                .siblings()
+                .removeClass("show");
+        });
+        $(".menu-toggle").click(function() {
+            if (mobileScreen.matches) {
+                $(".dashboard-nav").toggleClass("mobile-show");
+            } else {
+                $(".dashboard").toggleClass("dashboard-compact");
+            }
+        });
+    });
+</script>
+@endpush
