@@ -1,5 +1,8 @@
-@include('manajemen_data.layouts.dashboard')
+@extends('management-data.layouts.app')
 
+@section('title', 'Edit Data Dokter')
+
+@section('content')
 <div class='dashboard-app'>
     <header class='dashboard-toolbar'>
         <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
@@ -8,7 +11,7 @@
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div class="d-flex flex-column">
-                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B; font-weight:">Edit Data Dokter</h4>
+                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Edit Data Dokter</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
@@ -116,7 +119,7 @@
                         <label for="doctor_photos" class="form-label">Foto Dokter</label>
                         <input type="file" class="form-control" id="doctor_photos" accept="image/*" placeholder="Upload Foto Dokter">
                     </div>
-    
+
                     <div class="mb-3">
                         <label for="doctor_medias" class="form-label">Curriculum Vitae</label>
                         <input type="file" class="form-control" id="doctor_medias" accept="image/*, video/*" placeholder="Upload Curriculum Vitae">
@@ -138,6 +141,34 @@
     </div>
 </div>
 
+@endsection
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<script>
+    const mobileScreen = window.matchMedia("(max-width: 990px )");
+    $(document).ready(function() {
+        $(".dashboard-nav-dropdown-toggle").click(function() {
+            $(this).closest(".dashboard-nav-dropdown")
+                .toggleClass("show")
+                .find(".dashboard-nav-dropdown")
+                .removeClass("show");
+            $(this).parent()
+                .siblings()
+                .removeClass("show");
+        });
+        $(".menu-toggle").click(function() {
+            if (mobileScreen.matches) {
+                $(".dashboard-nav").toggleClass("mobile-show");
+            } else {
+                $(".dashboard").toggleClass("dashboard-compact");
+            }
+        });
+    });
+</script>
+
 <script>
     $(document).ready(function() {
         $('#education').summernote({
@@ -153,3 +184,4 @@
         });
     });
 </script>
+@endpush

@@ -20,12 +20,12 @@ class ReservationController extends Controller
 
         // Jika ada keyword, lakukan pencarian, jika tidak, tampilkan semua data dengan pagination
         $services = Service::with('medias')
-        ->where('service_category_id', $mcuCategoryId)
-        ->withTrashed() // Menyertakan data yang dihapus secara soft delete
-        ->when($keyword, function ($query, $keyword) {
-            return $query->search($keyword); // Menggunakan scope search jika ada keyword
-        })
-        ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan tanggal dibuat terbaru
+            ->where('service_category_id', $mcuCategoryId)
+            ->withTrashed() // Menyertakan data yang dihapus secara soft delete
+            ->when($keyword, function ($query, $keyword) {
+                return $query->search($keyword); // Menggunakan scope search jika ada keyword
+            })
+            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan tanggal dibuat terbaru
             ->paginate(4); // Membatasi tampilan maksimal 4 data per halaman
 
         // Menampilkan data ke view
@@ -55,7 +55,8 @@ class ReservationController extends Controller
         // Validasi data
         $validatedData = $request->validate([
             'title' => 'required|string',
-            'description' => 'required|string','special_information' => 'required|string',
+            'description' => 'required|string',
+            'special_information' => 'required|string',
             'address' => 'required|string',
             'price' => 'required|numeric',
             'media' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048' // Validasi foto
@@ -87,11 +88,17 @@ class ReservationController extends Controller
     }
 
     // Tampilkan form edit layanan
-    public function editMcu(Service $service)
+    public function editMcu(Service $service, Request $request)
     {
         $categories = ServiceCategory::all();
-        return view('management-data.reservation.medical-check-up.edit', compact('service', 'categories'));
+
+        // Ambil parameter 'page' dari request
+        $page = $request->input('page'); // Default ke halaman 1 jika page tidak ada
+
+        // Kirimkan parameter 'page' ke view
+        return view('management-data.reservation.medical-check-up.edit', compact('service', 'categories', 'page'));
     }
+
 
     // Update layanan yang sudah ada
     public function updateMcu(Request $request, Service $service)
@@ -104,7 +111,8 @@ class ReservationController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'special_information' => 'required|string',
-            'address' => 'required|string','price' => 'required|numeric',
+            'address' => 'required|string',
+            'price' => 'required|numeric',
             'media' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Foto opsional
         ]);
 
@@ -195,7 +203,7 @@ class ReservationController extends Controller
     }
 
 
-    public function restoreMcu($id)
+    public function restoreMcu($id, Request $request)
     {
         // Mengembalikan layanan yang telah di-soft delete
         $service = Service::withTrashed()->findOrFail($id);
@@ -205,8 +213,8 @@ class ReservationController extends Controller
         foreach ($service->medias()->withTrashed()->get() as $media) {
             $media->restore();
         }
-
-        return redirect()->route('reservation.mcu.index')->with('success', 'Service restored successfully.');
+        $page = $request->input('page'); // Ambil parameter page
+        return redirect()->route('reservation.mcu.index', ['page' => $page])->with('success', 'Service restored successfully.');
     }
 
 
@@ -235,5 +243,4 @@ class ReservationController extends Controller
     {
         return view('management-data.reservation.online-consultation.invoice');
     }
-    
 }
