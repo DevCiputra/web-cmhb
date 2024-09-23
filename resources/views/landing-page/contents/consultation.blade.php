@@ -7,15 +7,15 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Beranda</a></li>
-                    <li class="breadcrumb-item" style="color: #023770">Cari Dokter</li>
+                    <li class="breadcrumb-item" style="color: #023770">Konsultasi Online</li>
                 </ol>
             </nav>
         </div>
 
         <div id="list-doctor" class="header-section">
             <div class="container-fluid">
-                <h1 style="margin-bottom: 5px;">Cari Dokter</h1>
-                <p style="margin-bottom: 15px;">Temukan Dokter Profesional di Ciputra Mitra Hospital.</p>
+                <h1 style="margin-bottom: 5px;">Konsultasi Online</h1>
+                <p style="margin-bottom: 15px;">Temukan Dokter Profesional untuk Konsultasi Online di Ciputra Mitra Hospital.</p>
 
                 <!-- Filter Card Section -->
                 <div class="row justify-content-center">
@@ -57,7 +57,7 @@
                 <!-- Doctor Cards Container -->
                 <div class="doctor-cards-container">
                     <div class="row">
-                        <!-- Card 1 -->
+                        <!-- Example Cards -->
                         <div class="col-md-3 mb-4">
                             <div class="doctor-card">
                                 <img class="doctor-card-img-top" src="{{ asset('images/dokter1.jpg') }}" alt="Doctor Image">
@@ -74,6 +74,7 @@
                             </div>
                         </div>
 
+                        <!-- Repeat other cards as needed -->
                         <!-- Card 2 -->
                         <div class="col-md-3 mb-4">
                             <div class="doctor-card">
@@ -90,64 +91,14 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Card 3 -->
                         <div class="col-md-3 mb-4">
                             <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter3.jpg') }}" alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Internis</p>
-                                    <h5 class="name">Dr. Emily Johnson, Sp.PD.</h5>
-                                    <p class="specialist">Spesialis Penyakit Dalam</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 4 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter4.jpg') }}" alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Gizi</p>
-                                    <h5 class="name">Dr. Michael Brown, Sp.G.</h5>
-                                    <p class="specialist">Spesialis Gizi</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Additional Cards -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter5.jpg') }}" alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Mata</p>
-                                    <h5 class="name">Dr. Lily Anderson, Sp.M.</h5>
-                                    <p class="specialist">Spesialis Mata</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 1 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter1.jpg') }}"
-                                    alt="Doctor Image">
+                                <img class="doctor-card-img-top" src="{{ asset('images/dokter1.jpg') }}" alt="Doctor Image">
                                 <div class="doctor-card-body">
                                     <p class="polyclinic">Poliklinik Anak</p>
-                                    <h5 class="name">Dr. John Doe, Sp.A. </h5>
+                                    <h5 class="name">Dr. John Doe, Sp.A.</h5>
                                     <p class="specialist">Spesialis Anak</p>
-                                    <a href="#" class="btn btn-profil">
+                                    <a href="/profile" class="btn btn-profil">
                                         Lihat Profil
                                         <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
                                             class="chevron-icon">
@@ -155,13 +106,14 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Repeat other cards as needed -->
                         <!-- Card 2 -->
                         <div class="col-md-3 mb-4">
                             <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter2.jpg') }}"
-                                    alt="Doctor Image">
+                                <img class="doctor-card-img-top" src="{{ asset('images/dokter2.jpg') }}" alt="Doctor Image">
                                 <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Bedah Umum</p>
+                                    <p class="polyclinic">Poliklinik Bedah</p>
                                     <h5 class="name">Dr. Jane Smith, Sp.B.</h5>
                                     <p class="specialist">Spesialis Bedah</p>
                                     <a href="#" class="btn btn-profil">
@@ -172,50 +124,14 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Card 3 -->
                         <div class="col-md-3 mb-4">
                             <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter3.jpg') }}"
-                                    alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Internis</p>
-                                    <h5 class="name">Dr. Emily Johnson, Sp.PD.</h5>
-                                    <p class="specialist">Spesialis Penyakit Dalam</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 4 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter4.jpg') }}"
-                                    alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Gizi</p>
-                                    <h5 class="name">Dr. Michael Brown, Sp.G.</h5>
-                                    <p class="specialist">Spesialis Gizi</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 1 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter1.jpg') }}"
-                                    alt="Doctor Image">
+                                <img class="doctor-card-img-top" src="{{ asset('images/dokter1.jpg') }}" alt="Doctor Image">
                                 <div class="doctor-card-body">
                                     <p class="polyclinic">Poliklinik Anak</p>
-                                    <h5 class="name">Dr. John Doe, Sp.A. </h5>
+                                    <h5 class="name">Dr. John Doe, Sp.A.</h5>
                                     <p class="specialist">Spesialis Anak</p>
-                                    <a href="#" class="btn btn-profil">
+                                    <a href="/profile" class="btn btn-profil">
                                         Lihat Profil
                                         <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
                                             class="chevron-icon">
@@ -223,13 +139,14 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Repeat other cards as needed -->
                         <!-- Card 2 -->
                         <div class="col-md-3 mb-4">
                             <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter2.jpg') }}"
-                                    alt="Doctor Image">
+                                <img class="doctor-card-img-top" src="{{ asset('images/dokter2.jpg') }}" alt="Doctor Image">
                                 <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Bedah Umum</p>
+                                    <p class="polyclinic">Poliklinik Bedah</p>
                                     <h5 class="name">Dr. Jane Smith, Sp.B.</h5>
                                     <p class="specialist">Spesialis Bedah</p>
                                     <a href="#" class="btn btn-profil">
@@ -240,7 +157,74 @@
                                 </div>
                             </div>
                         </div>
-                        
+                        <div class="col-md-3 mb-4">
+                            <div class="doctor-card">
+                                <img class="doctor-card-img-top" src="{{ asset('images/dokter1.jpg') }}" alt="Doctor Image">
+                                <div class="doctor-card-body">
+                                    <p class="polyclinic">Poliklinik Anak</p>
+                                    <h5 class="name">Dr. John Doe, Sp.A.</h5>
+                                    <p class="specialist">Spesialis Anak</p>
+                                    <a href="/profile" class="btn btn-profil">
+                                        Lihat Profil
+                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
+                                            class="chevron-icon">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Repeat other cards as needed -->
+                        <!-- Card 2 -->
+                        <div class="col-md-3 mb-4">
+                            <div class="doctor-card">
+                                <img class="doctor-card-img-top" src="{{ asset('images/dokter2.jpg') }}" alt="Doctor Image">
+                                <div class="doctor-card-body">
+                                    <p class="polyclinic">Poliklinik Bedah</p>
+                                    <h5 class="name">Dr. Jane Smith, Sp.B.</h5>
+                                    <p class="specialist">Spesialis Bedah</p>
+                                    <a href="#" class="btn btn-profil">
+                                        Lihat Profil
+                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
+                                            class="chevron-icon">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="doctor-card">
+                                <img class="doctor-card-img-top" src="{{ asset('images/dokter1.jpg') }}" alt="Doctor Image">
+                                <div class="doctor-card-body">
+                                    <p class="polyclinic">Poliklinik Anak</p>
+                                    <h5 class="name">Dr. John Doe, Sp.A.</h5>
+                                    <p class="specialist">Spesialis Anak</p>
+                                    <a href="/profile" class="btn btn-profil">
+                                        Lihat Profil
+                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
+                                            class="chevron-icon">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Repeat other cards as needed -->
+                        <!-- Card 2 -->
+                        <div class="col-md-3 mb-4">
+                            <div class="doctor-card">
+                                <img class="doctor-card-img-top" src="{{ asset('images/dokter2.jpg') }}" alt="Doctor Image">
+                                <div class="doctor-card-body">
+                                    <p class="polyclinic">Poliklinik Bedah</p>
+                                    <h5 class="name">Dr. Jane Smith, Sp.B.</h5>
+                                    <p class="specialist">Spesialis Bedah</p>
+                                    <a href="#" class="btn btn-profil">
+                                        Lihat Profil
+                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
+                                            class="chevron-icon">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Additional Cards here -->
+                    </div>
 
                     <!-- Pagination Section -->
                     <div class="pagination-container d-flex justify-content-end">
@@ -281,6 +265,7 @@
         </div>
     </div>
 @endsection
+
 @push('scripts')
     <script src="{{ asset('js/navbar.js') }}"></script>
     <script>

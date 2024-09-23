@@ -32,7 +32,10 @@
                 <form action="{{ route('reservation.mcu.update', $service->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="page" value="{{ $services->currentPage() }}">
+
+                    <!-- Hidden input untuk page -->
+                    <input type="hidden" name="page" value="{{ $page }}">
+
                     <!-- Nama MCU -->
                     <div class="mb-3">
                         <label for="namaMCU" class="form-label">Nama Paket</label>

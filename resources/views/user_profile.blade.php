@@ -28,25 +28,45 @@
                 <div class="profile-header text-center">
                     <img src="{{ asset('images/user.jpg') }}" alt="User Photo">
                     <h5>Nama User</h5>
+                    <p>08218881010</p>
                     <p>user@mail.com</p>
                     <img src="icons/pencil-square.png" alt="Edit Profile" class="edit-icon" data-bs-toggle="modal" data-bs-target="#editProfileModal">
                 </div>
-                <div class="profile-info">
-                    <h6>Alamat</h6>
-                    <div class="mb-3">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas efficitur, eros ut porttitor semper, ex tellus cursus ipsum, eu posuere augue turpis ac tortor.</p>
-                    </div>
-                    <h6>Usia</h6>
-                    <div class="mb-3">
-                        <p>43 Tahun</p>
-                    </div>
-                    <h6>Alergi</h6>
-                    <div class="mb-3">
-                        <p>Alergi ayam ras</p>
-                    </div>
-                    <h6>Golongan Darah</h6>
-                    <div class="mb-3">
-                        <p>B</p>
+                <div class="card p-3 shadow tab-bar" style="max-width: auto;">
+                    <nav>
+                        <div class="nav nav-tabs mb-1 justify-content-center" id="nav-tab" role="tablist">
+                            <button class="nav-link active flex-fill text-center py-2 px-3" id="profile-info-tab" data-bs-toggle="tab" data-bs-target="#profile-info" type="button" role="tab" aria-controls="profile-info" aria-selected="true">Informasi Pribadi</button>
+                            <button class="nav-link flex-fill text-center py-2 px-3" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Pemesanan Konsultasi</button>
+                        </div>
+                    </nav>
+                    
+                    <div class="tab-content p-3 border bg-light" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="profile-info" role="tabpanel" aria-labelledby="profile-info-tab">
+                            <div class="profile-info">
+                                <h6>Alamat</h6>
+                                <div class="mb-3">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas efficitur, eros ut porttitor semper, ex tellus cursus ipsum, eu posuere augue turpis ac tortor.</p>
+                                </div>
+                                <h6>Usia</h6>
+                                <div class="mb-3">
+                                    <p>43 Tahun</p>
+                                </div>
+                                <h6>Alergi</h6>
+                                <div class="mb-3">
+                                    <p>Alergi ayam ras</p>
+                                </div>
+                                <h6>Golongan Darah</h6>
+                                <div class="mb-3">
+                                    <p>B</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <p><strong>This is some placeholder content the Profile tab's associated content.</strong>
+                                Clicking another tab will toggle the visibility of this one for the next.
+                                The tab JavaScript swaps classes to control the content visibility and styling. You can use it with
+                                tabs, pills, and any other <code>.nav</code>-powered navigation.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -115,13 +135,12 @@
     </div>
 </div>
 
-
     @include('layouts.footer')
     <script src="{{ asset('js/navbar.js') }}"></script>
     <script>
         function toggleEmergencyButtons() {
             const buttons = document.getElementById("emergency-buttons");
-            buttons.classList.toggle("expand"); 
+            buttons.classList.toggle("expand");
 
             if (buttons.style.maxHeight === "0px" || buttons.style.maxHeight === "") {
                 buttons.style.maxHeight = "200px"; // Expand the sub-menu (adjust height as needed)
