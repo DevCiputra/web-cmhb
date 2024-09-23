@@ -31,7 +31,7 @@
             <div class="card-body" style="padding: 2rem;">
                 <form action="{{ route('reservation.mcu.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="page" value="{{ $services->currentPage() }}">
+                    <input type="hidden" name="page">
                     <!-- Nama MCU -->
                     <div class="mb-3">
                         <label for="namaMCU" class="form-label">Nama Paket</label>
@@ -161,5 +161,5 @@
 @endpush
 
 @push('styles')
-<!-- Tidak perlu menambahkan CDN Trix lagi karena sudah ada di file app -->
+<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 @endpush

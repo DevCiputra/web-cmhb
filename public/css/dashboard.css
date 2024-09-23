@@ -475,6 +475,65 @@ h1, .h1 {
     margin-top: 22px;
 }
 
+/* Equal Button Styling */
+.btn-end {
+    width: 100px; /* Adjust as necessary */
+    text-align: center;
+    padding: 8px;
+    border-radius: 10px;
+    height: 40px; /* Sesuaikan tinggi yang diinginkan */
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+}
+
+
+/* Button Specific Colors */
+.btn-danger {
+    background-color: #dc3545 !important; /* Use !important to enforce the color */
+    border-color: #dc3545 !important;
+    color: white !important;
+}
+.btn-danger:hover {
+    background-color: #c82333 !important; /* Darker shade on hover */
+}
+
+
+.btn-secondary {
+    background-color: #023770 !important;
+    border-color: #023770 !important;
+    color: white;
+}
+
+.btn-success {
+    background-color: #007858 !important;
+    border-color: #007858 !important;
+    color: white;
+}
+
+.btn-warning {
+    background-color: #FFC107 !important;
+    border-color: #FFC107 !important;
+    color: white;
+}
+
+/* Custom Button: "Tambah" and "Cari" */
+.btn-custom {
+    background-color: #007858;
+    color: white;
+    border-radius: 2px !important;
+    padding: 8px 12px;
+}
+
+.btn-custom img {
+    filter: invert(100%);
+    margin-right: 8px;
+}
+
+
+
 @media (min-width: 992px) {
     .dashboard-app {
         margin-left: 238px;

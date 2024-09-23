@@ -18,7 +18,7 @@
         <div class="invoice-container">
             <div class="invoice-header text-center">
                 <div class="logo">
-                    <img src="logo.png" alt="Logo" class="logo-img">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo-img">
                 </div>
                 <h1>Hi John Doe,</h1>
                 <p>Your order <strong>Consultation Package</strong> was confirmed. Check the details below.</p>

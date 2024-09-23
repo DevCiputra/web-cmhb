@@ -56,10 +56,21 @@
                         style="width: 100%; height: 200px; object-fit: cover;">
 
                     <div class="card-body">
-                        <h5 class="title">{{ $service->title }}</h5>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="title">{{ $service->title }}</h5>
+                            <div class="icon-group d-flex">
+                                <a href="{{ route('reservation.mcu.detail', $service->id) }}" class="btn btn-info btn-sm btn-e">
+                                    <img src="{{ asset('icons/eye-fill.svg') }}" alt="View Details" class="eye-icon">
+                                </a>
+                                <a href="{{ route('reservation.mcu.edit', $service->id) }}" class="btn btn-edit btn-sm btn-e">
+                                    <img src="{{ asset('icons/pencil-square.svg') }}" alt="Pencil Square" class="pencil-icon">
+                                </a>
+                            </div>
+                        </div>
+                                             
                         <b class="price">Rp. {{ number_format($service->price, 0, ',', '.') }}</b>
-                        <p class="description">{!! $service->description !!}</p>
-                        <p class="description">{!! $service->special_information !!}</p>
+                        {{-- <p class="description">{!! Str::limit($service->description,250) !!}</p> --}}
+                        {{-- <p class="description">{!! $service->special_information !!}</p> --}}
 
                         <p class="text-muted mb-2">
                             Dibuat: {{ $service->created_at->format('d M Y H:i') }} <br>
@@ -72,46 +83,39 @@
                             @endif
                         </p>
 
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-end align-items-center">
                             @if($service->deleted_at)
                             <span class="text-muted">Deleted</span>
                             <form action="{{ route('reservation.mcu.restore', $service->id) }}" method="POST" style="display:inline;" onsubmit="return confirmRestore();">
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="page" value="{{ $services->currentPage() }}">
-                                <button type="submit" class="btn btn-warning btn-sm">Restore</button>
+                                <button type="submit" class="btn btn-warning btn-sm btn-end">Restore</button>
                             </form>
-                            <a href="{{ route('reservation.mcu.detail', $service->id) }}" class="btn btn-info btn-sm">View Details</a>
                             @else
-                            <div class="icon-group">
-                                <a href="{{ route('reservation.mcu.edit', $service->id) }}" class="btn btn-edit btn-sm">
-                                    <img src="{{ asset('icons/pencil-square.svg') }}" alt="Pencil Square" class="pencil-icon">
-                                </a>
-                            </div>
                             @if(!$service->is_published)
                             <form action="{{ route('reservation.mcu.publish', $service->id) }}" method="POST" style="display:inline;" onsubmit="return confirmPublish();">
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="page" value="{{ $services->currentPage() }}">
-                                <button type="submit" class="btn btn-success btn-sm">Publish</button>
+                                <button type="submit" class="btn btn-success btn-sm btn-end">Publish</button>
                             </form>
                             @else
                             <form action="{{ route('reservation.mcu.unpublish', $service->id) }}" method="POST" style="display:inline;" onsubmit="return confirmUnpublish();">
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="page" value="{{ $services->currentPage() }}">
-                                <button type="submit" class="btn btn-secondary btn-sm">Unpublish</button>
+                                <button type="submit" class="btn btn-secondary btn-sm btn-end">Unpublish</button>
                             </form>
                             @endif
-                            <form action="{{ route('reservation.mcu.destroy', $service->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');">
+                            <form action="{{ route('reservation.mcu.destroy', $service->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="page" value="{{ $services->currentPage() }}">
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm btn-end">Delete</button>
                             </form>
-                            <a href="{{ route('reservation.mcu.detail', $service->id) }}" class="btn btn-info btn-sm">View Details</a>
                             @endif
-                        </div>
+                        </div>  
                     </div>
                 </div>
             </div>
@@ -156,4 +160,8 @@
         return confirm('Are you sure you want to unpublish this service?');
     }
 </script>
+@endpush
+
+@push('styles')
+<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 @endpush
