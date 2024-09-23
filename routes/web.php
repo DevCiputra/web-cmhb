@@ -148,6 +148,7 @@ Route::get('/information-promote', [InformationController::class, 'indexPromote'
 
 Route::get('/doctor-data', [DoctorController::class, 'indexDataDoctor'])->name('doctor.data.index');
 
+
 // END MODUL
 
 

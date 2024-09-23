@@ -10,4 +10,6 @@ class DoctorController extends Controller
     {
         return view('management-data.doctor.index');
     }
+
+    
 }
