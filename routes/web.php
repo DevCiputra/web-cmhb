@@ -84,7 +84,7 @@ Route::get('/user_profile', function () {
     return view('user_profile');
 });
 
-Route::get('/login', function () { 
+Route::get('/login', function () {
     return view('login');
 });
 
@@ -147,6 +147,35 @@ Route::get('/information-promote', [InformationController::class, 'indexPromote'
 // MODUL DOCTOR
 
 Route::get('/doctor-data', [DoctorController::class, 'indexDataDoctor'])->name('doctor.data.index');
+Route::get('/doctor/create', [DoctorController::class, 'create'])->name('doctor.create');
+Route::post('/doctor', [DoctorController::class, 'store'])->name('doctor.store');
+Route::get('/doctor/{id}/edit', [DoctorController::class, 'edit'])->name('doctor.edit');
+Route::put('/doctor/{id}', [DoctorController::class, 'update'])->name('doctor.update');
+Route::delete('/doctor/{id}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
+
+
+// sub modul poly doctor
+
+// Route untuk menampilkan daftar poliklinik dokter
+Route::get('/doctor-polyclinic', [DoctorController::class, 'indexPolyclinicDoctor'])->name('doctor.polyclinic.index');
+
+// Route untuk menampilkan form create poliklinik dokter
+Route::get('/doctor-polyclinic/create', [DoctorController::class, 'createPolyclinicDoctor'])->name('doctor.polyclinic.create');
+
+// Route untuk menyimpan data poliklinik dokter
+Route::post('/doctor-polyclinic/store', [DoctorController::class, 'storePolyclinicDoctor'])->name('doctor.polyclinic.store');
+
+// Route untuk menampilkan form edit poliklinik dokter
+Route::get('/doctor-polyclinic/edit/{id}', [DoctorController::class, 'editPolyclinicDoctor'])->name('doctor.polyclinic.edit');
+
+// Route untuk update poliklinik dokter
+Route::post('/doctor-polyclinic/update/{id}', [DoctorController::class, 'updatePolyclinicDoctor'])->name('doctor.polyclinic.update');
+
+// Route untuk menghapus poliklinik dokter
+Route::delete('/doctor-polyclinic/delete/{id}', [DoctorController::class, 'deletePolyclinicDoctor'])->name('doctor.polyclinic.delete');
+
+// end sub modul poly doctor
+
 
 
 // END MODUL
