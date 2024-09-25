@@ -90,7 +90,7 @@
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="page" value="{{ $services->currentPage() }}">
-                                <button type="submit" class="btn btn-warning btn-sm btn-end">Restore</button>
+                                <button type="submit" class="btn btn-warning btn-end">Restore</button>
                             </form>
                             @else
                             @if(!$service->is_published)
@@ -98,21 +98,21 @@
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="page" value="{{ $services->currentPage() }}">
-                                <button type="submit" class="btn btn-success btn-sm btn-end">Publish</button>
+                                <button type="submit" class="btn btn-success  btn-end">Publish</button>
                             </form>
                             @else
                             <form action="{{ route('reservation.mcu.unpublish', $service->id) }}" method="POST" style="display:inline;" onsubmit="return confirmUnpublish();">
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="page" value="{{ $services->currentPage() }}">
-                                <button type="submit" class="btn btn-secondary btn-sm btn-end">Unpublish</button>
+                                <button type="submit" class="btn btn-secondary  btn-end">Unpublish</button>
                             </form>
                             @endif
                             <form action="{{ route('reservation.mcu.destroy', $service->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="page" value="{{ $services->currentPage() }}">
-                                <button type="submit" class="btn btn-danger btn-sm btn-end">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-end">Delete</button>
                             </form>
                             @endif
                         </div>  

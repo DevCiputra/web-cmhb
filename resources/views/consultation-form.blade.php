@@ -71,18 +71,12 @@
                                     <input class="form-check-input" type="checkbox" name="day[]" value="Kamis" id="thursday">
                                     <label class="form-check-label" for="thursday">
                                         Kamis
-                                        <input type="time" name="thursday_start" class="form-control d-inline-block w-auto mx-2" value="09:00" style="height: 40px;">
-                                        s/d
-                                        <input type="time" name="thursday_end" class="form-control d-inline-block w-auto mx-2" value="09:00" style="height: 40px;">
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="day[]" value="Jumat" id="friday" checked>
                                     <label class="form-check-label" for="friday">
                                         Jumat
-                                        <input type="time" name="friday_start" class="form-control d-inline-block w-auto mx-2" value="09:00" style="height: 40px;">
-                                        s/d
-                                        <input type="time" name="friday_end" class="form-control d-inline-block w-auto mx-2" value="09:00" style="height: 40px;">
                                     </label>
                                 </div>
                                 <div class="form-check">
@@ -119,30 +113,7 @@
                         <p class="consultation-fee">Rp. 500.000,00</p>
                     </div>
     
-                    {{-- Pilih Metode Pembayaran --}}
-                    <div class="form-group mb-4">
-                        <label for="paymentMethod" class="form-label">Pilih Metode Pembayaran (Transfer)</label>
-                        <select class="form-select" id="paymentMethod" name="payment_method" required style="height: 48px;">
-                            <option selected>Pilih Metode</option>
-                            <option value="Bank Transfer">Bank Transfer</option>
-                            <option value="Kartu Kredit">Kartu Kredit</option>
-                        </select>
-                    </div>
-    
-                    {{-- Pilih Bank --}}
-                    <div class="form-group mb-4">
-                        <label for="bank" class="form-label">Pilih Bank</label>
-                        <select class="form-select" id="bank" name="bank" required style="height: 48px;">
-                            <option selected>Pilih Bank</option>
-                            <option value="BCA">BCA</option>
-                            <option value="Mandiri">Mandiri</option>
-                            <option value="BRI">BRI</option>
-                        </select>
-                    </div>
-    
-                    <div class="form-group mb-4">
-                        <p class="text-muted">Note: Untuk Up Bukti Pembayaran dapat dilakukan di menu profile</p>
-                    </div>
+                    
     
                     {{-- Button Submit --}}
                     <div class="form-group text-end">
