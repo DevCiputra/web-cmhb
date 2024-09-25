@@ -29,9 +29,18 @@
                   <a href="/information-promote" class="dashboard-nav-dropdown-item">Promo</a>
               </div>
           </div>
-          <a href="/doctor-data" class="dashboard-nav-item">
-              <i class="fas fa-user-md"></i> Dokter
-          </a>
+
+          <div class='dashboard-nav-dropdown'>
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                  <i class="fas fa-user-md"></i> Dokter
+              </a>
+              <div class='dashboard-nav-dropdown-menu'>
+                  <a href="{{ route('doctor.data.index') }}" class="dashboard-nav-dropdown-item">Data Dokter</a>
+                  <a href="{{ route('doctor.polyclinic.index') }}" class="dashboard-nav-dropdown-item">Poliklinik Dokter</a>
+              </div>
+
+          </div>
+
           <div class='dashboard-nav-dropdown'>
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
                   <i class="fas fa-folder"></i> Master Data

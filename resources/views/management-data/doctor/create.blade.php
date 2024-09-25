@@ -28,102 +28,75 @@
         <div class="card"
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-body" style="padding: 2rem;">
-                <form>
+                <form action="{{ route('doctor.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama Dokter</label>
-                        <input type="text" class="form-control" id="name" placeholder="Masukkan Nama Dokter">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan Nama Dokter" required value="{{ old('name') }}">
+                        @error('name')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label for="specialist" class="form-label">Spesialis</label>
-                        <input type="text" class="form-control" id="specialist" placeholder="Masukkan Spesialis">
+                        <label for="specialization_name" class="form-label">Spesialis</label>
+                        <input type="text" class="form-control" id="specialization_name" name="specialization_name" placeholder="Masukkan Spesialis" required value="{{ old('specialization_name') }}">
+                        @error('specialization_name')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="education" class="form-label">Latar Belakang Pendidikan</label>
-                        <textarea class="form-control" id="education" rows="4" placeholder="Masukkan Latar Belakang Pendidikan"></textarea>
+                        <textarea class="form-control" id="education" name="education" rows="4" placeholder="Masukkan Latar Belakang Pendidikan" required>{{ old('education') }}</textarea>
+                        @error('education')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Jadwal Praktek -->
                     <div class="mb-3">
                         <label for="doctor_schedule" class="form-label">Jadwal Praktek</label>
                         <div id="doctor_schedule">
+                            @foreach(['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'] as $day)
                             <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="senin">
-                                <label class="form-check-label" for="senin">
-                                    Senin
+                                <input class="form-check-input" type="checkbox" id="{{ $day }}" name="doctor_schedule[{{ $loop->index }}][day_of_week]" value="{{ $day }}">
+                                <label class="form-check-label" for="{{ $day }}">
+                                    {{ ucfirst($day) }}
                                 </label>
                                 <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="senin_start">
-                                    <input type="time" class="form-control" id="senin_end">
+                                    <input type="time" class="form-control me-2" id="{{ $day }}_start" name="doctor_schedule[{{ $loop->index }}][start_time]">
+                                    <input type="time" class="form-control" id="{{ $day }}_end" name="doctor_schedule[{{ $loop->index }}][end_time]">
                                 </div>
                             </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="selasa">
-                                <label class="form-check-label" for="selasa">
-                                    Selasa
-                                </label>
-                                <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="selasa_start">
-                                    <input type="time" class="form-control" id="selasa_end">
-                                </div>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="rabu">
-                                <label class="form-check-label" for="rabu">
-                                    Rabu
-                                </label>
-                                <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="rabu_start">
-                                    <input type="time" class="form-control" id="rabu_end">
-                                </div>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="kamis">
-                                <label class="form-check-label" for="kamis">
-                                    Kamis
-                                </label>
-                                <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="kamis_start">
-                                    <input type="time" class="form-control" id="kamis_end">
-                                </div>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="jumat">
-                                <label class="form-check-label" for="jumat">
-                                    Jum'at
-                                </label>
-                                <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="jumat_start">
-                                    <input type="time" class="form-control" id="jumat_end">
-                                </div>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="sabtu">
-                                <label class="form-check-label" for="sabtu">
-                                    Sabtu
-                                </label>
-                                <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="sabtu_start">
-                                    <input type="time" class="form-control" id="sabtu_end">
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
 
+
                     <div class="mb-3">
                         <label for="operation_rate" class="form-label">Angka Keberhasilan Operasi</label>
-                        <input type="text" class="form-control" id="operation_rate" placeholder="Masukkan Angka Keberhasilan Operasi">
+                        <input type="text" class="form-control" id="operation_rate" name="operation_rate" placeholder="Masukkan Angka Keberhasilan Operasi" required value="{{ old('operation_rate') }}">
+                        @error('operation_rate')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="doctor_photos" class="form-label">Foto Dokter</label>
-                        <input type="file" class="form-control" id="doctor_photos" accept="image/*" placeholder="Upload Foto Dokter">
+                        <input type="file" class="form-control" id="doctor_photos" name="doctor_photos" accept="image/*" required>
+                        @error('doctor_photos')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="doctor_medias" class="form-label">Curriculum Vitae</label>
-                        <input type="file" class="form-control" id="doctor_medias" accept="image/*, video/*" placeholder="Upload Curriculum Vitae">
+                        <input type="file" class="form-control" id="doctor_medias" name="doctor_medias" accept=".pdf,.doc,.docx" required>
+                        @error('doctor_medias')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="d-flex justify-content-end">
@@ -136,7 +109,6 @@
         </div>
     </div>
 </div>
-
 
 @endsection
 
@@ -162,22 +134,6 @@
             } else {
                 $(".dashboard").toggleClass("dashboard-compact");
             }
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        $('#education').summernote({
-            height: 400, // Set the height of the editor
-            placeholder: 'Masukkan Latar Belakang Pendidikan',
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'italic', 'underline', 'clear']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
         });
     });
 </script>

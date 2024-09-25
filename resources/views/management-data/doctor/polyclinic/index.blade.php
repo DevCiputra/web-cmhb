@@ -1,0 +1,74 @@
+@extends('management-data.layouts.app')
+
+@section('title', 'Daftar Poliklinik Dokter')
+
+@section('content')
+<div class='dashboard-app'>
+    <header class='dashboard-toolbar'>
+        <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
+    </header>
+    <div class='dashboard-content'>
+        <div class="card-header">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Daftar Poliklinik</h4>
+                <a href="{{ route('doctor.polyclinic.create') }}" style="text-decoration: none;">
+                    <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px;">
+                        Tambah Poliklinik
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            @foreach($polyclinics as $polyclinic)
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $polyclinic->name }}</h5>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('doctor.polyclinic.edit', $polyclinic->id) }}" class="btn btn-edit">
+                                <img src="{{ asset('icons/pencil-square.svg') }}" alt="Edit" class="pencil-icon">
+                            </a>
+                            <form action="{{ route('doctor.polyclinic.delete', $polyclinic->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Hapus</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+@endsection
+
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<script>
+    const mobileScreen = window.matchMedia("(max-width: 990px )");
+    $(document).ready(function() {
+        $(".dashboard-nav-dropdown-toggle").click(function() {
+            $(this).closest(".dashboard-nav-dropdown")
+                .toggleClass("show")
+                .find(".dashboard-nav-dropdown")
+                .removeClass("show");
+            $(this).parent()
+                .siblings()
+                .removeClass("show");
+        });
+        $(".menu-toggle").click(function() {
+            if (mobileScreen.matches) {
+                $(".dashboard-nav").toggleClass("mobile-show");
+            } else {
+                $(".dashboard").toggleClass("dashboard-compact");
+            }
+        });
+    });
+</script>
+@endpush

@@ -29,13 +29,14 @@
                     <!-- Dropdown Category -->
                     <select class="form-select">
                         <option selected>Pilih Spesialis</option>
-                        <option value="1">Spesialis Jantung</option>
-                        <option value="2">Spesialis Anak</option>
-                        <!-- Add more specialties as needed -->
+                        <!-- Loop untuk setiap spesialisasi dokter -->
+                        @foreach ($specializations as $specialization)
+                        <option value="{{ $specialization }}">{{ $specialization }}</option>
+                        @endforeach
                     </select>
 
                     <!-- Add Button -->
-                    <a href="/tambah_dokter" style="text-decoration: none;">
+                    <a href="{{ route('doctor.create') }}" style="text-decoration: none;">
                         <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none;">
                             <img src="{{ asset('icons/plus.svg') }}" width="16" height="16" style="filter: invert(100%); margin-right: 8px;" alt="Plus Icon">
                             Tambah
@@ -44,57 +45,42 @@
                 </div>
             </div>
         </div>
+
         <!-- Cards Container -->
         <div class="row cards-container">
+            @foreach ($doctors as $doctor)
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/dokter1.jpg') }}" alt="Dr. John Doe">
+                    <img class="card-img-top" src="{{ asset('images/dokter_placeholder.jpg') }}" alt="{{ $doctor->name }}">
                     <div class="card-body">
                         <div class="header-container">
-                            <h5 class="title">Dr. John Doe</h5>
+                            <h5 class="title">{{ $doctor->name }}</h5>
                             <div class="icon-group">
-                                <a href="/edit_dokter" class="btn btn-edit">
+                                <a href="{{ route('doctor.edit', $doctor->id) }}" class="btn btn-edit">
                                     <img src="{{ asset('icons/pencil-square.svg') }}" alt="Edit" class="pencil-icon">
                                 </a>
-                                <a href="/view_dokter" class="btn btn-view">
+                                <a href="{{ route('doctor.show', $doctor->id) }}" class="btn btn-view">
                                     <img src="{{ asset('icons/eye.svg') }}" alt="View" class="eye-icon">
                                 </a>
+                                <form action="{{ route('doctor.destroy', $doctor->id) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-delete">
+                                        <img src="{{ asset('icons/trash.svg') }}" alt="Delete" class="trash-icon">
+                                    </button>
+                                </form>
                             </div>
                         </div>
-                        <p class="specialist">Spesialis Jantung</p>
-                        {{-- <a href="#" class="btn btn-action">
-                            Hapus
-                        </a> --}}
+                        <p class="specialist">{{ $doctor->specialization_name }}</p>
+                        <p class="polyclinic">Poliklinik: {{ $doctor->polyclinic->name ?? 'N/A' }}</p>
+                        <p class="education">Pendidikan: {{ $doctor->education->name ?? 'N/A' }}</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/dokter2.jpg') }}" alt="Dr. Jane Smith">
-                    <div class="card-body">
-                        <div class="header-container">
-                            <h5 class="title">Dr. Jane Smith</h5>
-                            <div class="icon-group">
-                                <a href="/edit_dokter" class="btn btn-edit">
-                                    <img src="{{ asset('icons/pencil-square.svg') }}" alt="Edit" class="pencil-icon">
-                                </a>
-                                <a href="/view_dokter" class="btn btn-view">
-                                    <img src="{{ asset('icons/eye.svg') }}" alt="View" class="eye-icon">
-                                </a>
-                            </div>
-                        </div>
-                        <p class="specialist">Spesialis Anak</p>
-                        {{-- <a href="#" class="btn btn-action">
-                            Nonaktifkan
-                        </a> --}}
-                    </div>
-                </div>
-            </div>
-            <!-- Repeat similar card structure for other doctors -->
+            @endforeach
         </div>
     </div>
 </div>
-
 @endsection
 
 @push('scripts')
