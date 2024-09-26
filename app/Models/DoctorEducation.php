@@ -11,11 +11,12 @@ class DoctorEducation extends Model
 
     protected $table = 'doctor_educations';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['doctor_id', 'name'];
 
-    // Relasi ke dokter
-    public function doctors()
+    // Relasi ke model Doctor
+    public function doctor()
     {
-        return $this->hasMany(Doctor::class);
+        return $this->belongsTo(Doctor::class, 'doctor_id');
     }
+
 }

@@ -21,8 +21,14 @@ return new class extends Migration
 
             // Foreign key constraint
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
+
+            // Indeks (opsional)
+            $table->index('doctor_id');
+            $table->index('day_of_week');
         });
     }
+
+
     /**
      * Reverse the migrations.
      */

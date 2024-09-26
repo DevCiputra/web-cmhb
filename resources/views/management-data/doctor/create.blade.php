@@ -16,7 +16,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href="/dashboard_dokter">Dokter</a></li>
+                            <li class="breadcrumb-item"><a href="/doctor-data">Dokter</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Tambah Data Dokter</li>
                         </ol>
                     </nav>
@@ -28,9 +28,8 @@
         <div class="card"
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-body" style="padding: 2rem;">
-                <form action="{{ route('doctor.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('doctor.data.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama Dokter</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan Nama Dokter" required value="{{ old('name') }}">
@@ -49,39 +48,72 @@
 
                     <div class="mb-3">
                         <label for="education" class="form-label">Latar Belakang Pendidikan</label>
+                        <textarea class="form-control" id="education" name="education" rows="4" placeholder="Masukkan Latar Belakang Pendidikan">{{ $doctor->education->name ?? '' }}</textarea>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="doctor_polyclinic_id" class="form-label">Poliklinik</label>
+                        <select class="form-select" id="doctor_polyclinic_id" name="doctor_polyclinic_id" required>
+                            <option value="">Pilih Poliklinik</option>
+                            @foreach($polyclinics as $polyclinic)
+                            <option value="{{ $polyclinic->id }}">{{ $polyclinic->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('doctor_polyclinic_id')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="education" class="form-label">Latar Belakang Pendidikan</label>
                         <textarea class="form-control" id="education" name="education" rows="4" placeholder="Masukkan Latar Belakang Pendidikan" required>{{ old('education') }}</textarea>
                         @error('education')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <!-- Jadwal Praktek -->
+                    <!-- Input Hari dan Jam Praktek -->
                     <div class="mb-3">
                         <label for="doctor_schedule" class="form-label">Jadwal Praktek</label>
-                        <div id="doctor_schedule">
-                            @foreach(['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'] as $day)
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="{{ $day }}" name="doctor_schedule[{{ $loop->index }}][day_of_week]" value="{{ $day }}">
-                                <label class="form-check-label" for="{{ $day }}">
-                                    {{ ucfirst($day) }}
-                                </label>
-                                <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="{{ $day }}_start" name="doctor_schedule[{{ $loop->index }}][start_time]">
-                                    <input type="time" class="form-control" id="{{ $day }}_end" name="doctor_schedule[{{ $loop->index }}][end_time]">
+                        <div id="schedule-container">
+                            <div class="schedule-row mb-2">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="day" class="form-label">Hari</label>
+                                        <select name="doctor_schedule[days][]" class="form-select" required>
+                                            <option value="">Pilih Hari</option>
+                                            <option value="Monday">Senin</option>
+                                            <option value="Tuesday">Selasa</option>
+                                            <option value="Wednesday">Rabu</option>
+                                            <option value="Thursday">Kamis</option>
+                                            <option value="Friday">Jumat</option>
+                                            <option value="Saturday">Sabtu</option>
+                                            <option value="Sunday">Minggu</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="start_time" class="form-label">Jam Mulai</label>
+                                        <input type="time" class="form-control" name="doctor_schedule[start_time][]" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="end_time" class="form-label">Jam Selesai</label>
+                                        <input type="time" class="form-control" name="doctor_schedule[end_time][]" required>
+                                    </div>
                                 </div>
                             </div>
-                            @endforeach
                         </div>
+                        <button type="button" id="add-schedule" class="btn btn-primary">Tambah Jadwal</button>
                     </div>
 
-
+                    <!--
                     <div class="mb-3">
                         <label for="operation_rate" class="form-label">Angka Keberhasilan Operasi</label>
                         <input type="text" class="form-control" id="operation_rate" name="operation_rate" placeholder="Masukkan Angka Keberhasilan Operasi" required value="{{ old('operation_rate') }}">
                         @error('operation_rate')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> -->
 
                     <div class="mb-3">
                         <label for="doctor_photos" class="form-label">Foto Dokter</label>
@@ -137,4 +169,44 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+        let scheduleCount = 1; // Counter untuk jadwal
+
+        $('#add-schedule').on('click', function() {
+            // Buat elemen baru untuk baris jadwal
+            const newScheduleRow = `
+                <div class="schedule-row mb-2">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="day" class="form-label">Hari</label>
+                            <select name="doctor_schedule[days][]" class="form-select" required>
+                                <option value="">Pilih Hari</option>
+                                <option value="Monday">Senin</option>
+                                <option value="Tuesday">Selasa</option>
+                                <option value="Wednesday">Rabu</option>
+                                <option value="Thursday">Kamis</option>
+                                <option value="Friday">Jumat</option>
+                                <option value="Saturday">Sabtu</option>
+                                <option value="Sunday">Minggu</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="start_time" class="form-label">Jam Mulai</label>
+                            <input type="time" class="form-control" name="doctor_schedule[start_time][]" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="end_time" class="form-label">Jam Selesai</label>
+                            <input type="time" class="form-control" name="doctor_schedule[end_time][]" required>
+                        </div>
+                    </div>
+                </div>`;
+            // Tambahkan baris baru ke container
+            $('#schedule-container').append(newScheduleRow);
+            scheduleCount++;
+        });
+    });
+</script>
+
 @endpush

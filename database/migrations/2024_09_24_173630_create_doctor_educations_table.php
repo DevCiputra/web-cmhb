@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('doctor_educations', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('doctor_id');  // Foreign key ke tabel doctors
             $table->string('name'); // Nama pendidikan (misal: Sarjana Kedokteran)
             $table->timestamps();
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
         });
     }
 

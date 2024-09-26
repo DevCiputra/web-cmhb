@@ -12,11 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        // Panggil seeder lainnya di sini
+        $this->call(DoctorPolyclinicSeeder::class);
+        $this->call(ServiceCategorySeeder::class);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Anda juga bisa menambahkan seeder lain di sini jika ada
+        // $this->call(SeederLainnya::class);
     }
 }

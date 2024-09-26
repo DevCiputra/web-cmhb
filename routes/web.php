@@ -147,11 +147,15 @@ Route::get('/information-promote', [InformationController::class, 'indexPromote'
 // MODUL DOCTOR
 
 Route::get('/doctor-data', [DoctorController::class, 'indexDataDoctor'])->name('doctor.data.index');
-Route::get('/doctor/create', [DoctorController::class, 'create'])->name('doctor.create');
-Route::post('/doctor', [DoctorController::class, 'store'])->name('doctor.store');
-Route::get('/doctor/{id}/edit', [DoctorController::class, 'edit'])->name('doctor.edit');
-Route::put('/doctor/{id}', [DoctorController::class, 'update'])->name('doctor.update');
-Route::delete('/doctor/{id}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
+Route::get('/doctor-data/create', [DoctorController::class, 'create'])->name('doctor.data.create');
+Route::post('/doctor-data-store', [DoctorController::class, 'store'])->name('doctor.data.store');
+Route::get('/doctor-data/{id}/edit', [DoctorController::class, 'edit'])->name('doctor.data.edit');
+Route::put('/doctor-data/{id}', [DoctorController::class, 'update'])->name('doctor.data.update');
+Route::delete('/doctor-data/{id}', [DoctorController::class, 'destroy'])->name('doctor.data.destroy');
+Route::get('/doctor-data/{id}', [DoctorController::class, 'show'])->name('doctor.data.show'); // Rute untuk melihat detail dokter
+
+Route::get('/doctors-data/search', [DoctorController::class, 'searchDoctor'])->name('doctor.data.search');
+
 
 
 // sub modul poly doctor

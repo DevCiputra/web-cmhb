@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class DoctorPhoto extends Model
 {
+    use HasFactory;
+    protected $table = 'doctor_photos';
+
     protected $fillable = [
         'doctor_id',
         'name',
