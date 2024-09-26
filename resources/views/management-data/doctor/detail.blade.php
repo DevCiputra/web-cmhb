@@ -1,6 +1,6 @@
 @extends('management-data.layouts.app')
 
-@section('title', 'Tambah Data Dokter')
+@section('title', 'Detail Dokter')
 
 @section('content')
 
@@ -16,23 +16,24 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href="/dashboard_dokter">Dokter</a></li>
-                            <li class="breadcrumb-item" style="color: #023770">Tambah Data Dokter</li>
+                            <li class="breadcrumb-item"><a href="/doctor-data">Dokter</a></li>
+                            <li class="breadcrumb-item" style="color: #023770">Detail Dokter</li>
                         </ol>
                     </nav>
                 </div>
             </div>
         </div>
 
-        <div class="card"
-            style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
+        <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-body" style="padding: 6rem;">
                 <!-- Doctor Profile Section -->
                 <div class="doctor-detail">
-                    <h1 class="doctor-name">Nama Dokter</h1>
-                    <h3 class="doctor-specialist">Nama Spesialis</h3>
+                    <h1 class="doctor-name">{{ $doctor->name }}</h1>
+                    <h3 class="doctor-specialist">{{ $doctor->specialization_name }}</h3>
+
+                    <!-- Foto Dokter, dari photos -->
                     <div class="doctor-photo">
-                        <img src="{{ asset('images/dokter1.jpg') }}" alt="Doctor Photo">
+                        <img src="{{ asset('storage/doctor/photos/' . $doctor->id . '/' . ($doctor->photos->first()->name ?? 'dokter_placeholder.jpg')) }}" alt="Doctor Photo">
                     </div>
                 </div>
 
@@ -40,9 +41,7 @@
                 <div class="doctor-education">
                     <h4>Riwayat Pendidikan</h4>
                     <ul>
-                        <li class="education-item">Riwayat Pendidikan 1</li>
-                        <li class="education-item">Riwayat Pendidikan 2</li>
-                        <li class="education-item">Riwayat Pendidikan 3</li>
+                        <li class="education-item">{{ $doctor->education->name }}</li>
                     </ul>
                 </div>
 
@@ -50,35 +49,27 @@
                 <div class="doctor-schedule">
                     <h4>Jadwal Praktek</h4>
                     <ul>
-                        <li class="schedule-item">Senin: 13:00 – 18:00</li>
-                        <li class="schedule-item">Rabu: 14:00 – 19:00</li>
-                        <li class="schedule-item">Sabtu: 10:00 – 13:00</li>
+                        @foreach ($doctor->schedules as $schedule)
+                        <li class="schedule-item">{{ $schedule->day_of_week }}: {{ $schedule->start_time }} – {{ $schedule->end_time }}</li>
+                        @endforeach
                     </ul>
                 </div>
 
-                <!-- Doctor Profile Video Section -->
-                <div class="doctor-profile-video">
-                    <h4>Video Profile</h4>
-                    <video controls>
-                        <source src="path_to_video.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                <!-- CV Section, ambil dari medias -->
+                <div class="doctor-cv">
+                    <h4>Curriculum Vitae (CV)</h4>
+                    @if($doctor->medias->isNotEmpty())
+                    <a href="{{ asset('storage/doctor/medias/' . $doctor->id . '/' . $doctor->medias->first()->name) }}" class="btn btn-primary" target="_blank">Lihat CV</a>
+                    @else
+                    <p>Tidak ada CV tersedia.</p>
+                    @endif
                 </div>
 
-                <!-- Doctor Success Rate Section -->
-                <div class="doctor-success-rate">
-                    <h4>Angka Keberhasilan Operasi</h4>
-                    <ul>
-                        <li class="success-rate-item">Operasi A: 65%</li>
-                        <li class="success-rate-item">Operasi B: 43%</li>
-                    </ul>
-                </div>
             </div>
         </div>
-
-
     </div>
 </div>
+
 @endsection
 
 @push('styles')

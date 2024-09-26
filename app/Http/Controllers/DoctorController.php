@@ -9,13 +9,17 @@ use App\Models\DoctorPhoto;
 use App\Models\DoctorPolyclinic;
 use App\Models\DoctorSchedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
 {
-    public function indexDataDoctor()
+    public function indexDataDoctor(Request $request)
     {
-        // Mengambil semua data dokter dengan relasi ke tabel pendidikan dan poliklinik
-        $doctors = Doctor::with(['education', 'polyclinic'])->get();
+        // Ambil query pencarian dari request
+        $query = $request->input('query');
+
+        // Mengambil data dokter dengan relasi, dan jika ada query pencarian, lakukan pencarian
+        $doctors = Doctor::search($query)->paginate(10); // Atur jumlah data per halaman
 
         // Ambil semua spesialisasi unik dari dokter
         $specializations = Doctor::distinct()->pluck('specialization_name');
@@ -23,6 +27,18 @@ class DoctorController extends Controller
         return view('management-data.doctor.index', compact('doctors', 'specializations'));
     }
 
+
+    // DoctorController.php
+
+    public function searchDoctor(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Menggunakan metode search dari model Doctor
+        $doctors = Doctor::search($query);
+
+        return response()->json($doctors);
+    }
 
     // Menampilkan halaman form tambah dokter
     public function create()
@@ -37,38 +53,43 @@ class DoctorController extends Controller
     // Menyimpan data dokter baru
     public function store(Request $request)
     {
-
-        // Debug request
-        // dd($request->all(), $request->file('doctor_photos'), $request->file('doctor_medias'));
-
-        // Validasi data input
         $request->validate([
             'name' => 'required|string|max:255',
             'specialization_name' => 'required|string|max:255',
-            'doctor_education_id' => 'required|exists:doctor_educations,id',
+            'doctor_polyclinic_id' => 'required|exists:doctor_polyclinics,id', // Validasi poliklinik
             'doctor_photos' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'doctor_medias' => 'required|file|mimes:pdf,doc,docx|max:10240', // CV dalam bentuk file
-            'operation_rate' => 'required|numeric|min:0|max:100', // Validasi untuk angka keberhasilan operasi
-            'doctor_schedule' => 'required|array', // Validasi untuk jadwal dokter
-            'doctor_schedule.*.day_of_week' => 'required|string|in:senin,selasa,rabu,kamis,jumat,sabtu',
-            'doctor_schedule.*.start_time' => 'required|date_format:H:i',
-            'doctor_schedule.*.end_time' => 'required|date_format:H:i|after:doctor_schedule.*.start_time',
+            'doctor_medias' => 'required|file|mimes:pdf,doc,docx|max:10240',
+            'operation_rate' => 'required|numeric|min:0|max:100',
+            'education' => 'required|string|max:500', // Validasi pendidikan
+            'doctor_schedule.days' => 'required|array',
+            'doctor_schedule.days.*' => 'required|string|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
+            'doctor_schedule.start_time' => 'required|array',
+            'doctor_schedule.start_time.*' => 'required|date_format:H:i',
+            'doctor_schedule.end_time' => 'required|array',
+            'doctor_schedule.end_time.*' => 'required|date_format:H:i|after:doctor_schedule.start_time.*',
         ]);
 
         // Simpan data dokter ke tabel 'doctors'
         $doctor = Doctor::create([
             'name' => $request->input('name'),
             'specialization_name' => $request->input('specialization_name'),
-            'doctor_education_id' => $request->input('doctor_education_id'),
             'doctor_polyclinic_id' => $request->input('doctor_polyclinic_id'),
             'operation_rate' => $request->input('operation_rate'), // Simpan angka keberhasilan
+        ]);
+
+        // Simpan pendidikan dokter
+        DoctorEducation::create([
+            'doctor_id' => $doctor->id,
+            'name' => $request->input('education'), // Simpan nama pendidikan
         ]);
 
         // Proses dan simpan foto dokter
         if ($request->hasFile('doctor_photos')) {
             $photo = $request->file('doctor_photos');
             $photoName = time() . '_' . $photo->getClientOriginalName();
-            $photoPath = $photo->storeAs('photos', $photoName, 'public'); // simpan di storage/public/photos
+
+            // Simpan foto di subfolder berdasarkan ID dokter
+            $photoPath = $photo->storeAs('doctor/photos/' . $doctor->id, $photoName, 'public');
 
             DoctorPhoto::create([
                 'doctor_id' => $doctor->id,
@@ -81,7 +102,9 @@ class DoctorController extends Controller
         if ($request->hasFile('doctor_medias')) {
             $cv = $request->file('doctor_medias');
             $cvName = time() . '_' . $cv->getClientOriginalName();
-            $cvPath = $cv->storeAs('medias', $cvName, 'public'); // simpan di storage/public/medias
+
+            // Simpan media di subfolder berdasarkan ID dokter
+            $cvPath = $cv->storeAs('doctor/medias/' . $doctor->id, $cvName, 'public');
 
             DoctorMedia::create([
                 'doctor_id' => $doctor->id,
@@ -90,13 +113,17 @@ class DoctorController extends Controller
             ]);
         }
 
-        // Simpan jadwal dokter
-        foreach ($request->input('doctor_schedule') as $schedule) {
+        // Simpan jadwal dokter (multiple hari)
+        $days = $request->input('doctor_schedule.days');
+        $startTimes = $request->input('doctor_schedule.start_time');
+        $endTimes = $request->input('doctor_schedule.end_time');
+
+        foreach ($days as $index => $day) {
             DoctorSchedule::create([
                 'doctor_id' => $doctor->id,
-                'day_of_week' => $schedule['day_of_week'],
-                'start_time' => $schedule['start_time'],
-                'end_time' => $schedule['end_time'],
+                'day_of_week' => $day,
+                'start_time' => $startTimes[$index],
+                'end_time' => $endTimes[$index],
             ]);
         }
 
@@ -104,11 +131,22 @@ class DoctorController extends Controller
     }
 
 
+    public function show($id)
+    {
+        // Mengambil data dokter berdasarkan ID beserta relasi ke poliklinik, pendidikan, jadwal, dan media
+        $doctor = Doctor::with(['polyclinic', 'education', 'schedules', 'medias'])->findOrFail($id);
+
+        // dd($doctor);
+        return view('management-data.doctor.detail', compact('doctor'));
+    }
+
+
+
     // Menampilkan halaman edit dokter
     public function edit($id)
     {
         // Mengambil data dokter berdasarkan id
-        $doctor = Doctor::findOrFail($id);
+        $doctor = Doctor::with(['photos', 'education', 'polyclinic', 'schedules'])->findOrFail($id);
         $educations = DoctorEducation::all();
         $polyclinics = DoctorPolyclinic::all();
 
@@ -122,16 +160,78 @@ class DoctorController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'specialization_name' => 'required|string|max:255',
-            'doctor_education_id' => 'required|exists:doctor_educations,id',
+            'education' => 'required|string|max:500', // Validasi untuk textarea pendidikan
             'doctor_polyclinic_id' => 'required|exists:doctor_polyclinics,id',
+            'doctor_photos' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'doctor_medias' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ]);
 
-        // Mengambil data dokter dan meng-update-nya
+        // Mengupdate data dokter
         $doctor = Doctor::findOrFail($id);
-        $doctor->update($validatedData);
+        $doctor->update([
+            'name' => $validatedData['name'],
+            'specialization_name' => $validatedData['specialization_name'],
+            'doctor_polyclinic_id' => $validatedData['doctor_polyclinic_id'],
+        ]);
 
-        // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('doctor.data.index')->with('success', 'Data dokter berhasil diperbarui.');
+        // Mengupdate pendidikan dokter
+        $doctorEducation = $doctor->education;
+        if ($doctorEducation) {
+            $doctorEducation->update(['name' => $validatedData['education']]);
+        } else {
+            DoctorEducation::create(['doctor_id' => $doctor->id, 'name' => $validatedData['education']]);
+        }
+
+        // Mengupdate atau menambah foto dokter
+        if ($request->hasFile('doctor_photos')) {
+            // Menghapus foto lama
+            foreach ($doctor->photos as $photo) {
+                Storage::delete('public/doctor/photos/' . $doctor->id . '/' . $photo->name);
+                $photo->delete();
+            }
+
+            // Menyimpan foto baru
+            $file = $request->file('doctor_photos');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/doctor/photos/' . $doctor->id, $filename);
+            DoctorPhoto::create(['doctor_id' => $doctor->id, 'name' => $filename, 'mime_type' => $file->getMimeType()]);
+        }
+
+        // Mengupdate atau menambah CV dokter
+        if ($request->hasFile('doctor_medias')) {
+            // Menghapus media lama
+            foreach ($doctor->medias as $media) {
+                Storage::delete('public/doctor/medias/' . $doctor->id . '/' . $media->name);
+                $media->delete();
+            }
+
+            // Menyimpan CV baru
+            $file = $request->file('doctor_medias');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/doctor/medias/' . $doctor->id, $filename);
+            DoctorMedia::create(['doctor_id' => $doctor->id, 'name' => $filename, 'mime_type' => $file->getMimeType()]);
+        }
+
+        // Mengupdate jadwal dokter
+        if ($request->has('doctor_schedule')) {
+            // Hapus jadwal lama
+            DoctorSchedule::where('doctor_id', $doctor->id)->delete();
+
+            // Tambahkan jadwal baru
+            foreach ($request->doctor_schedule['days'] as $day) {
+                $start_time = $request->doctor_schedule['start_time'][$day];
+                $end_time = $request->doctor_schedule['end_time'][$day];
+
+                DoctorSchedule::create([
+                    'doctor_id' => $doctor->id,
+                    'day_of_week' => $day,
+                    'start_time' => $start_time,
+                    'end_time' => $end_time,
+                ]);
+            }
+        }
+
+        return redirect()->route('doctor.data.index')->with('success', 'Data dokter berhasil diperbarui!');
     }
 
     // Menghapus data dokter
@@ -201,5 +301,4 @@ class DoctorController extends Controller
 
         return redirect()->route('doctor.polyclinic.index')->with('success', 'Poliklinik berhasil dihapus.');
     }
-
 }

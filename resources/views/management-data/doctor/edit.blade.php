@@ -15,7 +15,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href="/dashboard_dokter">Dokter</a></li>
+                            <li class="breadcrumb-item"><a href="/doctor-data">Dokter</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Edit Data Dokter</li>
                         </ol>
                     </nav>
@@ -24,124 +24,84 @@
         </div>
 
         <!-- Form Card -->
-        <div class="card"
-            style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
+        <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-body" style="padding: 2rem;">
-                <form>
+                <form method="POST" action="{{ route('doctor.data.update', $doctor->id) }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama Dokter</label>
-                        <input type="text" class="form-control" id="name" placeholder="Masukkan Nama Dokter">
+                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $doctor->name) }}" placeholder="Masukkan Nama Dokter" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="specialist" class="form-label">Spesialis</label>
-                        <input type="text" class="form-control" id="specialist" placeholder="Masukkan Spesialis">
+                        <label for="specialization_name" class="form-label">Spesialis</label>
+                        <input type="text" class="form-control" id="specialization_name" name="specialization_name" value="{{ old('specialization_name', $doctor->specialization_name) }}" placeholder="Masukkan Spesialis" required>
                     </div>
+
 
                     <div class="mb-3">
                         <label for="education" class="form-label">Latar Belakang Pendidikan</label>
-                        <textarea class="form-control" id="education" rows="4" placeholder="Masukkan Latar Belakang Pendidikan"></textarea>
+                        <textarea class="form-control" id="education" name="education" rows="4" placeholder="Masukkan Latar Belakang Pendidikan">{{ $doctor->education->name ?? '' }}</textarea>
                     </div>
 
-                    <!-- Jadwal Praktek -->
+
+                    <div class="mb-3">
+                        <label for="doctor_polyclinic_id" class="form-label">Poliklinik</label>
+                        <select class="form-select" id="doctor_polyclinic_id" name="doctor_polyclinic_id" required>
+                            <option value="">Pilih Poliklinik</option>
+                            @foreach ($polyclinics as $polyclinic)
+                            <option value="{{ $polyclinic->id }}" {{ $doctor->doctor_polyclinic_id == $polyclinic->id ? 'selected' : '' }}>
+                                {{ $polyclinic->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="mb-3">
                         <label for="doctor_schedule" class="form-label">Jadwal Praktek</label>
                         <div id="doctor_schedule">
+                            @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] as $day)
                             <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="senin">
-                                <label class="form-check-label" for="senin">
-                                    Senin
-                                </label>
+                                <input class="form-check-input" type="checkbox" id="{{ strtolower($day) }}" name="doctor_schedule[days][]" value="{{ $day }}" {{ in_array($day, $doctor->schedules->pluck('day_of_week')->toArray()) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="{{ strtolower($day) }}">{{ $day }}</label>
                                 <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="senin_start">
-                                    <input type="time" class="form-control" id="senin_end">
+                                    <input type="time" class="form-control me-2" id="{{ strtolower($day) }}_start" name="doctor_schedule[start_time][{{ $day }}]" value="{{ $doctor->schedules->where('day_of_week', $day)->first()->start_time ?? '' }}">
+                                    <input type="time" class="form-control" id="{{ strtolower($day) }}_end" name="doctor_schedule[end_time][{{ $day }}]" value="{{ $doctor->schedules->where('day_of_week', $day)->first()->end_time ?? '' }}">
                                 </div>
                             </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="selasa">
-                                <label class="form-check-label" for="selasa">
-                                    Selasa
-                                </label>
-                                <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="selasa_start">
-                                    <input type="time" class="form-control" id="selasa_end">
-                                </div>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="rabu">
-                                <label class="form-check-label" for="rabu">
-                                    Rabu
-                                </label>
-                                <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="rabu_start">
-                                    <input type="time" class="form-control" id="rabu_end">
-                                </div>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="kamis">
-                                <label class="form-check-label" for="kamis">
-                                    Kamis
-                                </label>
-                                <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="kamis_start">
-                                    <input type="time" class="form-control" id="kamis_end">
-                                </div>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="jumat">
-                                <label class="form-check-label" for="jumat">
-                                    Jum'at
-                                </label>
-                                <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="jumat_start">
-                                    <input type="time" class="form-control" id="jumat_end">
-                                </div>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="sabtu">
-                                <label class="form-check-label" for="sabtu">
-                                    Sabtu
-                                </label>
-                                <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="sabtu_start">
-                                    <input type="time" class="form-control" id="sabtu_end">
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="operation_rate" class="form-label">Angka Keberhasilan Operasi</label>
-                        <input type="text" class="form-control" id="operation_rate" placeholder="Masukkan Angka Keberhasilan Operasi">
-                    </div>
-
-                    <div class="mb-3">
                         <label for="doctor_photos" class="form-label">Foto Dokter</label>
-                        <input type="file" class="form-control" id="doctor_photos" accept="image/*" placeholder="Upload Foto Dokter">
+                        @if($doctor->photos->isNotEmpty())
+                        <img src="{{ asset('storage/doctor/photos/' . $doctor->id . '/' . $doctor->photos->first()->name) }}" alt="Foto Dokter" class="img-thumbnail mb-2" style="max-width: 150px;">
+                        @endif
+                        <input type="file" class="form-control" id="doctor_photos" name="doctor_photos" accept="image/*">
                     </div>
 
                     <div class="mb-3">
-                        <label for="doctor_medias" class="form-label">Curriculum Vitae</label>
-                        <input type="file" class="form-control" id="doctor_medias" accept="image/*, video/*" placeholder="Upload Curriculum Vitae">
+                        <label for="doctor_medias" class="form-label">CV Dokter</label>
+                        @if($doctor->medias->isNotEmpty())
+                        <a href="{{ asset('storage/doctor/medias/' . $doctor->id . '/' . $doctor->medias->first()->name) }}" target="_blank" class="btn btn-link">Lihat CV</a>
+                        @endif
+                        <input type="file" class="form-control" id="doctor_medias" name="doctor_medias" accept=".pdf,.doc,.docx">
                     </div>
 
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-danger me-2"
-                            style="background-color: #DC3545; color: #fff; border-radius: 10px; padding: 8px 12px;">
-                            Hapus
-                        </button>
-                        <button type="submit" class="btn btn-success"
-                            style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
-                            Simpan
-                        </button>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{{ route('doctor.data.index') }}" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
 @endsection
+
 
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -169,19 +129,4 @@
     });
 </script>
 
-<script>
-    $(document).ready(function() {
-        $('#education').summernote({
-            height: 400, // Set the height of the editor
-            placeholder: 'Masukkan Latar Belakang Pendidikan',
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'italic', 'underline', 'clear']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
-    });
-</script>
 @endpush

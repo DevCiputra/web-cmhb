@@ -15,12 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('specialization_name');  // Data denormalisasi (langsung disimpan)
-            $table->unsignedBigInteger('doctor_education_id');  // Foreign key ke doctor_educations
             $table->unsignedBigInteger('doctor_polyclinic_id');  // Foreign key ke doctor_polyclinics
             $table->timestamps();
 
             // Foreign key constraint
-            $table->foreign('doctor_education_id')->references('id')->on('doctor_educations');
             $table->foreign('doctor_polyclinic_id')->references('id')->on('doctor_polyclinics');
         });
     }

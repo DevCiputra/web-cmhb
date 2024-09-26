@@ -9,6 +9,8 @@ class DoctorLog extends Model
 {
     use HasFactory;
 
+    protected $table = 'doctor_logs';
+
     protected $fillable = [
         'doctor_id',
         'action',

@@ -9,6 +9,8 @@ class DoctorMedia extends Model
 {
     use HasFactory;
 
+    protected $table = 'doctor_medias';
+
     protected $fillable = [
         'doctor_id',
         'name',

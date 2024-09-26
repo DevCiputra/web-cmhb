@@ -9,6 +9,8 @@ class DoctorPolyclinic extends Model
 {
     use HasFactory;
 
+    protected $table = 'doctor_polyclinics';
+
     protected $fillable = ['name'];
 
     // Relasi ke tabel Doctor
