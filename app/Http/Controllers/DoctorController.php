@@ -39,7 +39,7 @@ class DoctorController extends Controller
     {
 
         // Debug request
-        dd($request->all(), $request->file('doctor_photos'), $request->file('doctor_medias'));
+        // dd($request->all(), $request->file('doctor_photos'), $request->file('doctor_medias'));
 
         // Validasi data input
         $request->validate([

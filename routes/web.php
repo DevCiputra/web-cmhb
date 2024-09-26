@@ -35,6 +35,10 @@ Route::get('/consultation-confirmation', function () {
     return view('consultation-confirmation');
 });
 
+Route::get('/consultation-detail', function () {
+    return view('consultation-detail');
+});
+
 Route::get('/consultation-invoice', function () {
     return view('consultation-invoice');
 });

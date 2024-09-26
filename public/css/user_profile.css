@@ -197,6 +197,10 @@ body {
     background-color: #ffc107; /* Yellow */
 }
 
+.badge-info {
+    background-color: #0d6efd; /* Blue */
+}
+
 .badge-danger {
     background-color: #dc3545; /* Red */
 }
