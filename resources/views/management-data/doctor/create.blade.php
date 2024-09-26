@@ -47,12 +47,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="education" class="form-label">Latar Belakang Pendidikan</label>
-                        <textarea class="form-control" id="education" name="education" rows="4" placeholder="Masukkan Latar Belakang Pendidikan">{{ $doctor->education->name ?? '' }}</textarea>
-                    </div>
-
-
-                    <div class="mb-3">
                         <label for="doctor_polyclinic_id" class="form-label">Poliklinik</label>
                         <select class="form-select" id="doctor_polyclinic_id" name="doctor_polyclinic_id" required>
                             <option value="">Pilih Poliklinik</option>
@@ -105,15 +99,6 @@
                         </div>
                         <button type="button" id="add-schedule" class="btn btn-primary">Tambah Jadwal</button>
                     </div>
-
-                    <!--
-                    <div class="mb-3">
-                        <label for="operation_rate" class="form-label">Angka Keberhasilan Operasi</label>
-                        <input type="text" class="form-control" id="operation_rate" name="operation_rate" placeholder="Masukkan Angka Keberhasilan Operasi" required value="{{ old('operation_rate') }}">
-                        @error('operation_rate')
-                        <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div> -->
 
                     <div class="mb-3">
                         <label for="doctor_photos" class="form-label">Foto Dokter</label>

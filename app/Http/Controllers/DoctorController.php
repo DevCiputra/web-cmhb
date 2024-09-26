@@ -53,28 +53,22 @@ class DoctorController extends Controller
     // Menyimpan data dokter baru
     public function store(Request $request)
     {
+
+        // dd($request->all(), $request->file('doctor_photos'), $request->file('doctor_medias'));
         $request->validate([
             'name' => 'required|string|max:255',
             'specialization_name' => 'required|string|max:255',
             'doctor_polyclinic_id' => 'required|exists:doctor_polyclinics,id', // Validasi poliklinik
             'doctor_photos' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'doctor_medias' => 'required|file|mimes:pdf,doc,docx|max:10240',
-            'operation_rate' => 'required|numeric|min:0|max:100',
-            'education' => 'required|string|max:500', // Validasi pendidikan
-            'doctor_schedule.days' => 'required|array',
-            'doctor_schedule.days.*' => 'required|string|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
-            'doctor_schedule.start_time' => 'required|array',
-            'doctor_schedule.start_time.*' => 'required|date_format:H:i',
-            'doctor_schedule.end_time' => 'required|array',
-            'doctor_schedule.end_time.*' => 'required|date_format:H:i|after:doctor_schedule.start_time.*',
+            'doctor_medias' => 'required|file|mimes:pdf,doc,docx|max:10240'
         ]);
 
+        // dd($request);
         // Simpan data dokter ke tabel 'doctors'
         $doctor = Doctor::create([
             'name' => $request->input('name'),
             'specialization_name' => $request->input('specialization_name'),
             'doctor_polyclinic_id' => $request->input('doctor_polyclinic_id'),
-            'operation_rate' => $request->input('operation_rate'), // Simpan angka keberhasilan
         ]);
 
         // Simpan pendidikan dokter
