@@ -47,31 +47,31 @@
                     <!-- Email -->
                     <div class="form-group mb-4">
                         <label for="email" class="form-label">Email</label>
-                        <p class="form-text">Email</p>
+                        <p class="form-text">john.doe@email.com</p>
                     </div>
 
                     <!-- Nama Dokter -->
                     <div class="form-group mb-4">
                         <label for="doctorName" class="form-label">Nama Dokter</label>
-                        <p class="form-text">Nama Dokter</p>
+                        <p class="form-text">dr. Jane Smith, Sp.JP</p>
                     </div>
 
                     <!-- Spesialis -->
                     <div class="form-group mb-4">
                         <label for="specialist" class="form-label">Spesialis</label>
-                        <p class="form-text">Spesialis</p>
+                        <p class="form-text">Kardiologi</p>
                     </div>
 
                     <!-- Poliklinik -->
                     <div class="form-group mb-4">
                         <label for="polyclinic" class="form-label">Poliklinik</label>
-                        <p class="form-text">Poliklinik</p>
+                        <p class="form-text">Poliklinik Jantung</p>
                     </div>
 
                     <!--Hari Konsultasi -->
                     <div class="form-group mb-4">
                         <label for="consultationDay" class="form-label">Hari Konsultasi</label>
-                        <p class="form-text">Kamis</p>
+                        <p class="form-text">Senin</p>
                     </div>
                     
 

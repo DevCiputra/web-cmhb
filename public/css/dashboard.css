@@ -629,7 +629,7 @@ trix-editor {
 /* CARD */
 
 /* Media query untuk layar dengan lebar maksimal 1221px */
-@media (min-width: 769px) and (max-width: 1221px) {
+@media (min-width: 769px) and (max-width: 1350px) {
     .card {
         /* Atur lebar card */
         max-width: 100%;
@@ -674,6 +674,9 @@ trix-editor {
         background-color: #dc3545 !important; /* Use !important to enforce the color */
         border-color: #dc3545 !important;
         color: white !important;
+        width: 60px;
+        height: 30px;
+        font-size: 10px !important;
     }
 
     .btn-danger:hover {
@@ -684,18 +687,27 @@ trix-editor {
         background-color: #023770 !important;
         border-color: #023770 !important;
         color: white;
+        width: 60px;
+        height: 30px;
+        font-size: 10px !important;
     }
 
     .btn-success {
         background-color: #007858 !important;
         border-color: #007858 !important;
         color: white;
+        width: 60px;
+        height: 30px;
+        font-size: 10px !important;
     }
 
     .btn-warning {
         background-color: #FFC107 !important;
         border-color: #FFC107 !important;
         color: white;
+        width: 60px;
+        height: 30px;
+        font-size: 10px !important;
     }
 
     /* Custom Button: "Tambah" and "Cari" */
@@ -704,6 +716,7 @@ trix-editor {
         color: white;
         border-radius: 2px !important;
         padding: 6px 10px; /* Adjust padding for custom buttons */
+        
     }
 
     .btn-custom img {

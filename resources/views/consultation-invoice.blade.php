@@ -7,7 +7,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Beranda</a></li>
                 <li class="breadcrumb-item"><a href="/account">Profil</a></li>
-                <li class="breadcrumb-item"><a href="/account">Riwayat Pemesanan</a></li>
+                <li class="breadcrumb-item"><a href="/account">Riwayat Pesanan</a></li>
                 <li class="breadcrumb-item active" style="color: #023770" aria-current="page">Invoice Pembayaran</li>
             </ol>
         </nav>
@@ -106,7 +106,7 @@
             <div class="col-sm-12 col-md-3">
                 <div class="form-group">
                     <label for="consultationTime" class="form-label">Waktu Konsultasi</label>
-                    <p class="form-text">Senin, 17:00 WIB</p>
+                    <p class="form-text">Senin, 17:00 WITA</p>
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@
             <tbody>
                 <tr>
                     <td>Paket Konsultasi</td>
-                    <td>500.000 IDR</td>
+                    <td>Rp. 500.000</td>
                 </tr>
                 <tr>
                     <td>Jumlah: 1</td>
@@ -163,3 +163,4 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/consultation.css') }}">
 @endpush
+

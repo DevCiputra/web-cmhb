@@ -20,7 +20,7 @@
                                 aria-controls="profile-info" aria-selected="true">Informasi Pribadi</button>
                             <button class="nav-link flex-fill text-center py-2 px-3" id="nav-profile-tab"
                                 data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab"
-                                aria-controls="nav-profile" aria-selected="false">Pemesanan Konsultasi</button>
+                                aria-controls="nav-profile" aria-selected="false">Riwayat Pesanan</button>
                         </div>
                     </nav>
 
@@ -54,198 +54,65 @@
                                 <div class="btn-group" role="group" aria-label="Filter Options">
                                     <button type="button" class="btn btn-outline-primary"
                                         id="filter-latest">Terbaru</button>
-                                    <button type="button" class="btn btn-outline-primary"
-                                        id="filter-newest">Paling Lama</button>
+                                    <button type="button" class="btn btn-outline-primary" id="filter-newest">Paling
+                                        Lama</button>
                                 </div>
                             </div>
 
                             <!-- Scrollable Consultation List -->
                             <div class="consultation-list" style="max-height: 300px; overflow-y: auto;">
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12345</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-17</span>
-                                            <span class="booking-time">10:30 AM</span>
+                                <a href="/consultation-detail" class="booking-item-link">
+                                    <div class="booking-item">
+                                        <div class="booking-info">
+                                            <span class="booking-code">#12345</span>
+                                            <div class="booking-details">
+                                                <span class="booking-date">2024-09-17</span>
+                                                <span class="booking-time">10:30 AM</span>
+                                            </div>
                                         </div>
+                                        <span class="status-badge badge-success">Berhasil</span>
                                     </div>
-                                    <span class="status-badge badge-success">Success</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12346</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-18</span>
-                                            <span class="booking-time">02:45 PM</span>
+                                </a>
+                                <a href="/consultation-detail" class="booking-item-link">
+                                    <div class="booking-item">
+                                        <div class="booking-info">
+                                            <span class="booking-code">#12346</span>
+                                            <div class="booking-details">
+                                                <span class="booking-date">2024-09-18</span>
+                                                <span class="booking-time">02:45 PM</span>
+                                            </div>
                                         </div>
+                                        <span class="status-badge badge-warning">Menunggu Pembayaran</span>
                                     </div>
-                                    <span class="status-badge badge-warning">On Process</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12347</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-19</span>
-                                            <span class="booking-time">09:00 AM</span>
+                                </a>
+                                <a href="/consultation-detail" class="booking-item-link">
+                                    <div class="booking-item">
+                                        <div class="booking-info">
+                                            <span class="booking-code">#12347</span>
+                                            <div class="booking-details">
+                                                <span class="booking-date">2024-09-19</span>
+                                                <span class="booking-time">09:00 AM</span>
+                                            </div>
                                         </div>
+                                        <span class="status-badge badge-info">Menunggu Approval</span>
                                     </div>
-                                    <span class="status-badge badge-danger">Cancelled</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12345</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-17</span>
-                                            <span class="booking-time">10:30 AM</span>
+                                </a>
+                                <a href="/consultation-detail" class="booking-item-link">
+                                    <div class="booking-item">
+                                        <div class="booking-info">
+                                            <span class="booking-code">#12348</span>
+                                            <div class="booking-details">
+                                                <span class="booking-date">2024-09-20</span>
+                                                <span class="booking-time">11:00 AM</span>
+                                            </div>
                                         </div>
+                                        <span class="status-badge badge-danger">Cancelled</span>
                                     </div>
-                                    <span class="status-badge badge-success">Success</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12346</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-18</span>
-                                            <span class="booking-time">02:45 PM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-warning">On Process</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12347</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-19</span>
-                                            <span class="booking-time">09:00 AM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-danger">Cancelled</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12345</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-17</span>
-                                            <span class="booking-time">10:30 AM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-success">Success</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12346</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-18</span>
-                                            <span class="booking-time">02:45 PM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-warning">On Process</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12347</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-19</span>
-                                            <span class="booking-time">09:00 AM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-danger">Cancelled</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12345</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-17</span>
-                                            <span class="booking-time">10:30 AM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-success">Success</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12346</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-18</span>
-                                            <span class="booking-time">02:45 PM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-warning">On Process</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12347</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-19</span>
-                                            <span class="booking-time">09:00 AM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-danger">Cancelled</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12345</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-17</span>
-                                            <span class="booking-time">10:30 AM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-success">Success</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12346</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-18</span>
-                                            <span class="booking-time">02:45 PM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-warning">On Process</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12347</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-19</span>
-                                            <span class="booking-time">09:00 AM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-danger">Cancelled</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12345</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-17</span>
-                                            <span class="booking-time">10:30 AM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-success">Success</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12346</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-18</span>
-                                            <span class="booking-time">02:45 PM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-warning">On Process</span>
-                                </div>
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12347</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-19</span>
-                                            <span class="booking-time">09:00 AM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-danger">Cancelled</span>
-                                </div>
-                                
-                                <!-- Add more booking items as needed -->
+                                </a>
+                                <!-- Tambahkan item lainnya jika diperlukan -->
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -318,39 +185,66 @@
     <script src="{{ asset('js/navbar.js') }}"></script>
 
     <script>
-        function toggleEmergencyButtons() {
-            const buttons = document.getElementById("emergency-buttons");
-            buttons.classList.toggle("expand");
-
-            if (buttons.style.maxHeight === "0px" || buttons.style.maxHeight === "") {
-                buttons.style.maxHeight = "200px"; // Expand the sub-menu (adjust height as needed)
-            } else {
-                buttons.style.maxHeight = "0px"; // Collapse the sub-menu
+        document.addEventListener("DOMContentLoaded", function() {
+            // Set default tab to 'profile-info' on initial page load
+            const infoTab = document.getElementById('profile-info-tab');
+            const riwayatTab = document.getElementById('nav-profile-tab');
+            const infoContent = document.getElementById('profile-info');
+            const riwayatContent = document.getElementById('nav-profile');
+    
+            // Aktifkan default tab hanya jika tidak ada yang dipilih sebelumnya
+            if (!localStorage.getItem('activeTab')) {
+                infoTab.classList.add('active');
+                infoContent.classList.add('show', 'active');
             }
-        }
-
-        document.getElementById('filter-latest').addEventListener('click', function() {
-            sortConsultations('latest');
-        });
-
-        document.getElementById('filter-newest').addEventListener('click', function() {
-            sortConsultations('newest');
-        });
-
-        function sortConsultations(order) {
-            const bookingList = document.querySelector('.consultation-list');
-            const bookings = Array.from(bookingList.querySelectorAll('.booking-item'));
-
-            bookings.sort((a, b) => {
-                const dateA = new Date(a.querySelector('.booking-date').textContent);
-                const dateB = new Date(b.querySelector('.booking-date').textContent);
-
-                return order === 'latest' ? dateB - dateA : dateA - dateB;
+    
+            // Cek tab yang terakhir kali dipilih di localStorage
+            const lastTab = localStorage.getItem('activeTab');
+            if (lastTab) {
+                const activeTab = document.querySelector(`#${lastTab}`);
+                const tabContent = document.querySelector(`#${activeTab.getAttribute("aria-controls")}`);
+                if (activeTab && tabContent) {
+                    // Aktifkan tab terakhir yang diakses
+                    activeTab.classList.add('active');
+                    tabContent.classList.add('show', 'active');
+                }
+            }
+    
+            // Event listener untuk setiap tab, menyimpan posisi terakhir yang dikunjungi
+            const tabs = document.querySelectorAll('.nav-profile .nav-link');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    localStorage.setItem('activeTab', this.id);
+                    
+                    // Tampilkan konten yang sesuai dan sembunyikan yang lain
+                    if (this.id === 'profile-info-tab') {
+                        riwayatContent.classList.remove('show', 'active');
+                        infoContent.classList.add('show', 'active');
+                    } else if (this.id === 'nav-profile-tab') {
+                        infoContent.classList.remove('show', 'active');
+                        riwayatContent.classList.add('show', 'active');
+                    }
+                });
             });
-
-            bookings.forEach(booking => bookingList.appendChild(booking));
-        }
+    
+            // Cek apakah ada parameter `tab` pada URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const tab = urlParams.get('tab');
+    
+            // Jika `tab` adalah `riwayat`, aktifkan tab Pemesanan Konsultasi
+            if (tab === 'riwayat') {
+                riwayatTab.classList.add('active');
+                infoTab.classList.remove('active');
+    
+                riwayatContent.classList.add('show', 'active');
+                infoContent.classList.remove('show', 'active');
+    
+                // Simpan riwayat tab ke localStorage
+                localStorage.setItem('activeTab', 'nav-profile-tab');
+            }
+        });
     </script>
+    
 @endpush
 
 @push('styles')
