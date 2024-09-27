@@ -388,23 +388,47 @@ h1, .h1 {
     text-align: left;
     margin-top: 24px;
     margin-bottom: 24px;
-    /* Menghapus pengaturan tinggi tetap agar tinggi kartu fleksibel sesuai konten */
 }
+
+
+.card-form {
+    padding: 15px;
+    background-color: #fff;
+}
+
+
+.card-body {
+    padding: 15px;
+    background-color: #fff;
+    max-height: 400px;
+}
+
 
 .card-img-top {
     width: 100%;
     height: auto; /* Mengubah tinggi gambar agar menyesuaikan dengan lebar card */
     object-fit: cover;
     object-position: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
 }
 
-.card-body {
-    padding: 15px;
-    background-color: #fff;
-    /* Menghapus pengaturan tinggi agar body card fleksibel sesuai konten */
+.doctor-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center; /* Posisikan gambar di tengah */
 }
+
+
+
+.card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px; /* Sesuaikan dengan lebar container */
+}
+
 
 
 .header-container {
@@ -449,6 +473,19 @@ h1, .h1 {
     width: 24px; /* Adjust size as needed */
     height: 24px;
 }
+
+.card-body p {
+    margin-bottom: 5px; /* Reduce space between paragraphs */
+}
+
+.card-body h6 {
+    margin-bottom: 5px; /* Reduce space below the h6 heading */
+}
+
+.doctor-schedule li {
+    margin-bottom: 2px; /* Further reduce space between list items */
+}
+
 
 
 .cards-container {
@@ -690,6 +727,9 @@ trix-editor {
         width: 60px;
         height: 30px;
         font-size: 10px !important;
+        align-items: center;
+        justify-content: center;
+        
     }
 
     .btn-success {

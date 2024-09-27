@@ -8,13 +8,13 @@
         <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
     </header>
     <div class='dashboard-content'>
-        <div class="card-header">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-                <div class="d-flex flex-column">
+        <div class="card-header mb-3">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
                     <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Edit Data Dokter</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
                             <li class="breadcrumb-item"><a href="/doctor-data">Dokter</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Edit Data Dokter</li>
                         </ol>
@@ -25,7 +25,7 @@
 
         <!-- Form Card -->
         <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
-            <div class="card-body" style="padding: 2rem;">
+            <div class="card-form" style="padding: 2rem;">
                 <form method="POST" action="{{ route('doctor.data.update', $doctor->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -92,8 +92,8 @@
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ route('doctor.data.index') }}" class="btn btn-secondary">Kembali</a>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        <a href="{{ route('doctor.data.index') }}" class="btn btn-secondary d-flex align-items-center justify-content-center">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -129,4 +129,8 @@
     });
 </script>
 
+@endpush
+
+@push('styles')
+<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 @endpush

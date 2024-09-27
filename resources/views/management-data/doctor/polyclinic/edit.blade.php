@@ -25,7 +25,7 @@
         </div>
 
         <div class="card" style="border: none; border-radius: 12px;">
-            <div class="card-body">
+            <div class="card-form">
                 <form method="POST" action="{{ route('doctor.polyclinic.update', $polyclinic->id) }}">
                     @csrf
 

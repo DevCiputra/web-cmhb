@@ -57,7 +57,7 @@
 
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h5 class="title">{{ $service->title }}</h5>
+                            <h5 class="title card-title">{{ $service->title }}</h5>
                             <div class="icon-group d-flex">
                                 <a href="{{ route('reservation.mcu.detail', $service->id) }}" class="btn btn-info btn-sm btn-e">
                                     <img src="{{ asset('icons/eye-fill.svg') }}" alt="View Details" class="eye-icon">
@@ -67,6 +67,7 @@
                                 </a>
                             </div>
                         </div>
+                        
                                              
                         <b class="price">Rp. {{ number_format($service->price, 0, ',', '.') }}</b>
                         {{-- <p class="description">{!! Str::limit($service->description,250) !!}</p> --}}

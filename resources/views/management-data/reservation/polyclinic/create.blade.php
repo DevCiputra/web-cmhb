@@ -23,7 +23,7 @@
 
         <!-- Form Card -->
         <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
-            <div class="card-body" style="padding: 2rem;">
+            <div class="card-form" style="padding: 2rem;">
                 <form>
                     <!-- Nama Poliklinik -->
                     <div class="mb-3">
