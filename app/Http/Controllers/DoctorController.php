@@ -53,6 +53,7 @@ class DoctorController extends Controller
     // Menyimpan data dokter baru
     public function store(Request $request)
     {
+        dd($request);
         $request->validate([
             'name' => 'required|string|max:255',
             'specialization_name' => 'required|string|max:255',

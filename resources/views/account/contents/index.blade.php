@@ -148,11 +148,11 @@
                 <div class="modal-body">
                     <form id="editProfileForm">
                         <div class="mb-3">
-                            <label for="profilePhoto" class="form-label">Profile Photo</label>
+                            <label for="profilePhoto" class="form-label">Foto Profil</label>
                             <input type="file" class="form-control" id="profilePhoto">
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
+                            <label for="name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="name" value="Nama User">
                         </div>
                         <div class="mb-3">
@@ -160,22 +160,22 @@
                             <input type="email" class="form-control" id="email" value="user@mail.com">
                         </div>
                         <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
+                            <label for="address" class="form-label">Alamat</label>
                             <textarea class="form-control" id="address" rows="3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas efficitur, eros ut porttitor semper, ex tellus cursus ipsum, eu posuere augue turpis ac tortor.</textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="allergy" class="form-label">Allergy</label>
+                            <label for="allergy" class="form-label">Alergi</label>
                             <input type="text" class="form-control" id="allergy" value="Alergi ayam ras">
                         </div>
                         <div class="mb-3">
-                            <label for="bloodType" class="form-label">Blood Type</label>
+                            <label for="bloodType" class="form-label">Golongan Darah</label>
                             <input type="text" class="form-control" id="bloodType" value="B">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
         </div>
