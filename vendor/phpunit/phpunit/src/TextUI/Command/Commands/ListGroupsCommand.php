@@ -9,7 +9,6 @@
  */
 namespace PHPUnit\TextUI\Command;
 
-use const PHP_EOL;
 use function sort;
 use function sprintf;
 use function str_starts_with;
@@ -17,8 +16,6 @@ use PHPUnit\Framework\TestSuite;
 use PHPUnit\TextUI\Configuration\Registry;
 
 /**
- * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
- *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 final class ListGroupsCommand implements Command

@@ -15,8 +15,6 @@ use Iterator;
 /**
  * @template-implements Iterator<int, TestResult>
  *
- * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
- *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 final class TestResultCollectionIterator implements Iterator

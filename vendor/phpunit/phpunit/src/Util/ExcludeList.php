@@ -9,7 +9,6 @@
  */
 namespace PHPUnit\Util;
 
-use const PHP_OS_FAMILY;
 use function class_exists;
 use function defined;
 use function dirname;

@@ -10,7 +10,6 @@
 namespace PHPUnit\TextUI\Configuration;
 
 use const DIRECTORY_SEPARATOR;
-use const PATH_SEPARATOR;
 use function array_diff;
 use function assert;
 use function dirname;
@@ -32,8 +31,6 @@ use SebastianBergmann\Environment\Console;
 use SebastianBergmann\Invoker\Invoker;
 
 /**
- * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
- *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 final class Merger
@@ -117,12 +114,6 @@ final class Merger
             $failOnDeprecation = $cliConfiguration->failOnDeprecation();
         } else {
             $failOnDeprecation = $xmlConfiguration->phpunit()->failOnDeprecation();
-        }
-
-        if ($cliConfiguration->hasFailOnPhpunitDeprecation()) {
-            $failOnPhpunitDeprecation = $cliConfiguration->failOnPhpunitDeprecation();
-        } else {
-            $failOnPhpunitDeprecation = $xmlConfiguration->phpunit()->failOnPhpunitDeprecation();
         }
 
         if ($cliConfiguration->hasFailOnEmptyTestSuite()) {
@@ -354,14 +345,6 @@ final class Merger
             $coverageTextShowOnlySummary    = $xmlConfiguration->codeCoverage()->text()->showOnlySummary();
         }
 
-        if ($cliConfiguration->hasCoverageTextShowUncoveredFiles()) {
-            $coverageTextShowUncoveredFiles = $cliConfiguration->coverageTextShowUncoveredFiles();
-        }
-
-        if ($cliConfiguration->hasCoverageTextShowOnlySummary()) {
-            $coverageTextShowOnlySummary = $cliConfiguration->coverageTextShowOnlySummary();
-        }
-
         if ($cliConfiguration->hasCoverageText()) {
             $coverageText = $cliConfiguration->coverageText();
         } elseif ($coverageFromXmlConfiguration && $xmlConfiguration->codeCoverage()->hasText()) {
@@ -454,12 +437,6 @@ final class Merger
             $displayDetailsOnTestsThatTriggerDeprecations = $cliConfiguration->displayDetailsOnTestsThatTriggerDeprecations();
         } else {
             $displayDetailsOnTestsThatTriggerDeprecations = $xmlConfiguration->phpunit()->displayDetailsOnTestsThatTriggerDeprecations();
-        }
-
-        if ($cliConfiguration->hasDisplayDetailsOnPhpunitDeprecations()) {
-            $displayDetailsOnPhpunitDeprecations = $cliConfiguration->displayDetailsOnPhpunitDeprecations();
-        } else {
-            $displayDetailsOnPhpunitDeprecations = $xmlConfiguration->phpunit()->displayDetailsOnPhpunitDeprecations();
         }
 
         if ($cliConfiguration->hasDisplayDetailsOnTestsThatTriggerErrors()) {
@@ -787,7 +764,6 @@ final class Merger
             $xmlConfiguration->codeCoverage()->ignoreDeprecatedCodeUnits(),
             $disableCodeCoverageIgnore,
             $failOnDeprecation,
-            $failOnPhpunitDeprecation,
             $failOnEmptyTestSuite,
             $failOnIncomplete,
             $failOnNotice,
@@ -824,7 +800,6 @@ final class Merger
             $displayDetailsOnIncompleteTests,
             $displayDetailsOnSkippedTests,
             $displayDetailsOnTestsThatTriggerDeprecations,
-            $displayDetailsOnPhpunitDeprecations,
             $displayDetailsOnTestsThatTriggerErrors,
             $displayDetailsOnTestsThatTriggerNotices,
             $displayDetailsOnTestsThatTriggerWarnings,

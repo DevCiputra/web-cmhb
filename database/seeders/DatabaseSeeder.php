@@ -16,6 +16,11 @@ class DatabaseSeeder extends Seeder
         $this->call(DoctorPolyclinicSeeder::class);
         $this->call(ServiceCategorySeeder::class);
 
+        $this->call([
+            RolesTableSeeder::class,
+            UsersTableSeeder::class,
+            ReservationStatusesTableSeeder::class,
+        ]);
         // Anda juga bisa menambahkan seeder lain di sini jika ada
         // $this->call(SeederLainnya::class);
     }

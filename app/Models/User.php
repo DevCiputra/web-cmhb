@@ -20,7 +20,13 @@ class User extends Authenticatable
      */
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['username', 'password', 'email', 'role', 'email_verified_at'];
+    protected $fillable = ['username', 'password', 'email', 'role', 'whatsapp_number', 'email_verified_at'];
+
+
+    public function patient()
+    {
+        return $this->hasOne(Patient::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
