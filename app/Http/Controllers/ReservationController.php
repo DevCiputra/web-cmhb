@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\ServiceMedia;
@@ -227,6 +228,19 @@ class ReservationController extends Controller
     public function indexHomeService()
     {
         return view('management-data.reservation.home-service.index');
+    }
+
+
+    // landing page consultation
+
+    // Method untuk menampilkan halaman konsultasi online
+    public function indexLandingConsultation()
+    {
+        $title = 'Konsultasi Online';
+        // Mengambil semua data dokter beserta relasi poliklinik dan foto
+        $doctors = Doctor::with(['polyclinic', 'photos'])->get();
+
+        return view('landing-page.reservations.online-consultation.index', compact('title', 'doctors'));
     }
 
     public function indexConsultation()
