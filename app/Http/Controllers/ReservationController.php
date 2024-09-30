@@ -218,6 +218,23 @@ class ReservationController extends Controller
         return redirect()->route('reservation.mcu.index', ['page' => $page])->with('success', 'Service restored successfully.');
     }
 
+    public function indexLandingMcu()
+{
+    // Mengambil ID kategori "MCU"
+    $mcuCategoryId = ServiceCategory::where('name', 'MCU')->first()->id;
+
+    // Ambil data service yang sudah dipublish
+    $services = Service::with('medias')
+        ->where('service_category_id', $mcuCategoryId)
+        ->where('is_published', true) // Hanya ambil yang dipublish
+        ->orderBy('created_at', 'desc')
+        ->get(); // Mengambil semua data yang dipublish tanpa pagination
+
+    // Menampilkan data ke view `landing-page.mcu.index`
+    return view('landing-page.mcu.index', compact('services'));
+}
+
+
 
 
     public function indexPoly()
