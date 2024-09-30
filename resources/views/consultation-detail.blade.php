@@ -87,9 +87,9 @@
             <!-- Button Section -->
             <div class="mt-4 consultation-button-section">
                 {{-- @if($booking->payment_status == 'pending') --}}
-                    <a href="" class="btn consultation-payment-button" style="background-color: #0d7c5d; color:white">Lakukan Pembayaran</a>
+                    <a href="" class="btn consultation-payment-button" style="background-color: #0d7c5d; color:white">Konfirmasi Pembayaran</a>
                 {{-- @elseif($booking->payment_status == 'paid') --}}
-                    <a href="" class="btn consultation-invoice-button" style="background-color: #adb5bd; color:white" >Lihat Invoice</a>
+                    <a href="/consultation-invoice" class="btn consultation-invoice-button" style="background-color: #adb5bd; color:white" >Lihat Invoice</a>
                 {{-- @endif --}}
             </div>
         </div>

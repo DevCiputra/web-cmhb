@@ -66,7 +66,7 @@
                 <p><strong>Biaya Konsultasi</strong><br> Rp. 500.000,00</p>
                 <p><strong>Tanggal & Waktu Reservasi</strong><br> 15 September 2024, 14:00 WITA</p>
                 <p><strong>Tanggal & Waktu Pembayaran</strong><br> 15 September 2024, 15:30 WITA</p>
-                <p><strong>Tanggal & Waktu Konfirmasi</strong><br> 15 September 2024, 15:34 WITA</p>
+                {{-- <p><strong>Tanggal & Waktu Konfirmasi</strong><br> 15 September 2024, 15:34 WITA</p> --}}
                 <p><strong>Tanggal & Waktu Pemesanan Berhasil</strong><br> 15 September 2024, 16:00 WITA</p>
             </div>
         </div>
