@@ -22,36 +22,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//RESERVASI ONLINE
-Route::get('/online-consultation', function () {
-    return view('landing-page.contents.consultation');
-});
-
-Route::get('/consultation-form', function () {
-    return view('consultation-form');
-});
-
-Route::get('/consultation-confirmation', function () {
-    return view('consultation-confirmation');
-});
-
-Route::get('/consultation-detail', function () {
-    return view('consultation-detail');
-});
-
-Route::get('/consultation-invoice', function () {
-    return view('consultation-invoice');
-});
 
 // MODUL LANDING PAGE
 
 Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
-Route::get('/doctor', [LandingPageController::class, 'doctor'])->name('doctor');
 Route::get('/medical-check-up', [LandingPageController::class, 'medicalCheckUp'])->name('medical-check-up');
 Route::get('/home-service', [LandingPageController::class, 'homeService'])->name('home-service');
 Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('polyclinic');
 Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
 Route::get('/information', [LandingPageController::class, 'information'])->name('information');
+
+
+// Route untuk menampilkan daftar dokter
+Route::get('/doctor', [LandingPageController::class, 'doctor'])->name('doctor.landing');
+
+// Route untuk menampilkan profil dokter berdasarkan ID
+Route::get('/doctor/profile/{id}', [LandingPageController::class, 'showDoctor'])->name('doctor.show.landing');
+
+Route::get('/search-doctor', [DoctorController::class, 'searchDoctor'])->name('doctor.search');
+
+
 
 // END MODUL
 
@@ -64,9 +54,6 @@ Route::get(
 
 // END MODUL
 
-Route::get('/profile', function () {
-    return view('dokter_profile');
-});
 
 Route::get('/mcu_detail', function () {
     return view('mcu_detail');
@@ -104,7 +91,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 // END MODUL
 
 
-// MODUL RESERVATION
+// MODUL RESERVATION DATA
 // mcu
 Route::get('/reservation-mcu', [ReservationController::class, 'indexMcu'])->name('reservation.mcu.index');
 Route::get('/reservation-mcu/create', [ReservationController::class, 'createMcu'])->name('reservation.mcu.create');
@@ -136,6 +123,33 @@ Route::get('/reservation-online-consultation/invoice', [ReservationController::c
 // end
 // END MODUL
 
+// MODUL RESERVATION LANDING PAGE
+
+
+//RESERVASI ONLINE
+Route::get('/online-consultation', [
+    ReservationController::class,
+    'indexLandingConsultation'
+])->name('reservation.onlineconsultation.landing');
+
+Route::get('/consultation-form', function () {
+    return view('consultation-form');
+});
+
+Route::get('/consultation-confirmation', function () {
+    return view('consultation-confirmation');
+});
+
+Route::get('/consultation-detail', function () {
+    return view('consultation-detail');
+});
+
+Route::get('/consultation-invoice', function () {
+    return view('consultation-invoice');
+});
+
+// END MODUL
+
 // MODUL INFORMATION
 
 // article
@@ -143,7 +157,7 @@ Route::get('/information-article', [InformationController::class, 'indexArticle'
 // end
 
 // promote
-Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.article.index');
+Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
 // end
 
 // END MODUL

@@ -3,7 +3,7 @@
     <div class="nav-header">
         <div class="nav-title">
             <a href="/">
-                <img src="images/logo.png" alt="Ciputra Mitra Hospital Logo">
+                <img src="{{ asset('images/logo.png') }}" alt="Ciputra Mitra Hospital Logo">
             </a>
         </div>
     </div>

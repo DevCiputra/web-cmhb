@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 
 class LandingPageController extends Controller
@@ -14,9 +15,22 @@ class LandingPageController extends Controller
 
     public function doctor()
     {
-
         $title = 'Cari Dokter';
-        return view('landing-page.contents.doctor', compact('title'));
+        // Mengambil semua data dokter beserta relasi poliklinik dan foto
+        $doctors = Doctor::with(['polyclinic', 'photos'])->get();
+
+        return view('landing-page.contents.doctor', compact('title', 'doctors'));
+    }
+
+    // Method untuk menampilkan profil dokter
+    public function showDoctor($id)
+    {
+        // Ambil data dokter berdasarkan ID
+        $doctor = Doctor::with(['photos', 'education', 'schedules', 'medias'])->find($id);
+
+
+        // Kembali ke view untuk menampilkan detail dokter
+        return view('landing-page.contents.doctor-profile', compact('doctor'));
     }
 
     public function medicalCheckUp()

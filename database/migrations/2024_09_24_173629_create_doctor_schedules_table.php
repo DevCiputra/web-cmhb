@@ -26,7 +26,7 @@ return new class extends Migration
             $table->index('doctor_id');
             $table->index('day_of_week');
         });
-    }
+    }h
 
 
     /**
