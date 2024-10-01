@@ -11,6 +11,7 @@ namespace PHPUnit\Framework;
 
 use const PHP_EOL;
 use function assert;
+use function class_exists;
 use function defined;
 use function error_clear_last;
 use function extension_loaded;
@@ -45,8 +46,6 @@ use SebastianBergmann\Template\Template;
 use Throwable;
 
 /**
- * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
- *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 final class TestRunner
@@ -360,22 +359,22 @@ final class TestRunner
      */
     private function hasCoverageMetadata(string $className, string $methodName): bool
     {
-        foreach (MetadataRegistry::parser()->forClassAndMethod($className, $methodName) as $metadata) {
-            if ($metadata->isCovers()) {
-                return true;
-            }
+        $metadata = MetadataRegistry::parser()->forClassAndMethod($className, $methodName);
 
-            if ($metadata->isCoversClass()) {
-                return true;
-            }
+        if ($metadata->isCovers()->isNotEmpty()) {
+            return true;
+        }
 
-            if ($metadata->isCoversFunction()) {
-                return true;
-            }
+        if ($metadata->isCoversClass()->isNotEmpty()) {
+            return true;
+        }
 
-            if ($metadata->isCoversNothing()) {
-                return true;
-            }
+        if ($metadata->isCoversFunction()->isNotEmpty()) {
+            return true;
+        }
+
+        if ($metadata->isCoversNothing()->isNotEmpty()) {
+            return true;
         }
 
         return false;
@@ -384,6 +383,12 @@ final class TestRunner
     private function canTimeLimitBeEnforced(): bool
     {
         if ($this->timeLimitCanBeEnforced !== null) {
+            return $this->timeLimitCanBeEnforced;
+        }
+
+        if (!class_exists(Invoker::class)) {
+            $this->timeLimitCanBeEnforced = false;
+
             return $this->timeLimitCanBeEnforced;
         }
 

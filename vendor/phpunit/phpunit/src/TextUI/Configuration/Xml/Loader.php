@@ -75,8 +75,6 @@ use SebastianBergmann\CodeCoverage\Report\Html\Colors;
 use SebastianBergmann\CodeCoverage\Report\Thresholds;
 
 /**
- * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
- *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 final class Loader
@@ -818,7 +816,6 @@ final class Loader
             $this->getBooleanAttribute($document->documentElement, 'displayDetailsOnIncompleteTests', false),
             $this->getBooleanAttribute($document->documentElement, 'displayDetailsOnSkippedTests', false),
             $this->getBooleanAttribute($document->documentElement, 'displayDetailsOnTestsThatTriggerDeprecations', false),
-            $this->getBooleanAttribute($document->documentElement, 'displayDetailsOnPhpunitDeprecations', false),
             $this->getBooleanAttribute($document->documentElement, 'displayDetailsOnTestsThatTriggerErrors', false),
             $this->getBooleanAttribute($document->documentElement, 'displayDetailsOnTestsThatTriggerNotices', false),
             $this->getBooleanAttribute($document->documentElement, 'displayDetailsOnTestsThatTriggerWarnings', false),
@@ -827,7 +824,6 @@ final class Loader
             $bootstrap,
             $this->getBooleanAttribute($document->documentElement, 'processIsolation', false),
             $this->getBooleanAttribute($document->documentElement, 'failOnDeprecation', false),
-            $this->getBooleanAttribute($document->documentElement, 'failOnPhpunitDeprecation', false),
             $this->getBooleanAttribute($document->documentElement, 'failOnEmptyTestSuite', false),
             $this->getBooleanAttribute($document->documentElement, 'failOnIncomplete', false),
             $this->getBooleanAttribute($document->documentElement, 'failOnNotice', false),

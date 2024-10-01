@@ -10,7 +10,8 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,6 +52,21 @@ Route::get('/mcu/{id}', [LandingPageController::class, 'showMcuDetail'])->name('
 
 
 // END MODUL
+
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Link verifikasi telah dikirim ke email Anda.');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // MODUL ACCOUNT
 
@@ -276,128 +292,4 @@ Route::get('/edit_mcu', function () {
     return view('manajemen_data.reservasi.forms.form_editmcu');
 });
 
-Route::get('/view_mcu', function () {
-    return view('manajemen_data.reservasi.kontens.data_viewmcu');
-});
-
-Route::get('/dashboard_poli', function () {
-    return view('manajemen_data.reservasi.kontens.data_poliklinik');
-});
-
-Route::get('/tambah_poli', function () {
-    return view('manajemen_data.reservasi.forms.form_tambahpoliklinik');
-});
-
-Route::get('/edit_poli', function () {
-    return view('manajemen_data.reservasi.forms.form_editpoliklinik');
-});
-
-Route::get('/dashboard_homeservice', function () {
-    return view('manajemen_data.reservasi.kontens.data_homeservice');
-});
-
-Route::get('/tambah_homeservice', function () {
-    return view('manajemen_data.reservasi.forms.form_tambahhomeservice');
-});
-
-Route::get('/edit_homeservice', function () {
-    return view('manajemen_data.reservasi.forms.form_edithomeservice');
-});
-
-Route::get('/dashboard_artikel', function () {
-    return view('manajemen_data.informasi.kontens.data_artikel');
-});
-
-Route::get('/tambah_artikel', function () {
-    return view('manajemen_data.informasi.forms.form_tambahartikel');
-});
-
-Route::get('/edit_artikel', function () {
-    return view('manajemen_data.informasi.forms.form_editartikel');
-});
-
-Route::get('/view_artikel', function () {
-    return view('manajemen_data.informasi.kontens.data_viewartikel');
-});
-
-Route::get('/dashboard_promosi', function () {
-    return view('manajemen_data.informasi.kontens.data_promosi');
-});
-
-Route::get('/tambah_promosi', function () {
-    return view('manajemen_data.informasi.forms.form_tambahpromosi');
-});
-
-Route::get('/edit_promosi', function () {
-    return view('manajemen_data.informasi.forms.form_editpromosi');
-});
-
-Route::get('/view_promosi', function () {
-    return view('manajemen_data.informasi.kontens.data_viewpromosi');
-});
-
-Route::get('/dashboard_dokter', function () {
-    return view('manajemen_data.dokter.kontens.data_dokter');
-});
-
-Route::get('/tambah_dokter', function () {
-    return view('manajemen_data.dokter.forms.form_tambahdokter');
-});
-
-Route::get('/edit_dokter', function () {
-    return view('manajemen_data.dokter.forms.form_editdokter');
-});
-
-Route::get('/view_dokter', function () {
-    return view('manajemen_data.dokter.kontens.data_viewdokter');
-});
-
-// DASHBOARD MASTER DATA
-Route::get('/dashboard_user', function () {
-    return view('manajemen_data.master.kontens.masterdata_user');
-});
-
-Route::get('/tambah_user', function () {
-    return view('manajemen_data.master.forms.form_tambahuser');
-});
-
-Route::get('/edit_user', function () {
-    return view('manajemen_data.master.forms.form_edituser');
-});
-
-
-Route::get('/dashboard_role', function () {
-    return view('manajemen_data.master.kontens.masterdata_role');
-});
-
-Route::get('/tambah_role', function () {
-    return view('manajemen_data.master.forms.form_tambahrole');
-});
-
-Route::get('/edit_role', function () {
-    return view('manajemen_data.master.forms.form_editrole');
-});
-
-Route::get('/dashboard_infors', function () {
-    return view('manajemen_data.master.kontens.masterdata_infors');
-});
-
-Route::get('/tambah_infors', function () {
-    return view('manajemen_data.master.forms.form_tambahinfors');
-});
-
-Route::get('/edit_infors', function () {
-    return view('manajemen_data.master.forms.form_editinfors');
-});
-
-Route::get('/dashboard_galerirs', function () {
-    return view('manajemen_data.master.kontens.masterdata_galerirs');
-});
-
-Route::get('/tambah_galerirs', function () {
-    return view('manajemen_data.master.forms.form_tambahgalerirs');
-});
-
-Route::get('/edit_galerirs', function () {
-    return view('manajemen_data.master.forms.form_editgalerirs');
-});
+require __DIR__ . '/auth.php';

@@ -9,7 +9,6 @@
  */
 namespace PHPUnit\Util\Xml;
 
-use const PHP_OS_FAMILY;
 use function chdir;
 use function dirname;
 use function error_reporting;
@@ -21,8 +20,6 @@ use function sprintf;
 use DOMDocument;
 
 /**
- * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
- *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 final class Loader
