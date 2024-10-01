@@ -46,9 +46,17 @@ body {
 
 
 /* CARD mcu */
+
+
 .mcu-cards-container .col-md-3 {
     padding-left: 15px;
     padding-right: 15px;
+}
+
+.row {
+    display: flex; /* Menggunakan flexbox untuk penataan */
+    flex-wrap: wrap; /* Mengizinkan card untuk membungkus ke baris berikutnya */
+    justify-content: flex-start; /* Mengatur agar card rata kiri */
 }
 
 .mcu-card {
@@ -272,69 +280,35 @@ body {
 
 
 @media (max-width: 768px) {
-
     .header-section h1 {
         margin-top: 40px;
         font-size: 1.5rem;
     }
 
-    .header-section p {
-        font-size: 1rem;
-
-    }
-
     .mcu-cards-container .col-md-3 {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 5%;
+        padding-right: 5%;
         margin-bottom: 20px; /* Add spacing between the cards */
     }
 
     .mcu-card {
-        width: 80%; /* Make the card slightly smaller than full width */
-        margin: 0 auto; /* Center the card on the screen */
-        height: 350px; /* Adjust the card height */
-    }
-
-    .mcu-card-img-top {
-        height: 150px; /* Reduce the image height */
-    }
-
-    .mcu-card-body {
-        padding: 10px;
-        height: calc(100% - 150px); /* Adjust content height relative to image height */
-    }
-
-    .title {
-        font-size: 1.1rem;
-    }
-
-    .price {
-        font-size: 0.9rem;
-    }
-
-    .description {
-        font-size: 0.9rem;
+        width: 90%; /* Increase width for better visibility */
+        margin: 0 auto; /* Center the card */
+        height: 350px; /* Adjust card height */
     }
 
     .btn-selengkapnya {
         font-size: 0.9rem;
         bottom: 10px;
         right: 10px;
+        transition: color 0.3s; /* Add transition for color */
     }
 
-    .pagination-container {
-        margin-top: 10px;
+    .btn-selengkapnya:hover {
+        color: #0d6efd; /* Change text color on hover */
+        text-decoration: underline; /* Add underline effect */
     }
-
-    .emergency-card h1 {
-        font-size: 1.5rem;
-    }
-
-    .emergency-buttons a {
-        font-size: 0.8rem;
-        padding: 1rem;
-    }
-
 }
+
 
 

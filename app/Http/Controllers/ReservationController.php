@@ -27,7 +27,7 @@ class ReservationController extends Controller
                 return $query->search($keyword); // Menggunakan scope search jika ada keyword
             })
             ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan tanggal dibuat terbaru
-            ->paginate(4); // Membatasi tampilan maksimal 4 data per halaman
+            ->paginate(8); // Membatasi tampilan maksimal 4 data per halaman
 
         // Menampilkan data ke view
         return view('management-data.reservation.medical-check-up.index', compact('services'));
