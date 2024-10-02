@@ -34,14 +34,21 @@ Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('p
 Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
 Route::get('/information', [LandingPageController::class, 'information'])->name('information');
 
-
+// DOKTER
 // Route untuk menampilkan daftar dokter
 Route::get('/doctor', [LandingPageController::class, 'doctor'])->name('doctor.landing');
 
 // Route untuk menampilkan profil dokter berdasarkan ID
 Route::get('/doctor/profile/{id}', [LandingPageController::class, 'showDoctor'])->name('doctor.show.landing');
-
 Route::get('/search-doctor', [DoctorController::class, 'searchDoctor'])->name('doctor.search');
+
+// MCU
+// Route untuk menampilkan daftar layanan MCU di landing page
+Route::get('/medical-check-up', [LandingPageController::class, 'medicalCheckUp'])->name('mcu.landing');
+
+// Route untuk menampilkan detail layanan MCU berdasarkan ID
+Route::get('/medical-check-up/detail/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail.landing');
+Route::get('/mcu/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail');
 
 
 
@@ -137,6 +144,8 @@ Route::delete('/reservation-mcu/{service}', [ReservationController::class, 'dest
 Route::patch('reservation/mcu/restore/{id}', [ReservationController::class, 'restoreMcu'])->name('reservation.mcu.restore');
 Route::get('/reservation-mcu/{id}', [ReservationController::class, 'detailMcu'])->name('reservation.mcu.detail');
 Route::patch('/reservation-mcu/unpublish/{service}', [ReservationController::class, 'unpublishMcu'])->name('reservation.mcu.unpublish');
+Route::get('/mcu', [ReservationController::class, 'indexLandingMcu'])->name('landing.mcu.index');
+
 
 
 // end

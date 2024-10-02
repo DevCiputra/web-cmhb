@@ -27,7 +27,7 @@ class ReservationController extends Controller
                 return $query->search($keyword); // Menggunakan scope search jika ada keyword
             })
             ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan tanggal dibuat terbaru
-            ->paginate(4); // Membatasi tampilan maksimal 4 data per halaman
+            ->paginate(8); // Membatasi tampilan maksimal 4 data per halaman
 
         // Menampilkan data ke view
         return view('management-data.reservation.medical-check-up.index', compact('services'));
@@ -217,6 +217,23 @@ class ReservationController extends Controller
         $page = $request->input('page'); // Ambil parameter page
         return redirect()->route('reservation.mcu.index', ['page' => $page])->with('success', 'Service restored successfully.');
     }
+
+    public function indexLandingMcu()
+{
+    // Mengambil ID kategori "MCU"
+    $mcuCategoryId = ServiceCategory::where('name', 'MCU')->first()->id;
+
+    // Ambil data service yang sudah dipublish
+    $services = Service::with('medias')
+        ->where('service_category_id', $mcuCategoryId)
+        ->where('is_published', true) // Hanya ambil yang dipublish
+        ->orderBy('created_at', 'desc')
+        ->get(); // Mengambil semua data yang dipublish tanpa pagination
+
+    // Menampilkan data ke view `landing-page.mcu.index`
+    return view('landing-page.mcu.index', compact('services'));
+}
+
 
 
 
