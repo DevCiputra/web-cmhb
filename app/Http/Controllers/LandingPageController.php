@@ -72,7 +72,6 @@ class LandingPageController extends Controller
 
     public function homeService()
     {
-
         $title = 'Home Service';
         return view('landing-page.contents.home-service', compact('title'));
     }

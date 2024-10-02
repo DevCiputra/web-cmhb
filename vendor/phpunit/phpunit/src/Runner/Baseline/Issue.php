@@ -9,7 +9,6 @@
  */
 namespace PHPUnit\Runner\Baseline;
 
-use const FILE_IGNORE_NEW_LINES;
 use function assert;
 use function file;
 use function is_file;
@@ -17,8 +16,6 @@ use function sha1;
 use PHPUnit\Runner\FileDoesNotExistException;
 
 /**
- * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
- *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 final class Issue
@@ -140,7 +137,7 @@ final class Issue
 
         $hash = sha1($lines[$key]);
 
-        assert($hash !== '');
+        assert(!empty($hash));
 
         return $hash;
     }

@@ -17,9 +17,10 @@
             <div class="col-md-4">
                 <h5>Follow Us</h5>
                 <ul class="social-media">
-                    <li><a href="#"><img src="icons/facebook.png" alt="Facebook"></a></li>
-                    <li><a href="#"><img src="icons/tiktok.png" alt="Tiktok"></a></li>
-                    <li><a href="#"><img src="icons/instagram.png" alt="Instagram"></a></li>
+                    <li><a href="#"><img src="{{ asset('icons/facebook.png') }}" alt="Facebook"></a></li>
+                    <li><a href="#"><img src="{{ asset('icons/tiktok.png') }}" alt="Tiktok"></a></li>
+                    <li><a href="#"><img src="{{ asset('icons/instagram.png') }}" alt="Instagram"></a></li>
+
                 </ul>
             </div>
         </div>

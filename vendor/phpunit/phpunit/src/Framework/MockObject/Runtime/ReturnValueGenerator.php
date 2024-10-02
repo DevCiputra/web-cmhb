@@ -25,8 +25,6 @@ use stdClass;
 use Throwable;
 
 /**
- * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
- *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 final class ReturnValueGenerator
@@ -184,7 +182,6 @@ final class ReturnValueGenerator
     {
         try {
             return (new ReflectionClass($stubClassName))->newInstanceWithoutConstructor();
-            // @codeCoverageIgnoreStart
         } catch (Throwable $t) {
             throw new RuntimeException(
                 sprintf(
@@ -194,7 +191,6 @@ final class ReturnValueGenerator
                     $t->getMessage(),
                 ),
             );
-            // @codeCoverageIgnoreEnd
         }
     }
 
@@ -209,7 +205,6 @@ final class ReturnValueGenerator
     {
         try {
             return (new Generator)->testDouble($type, false, [], [], '', false);
-            // @codeCoverageIgnoreStart
         } catch (Throwable $t) {
             throw new RuntimeException(
                 sprintf(
@@ -219,7 +214,6 @@ final class ReturnValueGenerator
                     $t->getMessage(),
                 ),
             );
-            // @codeCoverageIgnoreEnd
         }
     }
 
@@ -234,7 +228,6 @@ final class ReturnValueGenerator
     {
         try {
             return (new Generator)->testDoubleForInterfaceIntersection($types, false);
-            // @codeCoverageIgnoreStart
         } catch (Throwable $t) {
             throw new RuntimeException(
                 sprintf(
@@ -244,7 +237,6 @@ final class ReturnValueGenerator
                     $t->getMessage(),
                 ),
             );
-            // @codeCoverageIgnoreEnd
         }
     }
 }

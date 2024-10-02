@@ -3,7 +3,7 @@
     <div class="nav-header">
         <div class="nav-title">
             <a href="/">
-                <img src="/images/logo.png" alt="Ciputra Mitra Hospital Logo">
+                <img src="{{ asset('images/logo.png') }}" alt="Ciputra Mitra Hospital Logo">
             </a>
         </div>
     </div>
@@ -39,7 +39,25 @@
             </ul>
         </li>
         <li><a class="nav-link" href="#emergency">IGD 24 Jam</a></li>
-        <li><a href="/account" class="btn-account">Akun Saya</a></li>
+
+        @if(Auth::check())
+        <!-- Jika halaman title == "Akun Saya" -->
+        @if(isset($title) && $title === 'Akun Saya')
+        <li>
+            <a href="{{ route('logout') }}" class="btn-account" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Logout
+            </a>
+        </li>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+        @else
+        <li><a href="{{ route('account-index') }}" class="btn-account">Akun Saya</a></li>
+        @endif
+        @else
+        <li><a href="{{ route('register') }}" class="btn-account">Daftar</a></li>
+        @endif
+
     </ul>
     @else
     <!-- Navbar default (untuk halaman umum atau beranda) -->
@@ -64,7 +82,13 @@
             </ul>
         </li>
         <li><a class="nav-link" href="#emergency">IGD 24 Jam</a></li>
-        <li><a href="/account" class="btn-account">Akun Saya</a></li>
+
+        @if(Auth::check())
+        <!-- Tampilkan Akun Saya jika user sudah login di halaman beranda -->
+        <li><a href="{{ route('account-index') }}" class="btn-account">Akun Saya</a></li>
+        @else
+        <li><a href="{{ route('register') }}" class="btn-account">Akun Saya</a></li>
+        @endif
     </ul>
     @endif
 </nav>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\InformationController;
@@ -10,7 +11,8 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,17 +67,38 @@ Route::get('/consultation-invoice', function () {
     return view('consultation-invoice');
 });
 
-// END MODUL
+// MODUL LANDING PAGE
+
+Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
+Route::get('/medical-check-up', [LandingPageController::class, 'medicalCheckUp'])->name('medical-check-up');
+Route::get('/home-service', [LandingPageController::class, 'homeService'])->name('home-service');
+Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('polyclinic');
+Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
+Route::get('/information', [LandingPageController::class, 'information'])->name('information');
+
+// DOKTER
+// Route untuk menampilkan daftar dokter
+Route::get('/doctor', [LandingPageController::class, 'doctor'])->name('doctor.landing');
+
+// Route untuk menampilkan profil dokter berdasarkan ID
+Route::get('/doctor/profile/{id}', [LandingPageController::class, 'showDoctor'])->name('doctor.show.landing');
+Route::get('/search-doctor', [DoctorController::class, 'searchDoctor'])->name('doctor.search');
+
+// MCU
+// Route untuk menampilkan daftar layanan MCU di landing page
+Route::get('/medical-check-up', [LandingPageController::class, 'medicalCheckUp'])->name('mcu.landing');
+
+// Route untuk menampilkan detail layanan MCU berdasarkan ID
+Route::get('/medical-check-up/detail/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail.landing');
+Route::get('/mcu/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail');
+
 
 
 // END MODUL
 
 // MODUL ACCOUNT
 
-Route::get(
-    '/account',
-    [AccountController::class, 'index']
-)->name('account-index');
+
 
 // END MODUL
 
@@ -109,6 +132,41 @@ Route::get('/register', function () {
 });
 
 
+// MODUL AUTH
+
+Route::group(['middleware' => ['guest']], function () {
+    // Route untuk menampilkan halaman registrasi
+    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+
+    // Route untuk menangani proses registrasi
+    Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+
+    // Route untuk menampilkan halaman login
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+});
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Route untuk menampilkan halaman permintaan reset password
+Route::get('/password/reset', [AuthController::class, 'showResetPasswordRequestForm'])->name('password.reset.request');
+
+// Route untuk menangani proses permintaan reset password
+Route::post('/password/reset', [AuthController::class, 'resetPasswordRequest'])->name('password.reset.process');
+
+// Route untuk menampilkan form ganti password berdasarkan token
+Route::get('/password/reset/{token}', [AuthController::class, 'showResetForm'])->name('password.reset.token');
+
+// Route untuk memperbarui password user
+Route::post('/password/reset/{token}', [AuthController::class, 'updatePassword'])->name('password.update');
+
+// Route untuk akun pasien, hanya bisa diakses oleh user dengan role pasien
+Route::middleware(['auth', 'role:Pasien'])->group(function () {
+    Route::get('/account', [AccountController::class, 'index'])->name('account-index');
+});
+
+// END MODUL AUTH
+
 // MODUL DASHBOARD
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard-page');
@@ -129,6 +187,8 @@ Route::patch('reservation/mcu/restore/{id}', [ReservationController::class, 'res
 Route::get('/reservation-mcu/{id}', [ReservationController::class, 'detailMcu'])->name('reservation.mcu.detail');
 Route::patch('/reservation-mcu/unpublish/{service}', [ReservationController::class, 'unpublishMcu'])->name('reservation.mcu.unpublish');
 Route::get('/mcu', [ReservationController::class, 'indexLandingMcu'])->name('landing.mcu.index');
+
+Route::get('/mcu', [ReservationController::class, 'indexLandingMcu'])->name('landing.mcu.index');
 // end
 
 // poly
@@ -145,6 +205,33 @@ Route::get('/reservation-online-consultation/detail', [ReservationController::cl
 Route::get('/reservation-online-consultation/invoice', [ReservationController::class, 'invoiceConsultation'])->name('reservation.onlineconsultation.invoice');
 
 // end
+// END MODUL
+
+// MODUL RESERVATION LANDING PAGE
+
+
+//RESERVASI ONLINE
+Route::get('/online-consultation', [
+    ReservationController::class,
+    'indexLandingConsultation'
+])->name('reservation.onlineconsultation.landing');
+
+Route::get('/consultation-form', function () {
+    return view('consultation-form');
+});
+
+Route::get('/consultation-confirmation', function () {
+    return view('consultation-confirmation');
+});
+
+Route::get('/consultation-detail', function () {
+    return view('consultation-detail');
+});
+
+Route::get('/consultation-invoice', function () {
+    return view('consultation-invoice');
+});
+
 // END MODUL
 
 
@@ -266,131 +353,6 @@ Route::get('/edit_mcu', function () {
     return view('manajemen_data.reservasi.forms.form_editmcu');
 });
 
-Route::get('/view_mcu', function () {
-    return view('manajemen_data.reservasi.kontens.data_viewmcu');
-});
-
-Route::get('/dashboard_poli', function () {
-    return view('manajemen_data.reservasi.kontens.data_poliklinik');
-});
-
-Route::get('/tambah_poli', function () {
-    return view('manajemen_data.reservasi.forms.form_tambahpoliklinik');
-});
-
-Route::get('/edit_poli', function () {
-    return view('manajemen_data.reservasi.forms.form_editpoliklinik');
-});
-
-Route::get('/dashboard_homeservice', function () {
-    return view('manajemen_data.reservasi.kontens.data_homeservice');
-});
-
-Route::get('/tambah_homeservice', function () {
-    return view('manajemen_data.reservasi.forms.form_tambahhomeservice');
-});
-
-Route::get('/edit_homeservice', function () {
-    return view('manajemen_data.reservasi.forms.form_edithomeservice');
-});
-
-Route::get('/dashboard_artikel', function () {
-    return view('manajemen_data.informasi.kontens.data_artikel');
-});
-
-Route::get('/tambah_artikel', function () {
-    return view('manajemen_data.informasi.forms.form_tambahartikel');
-});
-
-Route::get('/edit_artikel', function () {
-    return view('manajemen_data.informasi.forms.form_editartikel');
-});
-
-Route::get('/view_artikel', function () {
-    return view('manajemen_data.informasi.kontens.data_viewartikel');
-});
-
-Route::get('/dashboard_promosi', function () {
-    return view('manajemen_data.informasi.kontens.data_promosi');
-});
-
-Route::get('/tambah_promosi', function () {
-    return view('manajemen_data.informasi.forms.form_tambahpromosi');
-});
-
-Route::get('/edit_promosi', function () {
-    return view('manajemen_data.informasi.forms.form_editpromosi');
-});
-
-Route::get('/view_promosi', function () {
-    return view('manajemen_data.informasi.kontens.data_viewpromosi');
-});
-
-Route::get('/dashboard_dokter', function () {
-    return view('manajemen_data.dokter.kontens.data_dokter');
-});
-
-Route::get('/tambah_dokter', function () {
-    return view('manajemen_data.dokter.forms.form_tambahdokter');
-});
-
-Route::get('/edit_dokter', function () {
-    return view('manajemen_data.dokter.forms.form_editdokter');
-});
-
-Route::get('/view_dokter', function () {
-    return view('manajemen_data.dokter.kontens.data_viewdokter');
-});
-
-// DASHBOARD MASTER DATA
-Route::get('/dashboard_user', function () {
-    return view('manajemen_data.master.kontens.masterdata_user');
-});
-
-Route::get('/tambah_user', function () {
-    return view('manajemen_data.master.forms.form_tambahuser');
-});
-
-Route::get('/edit_user', function () {
-    return view('manajemen_data.master.forms.form_edituser');
-});
-
-
-Route::get('/dashboard_role', function () {
-    return view('manajemen_data.master.kontens.masterdata_role');
-});
-
-Route::get('/tambah_role', function () {
-    return view('manajemen_data.master.forms.form_tambahrole');
-});
-
-Route::get('/edit_role', function () {
-    return view('manajemen_data.master.forms.form_editrole');
-});
-
-Route::get('/dashboard_infors', function () {
-    return view('manajemen_data.master.kontens.masterdata_infors');
-});
-
-Route::get('/tambah_infors', function () {
-    return view('manajemen_data.master.forms.form_tambahinfors');
-});
-
-Route::get('/edit_infors', function () {
-    return view('manajemen_data.master.forms.form_editinfors');
-});
-
-Route::get('/dashboard_galerirs', function () {
-    return view('manajemen_data.master.kontens.masterdata_galerirs');
-});
-
-Route::get('/tambah_galerirs', function () {
-    return view('manajemen_data.master.forms.form_tambahgalerirs');
-});
-
-Route::get('/edit_galerirs', function () {
-    return view('manajemen_data.master.forms.form_editgalerirs');
-});
 
 Route::get('/coming-soon', function () {
     return view('landing-page.contents.coming-soon');

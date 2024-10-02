@@ -9,7 +9,6 @@
  */
 namespace PHPUnit\Event\Test;
 
-use const PHP_EOL;
 use function sprintf;
 use PHPUnit\Event\Event;
 use PHPUnit\Event\Telemetry;
