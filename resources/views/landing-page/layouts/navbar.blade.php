@@ -3,7 +3,7 @@
     <div class="nav-header">
         <div class="nav-title">
             <a href="/">
-                <img src="images/logo.png" alt="Ciputra Mitra Hospital Logo">
+                <img src="/images/logo.png" alt="Ciputra Mitra Hospital Logo">
             </a>
         </div>
     </div>
@@ -34,8 +34,8 @@
         <li class="nav-item dropdown">
             <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Fitur</a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/skrining-depresi">Skrining Depresi</a></li>
-                <li><a class="dropdown-item" href="/bmi">BMI</a></li>
+                <li><a class="dropdown-item" href="/coming-soon">Skrining Depresi</a></li>
+                <li><a class="dropdown-item" href="/coming-soon">BMI</a></li>
             </ul>
         </li>
         <li><a class="nav-link" href="#emergency">IGD 24 Jam</a></li>

@@ -48,6 +48,12 @@ body {
     padding-right: 15px;
 }
 
+.row {
+    display: flex; /* Menggunakan flexbox untuk penataan */
+    flex-wrap: wrap; /* Mengizinkan card untuk membungkus ke baris berikutnya */
+    justify-content: flex-start; /* Mengatur agar card rata kiri */
+}
+
 .doctor-card {
     position: relative;
     border-radius: 10px;
@@ -292,7 +298,6 @@ body {
     }
 
 }
-
 
 
 

@@ -19,33 +19,32 @@
 
                 <!-- Filter Card Section -->
                 <div class="row justify-content-center">
-                    <div class="col-md-8 col-md-6">
+                    <div class="col-md-8">
                         <div class="card-filter mb-4">
                             <div class="filter-card-body">
                                 <div class="row">
                                     <!-- Search Bar -->
                                     <div class="col-md-4 mb-2">
-                                        <input type="text" class="form-control" placeholder="Cari dokter...">
+                                        <input type="text" class="form-control" id="doctorSearch"
+                                            placeholder="Cari dokter...">
                                     </div>
-                                    <!-- Filter Dropdown -->
-                                    <div class="col-md-4">
-                                        <select class="form-select">
-                                            <option selected>Pilih Poliklinik</option>
-                                            <option value="1">Poli Anak</option>
-                                            <option value="2">Poli Gizi</option>
-                                            <option value="3">Poli Internis</option>
-                                            <option value="4">Poli Mata</option>
-                                            <!-- Add more options as needed -->
+                                    <!-- Filter Dropdown for Polyclinic -->
+                                    <div class="col-md-4 mb-2">
+                                        <select class="form-select" id="polyclinicSelect">
+                                            <option value="">Pilih Poliklinik</option>
+                                            @foreach ($polyclinics as $polyclinic)
+                                                <option value="{{ $polyclinic->id }}">{{ $polyclinic->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
-                                        <select class="form-select">
-                                            <option selected>Pilih Spesialis</option>
-                                            <option value="1">Cardiologist</option>
-                                            <option value="2">Dermatologist</option>
-                                            <option value="3">Pediatrician</option>
-                                            <option value="4">General Practitioner</option>
-                                            <!-- Add more options as needed -->
+
+                                    <!-- Filter Dropdown for Specialization -->
+                                    <div class="col-md-4 mb-2">
+                                        <select class="form-select" id="specializationSelect">
+                                            <option value="">Pilih Spesialis</option>
+                                            @foreach ($specializations as $specialization)
+                                                <option value="{{ $specialization }}">{{ $specialization }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -56,206 +55,57 @@
 
                 <!-- Doctor Cards Container -->
                 <div class="doctor-cards-container">
-                    <div class="row">
-                        <!-- Card 1 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter1.jpg') }}" alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Anak</p>
-                                    <h5 class="name">Dr. John Doe, Sp.A.</h5>
-                                    <p class="specialist">Spesialis Anak</p>
-                                    <a href="/profile" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="row" id="doctorCardsContainer">
+                        @foreach ($doctors as $doctor)
+                            <div class="col-md-3 mb-4 doctor-card-wrapper">
+                                <div class="doctor-card">
+                                    @php
+                                        $photoUrl = $doctor->photos->isNotEmpty()
+                                            ? asset(
+                                                'storage/doctor/photos/' .
+                                                    $doctor->id .
+                                                    '/' .
+                                                    $doctor->photos->first()->name,
+                                            )
+                                            : asset('images/default-doctor.jpg'); // Default image jika tidak ada foto
+                                    @endphp
 
-                        <!-- Card 2 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter2.jpg') }}" alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Bedah</p>
-                                    <h5 class="name">Dr. Jane Smith, Sp.B.</h5>
-                                    <p class="specialist">Spesialis Bedah</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
+                                    <img class="doctor-card-img-top" src="{{ $photoUrl }}" alt="Doctor Image">
+                                    <div class="doctor-card-body">
+                                        <p class="polyclinic">{{ $doctor->polyclinic->name ?? 'N/A' }}</p>
+                                        <h5 class="name">{{ $doctor->name }}</h5>
+                                        <p class="specialist">{{ $doctor->specialization_name }}</p>
+                                        <a href="{{ route('doctor.show.landing', $doctor->id) }}">
+                                            Lihat Profil
+                                            <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
+                                                class="chevron-icon">
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Card 3 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter3.jpg') }}" alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Internis</p>
-                                    <h5 class="name">Dr. Emily Johnson, Sp.PD.</h5>
-                                    <p class="specialist">Spesialis Penyakit Dalam</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 4 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter4.jpg') }}" alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Gizi</p>
-                                    <h5 class="name">Dr. Michael Brown, Sp.G.</h5>
-                                    <p class="specialist">Spesialis Gizi</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Additional Cards -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter5.jpg') }}" alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Mata</p>
-                                    <h5 class="name">Dr. Lily Anderson, Sp.M.</h5>
-                                    <p class="specialist">Spesialis Mata</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 1 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter1.jpg') }}"
-                                    alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Anak</p>
-                                    <h5 class="name">Dr. John Doe, Sp.A. </h5>
-                                    <p class="specialist">Spesialis Anak</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 2 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter2.jpg') }}"
-                                    alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Bedah Umum</p>
-                                    <h5 class="name">Dr. Jane Smith, Sp.B.</h5>
-                                    <p class="specialist">Spesialis Bedah</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 3 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter3.jpg') }}"
-                                    alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Internis</p>
-                                    <h5 class="name">Dr. Emily Johnson, Sp.PD.</h5>
-                                    <p class="specialist">Spesialis Penyakit Dalam</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 4 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter4.jpg') }}"
-                                    alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Gizi</p>
-                                    <h5 class="name">Dr. Michael Brown, Sp.G.</h5>
-                                    <p class="specialist">Spesialis Gizi</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 1 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter1.jpg') }}"
-                                    alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Anak</p>
-                                    <h5 class="name">Dr. John Doe, Sp.A. </h5>
-                                    <p class="specialist">Spesialis Anak</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 2 -->
-                        <div class="col-md-3 mb-4">
-                            <div class="doctor-card">
-                                <img class="doctor-card-img-top" src="{{ asset('images/dokter2.jpg') }}"
-                                    alt="Doctor Image">
-                                <div class="doctor-card-body">
-                                    <p class="polyclinic">Poliklinik Bedah Umum</p>
-                                    <h5 class="name">Dr. Jane Smith, Sp.B.</h5>
-                                    <p class="specialist">Spesialis Bedah</p>
-                                    <a href="#" class="btn btn-profil">
-                                        Lihat Profil
-                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                            class="chevron-icon">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        
+                        @endforeach
+                    </div>
 
                     <!-- Pagination Section -->
-                    <div class="pagination-container d-flex justify-content-end">
-                        <nav aria-label="Doctor pagination">
+                    <div class="pagination-container d-flex justify-content-end mt-2">
+                        <nav aria-label="doctor pagination">
                             <ul class="pagination">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                <li class="page-item {{ $doctors->onFirstPage() ? 'disabled' : '' }}">
+                                    <a class="page-link"
+                                        href="{{ $doctors->onFirstPage() ? '#' : $doctors->previousPageUrl() }}"
+                                        tabindex="-1">Previous</a>
                                 </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">1<span class="sr-only"></span></a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
+
+                                @foreach (range(1, $doctors->lastPage()) as $i)
+                                    <li class="page-item {{ $i == $doctors->currentPage() ? 'active' : '' }}">
+                                        <a class="page-link"
+                                            href="{{ $i == $doctors->currentPage() ? '#' : $doctors->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endforeach
+
+                                <li class="page-item {{ $doctors->hasMorePages() ? '' : 'disabled' }}">
+                                    <a class="page-link"
+                                        href="{{ $doctors->hasMorePages() ? $doctors->nextPageUrl() : '#' }}">Next</a>
                                 </li>
                             </ul>
                         </nav>
@@ -263,10 +113,9 @@
                 </div>
             </div>
         </div>
+
         <!-- Emergency Section -->
-        <!-- Emergency FAB -->
         <div id="emergency" class="emergency-fab">
-            <!-- Sub-menu FAB buttons that will collapse/expand -->
             <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
                 <a href="#" class="btn btn-success btn-lg mb-2 rounded-circle">
                     <i class="fas fa-ambulance"></i>
@@ -281,9 +130,60 @@
         </div>
     </div>
 @endsection
+
 @push('scripts')
     <script src="{{ asset('js/navbar.js') }}"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('doctorSearch');
+    const polyclinicSelect = document.getElementById('polyclinicSelect');
+    const specializationSelect = document.getElementById('specializationSelect');
+    const doctorCardsContainer = document.getElementById('doctorCardsContainer');
+    const originalDoctorCards = Array.from(doctorCardsContainer.getElementsByClassName('doctor-card-wrapper')); // Referensi asli kartu dokter
+
+    searchInput.addEventListener('input', filterDoctors);
+    polyclinicSelect.addEventListener('change', filterDoctors);
+    specializationSelect.addEventListener('change', filterDoctors);
+
+    function filterDoctors() {
+        // Ambil nilai dari input search, dropdown poliklinik, dan spesialisasi
+        const searchText = searchInput.value.toLowerCase().trim();
+        const selectedPolyclinic = polyclinicSelect.value;
+        const selectedSpecialization = specializationSelect.value;
+
+        // Bersihkan kontainer kartu sebelum menambahkan kartu yang sesuai
+        doctorCardsContainer.innerHTML = '';
+
+        // Filter kartu berdasarkan input dan dropdown
+        const filteredCards = originalDoctorCards.filter(function (cardWrapper) {
+            const cardName = cardWrapper.querySelector('.name').textContent.toLowerCase();
+            const cardPolyclinic = cardWrapper.querySelector('.polyclinic').textContent.trim();
+            const cardSpecialization = cardWrapper.querySelector('.specialist').textContent.trim();
+
+            const matchesSearch = cardName.includes(searchText);
+            const matchesPolyclinic = selectedPolyclinic ? cardPolyclinic === polyclinicSelect.options[polyclinicSelect.selectedIndex].text : true;
+            const matchesSpecialization = selectedSpecialization ? cardSpecialization === selectedSpecialization : true;
+
+            // Kartu cocok jika memenuhi ketiga filter ini
+            return matchesSearch && matchesPolyclinic && matchesSpecialization;
+        });
+
+        // Jika ada kartu yang sesuai dengan filter, tampilkan kartu tersebut
+        if (filteredCards.length > 0) {
+            filteredCards.forEach(card => doctorCardsContainer.appendChild(card));
+        } else {
+            // Jika tidak ada kartu yang sesuai, tampilkan pesan 'No Results Found'
+            const noResultsMessage = document.createElement('div');
+            noResultsMessage.className = 'col-12 text-center';
+            noResultsMessage.innerHTML = '<p class="mt-4">No Results Found</p>';
+            doctorCardsContainer.appendChild(noResultsMessage);
+        }
+    }
+});
+
+
+
+        // EMERGENCY    
         function toggleEmergencyButtons() {
             const buttons = document.getElementById("emergency-buttons");
             buttons.classList.toggle("expand");

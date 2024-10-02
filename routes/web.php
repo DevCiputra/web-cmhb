@@ -22,10 +22,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//RESERVASI ONLINE
-Route::get('/online-consultation', function () {
-    return view('landing-page.contents.consultation');
-});
+
+// MODUL LANDING PAGE
+
+Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
+Route::get('/medical-check-up', [LandingPageController::class, 'medicalCheckUp'])->name('medical-check-up');
+Route::get('/home-service', [LandingPageController::class, 'homeService'])->name('home-service');
+Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('polyclinic');
+Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
+Route::get('/information', [LandingPageController::class, 'information'])->name('information');
+
+// DOKTER
+// Route untuk menampilkan daftar dokter
+Route::get('/doctor', [LandingPageController::class, 'doctor'])->name('doctor.landing');
+// Route untuk menampilkan profil dokter berdasarkan ID
+Route::get('/doctor/profile/{id}', [LandingPageController::class, 'showDoctor'])->name('doctor.show.landing');
+Route::get('/search-doctor', [DoctorController::class, 'searchDoctor'])->name('doctor.search');
+
+// MCU
+// Route untuk menampilkan daftar layanan MCU di landing page
+Route::get('/medical-check-up', [LandingPageController::class, 'medicalCheckUp'])->name('mcu.landing');
+// Route untuk menampilkan detail layanan MCU berdasarkan ID
+Route::get('/medical-check-up/detail/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail.landing');
+Route::get('/mcu/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail');
+
+// ONLINE CONSULTATION
+Route::get('/online-consultation', [LandingPageController::class,'consultation'])->name('onlineconsultation.landing');
 
 Route::get('/consultation-form', function () {
     return view('consultation-form');
@@ -43,15 +65,8 @@ Route::get('/consultation-invoice', function () {
     return view('consultation-invoice');
 });
 
-// MODUL LANDING PAGE
+// END MODUL
 
-Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
-Route::get('/doctor', [LandingPageController::class, 'doctor'])->name('doctor');
-Route::get('/medical-check-up', [LandingPageController::class, 'medicalCheckUp'])->name('medical-check-up');
-Route::get('/home-service', [LandingPageController::class, 'homeService'])->name('home-service');
-Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('polyclinic');
-Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
-Route::get('/information', [LandingPageController::class, 'information'])->name('information');
 
 // END MODUL
 
@@ -64,9 +79,6 @@ Route::get(
 
 // END MODUL
 
-Route::get('/profile', function () {
-    return view('dokter_profile');
-});
 
 Route::get('/mcu_detail', function () {
     return view('mcu_detail');
@@ -104,7 +116,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 // END MODUL
 
 
-// MODUL RESERVATION
+// MODUL RESERVATION DATA
 // mcu
 Route::get('/reservation-mcu', [ReservationController::class, 'indexMcu'])->name('reservation.mcu.index');
 Route::get('/reservation-mcu/create', [ReservationController::class, 'createMcu'])->name('reservation.mcu.create');
@@ -116,8 +128,7 @@ Route::delete('/reservation-mcu/{service}', [ReservationController::class, 'dest
 Route::patch('reservation/mcu/restore/{id}', [ReservationController::class, 'restoreMcu'])->name('reservation.mcu.restore');
 Route::get('/reservation-mcu/{id}', [ReservationController::class, 'detailMcu'])->name('reservation.mcu.detail');
 Route::patch('/reservation-mcu/unpublish/{service}', [ReservationController::class, 'unpublishMcu'])->name('reservation.mcu.unpublish');
-
-
+Route::get('/mcu', [ReservationController::class, 'indexLandingMcu'])->name('landing.mcu.index');
 // end
 
 // poly
@@ -136,6 +147,8 @@ Route::get('/reservation-online-consultation/invoice', [ReservationController::c
 // end
 // END MODUL
 
+
+
 // MODUL INFORMATION
 
 // article
@@ -143,7 +156,7 @@ Route::get('/information-article', [InformationController::class, 'indexArticle'
 // end
 
 // promote
-Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.article.index');
+Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
 // end
 
 // END MODUL
@@ -377,4 +390,8 @@ Route::get('/tambah_galerirs', function () {
 
 Route::get('/edit_galerirs', function () {
     return view('manajemen_data.master.forms.form_editgalerirs');
+});
+
+Route::get('/coming-soon', function () {
+    return view('landing-page.contents.coming-soon');
 });

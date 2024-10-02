@@ -186,63 +186,72 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Set default tab to 'profile-info' on initial page load
-            const infoTab = document.getElementById('profile-info-tab');
-            const riwayatTab = document.getElementById('nav-profile-tab');
-            const infoContent = document.getElementById('profile-info');
-            const riwayatContent = document.getElementById('nav-profile');
-    
-            // Aktifkan default tab hanya jika tidak ada yang dipilih sebelumnya
-            if (!localStorage.getItem('activeTab')) {
-                infoTab.classList.add('active');
+    // Dapatkan elemen tab untuk 'Informasi Pribadi' dan 'Riwayat Pesanan'
+    const infoTab = document.getElementById('profile-info-tab');
+    const riwayatTab = document.getElementById('nav-profile-tab');
+    const infoContent = document.getElementById('profile-info');
+    const riwayatContent = document.getElementById('nav-profile');
+
+    // Aktifkan default tab hanya jika tidak ada yang dipilih sebelumnya di localStorage
+    if (!localStorage.getItem('activeTab')) {
+        infoTab.classList.add('active');
+        infoContent.classList.add('show', 'active');
+        riwayatTab.classList.remove('active');
+        riwayatContent.classList.remove('show', 'active');
+    }
+
+    // Cek tab yang terakhir kali dipilih di localStorage
+    const lastTab = localStorage.getItem('activeTab');
+    if (lastTab) {
+        const activeTab = document.querySelector(`#${lastTab}`);
+        const tabContent = document.querySelector(`#${activeTab.getAttribute("aria-controls")}`);
+        if (activeTab && tabContent) {
+            // Aktifkan tab terakhir yang diakses
+            activeTab.classList.add('active');
+            tabContent.classList.add('show', 'active');
+        }
+    }
+
+    // Event listener untuk setiap tab, menyimpan posisi terakhir yang dikunjungi
+    const tabs = document.querySelectorAll('.nav-profile .nav-link');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            localStorage.setItem('activeTab', this.id);
+            
+            // Tampilkan konten yang sesuai dan sembunyikan yang lain
+            if (this.id === 'profile-info-tab') {
+                riwayatContent.classList.remove('show', 'active');
                 infoContent.classList.add('show', 'active');
-            }
-    
-            // Cek tab yang terakhir kali dipilih di localStorage
-            const lastTab = localStorage.getItem('activeTab');
-            if (lastTab) {
-                const activeTab = document.querySelector(`#${lastTab}`);
-                const tabContent = document.querySelector(`#${activeTab.getAttribute("aria-controls")}`);
-                if (activeTab && tabContent) {
-                    // Aktifkan tab terakhir yang diakses
-                    activeTab.classList.add('active');
-                    tabContent.classList.add('show', 'active');
-                }
-            }
-    
-            // Event listener untuk setiap tab, menyimpan posisi terakhir yang dikunjungi
-            const tabs = document.querySelectorAll('.nav-profile .nav-link');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    localStorage.setItem('activeTab', this.id);
-                    
-                    // Tampilkan konten yang sesuai dan sembunyikan yang lain
-                    if (this.id === 'profile-info-tab') {
-                        riwayatContent.classList.remove('show', 'active');
-                        infoContent.classList.add('show', 'active');
-                    } else if (this.id === 'nav-profile-tab') {
-                        infoContent.classList.remove('show', 'active');
-                        riwayatContent.classList.add('show', 'active');
-                    }
-                });
-            });
-    
-            // Cek apakah ada parameter `tab` pada URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const tab = urlParams.get('tab');
-    
-            // Jika `tab` adalah `riwayat`, aktifkan tab Pemesanan Konsultasi
-            if (tab === 'riwayat') {
-                riwayatTab.classList.add('active');
-                infoTab.classList.remove('active');
-    
-                riwayatContent.classList.add('show', 'active');
+            } else if (this.id === 'nav-profile-tab') {
                 infoContent.classList.remove('show', 'active');
-    
-                // Simpan riwayat tab ke localStorage
-                localStorage.setItem('activeTab', 'nav-profile-tab');
+                riwayatContent.classList.add('show', 'active');
             }
         });
+    });
+
+    // Cek apakah ada parameter `tab` pada URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const tab = urlParams.get('tab');
+
+    // Jika `tab` adalah `riwayat`, aktifkan tab Pemesanan Konsultasi
+    if (tab === 'riwayat') {
+        riwayatTab.classList.add('active');
+        infoTab.classList.remove('active');
+
+        riwayatContent.classList.add('show', 'active');
+        infoContent.classList.remove('show', 'active');
+
+        // Simpan riwayat tab ke localStorage
+        localStorage.setItem('activeTab', 'nav-profile-tab');
+    } else {
+        // Jika tidak ada `tab`, pastikan 'Informasi Pribadi' adalah tampilan default
+        infoTab.classList.add('active');
+        infoContent.classList.add('show', 'active');
+        riwayatTab.classList.remove('active');
+        riwayatContent.classList.remove('show', 'active');
+    }
+});
+
     </script>
     
 @endpush
