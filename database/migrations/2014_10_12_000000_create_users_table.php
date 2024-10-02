@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('username', 255);
             $table->string('email')->unique();
-            $table->string('email_verification_code', 6)->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('whatsapp_number')->nullable(); // Kolom baru
             $table->string('password', 255);
-            $table->string('role');
+            $table->string('role'); // Menyimpan role seperti 'Pasien', 'Admin'
+            $table->string('whatsapp', 20)->nullable(); // Tambahkan kolom nomor WhatsApp
+            $table->string('profile_picture')->nullable(); // Tambahkan kolom foto profil
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\InformationController;
@@ -46,27 +47,9 @@ Route::get('/search-doctor', [DoctorController::class, 'searchDoctor'])->name('d
 
 // END MODUL
 
-
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-    return back()->with('message', 'Link verifikasi telah dikirim ke email Anda.');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
 // MODUL ACCOUNT
 
-Route::get(
-    '/account',
-    [AccountController::class, 'index']
-)->name('account-index');
+
 
 // END MODUL
 
@@ -99,6 +82,41 @@ Route::get('/register', function () {
     return view('register');
 });
 
+
+// MODUL AUTH
+
+Route::group(['middleware' => ['guest']], function () {
+    // Route untuk menampilkan halaman registrasi
+    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+
+    // Route untuk menangani proses registrasi
+    Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+
+    // Route untuk menampilkan halaman login
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+});
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Route untuk menampilkan halaman permintaan reset password
+Route::get('/password/reset', [AuthController::class, 'showResetPasswordRequestForm'])->name('password.reset.request');
+
+// Route untuk menangani proses permintaan reset password
+Route::post('/password/reset', [AuthController::class, 'resetPasswordRequest'])->name('password.reset.process');
+
+// Route untuk menampilkan form ganti password berdasarkan token
+Route::get('/password/reset/{token}', [AuthController::class, 'showResetForm'])->name('password.reset.token');
+
+// Route untuk memperbarui password user
+Route::post('/password/reset/{token}', [AuthController::class, 'updatePassword'])->name('password.update');
+
+// Route untuk akun pasien, hanya bisa diakses oleh user dengan role pasien
+Route::middleware(['auth', 'role:Pasien'])->group(function () {
+    Route::get('/account', [AccountController::class, 'index'])->name('account-index');
+});
+
+// END MODUL AUTH
 
 // MODUL DASHBOARD
 
@@ -283,4 +301,3 @@ Route::get('/edit_mcu', function () {
     return view('manajemen_data.reservasi.forms.form_editmcu');
 });
 
-require __DIR__ . '/auth.php';

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->bigInteger('medical_record_id')->nullable();
             $table->unsignedBigInteger('user_id'); // Foreign key ke users
+            $table->string('profile_picture')->nullable(); // Tambahkan foto profil jika perlu
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

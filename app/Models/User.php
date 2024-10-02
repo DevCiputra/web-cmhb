@@ -18,10 +18,16 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    use HasFactory, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes;
 
-    protected $fillable = ['username', 'password', 'email', 'role', 'whatsapp_number', 'email_verified_at'];
-
+    protected $fillable = [
+        'username',
+        'email',
+        'password',
+        'role',
+        'whatsapp',
+        'profile_picture',
+    ];
 
     public function patient()
     {
