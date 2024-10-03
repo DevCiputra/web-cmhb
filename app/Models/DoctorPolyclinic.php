@@ -18,4 +18,11 @@ class DoctorPolyclinic extends Model
     {
         return $this->hasMany(Doctor::class, 'doctor_polyclinic_id');
     }
+
+    public static function search($query)
+    {
+        return self::where('name', 'LIKE', "%{$query}%"); // Pencarian berdasarkan nama poliklinik
+    }
+    
+    
 }

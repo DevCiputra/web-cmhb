@@ -106,7 +106,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="/online-consultation" class="reservation-item mb-3" id="card-konsultasi">
+                    <a href="/consultation-online" class="reservation-item mb-3" id="card-konsultasi">
                         <div class="reservation-content">
                             <img src="{{ asset('images/konsul.jpg') }}" alt="Konsultasi Online" class="img-fluid">
                             <div class="reservation-info">
@@ -236,7 +236,7 @@
                         <h5 class="feature-title">Skrining Depresi</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
-                        <a href="#" class="btn btn-outline-success btn-lg rounded-pill">Coba Sekarang</a>
+                        <a href="/coming" class="btn btn-outline-success btn-lg rounded-pill">Coba Sekarang</a>
                     </div>
                 </div>
                 <!-- Column 2 -->
@@ -245,7 +245,7 @@
                         <h5 class="feature-title">Body Mass Index (BMI)</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
-                        <a href="#" class="btn btn-success btn-lg rounded-pill">Coba Sekarang</a>
+                        <a href="/coming" class="btn btn-success btn-lg rounded-pill">Coba Sekarang</a>
                     </div>
                 </div>
             </div>

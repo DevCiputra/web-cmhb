@@ -27,6 +27,22 @@ class Service extends Model
         return $this->hasMany(ServiceLog::class);
     }
 
+    // Static search function
+    public static function search($query)
+    {
+        return self::with(['category', 'medias']) // Eager load related models
+            ->where('title', 'LIKE', "%{$query}%")
+            ->orWhere('description', 'LIKE', "%{$query}%")
+            ->orWhere('special_information', 'LIKE', "%{$query}%")
+            ->orWhere('price', 'LIKE', "%{$query}%")
+            ->orWhereHas('category', function ($q) use ($query) {
+                $q->where('name', 'LIKE', "%{$query}%");
+            })
+            ->orWhereHas('medias', function ($q) use ($query) {
+                $q->where('name', 'LIKE', "%{$query}%");
+            });
+    }
+
     // Scope untuk pencarian dengan fleksibilitas kata kunci status publikasi
     public function scopeSearch($query, $keyword)
     {

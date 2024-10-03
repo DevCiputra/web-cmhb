@@ -23,15 +23,20 @@
                     <div class="col-md-8 col-lg-6">
                         <div class="card-filter">
                             <div class="filter-card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <input type="text" class="form-control" id="mcuSearch" placeholder="Cari paket MCU...">
-                                    </div>
-                                </div>
+                                <form action="{{ route('mcu.landing') }}" method="GET" class="d-flex">
+                                    <input type="text" name="search" class="form-control"
+                                        placeholder="Cari paket MCU..." style="max-width: 500px;"
+                                        value="{{ request('search') }}">
+                                    <button type="submit" class="btn btn-md ms-2"
+                                        style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
+                                        Cari
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+
 
                 <!-- MCU Cards Container -->
                 <div class="mcu-cards-container">
@@ -59,7 +64,8 @@
                                         <p class="description">{{ $limitedDescription }}</p>
                                         <a href="{{ route('mcu.detail.landing', $mcu->id) }}" class="btn btn-selengkapnya">
                                             Selengkapnya
-                                            <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
+                                            <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
+                                                class="chevron-icon">
                                         </a>
                                     </div>
                                 </div>
@@ -68,29 +74,15 @@
                     </div>
 
                     <!-- No Results Message -->
-                    <div id="noResultsMessage" class="col-12 text-center d-none">
-                        <p class="mt-4">No Results Found</p>
-                    </div>
+                    @if ($mcus->isEmpty())
+                        <div id="noResultsMessage" class="col-12 text-center">
+                            <p class="mt-4">Tidak ada hasil ditemukan</p>
+                        </div>
+                    @endif
 
                     <!-- Pagination Section -->
                     <div class="pagination-container d-flex justify-content-end mt-2">
-                        <nav aria-label="mcu pagination">
-                            <ul class="pagination">
-                                <li class="page-item {{ $mcus->onFirstPage() ? 'disabled' : '' }}">
-                                    <a class="page-link" href="{{ $mcus->onFirstPage() ? '#' : $mcus->previousPageUrl() }}" tabindex="-1">Previous</a>
-                                </li>
-
-                                @foreach(range(1, $mcus->lastPage()) as $i)
-                                    <li class="page-item {{ $i == $mcus->currentPage() ? 'active' : '' }}">
-                                        <a class="page-link" href="{{ $i == $mcus->currentPage() ? '#' : $mcus->url($i) }}">{{ $i }}</a>
-                                    </li>
-                                @endforeach
-
-                                <li class="page-item {{ $mcus->hasMorePages() ? '' : 'disabled' }}">
-                                    <a class="page-link" href="{{ $mcus->hasMorePages() ? $mcus->nextPageUrl() : '#' }}">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
+                        {{ $mcus->links() }}
                     </div>
                 </div>
             </div>
@@ -106,7 +98,8 @@
                     <i class="fab fa-whatsapp"></i>
                 </a>
             </div>
-            <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle" onclick="toggleEmergencyButtons()" aria-label="Toggle Emergency Buttons">
+            <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle" onclick="toggleEmergencyButtons()"
+                aria-label="Toggle Emergency Buttons">
                 <i class="fa-solid fa-phone"></i>
             </a>
         </div>
@@ -116,30 +109,6 @@
 @push('scripts')
     <script src="{{ asset('js/navbar.js') }}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('mcuSearch');
-            const mcuCardsContainer = document.getElementById('mcuCardsContainer');
-            const mcuCards = Array.from(mcuCardsContainer.getElementsByClassName('mcu-card-wrapper'));
-            const noResultsMessage = document.getElementById('noResultsMessage');
-
-            searchInput.addEventListener('input', function() {
-                const searchText = searchInput.value.toLowerCase().trim();
-                let foundAny = false;
-
-                mcuCards.forEach(function(cardWrapper) {
-                    const cardTitle = cardWrapper.querySelector('.title').textContent.toLowerCase();
-                    if (cardTitle.includes(searchText)) {
-                        cardWrapper.style.display = ''; // Show the matching card
-                        foundAny = true;
-                    } else {
-                        cardWrapper.style.display = 'none'; // Hide the non-matching card
-                    }
-                });
-
-                noResultsMessage.classList.toggle('d-none', foundAny); // Show/hide no results message
-            });
-        });
-
         function toggleEmergencyButtons() {
             const buttons = document.getElementById("emergency-buttons");
             buttons.classList.toggle("expand");

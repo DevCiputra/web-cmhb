@@ -16,7 +16,6 @@ class LandingPageController extends Controller
     }
 
     // Method untuk menampilkan daftar dokter
-    // Method untuk menampilkan daftar dokter
     public function doctor(Request $request)
     {
         $title = 'Cari Dokter';
@@ -44,19 +43,34 @@ class LandingPageController extends Controller
     }
 
     // Method untuk menampilkan daftar layanan Medical Check Up (MCU)
-    public function medicalCheckUp()
+    public function medicalCheckUp(Request $request)
     {
         $title = 'Medical Check Up';
 
-        // Fetching the data for published medical check-up packages with pagination
-        $mcus = Service::where('service_category_id', 1) // Replace 1 with the actual MCU category ID
-            ->where('is_published', 1) // Get only published services
-            ->with('medias') // Eager load related media
-            ->paginate(8); // Set the number of items per page (e.g., 8)
+        // Mengambil query pencarian dari request
+        $query = $request->input('search');
 
-        return view('landing-page.contents.medical-check-up', compact('title', 'mcus'));
+        // Fetching the data for published medical check-up packages with pagination
+        $mcus = Service::where('service_category_id', 1) // Ganti 1 dengan ID kategori MCU yang sebenarnya
+            ->where('is_published', 1) // Hanya ambil layanan yang dipublikasikan
+            ->with('medias') // Eager load media terkait
+            ->when($query, function ($q) use ($query) {
+                return $q->where('title', 'LIKE', "%{$query}%"); // Pencarian berdasarkan judul paket MCU
+            })
+            ->paginate(8); // Set jumlah item per halaman (misalnya, 8)
+
+        return view('landing-page.contents.medical-check-up', compact('title', 'mcus', 'query'));
     }
 
+    public function searchMCU(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Using the search method from the MedicalCheckUp model
+        $mcus = Service::search($query)->get();
+
+        return response()->json($mcus);
+    }
 
 
 
@@ -76,11 +90,34 @@ class LandingPageController extends Controller
         return view('landing-page.contents.home-service', compact('title'));
     }
 
-    public function polyclinic()
+    public function polyclinic(Request $request)
     {
         $title = 'Poliklinik';
-        return view('landing-page.contents.polyclinic', compact('title'));
+
+        // Mengambil nilai query dari request
+        $query = $request->input('query');
+
+        // Jika query ada, lakukan pencarian, jika tidak tampilkan semua poliklinik
+        if ($query) {
+            $polyclinics = DoctorPolyclinic::search($query)->paginate(5);
+        } else {
+            $polyclinics = DoctorPolyclinic::paginate(5); // Menampilkan semua poliklinik jika tidak ada pencarian
+        }
+
+        return view('landing-page.contents.polyclinic', compact('title', 'polyclinics', 'query'));
     }
+
+    public function searchPolyclinic(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Menggunakan metode search dari model DoctorPolyclinic
+        $polyclinics = DoctorPolyclinic::search($query)->get();
+
+        return response()->json($polyclinics);
+    }
+
+
 
     public function promotion()
     {
@@ -117,5 +154,12 @@ class LandingPageController extends Controller
 
         // Kembali ke view untuk menampilkan detail dokter
         return view('landing-page.contents.doctor-profile', compact('doctor'));
+    }
+
+
+    public function coming()
+    {
+        $title = 'Coming Soon';
+        return view('landing-page.contents.coming-soon', compact('title'));
     }
 }

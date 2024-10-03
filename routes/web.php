@@ -33,6 +33,9 @@ Route::get('/home-service', [LandingPageController::class, 'homeService'])->name
 Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('polyclinic');
 Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
 Route::get('/information', [LandingPageController::class, 'information'])->name('information');
+// COMING SOON PAGE
+Route::get('/coming', [LandingPageController::class, 'coming'])->name('coming-page');
+
 
 // DOKTER
 // Route untuk menampilkan daftar dokter
@@ -49,7 +52,9 @@ Route::get('/medical-check-up/detail/{id}', [LandingPageController::class, 'show
 Route::get('/mcu/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail');
 
 // ONLINE CONSULTATION
-Route::get('/online-consultation', [LandingPageController::class,'consultation'])->name('onlineconsultation.landing');
+Route::get('/consultation-online', [LandingPageController::class,'consultation'])->name('onlineconsultation.landing');
+
+
 
 Route::get('/consultation-form', function () {
     return view('consultation-form');
@@ -66,41 +71,6 @@ Route::get('/consultation-detail', function () {
 Route::get('/consultation-invoice', function () {
     return view('consultation-invoice');
 });
-
-// MODUL LANDING PAGE
-
-Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
-Route::get('/medical-check-up', [LandingPageController::class, 'medicalCheckUp'])->name('medical-check-up');
-Route::get('/home-service', [LandingPageController::class, 'homeService'])->name('home-service');
-Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('polyclinic');
-Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
-Route::get('/information', [LandingPageController::class, 'information'])->name('information');
-
-// DOKTER
-// Route untuk menampilkan daftar dokter
-Route::get('/doctor', [LandingPageController::class, 'doctor'])->name('doctor.landing');
-
-// Route untuk menampilkan profil dokter berdasarkan ID
-Route::get('/doctor/profile/{id}', [LandingPageController::class, 'showDoctor'])->name('doctor.show.landing');
-Route::get('/search-doctor', [DoctorController::class, 'searchDoctor'])->name('doctor.search');
-
-// MCU
-// Route untuk menampilkan daftar layanan MCU di landing page
-Route::get('/medical-check-up', [LandingPageController::class, 'medicalCheckUp'])->name('mcu.landing');
-
-// Route untuk menampilkan detail layanan MCU berdasarkan ID
-Route::get('/medical-check-up/detail/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail.landing');
-Route::get('/mcu/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail');
-
-
-
-// END MODUL
-
-// MODUL ACCOUNT
-
-
-
-// END MODUL
 
 
 Route::get('/mcu_detail', function () {

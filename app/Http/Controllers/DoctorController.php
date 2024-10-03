@@ -19,7 +19,7 @@ class DoctorController extends Controller
         $query = $request->input('query');
 
         // Mengambil data dokter dengan relasi, dan jika ada query pencarian, lakukan pencarian
-        $doctors = Doctor::search($query)->paginate(10); // Atur jumlah data per halaman
+        $doctors = Doctor::search($query)->paginate(8); // Atur jumlah data per halaman
 
         // Ambil semua spesialisasi unik dari dokter
         $specializations = Doctor::distinct()->pluck('specialization_name');

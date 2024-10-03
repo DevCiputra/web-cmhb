@@ -104,7 +104,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" id="add-schedule" class="btn btn-primary">Tambah Jadwal</button>
+                            <button type="button" id="add-schedule" class="btn btn-primary">Tambah Jadwal Lain</button>
                         </div>
 
                         <div class="mb-3">
