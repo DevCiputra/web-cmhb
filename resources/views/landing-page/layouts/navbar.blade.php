@@ -55,7 +55,7 @@
         <li><a href="{{ route('account-index') }}" class="btn-account">Akun Saya</a></li>
         @endif
         @else
-        <li><a href="{{ route('register') }}" class="btn-account">Daftar</a></li>
+        <li><a href="{{ route('register') }}" class="btn-account">Akun Saya</a></li>
         @endif
 
     </ul>
