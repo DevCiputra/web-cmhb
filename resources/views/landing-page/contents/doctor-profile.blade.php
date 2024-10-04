@@ -77,7 +77,7 @@
         </div>
 
         <div class="doctor-action-buttons">
-            <a href="{{ route('reservation.mcu.create') }}" class="btn btn-reservasi">Reservasi</a>
+            <a href="{{ $doctor->address }}" target="_blank" class="btn btn-reservasi">Reservasi</a>
             <a href="/consultation-form" class="btn btn-konsultasi">Konsultasi Online</a>
         </div>
     </div>

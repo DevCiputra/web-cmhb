@@ -34,8 +34,12 @@ Route::prefix('/')->group(function () {
     Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('polyclinic');
     Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
     Route::get('/information', [LandingPageController::class, 'information'])->name('information');
-    // COMING SOON PAGE
-    Route::get('/coming', [LandingPageController::class, 'coming'])->name('coming-page');
+    // ONLINE CONSULTATION
+    Route::get('/consultation-online', [LandingPageController::class, 'consultation'])->name('onlineconsultation.landing');
+
+// COMING SOON PAGE
+Route::get('/coming', [LandingPageController::class, 'coming'])->name('coming-page');
+
 });
 
 // DOKTER
@@ -46,11 +50,10 @@ Route::get('/doctor/profile/{id}', [LandingPageController::class, 'showDoctor'])
 Route::get('/search-doctor', [DoctorController::class, 'searchDoctor'])->name('doctor.search');
 
 // MCU
-// Route untuk menampilkan daftar layanan MCU di landing page
-Route::get('/medical-check-up', [LandingPageController::class, 'medicalCheckUp'])->name('mcu.landing');
+
 // Route untuk menampilkan detail layanan MCU berdasarkan ID
 Route::get('/medical-check-up/detail/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail.landing');
-Route::get('/mcu/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail');
+
 
 // ONLINE CONSULTATION
 Route::get('/consultation-online', [LandingPageController::class, 'consultation'])->name('onlineconsultation.landing');
@@ -70,10 +73,6 @@ Route::get('/consultation-invoice', function () {
     return view('consultation-invoice');
 });
 
-
-Route::get('/mcu_detail', function () {
-    return view('mcu_detail');
-});
 
 Route::get('/promosi_detail', function () {
     return view('promosi_detail');

@@ -249,19 +249,21 @@ class ReservationController extends Controller
     // landing page consultation
 
     // Method untuk menampilkan halaman konsultasi online
-    // public function indexLandingConsultation()
-    // {
-    
-    //     $title = 'Konsultasi Online';
+    public function indexLandingConsultation()
+    {
 
-    //     $doctors = Doctor::with(['polyclinic', 'photos'])->paginate(8);
+        $title = 'Konsultasi Online';
 
-    //     $polyclinics = DoctorPolyclinic::all();
+        $doctors = Doctor::with(['polyclinic', 'photos'])->paginate(8);
 
-    //     $specializations = Doctor::select('specialization_name')->distinct()->pluck('specialization_name');
+        // Fetch all polyclinics for the dropdown
+        $polyclinics = DoctorPolyclinic::all();
 
-    //     return view('landing-page.contents.consultation', compact('title', 'doctors'));
-    // }
+        // Get distinct specialization names for the dropdown
+        $specializations = Doctor::select('specialization_name')->distinct()->pluck('specialization_name');
+
+        return view('landing-page.contents.online-consultation.index', compact('title', 'doctors', 'polyclinics', 'specializations'));
+    }
 
     public function indexConsultation()
     {

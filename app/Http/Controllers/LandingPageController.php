@@ -55,11 +55,12 @@ class LandingPageController extends Controller
     // Method untuk menampilkan profil dokter
     public function showDoctor($id)
     {
+        $title = 'Profile Dokter';
         // Ambil data dokter berdasarkan ID
         $doctor = Doctor::with(['photos', 'education', 'schedules', 'medias'])->find($id);
 
         // Kembali ke view untuk menampilkan detail dokter
-        return view('landing-page.contents.doctor-profile', compact('doctor'));
+        return view('landing-page.contents.doctor-profile', compact('doctor', 'title'));
     }
 
     // Method untuk menampilkan daftar layanan Medical Check Up (MCU)

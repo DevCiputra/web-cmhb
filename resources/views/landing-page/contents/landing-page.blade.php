@@ -78,7 +78,7 @@
             <div class="row justify-content-center">
                 <!-- Column 1 -->
                 <div class="col-md-5 d-flex flex-column">
-                    <a href="/medical-check-up" class="reservation-item mb-3" id="card-mcu">
+                    <a href="{{ route('medical-check-up') }}" class="reservation-item mb-3" id="card-mcu">
                         <div class="reservation-content">
                             <img src="{{ asset('images/mcu.jpg') }}" alt="Medical Check Up" class="img-fluid">
                             <div class="reservation-info">
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="/home-service" class="reservation-item mb-3" id="card-home-service">
+                    <a href="{{ route('home-service') }}" class="reservation-item mb-3" id="card-home-service">
                         <div class="reservation-content">
                             <img src="{{ asset('images/homeservice.jpg') }}" alt="Home Service" class="img-fluid">
                             <div class="reservation-info">
@@ -97,16 +97,15 @@
                 </div>
                 <!-- Column 2 -->
                 <div class="col-md-5 d-flex flex-column">
-                    <a href="/polyclinic" class="reservation-item mb-3" id="card-poliklinik">
+                    <a href="{{ route('polyclinic') }}" class="reservation-item mb-3" id="card-poliklinik">
                         <div class="reservation-content">
-                            <img src="{{ asset('images/poliklinik.jpg') }}" alt="Pendaftaran Poliklinik"
-                                class="img-fluid">
+                            <img src="{{ asset('images/poliklinik.jpg') }}" alt="Pendaftaran Poliklinik" class="img-fluid">
                             <div class="reservation-info">
                                 <h2>Pendaftaran Poliklinik</h2>
                             </div>
                         </div>
                     </a>
-                    <a href="/consultation-online" class="reservation-item mb-3" id="card-konsultasi">
+                    <a href="{{ route('onlineconsultation.landing') }}" class="reservation-item mb-3" id="card-konsultasi">
                         <div class="reservation-content">
                             <img src="{{ asset('images/konsul.jpg') }}" alt="Konsultasi Online" class="img-fluid">
                             <div class="reservation-info">
@@ -116,6 +115,7 @@
                     </a>
                 </div>
             </div>
+
         </div>
     </div>
     <!-- Promotion Section -->

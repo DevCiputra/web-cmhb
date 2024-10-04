@@ -59,6 +59,7 @@ class DoctorController extends Controller
             'name' => 'required|string|max:255',
             'specialization_name' => 'required|string|max:255',
             'doctor_polyclinic_id' => 'required|exists:doctor_polyclinics,id', // Validasi poliklinik
+            'address' => 'required|url',
             'doctor_photos' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'doctor_medias' => 'required|file|mimes:pdf,doc,docx|max:10240'
         ]);
@@ -69,6 +70,8 @@ class DoctorController extends Controller
             'name' => $request->input('name'),
             'specialization_name' => $request->input('specialization_name'),
             'doctor_polyclinic_id' => $request->input('doctor_polyclinic_id'),
+            'address'
+            => $request->input('address'),
         ]);
 
         // Simpan pendidikan dokter
@@ -158,6 +161,7 @@ class DoctorController extends Controller
             'specialization_name' => 'required|string|max:255',
             'education' => 'required|string|max:500', // Validasi untuk textarea pendidikan
             'doctor_polyclinic_id' => 'required|exists:doctor_polyclinics,id',
+            'address' => 'required|url',
             'doctor_photos' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'doctor_medias' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ]);
@@ -168,6 +172,7 @@ class DoctorController extends Controller
             'name' => $validatedData['name'],
             'specialization_name' => $validatedData['specialization_name'],
             'doctor_polyclinic_id' => $validatedData['doctor_polyclinic_id'],
+            'address' => $validatedData['address'],
         ]);
 
         // Mengupdate pendidikan dokter

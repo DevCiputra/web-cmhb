@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('specialization_name');  // Data denormalisasi (langsung disimpan)
             $table->unsignedBigInteger('doctor_polyclinic_id');  // Foreign key ke doctor_polyclinics
+            $table->string('address');
             $table->timestamps();
 
             // Foreign key constraint
