@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Patient;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -100,16 +101,36 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (auth()->attempt($credentials)) {
-            return redirect()->route('account-index')->with('success', 'Login successful!');
+            $user = Auth::user();
+
+            // Redirect user based on role
+            switch ($user->role) {
+                case 'Admin':
+                    return redirect()->route('dashboard-page')->with('success', 'Welcome Admin!');
+                case 'Pasien':
+                    return redirect()->route('account-index')->with('success', 'Welcome Pasien!');
+                case 'HBD':
+                    return redirect()->route('reservation.mcu.index')->with('success', 'Welcome HBD!');
+                default:
+                    auth()->logout();
+                    return redirect()->route('login')->with('error', 'Invalid role detected.');
+            }
         }
 
         return redirect()->back()->with('error', 'Invalid email or password.')->withInput();
     }
 
+
     public function logout(Request $request)
     {
         auth()->logout();
         return redirect('/'); // Atau redirect ke route lain sesuai kebutuhan
+    }
+
+    public function showResetPasswordRequestForm(Request $request)
+    {
+
+        return view('auth.reset-password-request');
     }
 
     public function resetPasswordRequest(Request $request)

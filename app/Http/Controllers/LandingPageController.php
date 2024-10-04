@@ -77,11 +77,14 @@ class LandingPageController extends Controller
     // Method untuk menampilkan detail layanan Medical Check Up (MCU)
     public function showMcuDetail($id)
     {
+
+        $title = 'Medical Check Up';
+
         // Ambil data MCU berdasarkan ID
         $mcuService = Service::with(['medias'])->findOrFail($id);
 
         // Return the view for the MCU detail, passing the $mcuService variable
-        return view('landing-page.contents.medical-check-up-detail', compact('mcuService'));
+        return view('landing-page.contents.medical-check-up-detail', compact('mcuService', 'title'));
     }
 
     public function homeService()
