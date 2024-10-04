@@ -52,8 +52,8 @@
                   <a href="/master-gallery-cmh" class="dashboard-nav-dropdown-item">Galeri RS</a>
               </div>
           </div>
-          <a href="#" class="dashboard-nav-item">
-              <i class="fas fa-user-circle"></i> Profile
+          <a href="/patient-data" class="dashboard-nav-item">
+              <i class="fas fa-user-circle"></i> Pasien
           </a>
           <div class="nav-item-divider"></div>
           <a href="#" class="dashboard-nav-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

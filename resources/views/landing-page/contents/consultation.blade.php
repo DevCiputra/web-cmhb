@@ -26,8 +26,13 @@
                                 <div class="row">
                                     <!-- Search Bar -->
                                     <div class="col-md-4 mb-2">
-                                        <input type="text" class="form-control" id="doctorSearch"
-                                            placeholder="Cari dokter...">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="doctorSearch"
+                                                placeholder="Cari dokter..." aria-label="Cari dokter">
+                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     <!-- Filter Dropdown for Polyclinic -->
                                     <div class="col-md-4 mb-2">

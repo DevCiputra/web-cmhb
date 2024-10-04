@@ -27,7 +27,7 @@
         <!-- DataTable Card -->
         <!-- Data Galeri -->
         <div class="card" style="border: none; border-radius: 12px;">
-            <div class="card-body">
+            <div class="card-form">
                 <div class="d-flex mb-3">
                     <h4 class="card-title" style="color: #1C3A6B;"><b>Data Galeri RS</b></h4>
                     <div class="ms-auto">

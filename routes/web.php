@@ -7,6 +7,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\MasterController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -33,9 +34,8 @@ Route::prefix('/')->group(function () {
     Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('polyclinic');
     Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
     Route::get('/information', [LandingPageController::class, 'information'])->name('information');
-// COMING SOON PAGE
-Route::get('/coming', [LandingPageController::class, 'coming'])->name('coming-page');
-
+    // COMING SOON PAGE
+    Route::get('/coming', [LandingPageController::class, 'coming'])->name('coming-page');
 });
 
 // DOKTER
@@ -53,10 +53,7 @@ Route::get('/medical-check-up/detail/{id}', [LandingPageController::class, 'show
 Route::get('/mcu/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail');
 
 // ONLINE CONSULTATION
-Route::get('/consultation-online', [LandingPageController::class,'consultation'])->name('onlineconsultation.landing');
-
-
-
+Route::get('/consultation-online', [LandingPageController::class, 'consultation'])->name('onlineconsultation.landing');
 Route::get('/consultation-form', function () {
     return view('consultation-form');
 });
@@ -181,7 +178,6 @@ Route::group(['middleware' => ['checkrole:Admin']], function () {
     Route::put('/master-user/{id}', [UserController::class, 'update'])->name('user.data.update'); // Mengupdate user
     Route::delete('/master-user/{id}', [UserController::class, 'destroy'])->name('user.data.destroy'); // Menghapus user
 });
-
 // INFORMATION HOSPITAL DAN GALERRI
 Route::group(
     ['middleware' => ['checkrole:HBD,Admin']],
@@ -219,9 +215,7 @@ Route::group(
         // end
     }
 );
-
 // ROLE
-
 Route::group(
     ['middleware' => ['checkrole:Admin']],
     function () {
@@ -234,6 +228,10 @@ Route::group(
         // end
     }
 );
+
+// PATIENT/PASIEN
+Route::get('/patient-data', [PatientController::class, 'indexDataPatient'])->name('patient.data.index');
+
 
 //RESERVASI ONLINE
 Route::get('/online-consultation', [
@@ -256,6 +254,11 @@ Route::get('/consultation-detail', function () {
 Route::get('/consultation-invoice', function () {
     return view('consultation-invoice');
 });
+
+
+
+
+// SOON
 
 Route::get('/tambah_mcu', function () {
     return view('manajemen_data.reservasi.forms.form_tambahmcu');

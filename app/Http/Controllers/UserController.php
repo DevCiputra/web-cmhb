@@ -12,9 +12,9 @@ class UserController extends Controller
     // Display the list of users
     public function index()
     {
-        $users = User::all(); // Get all users
+       $users = User::all(); // Get all users
         return view('management-data.master.user.index', compact('users'));
-    }
+    } 
 
     // Show the form for creating a new user
     public function create()

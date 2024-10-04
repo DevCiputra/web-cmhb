@@ -27,7 +27,7 @@
         <!-- Card Display -->
         <div class="card"
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px;">
-            <div class="card-body">
+            <div class="card-form">
                 <div class="d-flex mb-3">
                     <h4 class="card-title" style="color: #1C3A6B"><b>Data Informasi RS</b></h4>
                     <div class="ms-auto">

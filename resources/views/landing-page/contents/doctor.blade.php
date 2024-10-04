@@ -25,8 +25,13 @@
                                 <div class="row">
                                     <!-- Search Bar -->
                                     <div class="col-md-4 mb-2">
-                                        <input type="text" class="form-control" id="doctorSearch"
-                                            placeholder="Cari dokter...">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="doctorSearch"
+                                                placeholder="Cari dokter..." aria-label="Cari dokter">
+                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     <!-- Filter Dropdown for Polyclinic -->
                                     <div class="col-md-4 mb-2">
@@ -52,6 +57,7 @@
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Doctor Cards Container -->
                 <div class="doctor-cards-container">
@@ -134,52 +140,55 @@
 @push('scripts')
     <script src="{{ asset('js/navbar.js') }}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-    const searchInput = document.getElementById('doctorSearch');
-    const polyclinicSelect = document.getElementById('polyclinicSelect');
-    const specializationSelect = document.getElementById('specializationSelect');
-    const doctorCardsContainer = document.getElementById('doctorCardsContainer');
-    const originalDoctorCards = Array.from(doctorCardsContainer.getElementsByClassName('doctor-card-wrapper')); // Referensi asli kartu dokter
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('doctorSearch');
+            const polyclinicSelect = document.getElementById('polyclinicSelect');
+            const specializationSelect = document.getElementById('specializationSelect');
+            const doctorCardsContainer = document.getElementById('doctorCardsContainer');
+            const originalDoctorCards = Array.from(doctorCardsContainer.getElementsByClassName(
+                'doctor-card-wrapper')); // Referensi asli kartu dokter
 
-    searchInput.addEventListener('input', filterDoctors);
-    polyclinicSelect.addEventListener('change', filterDoctors);
-    specializationSelect.addEventListener('change', filterDoctors);
+            searchInput.addEventListener('input', filterDoctors);
+            polyclinicSelect.addEventListener('change', filterDoctors);
+            specializationSelect.addEventListener('change', filterDoctors);
 
-    function filterDoctors() {
-        // Ambil nilai dari input search, dropdown poliklinik, dan spesialisasi
-        const searchText = searchInput.value.toLowerCase().trim();
-        const selectedPolyclinic = polyclinicSelect.value;
-        const selectedSpecialization = specializationSelect.value;
+            function filterDoctors() {
+                // Ambil nilai dari input search, dropdown poliklinik, dan spesialisasi
+                const searchText = searchInput.value.toLowerCase().trim();
+                const selectedPolyclinic = polyclinicSelect.value;
+                const selectedSpecialization = specializationSelect.value;
 
-        // Bersihkan kontainer kartu sebelum menambahkan kartu yang sesuai
-        doctorCardsContainer.innerHTML = '';
+                // Bersihkan kontainer kartu sebelum menambahkan kartu yang sesuai
+                doctorCardsContainer.innerHTML = '';
 
-        // Filter kartu berdasarkan input dan dropdown
-        const filteredCards = originalDoctorCards.filter(function (cardWrapper) {
-            const cardName = cardWrapper.querySelector('.name').textContent.toLowerCase();
-            const cardPolyclinic = cardWrapper.querySelector('.polyclinic').textContent.trim();
-            const cardSpecialization = cardWrapper.querySelector('.specialist').textContent.trim();
+                // Filter kartu berdasarkan input dan dropdown
+                const filteredCards = originalDoctorCards.filter(function(cardWrapper) {
+                    const cardName = cardWrapper.querySelector('.name').textContent.toLowerCase();
+                    const cardPolyclinic = cardWrapper.querySelector('.polyclinic').textContent.trim();
+                    const cardSpecialization = cardWrapper.querySelector('.specialist').textContent.trim();
 
-            const matchesSearch = cardName.includes(searchText);
-            const matchesPolyclinic = selectedPolyclinic ? cardPolyclinic === polyclinicSelect.options[polyclinicSelect.selectedIndex].text : true;
-            const matchesSpecialization = selectedSpecialization ? cardSpecialization === selectedSpecialization : true;
+                    const matchesSearch = cardName.includes(searchText);
+                    const matchesPolyclinic = selectedPolyclinic ? cardPolyclinic === polyclinicSelect
+                        .options[polyclinicSelect.selectedIndex].text : true;
+                    const matchesSpecialization = selectedSpecialization ? cardSpecialization ===
+                        selectedSpecialization : true;
 
-            // Kartu cocok jika memenuhi ketiga filter ini
-            return matchesSearch && matchesPolyclinic && matchesSpecialization;
+                    // Kartu cocok jika memenuhi ketiga filter ini
+                    return matchesSearch && matchesPolyclinic && matchesSpecialization;
+                });
+
+                // Jika ada kartu yang sesuai dengan filter, tampilkan kartu tersebut
+                if (filteredCards.length > 0) {
+                    filteredCards.forEach(card => doctorCardsContainer.appendChild(card));
+                } else {
+                    // Jika tidak ada kartu yang sesuai, tampilkan pesan 'No Results Found'
+                    const noResultsMessage = document.createElement('div');
+                    noResultsMessage.className = 'col-12 text-center';
+                    noResultsMessage.innerHTML = '<p class="mt-4">No Results Found</p>';
+                    doctorCardsContainer.appendChild(noResultsMessage);
+                }
+            }
         });
-
-        // Jika ada kartu yang sesuai dengan filter, tampilkan kartu tersebut
-        if (filteredCards.length > 0) {
-            filteredCards.forEach(card => doctorCardsContainer.appendChild(card));
-        } else {
-            // Jika tidak ada kartu yang sesuai, tampilkan pesan 'No Results Found'
-            const noResultsMessage = document.createElement('div');
-            noResultsMessage.className = 'col-12 text-center';
-            noResultsMessage.innerHTML = '<p class="mt-4">No Results Found</p>';
-            doctorCardsContainer.appendChild(noResultsMessage);
-        }
-    }
-});
 
 
 
