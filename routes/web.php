@@ -33,6 +33,9 @@ Route::prefix('/')->group(function () {
     Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('polyclinic');
     Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
     Route::get('/information', [LandingPageController::class, 'information'])->name('information');
+    // ONLINE CONSULTATION
+    Route::get('/consultation-online', [LandingPageController::class, 'consultation'])->name('onlineconsultation.landing');
+
 // COMING SOON PAGE
 Route::get('/coming', [LandingPageController::class, 'coming'])->name('coming-page');
 
@@ -46,14 +49,11 @@ Route::get('/doctor/profile/{id}', [LandingPageController::class, 'showDoctor'])
 Route::get('/search-doctor', [DoctorController::class, 'searchDoctor'])->name('doctor.search');
 
 // MCU
-// Route untuk menampilkan daftar layanan MCU di landing page
-Route::get('/medical-check-up', [LandingPageController::class, 'medicalCheckUp'])->name('mcu.landing');
+
 // Route untuk menampilkan detail layanan MCU berdasarkan ID
 Route::get('/medical-check-up/detail/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail.landing');
-Route::get('/mcu/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail');
 
-// ONLINE CONSULTATION
-Route::get('/consultation-online', [LandingPageController::class,'consultation'])->name('onlineconsultation.landing');
+
 
 
 
@@ -73,10 +73,6 @@ Route::get('/consultation-invoice', function () {
     return view('consultation-invoice');
 });
 
-
-Route::get('/mcu_detail', function () {
-    return view('mcu_detail');
-});
 
 Route::get('/promosi_detail', function () {
     return view('promosi_detail');
@@ -240,47 +236,3 @@ Route::get('/online-consultation', [
     ReservationController::class,
     'indexLandingConsultation'
 ])->name('reservation.onlineconsultation.landing');
-
-Route::get('/consultation-form', function () {
-    return view('consultation-form');
-});
-
-Route::get('/consultation-confirmation', function () {
-    return view('consultation-confirmation');
-});
-
-Route::get('/consultation-detail', function () {
-    return view('consultation-detail');
-});
-
-Route::get('/consultation-invoice', function () {
-    return view('consultation-invoice');
-});
-
-Route::get('/tambah_mcu', function () {
-    return view('manajemen_data.reservasi.forms.form_tambahmcu');
-});
-
-Route::get('/edit_mcu', function () {
-    return view('manajemen_data.reservasi.forms.form_editmcu');
-});
-
-Route::get('/promosi_detail', function () {
-    return view('promosi_detail');
-});
-
-Route::get('/informasi', function () {
-    return view('informasi');
-});
-
-Route::get('/informasi_detail', function () {
-    return view('informasi_detail');
-});
-
-Route::get('/user_profile', function () {
-    return view('user_profile');
-});
-
-Route::get('/coming-soon', function () {
-    return view('landing-page.contents.coming-soon');
-});

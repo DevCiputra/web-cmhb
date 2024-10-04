@@ -46,6 +46,10 @@
                         <textarea class="form-control" id="education" name="education" rows="4" placeholder="Masukkan Latar Belakang Pendidikan">{{ $doctor->education->name ?? '' }}</textarea>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Link Accuity</label>
+                        <input type="url" class="form-control" id="address" name="address" value="{{ old('address', $doctor->address) }}" placeholder="Masukkan Link Accuity Dokter" required>
+                    </div>
 
                     <div class="mb-3">
                         <label for="doctor_polyclinic_id" class="form-label">Poliklinik</label>
