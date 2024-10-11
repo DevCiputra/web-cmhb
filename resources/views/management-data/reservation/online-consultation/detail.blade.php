@@ -57,7 +57,7 @@
                     <p><strong>Poliklinik</strong><br> {{ $reservation->doctorConsultationReservation->doctor->polyclinic->name ?? 'N/A' }}</p> <!-- Nama poliklinik dari tabel polyclinics -->
                 </div>
                 <div class="col-md-6">
-                    <p><strong>Waktu Konsultasi</strong><br> {{ \Carbon\Carbon::parse($reservation->doctorConsultationReservation->preferred_consultation_date)->format('l, d F Y') }}</p> <!-- Format tanggal konsultasi -->
+                    <p><strong>Waktu Konsultasi</strong><br> {{ \Carbon\Carbon::parse($reservation->doctorConsultationReservation->preferred_consultation_date) }}</p> <!-- Format tanggal konsultasi -->
                     <p><strong>Bukti Pembayaran</strong><br>
                         @if ($reservation->paymentRecords->isNotEmpty())
                         <a href="{{ asset('storage/' . $reservation->paymentRecords->last()->payment_proof) }}" class="link-primary" target="_blank">Lihat Bukti Pembayaran</a>
@@ -69,7 +69,7 @@
                     <p><strong>Tanggal & Waktu Reservasi</strong><br> {{ $reservation->created_at->format('d F Y, H:i') }}</p> <!-- Tanggal reservasi -->
                     <p><strong>Tanggal & Waktu Pembayaran</strong><br>
                         @if ($reservation->paymentRecords->isNotEmpty() && $reservation->paymentRecords->last()->payment_confirmation_date)
-                        {{ $reservation->paymentRecords->last()->payment_confirmation_date->format('d F Y, H:i') }}
+                        {{ $reservation->paymentRecords->last()->payment_confirmation_date}}
                         @else
                         'Belum Dibayar'
                         @endif
