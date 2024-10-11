@@ -7,7 +7,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\MasterController;
-use App\Http\Controllers\PatientController;
+use App\Http\Controllers\OnlineConsultationController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -37,9 +37,8 @@ Route::prefix('/')->group(function () {
     // ONLINE CONSULTATION
     Route::get('/consultation-online', [LandingPageController::class, 'consultation'])->name('onlineconsultation.landing');
 
-// COMING SOON PAGE
-Route::get('/coming', [LandingPageController::class, 'coming'])->name('coming-page');
-
+    // COMING SOON PAGE
+    Route::get('/coming', [LandingPageController::class, 'coming'])->name('coming-page');
 });
 
 // DOKTER
@@ -55,23 +54,30 @@ Route::get('/search-doctor', [DoctorController::class, 'searchDoctor'])->name('d
 Route::get('/medical-check-up/detail/{id}', [LandingPageController::class, 'showMcuDetail'])->name('mcu.detail.landing');
 
 
-// ONLINE CONSULTATION
-Route::get('/consultation-online', [LandingPageController::class, 'consultation'])->name('onlineconsultation.landing');
-Route::get('/consultation-form', function () {
-    return view('consultation-form');
+
+
+
+// Rute untuk konsultasi yang hanya bisa diakses oleh user dengan role Pasien dan Admin
+Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
+    // Rute untuk form konsultasi
+    Route::get('/consultation-form/{doctor_id}', [OnlineConsultationController::class, 'showConsultationForm'])->name('consultation.form');
+
+    // Rute untuk menyimpan reservasi
+    Route::post('/consultation-form', [OnlineConsultationController::class, 'storeReservation'])->name('consultation.store');
+
+    // Rute untuk halaman konfirmasi
+    Route::get('/consultation-confirmation/{id}', [OnlineConsultationController::class, 'showConfirmation'])->name('consultation.confirmation');
+
+    // Rute untuk halaman detail konsultasi
+    Route::get('/consultation-detail/{id}', [OnlineConsultationController::class, 'showConsultationDetail'])->name('consultation.detail');
+
+    // Rute untuk halaman invoice
+    Route::get('/consultation-invoice/{id}', [OnlineConsultationController::class, 'showInvoice'])->name('consultation.invoice');
+
+    // Rute untuk konfirmasi pembayaran
+    Route::post('/consultation-payment/{id}', [OnlineConsultationController::class, 'confirmPayment'])->name('consultation.payment');
 });
 
-Route::get('/consultation-confirmation', function () {
-    return view('consultation-confirmation');
-});
-
-Route::get('/consultation-detail', function () {
-    return view('consultation-detail');
-});
-
-Route::get('/consultation-invoice', function () {
-    return view('consultation-invoice');
-});
 
 
 Route::get('/promosi_detail', function () {

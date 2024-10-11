@@ -141,8 +141,6 @@ class LandingPageController extends Controller
         return response()->json($polyclinics);
     }
 
-
-
     public function promotion()
     {
         $title = 'Promosi';
