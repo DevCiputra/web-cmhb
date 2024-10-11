@@ -40,6 +40,14 @@
                     </div>
                 </div>
 
+                <!-- Doctor Consultation Fee Section -->
+                <div class="doctor-fee" style="margin-top: 2rem;">
+                    <h4 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem; color: #023770;">Consultation Fee</h4>
+                    <p style="font-size: 1.25rem; color: #444444;">
+                        Rp{{ number_format($doctor->consultation_fee, 0, ',', '.') }},-
+                    </p>
+                </div>
+
                 <!-- Doctor Education Section -->
                 <div class="doctor-education" style="margin-top: 2rem;">
                     <h4 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem; color: #023770;">Riwayat Pendidikan</h4>

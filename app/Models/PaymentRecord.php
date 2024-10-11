@@ -5,29 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DoctorConsultationReservation extends Model
+class PaymentRecord extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'reservation_id',
-        'doctor_id',
-        'preferred_consultation_date',
-        'agreed_consultation_date',
-        'agreed_consultation_time',
-        'zoom_link',
-        'zoom_password',
+        'payment_method',
+        'payment_proof',
+        'payment_confirmation_date',
     ];
 
     // Relasi dengan model Reservation
     public function reservation()
     {
         return $this->belongsTo(Reservation::class, 'reservation_id');
-    }
-
-    // Relasi dengan model Doctor
-    public function doctor()
-    {
-        return $this->belongsTo(Doctor::class, 'doctor_id');
     }
 }

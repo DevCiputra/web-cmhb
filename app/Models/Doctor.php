@@ -15,7 +15,9 @@ class Doctor extends Model
         'name',
         'specialization_name',  // Data denormalisasi
         'doctor_polyclinic_id', // Foreign key
-        'address'
+        'address',
+        'consultation_fee',
+        'email'
     ];
 
     // Relasi ke tabel DoctorPolyclinic (normalisasi)

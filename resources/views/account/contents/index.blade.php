@@ -3,9 +3,21 @@
 @section('content')
 <div class="container" style="margin-top: 80px;">
     <div class="row justify-content-center">
+        @if(session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+        @endif
         <div class="col-md-8">
             <div class="profile-header text-center">
-                <img src="{{ asset('images/user.jpg') }}" alt="User Photo">
+
+                <!-- Menampilkan gambar profil pasien -->
+                @if ($patient && $patient->profile_picture)
+                <img src="{{ asset('storage/' . $patient->profile_picture) }}" alt="Patient Photo" style="width: 100px; height: auto; border-radius: 50%;">
+                @else
+                <img src="{{ asset('images/user.jpg') }}" alt="Patient Photo" style="width: 100px; height: auto; border-radius: 50%;">
+                @endif
+
                 <h5>{{ $user->username }}</h5>
                 <p>{{ $user->whatsapp }}</p>
                 <p>{{ $user->email }}</p>
@@ -32,227 +44,231 @@
                             <div class="mb-3">
                                 <p>{{ $patient->address ?? 'Alamat tidak tersedia' }}</p>
                             </div>
+
                             <h6>Usia</h6>
                             <div class="mb-3">
                                 <p>{{ \Carbon\Carbon::parse($patient->created_at)->age }} Tahun</p>
                             </div>
+
                             <h6>Alergi</h6>
                             <div class="mb-3">
-                                <p>{{ $patient->allergy ?? 'Tidak ada alergi yang terdaftar' }}</p>
+                                <p>
+                                    @if($patient->allergies && $patient->allergies->isNotEmpty())
+                                    @foreach($patient->allergies as $allergy)
+                                    {{ $allergy->name }}{{ !$loop->last ? ', ' : '' }}
+                                    @endforeach
+                                    @else
+                                    Tidak ada alergi yang terdaftar
+                                    @endif
+                                </p>
                             </div>
                             <h6>Golongan Darah</h6>
                             <div class="mb-3">
-                                <p>{{ $patient->blood_type ?? 'Golongan darah tidak tersedia' }}</p>
+                                <p>
+                                    @if($patient->bloodGroup)
+                                    {{ $patient->bloodGroup->name }}
+                                    @else
+                                    Golongan darah tidak tersedia
+                                    @endif
+                                </p>
                             </div>
                         </div>
+
                     </div>
                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                         <!-- Filter Section -->
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span>Filter by:</span>
                             <div class="btn-group" role="group" aria-label="Filter Options">
-                                <button type="button" class="btn btn-outline-primary"
-                                    id="filter-latest">Terbaru</button>
-                                <button type="button" class="btn btn-outline-primary" id="filter-newest">Paling
-                                    Lama</button>
+                                <button type="button" class="btn btn-outline-primary" id="filter-latest">Terbaru</button>
+                                <button type="button" class="btn btn-outline-primary" id="filter-newest">Paling Lama</button>
                             </div>
                         </div>
 
                         <!-- Scrollable Consultation List -->
                         <div class="consultation-list" style="max-height: 300px; overflow-y: auto;">
-                            <a href="/consultation-detail" class="booking-item-link">
+                            @foreach ($reservations as $reservation)
+                            <a href="{{ route('consultation.detail', $reservation->id) }}" class="booking-item-link">
                                 <div class="booking-item">
                                     <div class="booking-info">
-                                        <span class="booking-code">#12345</span>
+                                        <span class="booking-code">{{ $reservation->code }}</span>
                                         <div class="booking-details">
-                                            <span class="booking-date">2024-09-17</span>
-                                            <span class="booking-time">10:30 AM</span>
+                                            <span class="booking-date">{{ $reservation->doctorConsultationReservation->preferred_consultation_date }}</span>
+
+                                            <span class="booking-time">{{ $reservation->doctorConsultationReservation->preferred_consultation_time ?? 'N/A' }}</span>
                                         </div>
                                     </div>
-                                    <span class="status-badge badge-success">Berhasil</span>
+                                    <span class="status-badge badge
+    @if($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
+        badge-warning
+    @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
+        {{ $reservation->status->class ?? 'badge-secondary' }}
+    @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
+        {{ $reservation->status->class ?? 'badge-success' }}
+    @else
+        badge-secondary
+    @endif
+">
+                                        @if($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
+                                        Menunggu Pembayaran
+                                        @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
+                                        {{ $reservation->status->name }}
+                                        @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
+                                        {{ $reservation->status->name }}
+                                        @else
+                                        Status Tidak Diketahui
+                                        @endif
+                                    </span>
+
                                 </div>
                             </a>
-                            <a href="/consultation-detail" class="booking-item-link">
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12346</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-18</span>
-                                            <span class="booking-time">02:45 PM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-warning">Menunggu Pembayaran</span>
-                                </div>
-                            </a>
-                            <a href="/consultation-detail" class="booking-item-link">
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12347</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-19</span>
-                                            <span class="booking-time">09:00 AM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-info">Menunggu Approval</span>
-                                </div>
-                            </a>
-                            <a href="/consultation-detail" class="booking-item-link">
-                                <div class="booking-item">
-                                    <div class="booking-info">
-                                        <span class="booking-code">#12348</span>
-                                        <div class="booking-details">
-                                            <span class="booking-date">2024-09-20</span>
-                                            <span class="booking-time">11:00 AM</span>
-                                        </div>
-                                    </div>
-                                    <span class="status-badge badge-danger">Cancelled</span>
-                                </div>
-                            </a>
+                            @endforeach
                             <!-- Tambahkan item lainnya jika diperlukan -->
                         </div>
-
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Emergency Section -->
-<!-- Emergency FAB -->
-<div id="emergency" class="emergency-fab">
-    <!-- Sub-menu FAB buttons that will collapse/expand -->
-    <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
-        <a href="#" class="btn btn-success btn-lg mb-2 rounded-circle">
-            <i class="fas fa-ambulance"></i>
-        </a>
-        <a href="#" class="btn btn-outline-success btn-lg rounded-circle mb-2">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-    </div>
-    <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle" onclick="toggleEmergencyButtons()">
-        <i class="fa-solid fa-phone"></i>
-    </a>
-</div>
-
-<!-- Modal for Editing Profile -->
-<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
-    aria-hidden="true">
+<!-- Modal untuk Mengedit Profil -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                <h5 class="modal-title" id="editProfileModalLabel">Edit Profil</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editProfileForm">
+                <form id="editProfileForm" action="{{ route('account-update', $patient->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+
+                    <!-- Preview Foto Profil -->
                     <div class="mb-3">
                         <label for="profilePhoto" class="form-label">Foto Profil</label>
-                        <input type="file" class="form-control" id="profilePhoto">
+                        <div>
+                            @if($patient && $patient->profile_picture)
+                            <img src="{{ asset('storage/' . $patient->profile_picture) }}" alt="Profile Photo" id="previewProfilePhoto" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+                            @else
+                            <img src="{{ asset('default_profile.png') }}" alt="Default Profile Photo" id="previewProfilePhoto" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+                            @endif
+                        </div>
+                        <input type="file" class="form-control mt-2" id="profilePhoto" name="profile_picture" accept="image/*" onchange="previewImage(event)">
                     </div>
+
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="name" value="Nama User">
+                        <input type="text" class="form-control" id="name" name="name" value="{{ $user->patient->name }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" value="user@mail.com">
+                        <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Alamat</label>
-                        <textarea class="form-control" id="address" rows="3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas efficitur, eros ut porttitor semper, ex tellus cursus ipsum, eu posuere augue turpis ac tortor.</textarea>
+                        <textarea class="form-control" id="address" name="address" rows="3" required>{{ $patient->address }}</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="allergy" class="form-label">Alergi</label>
-                        <input type="text" class="form-control" id="allergy" value="Alergi ayam ras">
+                        <input type="text" class="form-control" id="allergy" name="allergy" value="{{ $patient->allergies->pluck('name')->implode(', ') }}">
                     </div>
                     <div class="mb-3">
                         <label for="bloodType" class="form-label">Golongan Darah</label>
-                        <input type="text" class="form-control" id="bloodType" value="B">
+                        <input type="text" class="form-control" id="bloodType" name="blood_type" value="{{ $patient->bloodGroup->name ?? '' }}">
                     </div>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-primary">Simpan</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function previewImage(event) {
+        const output = document.getElementById('previewProfilePhoto');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
+
+
 @endsection
 @push('scripts')
 <script src="{{ asset('js/navbar.js') }}"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-    // Dapatkan elemen tab untuk 'Informasi Pribadi' dan 'Riwayat Pesanan'
-    const infoTab = document.getElementById('profile-info-tab');
-    const riwayatTab = document.getElementById('nav-profile-tab');
-    const infoContent = document.getElementById('profile-info');
-    const riwayatContent = document.getElementById('nav-profile');
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Dapatkan elemen tab untuk 'Informasi Pribadi' dan 'Riwayat Pesanan'
+        const infoTab = document.getElementById('profile-info-tab');
+        const riwayatTab = document.getElementById('nav-profile-tab');
+        const infoContent = document.getElementById('profile-info');
+        const riwayatContent = document.getElementById('nav-profile');
 
-    // Aktifkan default tab hanya jika tidak ada yang dipilih sebelumnya di localStorage
-    if (!localStorage.getItem('activeTab')) {
-        infoTab.classList.add('active');
-        infoContent.classList.add('show', 'active');
-        riwayatTab.classList.remove('active');
-        riwayatContent.classList.remove('show', 'active');
-    }
-
-    // Cek tab yang terakhir kali dipilih di localStorage
-    const lastTab = localStorage.getItem('activeTab');
-    if (lastTab) {
-        const activeTab = document.querySelector(`#${lastTab}`);
-        const tabContent = document.querySelector(`#${activeTab.getAttribute("aria-controls")}`);
-        if (activeTab && tabContent) {
-            // Aktifkan tab terakhir yang diakses
-            activeTab.classList.add('active');
-            tabContent.classList.add('show', 'active');
+        // Aktifkan default tab hanya jika tidak ada yang dipilih sebelumnya di localStorage
+        if (!localStorage.getItem('activeTab')) {
+            infoTab.classList.add('active');
+            infoContent.classList.add('show', 'active');
+            riwayatTab.classList.remove('active');
+            riwayatContent.classList.remove('show', 'active');
         }
-    }
 
-    // Event listener untuk setiap tab, menyimpan posisi terakhir yang dikunjungi
-    const tabs = document.querySelectorAll('.nav-profile .nav-link');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            localStorage.setItem('activeTab', this.id);
-            
-            // Tampilkan konten yang sesuai dan sembunyikan yang lain
-            if (this.id === 'profile-info-tab') {
-                riwayatContent.classList.remove('show', 'active');
-                infoContent.classList.add('show', 'active');
-            } else if (this.id === 'nav-profile-tab') {
-                infoContent.classList.remove('show', 'active');
-                riwayatContent.classList.add('show', 'active');
+        // Cek tab yang terakhir kali dipilih di localStorage
+        const lastTab = localStorage.getItem('activeTab');
+        if (lastTab) {
+            const activeTab = document.querySelector(`#${lastTab}`);
+            const tabContent = document.querySelector(`#${activeTab.getAttribute("aria-controls")}`);
+            if (activeTab && tabContent) {
+                // Aktifkan tab terakhir yang diakses
+                activeTab.classList.add('active');
+                tabContent.classList.add('show', 'active');
             }
+        }
+
+        // Event listener untuk setiap tab, menyimpan posisi terakhir yang dikunjungi
+        const tabs = document.querySelectorAll('.nav-profile .nav-link');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                localStorage.setItem('activeTab', this.id);
+
+                // Tampilkan konten yang sesuai dan sembunyikan yang lain
+                if (this.id === 'profile-info-tab') {
+                    riwayatContent.classList.remove('show', 'active');
+                    infoContent.classList.add('show', 'active');
+                } else if (this.id === 'nav-profile-tab') {
+                    infoContent.classList.remove('show', 'active');
+                    riwayatContent.classList.add('show', 'active');
+                }
+            });
         });
+
+        // Cek apakah ada parameter `tab` pada URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const tab = urlParams.get('tab');
+
+        // Jika `tab` adalah `riwayat`, aktifkan tab Pemesanan Konsultasi
+        if (tab === 'riwayat') {
+            riwayatTab.classList.add('active');
+            infoTab.classList.remove('active');
+
+            riwayatContent.classList.add('show', 'active');
+            infoContent.classList.remove('show', 'active');
+
+            // Simpan riwayat tab ke localStorage
+            localStorage.setItem('activeTab', 'nav-profile-tab');
+        } else {
+            // Jika tidak ada `tab`, pastikan 'Informasi Pribadi' adalah tampilan default
+            infoTab.classList.add('active');
+            infoContent.classList.add('show', 'active');
+            riwayatTab.classList.remove('active');
+            riwayatContent.classList.remove('show', 'active');
+        }
     });
+</script>
 
-    // Cek apakah ada parameter `tab` pada URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const tab = urlParams.get('tab');
-
-    // Jika `tab` adalah `riwayat`, aktifkan tab Pemesanan Konsultasi
-    if (tab === 'riwayat') {
-        riwayatTab.classList.add('active');
-        infoTab.classList.remove('active');
-
-        riwayatContent.classList.add('show', 'active');
-        infoContent.classList.remove('show', 'active');
-
-        // Simpan riwayat tab ke localStorage
-        localStorage.setItem('activeTab', 'nav-profile-tab');
-    } else {
-        // Jika tidak ada `tab`, pastikan 'Informasi Pribadi' adalah tampilan default
-        infoTab.classList.add('active');
-        infoContent.classList.add('show', 'active');
-        riwayatTab.classList.remove('active');
-        riwayatContent.classList.remove('show', 'active');
-    }
-});
-
-    </script>
-    
 @endpush
 
 @push('styles')

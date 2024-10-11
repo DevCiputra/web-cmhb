@@ -61,7 +61,9 @@ class DoctorController extends Controller
             'doctor_polyclinic_id' => 'required|exists:doctor_polyclinics,id', // Validasi poliklinik
             'address' => 'required|url',
             'doctor_photos' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'doctor_medias' => 'required|file|mimes:pdf,doc,docx|max:10240'
+            'doctor_medias' => 'required|file|mimes:pdf,doc,docx|max:10240',
+            'consultation_fee' => 'required|numeric|min:0',
+            'email' => 'required|email'
         ]);
 
         // dd($request);
@@ -72,6 +74,10 @@ class DoctorController extends Controller
             'doctor_polyclinic_id' => $request->input('doctor_polyclinic_id'),
             'address'
             => $request->input('address'),
+            'consultation_fee'
+            => $request->input('consultation_fee'),
+            'email'
+            => $request->input('email'),
         ]);
 
         // Simpan pendidikan dokter
@@ -164,6 +170,8 @@ class DoctorController extends Controller
             'address' => 'required|url',
             'doctor_photos' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'doctor_medias' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'consultation_fee' => 'required|numeric|min:0',
+            'email' => 'required|email',
         ]);
 
         // Mengupdate data dokter
@@ -173,6 +181,8 @@ class DoctorController extends Controller
             'specialization_name' => $validatedData['specialization_name'],
             'doctor_polyclinic_id' => $validatedData['doctor_polyclinic_id'],
             'address' => $validatedData['address'],
+            'consultation_fee' => $validatedData['consultation_fee'],
+            'email' => $validatedData['email'],
         ]);
 
         // Mengupdate pendidikan dokter

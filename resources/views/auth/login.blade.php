@@ -47,4 +47,9 @@
 <div class="mt-3 text-center">
     <a href="{{ route('password.reset.request') }}" class="text-decoration-none">Forgot your password?</a>
 </div>
+
+<div class="mt-3 text-center">
+    <!-- Link ke halaman registrasi -->
+    <p>Don't have an account? <a href="{{ route('register') }}" class="text-decoration-none">Register here</a>.</p>
+</div>
 @endsection

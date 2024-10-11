@@ -9,5 +9,10 @@ class ReservationStatus extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'class'];
+
+    public function statuses()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

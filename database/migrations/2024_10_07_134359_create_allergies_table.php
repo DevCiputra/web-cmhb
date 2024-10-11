@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reservation_statuses', function (Blueprint $table) {
+        Schema::create('allergies', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Nama status
-            $table->string('class')->nullable(); // Kelas CSS untuk status
+            $table->string('name');
+            $table->unsignedBigInteger('patient_id');
             $table->timestamps();
+
+            // Relasi ke tabel patients
+            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
         });
     }
 
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reservation_statuses');
+        Schema::dropIfExists('allergies');
     }
 };

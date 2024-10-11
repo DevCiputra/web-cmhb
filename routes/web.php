@@ -8,6 +8,7 @@ use App\Http\Controllers\InformationController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\OnlineConsultationController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -61,9 +62,8 @@ Route::get('/medical-check-up/detail/{id}', [LandingPageController::class, 'show
 Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
     // Rute untuk form konsultasi
     Route::get('/consultation-form/{doctor_id}', [OnlineConsultationController::class, 'showConsultationForm'])->name('consultation.form');
-
-    // Rute untuk menyimpan reservasi
     Route::post('/consultation-form', [OnlineConsultationController::class, 'storeReservation'])->name('consultation.store');
+
 
     // Rute untuk halaman konfirmasi
     Route::get('/consultation-confirmation/{id}', [OnlineConsultationController::class, 'showConfirmation'])->name('consultation.confirmation');
@@ -108,6 +108,7 @@ Route::post('/password/reset/{token}', [AuthController::class, 'updatePassword']
 // MODUL PASIEN
 Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
     Route::get('/account', [AccountController::class, 'index'])->name('account-index');
+    Route::post('/account/update/{id}', [AccountController::class, 'update'])->name('account-update'); // Tambahkan {id} di sini
 });
 
 // MODUL DASHBOARD
@@ -143,7 +144,9 @@ Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
 // MODUL RESERVATION ONLINE CONSULTATION
 Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
     Route::get('/reservation-online-consultation', [ReservationController::class, 'indexConsultation'])->name('reservation.onlineconsultation.index');
-    Route::get('/reservation-online-consultation/detail', [ReservationController::class, 'detailConsultation'])->name('reservation.onlineconsultation.detail');
+
+    Route::get('/reservation-online-consultation/detail/{id}', [ReservationController::class, 'detailConsultation'])->name('reservation.onlineconsultation.detail');
+
     Route::get('/reservation-online-consultation/invoice', [ReservationController::class, 'invoiceConsultation'])->name('reservation.onlineconsultation.invoice');
 });
 

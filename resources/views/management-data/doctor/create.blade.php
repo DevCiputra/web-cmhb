@@ -134,6 +134,23 @@
                         @enderror
                     </div>
 
+                    <!-- Input Consultation Fee -->
+                    <div class="mb-3">
+                        <label for="consultation_fee" class="form-label">Biaya Konsultasi (IDR)</label>
+                        <input type="number" class="form-control" id="consultation_fee" name="consultation_fee" placeholder="Masukkan Biaya Konsultasi" required value="{{ old('consultation_fee') }}">
+                        @error('consultation_fee')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Dokter</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email Dokter untuk keperluan Konsultasi Online" required value="{{ old('email') }}">
+                        @error('email')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-success"
                             style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">

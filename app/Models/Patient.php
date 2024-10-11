@@ -21,8 +21,19 @@ class Patient extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function reservations()
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    public function bloodGroup()
+    {
+        return $this->hasOne(BloodGroup::class); // Ubah menjadi hasOne
+    }
+
+    public function allergies()
+    {
+        return $this->hasMany(Allergy::class); // Tetap menggunakan hasMany jika satu pasien memiliki lebih dari satu alergi
     }
 }

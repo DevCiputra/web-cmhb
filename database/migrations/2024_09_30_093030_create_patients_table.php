@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('address')->nullable();
             $table->bigInteger('medical_record_id')->nullable();
             $table->unsignedBigInteger('user_id'); // Foreign key ke users

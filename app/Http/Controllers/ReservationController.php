@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Doctor;
 use App\Models\DoctorPolyclinic;
+use App\Models\Reservation;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\ServiceMedia;
@@ -267,12 +268,23 @@ class ReservationController extends Controller
 
     public function indexConsultation()
     {
-        return view('management-data.reservation.online-consultation.index');
+        $reservations = Reservation::with(['patient', 'status', 'doctorConsultationReservation'])->get();
+
+        // dd($reservations);
+        return view('management-data.reservation.online-consultation.index', compact('reservations'));
     }
 
-    public function detailConsultation()
+    public function detailConsultation($id)
     {
-        return view('management-data.reservation.online-consultation.detail');
+        // Ambil data reservasi beserta relasi yang relevan
+        $reservation = Reservation::with([
+            'patient.user', // Ambil data pasien beserta user untuk nomor WhatsApp dan email
+            'status', // Ambil status reservasi dari tabel reservation_status
+            'doctorConsultationReservation.doctor.polyclinic', // Ambil dokter, poliklinik, dan sesi konsultasi
+            'paymentRecords' // Ambil catatan pembayaran dari tabel payment_records
+        ])->findOrFail($id);
+
+        return view('management-data.reservation.online-consultation.detail', compact('reservation'));
     }
 
     public function invoiceConsultation()

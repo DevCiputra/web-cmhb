@@ -64,7 +64,6 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'Pasien',
             'whatsapp' => $sanitizedWhatsapp,
-            'profile_picture' => $profilePicture,
         ]);
 
         // Jika user gagal dibuat
@@ -74,8 +73,8 @@ class AuthController extends Controller
 
         // Buat data Pasien yang terhubung dengan User
         $patientCreated = Patient::create([
-            'name' => $sanitizedUsername,
             'user_id' => $userCreated->id,
+            'profile_picture' => $profilePicture,
         ]);
 
         if (!$patientCreated) {

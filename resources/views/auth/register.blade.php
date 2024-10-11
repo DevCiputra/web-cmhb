@@ -77,6 +77,7 @@
 
 <div class="mt-3 text-center">
     <span>Already have an account?</span>
-    <a href="{{ route('login') }}" class="btn btn-link">Login Here</a>
+    <p><a href="{{ route('login') }}" class="text-decoration-none">Login Here</a>.</p>
 </div>
+
 @endsection

@@ -15,17 +15,26 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('reservation_id'); // Foreign key ke reservations
             $table->unsignedBigInteger('doctor_id'); // Foreign key ke doctors
-            $table->date('preferred_consultation_date')->nullable(); // Tanggal reservasi
-            $table->time('preferred_consultation_time')->nullable(); // Waktu konsultasi
-            $table->string('payment_proof')->nullable(); // Bukti pembayaran
-            $table->string('zoom_link')->nullable(); // Link Zoom
-            $table->string('zoom_password')->nullable(); // Password Zoom (sebaiknya terenkripsi)
+
+            // Tanggal yang diajukan pasien untuk konsultasi
+            $table->date('preferred_consultation_date')->nullable();
+
+            // Tanggal & Waktu Konsultasi yang Disepakati
+            $table->date('agreed_consultation_date')->nullable();
+            $table->time('agreed_consultation_time')->nullable();
+
+            // Link & Password Zoom untuk sesi konsultasi
+            $table->string('zoom_link')->nullable();
+            $table->string('zoom_password')->nullable();
+
             $table->timestamps();
 
             $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
         });
+
     }
+
 
     /**
      * Reverse the migrations.

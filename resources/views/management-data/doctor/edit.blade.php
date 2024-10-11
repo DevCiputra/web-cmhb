@@ -95,6 +95,17 @@
                         <input type="file" class="form-control" id="doctor_medias" name="doctor_medias" accept=".pdf,.doc,.docx">
                     </div>
 
+                    <!-- Input Consultation Fee -->
+                    <div class="mb-3">
+                        <label for="consultation_fee" class="form-label">Biaya Konsultasi (IDR)</label>
+                        <input type="number" class="form-control" id="consultation_fee" name="consultation_fee" placeholder="Masukkan Biaya Konsultasi" value="{{ old('consultation_fee', $doctor->consultation_fee) }}" required>
+                    </div>
+                    <!-- Input email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Dokter</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Masukan Email Dokter untuk keperluan konsultasi online" value="{{ old('email', $doctor->email) }}" required>
+                    </div>
+
                     <div class="d-flex justify-content-between mt-4">
                         <a href="{{ route('doctor.data.index') }}" class="btn btn-secondary d-flex align-items-center justify-content-center">Kembali</a>
                         <button type="submit" class="btn btn-primary">Simpan</button>
