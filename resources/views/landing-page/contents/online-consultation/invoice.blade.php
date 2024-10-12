@@ -46,14 +46,16 @@
             </div>
         </div>
     </div>
+    <!-- Informasi Zoom -->
+    @if($invoice->doctorConsultationReservation->zoom_link)
+    <div class="important-info">
+        <p><strong>Link Zoom Meeting:</strong> <a href="{{ $invoice->doctorConsultationReservation->zoom_link }}" target="_blank">{{ $invoice->doctorConsultationReservation->zoom_link }}</a></p>
+    </div>
+    <div class="important-info">
+        <p><strong>ID Zoom Meeting:</strong> {{ $invoice->doctorConsultationReservation->zoom_password ?? 'N/A' }}</p>
+    </div>
+    @endif
 
-    <!-- Informasi Penting -->
-    <div class="important-info">
-        <p><strong>Link Zoom Meeting:</strong> <a href="{{ $invoice->doctorConsultationReservation->zoom_link }}" target="_blank">{{ $invoice->doctorConsultationReservation->zoom_link }}</a></p> <!-- Link Zoom -->
-    </div>
-    <div class="important-info">
-        <p><strong>ID Zoom Meeting:</strong> {{ $invoice->doctorConsultationReservation->zoom_password ?? 'N/A' }}</p> <!-- Zoom ID -->
-    </div>
 
     <!-- Section for Patient Details -->
     <h4 class="mb-4 mt-5" style="color: #023770;">Detail Pasien</h4>

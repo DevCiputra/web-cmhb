@@ -9,8 +9,11 @@ use App\Models\Patient;
 use App\Models\PaymentRecord;
 use App\Models\Reservation;
 use App\Models\ReservationStatus;
+use Carbon\Carbon;
 use Illuminate\Support\Str; // Tambahkan ini
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class OnlineConsultationController extends Controller
 {
@@ -142,4 +145,114 @@ class OnlineConsultationController extends Controller
 
         return redirect()->route('consultation.detail', $id)->with('success', 'Pembayaran berhasil dikonfirmasi.');
     }
+
+    public function cancelReservation($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+
+        // Ubah status reservasi menjadi 'Batal'
+        $reservation->update(['reservation_status_id' => ReservationStatus::where('name', 'Batal')->first()->id]);
+
+        return redirect()->back()->with('success', 'Reservation has been cancelled.');
+    }
+
+    public function approveReservation(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'agreed_consultation_date' => 'required|date',
+            'agreed_consultation_time' => 'required|date_format:H:i',
+        ]);
+
+        $reservation = Reservation::findOrFail($id);
+        $reservation->doctorConsultationReservation->update([
+            'agreed_consultation_date' => $validated['agreed_consultation_date'],
+            'agreed_consultation_time' => $validated['agreed_consultation_time'],
+        ]);
+
+        // Buat Zoom meeting menggunakan data yang disepakati
+        $zoomMeeting = $this->createMeeting(new Request([
+            'title' => "Konsultasi dengan Dr. {$reservation->doctorConsultationReservation->doctor->name}",
+            'start_date_time' => "{$validated['agreed_consultation_date']} {$validated['agreed_consultation_time']}",
+            'duration_in_minute' => 60,
+        ]), $reservation->id);
+
+        // Simpan detail Zoom ke dalam database
+        $reservation->doctorConsultationReservation->update([
+            'zoom_link' => $zoomMeeting['join_url'],
+            'zoom_password' => $zoomMeeting['password'],
+        ]);
+
+        // Ubah status reservasi menjadi "Berhasil"
+        $reservation->update([
+            'reservation_status_id' => ReservationStatus::where('name', 'Berhasil')->first()->id,
+        ]);
+
+        return redirect()->back()->with('success', 'Reservation approved and Zoom meeting created.');
+    }
+
+    public function createMeeting(Request $request, $reservationId): array
+    {
+        $validated = $this->validate($request, [
+            'title' => 'required|string|max:255',
+            'start_date_time' => 'required|date',
+            'duration_in_minute' => 'required|numeric',
+        ]);
+
+        $reservation = Reservation::with('doctorConsultationReservation.doctor')->findOrFail($reservationId);
+
+        try {
+            // Buat Zoom meeting menggunakan akun Zoom yang terhubung dengan aplikasi
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $this->generateToken(),
+                'Content-Type' => 'application/json',
+            ])->post("https://api.zoom.us/v2/users/me/meetings", [
+                'topic' => $validated['title'],
+                'type' => 2,
+                'start_time' => Carbon::parse($validated['start_date_time'])->toIso8601String(),
+                'duration' => $validated['duration_in_minute'],
+                'password' => $this->generateMeetingPassword(), // Menggunakan password yang dihasilkan
+                'settings' => [
+                    'host_video' => true,
+                    'participant_video' => true,
+                    'join_before_host' => false, // Peserta tidak bisa masuk sebelum host
+                    'waiting_room' => true, // Aktifkan waiting room
+                    'approval_type' => 0,
+                    'meeting_authentication' => false,
+                ],
+            ]);
+
+            $zoomData = $response->json();
+
+            if (isset($zoomData['code']) && isset($zoomData['message'])) {
+                throw new \Exception("Zoom API error: {$zoomData['message']} (Code: {$zoomData['code']})");
+            }
+
+            return $zoomData;
+        } catch (\Throwable $th) {
+            throw new \Exception('Error creating Zoom meeting: ' . $th->getMessage());
+        }
+    }
+
+    protected function generateMeetingPassword(): string
+    {
+        return Str::random(8); // Menghasilkan password acak sepanjang 8 karakter
+    }
+    // Fungsi untuk generate Zoom OAuth Token
+    protected function generateToken(): string
+    {
+        try {
+            $base64String = base64_encode(env('ZOOM_CLIENT_KEY') . ':' . env('ZOOM_CLIENT_SECRET'));
+            $accountId = env('ZOOM_ACCOUNT_ID');
+
+            $responseToken = Http::withHeaders([
+                "Content-Type" => "application/x-www-form-urlencoded",
+                "Authorization" => "Basic {$base64String}"
+            ])->post("https://zoom.us/oauth/token?grant_type=account_credentials&account_id={$accountId}");
+
+            return $responseToken->json()['access_token'];
+        } catch (\Throwable $th) {
+            throw new \Exception('Error generating Zoom token: ' . $th->getMessage());
+        }
+    }
+
 }

@@ -36,12 +36,16 @@
             <h4 class="mb-4" style="color: #000;">{{ $reservation->code }}</h4>
 
             <div class="d-flex mb-4">
-                <button class="btn btn-success me-2" style="border-radius: 6px; display: flex; align-items: center;">
+                <!-- Tombol Approve Order -->
+                <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#approveModal">
                     <i class="fas fa-check-circle me-1"></i> Approve Order
                 </button>
-                <button class="btn btn-danger me-2" style="border-radius: 6px; display: flex; align-items: center;">
-                    <i class="fas fa-times-circle me-1"></i> Cancel Order
-                </button>
+                <form action="{{ route('reservation.cancel', $reservation->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-danger me-2">
+                        <i class="fas fa-times-circle me-1"></i> Cancel Order
+                    </button>
+                </form>
                 <button class="btn btn-secondary" style="border-radius: 6px; display: flex; align-items: center;">
                     <i class="fas fa-trash me-1"></i> Delete Order
                 </button>
@@ -82,11 +86,46 @@
     </div>
 </div>
 
+<!-- Modal untuk Approve Reservation -->
+<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="approveForm" method="POST" action="{{ route('reservation.approve', $reservation->id) }}">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="approveModalLabel">Approve Konsultasi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="agreedDate" class="form-label">Tanggal Konsultasi yang Disepakati</label>
+                        <input type="text" class="form-control" id="agreedDate" name="agreed_consultation_date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="agreedTime" class="form-label">Waktu Konsultasi yang Disepakati</label>
+                        <input type="text" class="form-control" id="agreedTime" name="agreed_consultation_time" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Approve</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 @endsection
+
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endpush
 
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script>
     const mobileScreen = window.matchMedia("(max-width: 990px )");
@@ -107,6 +146,20 @@
                 $(".dashboard").toggleClass("dashboard-compact");
             }
         });
+    });
+</script>
+
+<script>
+    // Inisialisasi flatpickr untuk input waktu dengan format 24 jam
+    flatpickr("#agreedTime", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i", // Format 24 jam
+        time_24hr: true, // Aktifkan 24 jam
+    });
+
+    flatpickr("#agreedDate", {
+        dateFormat: "Y-m-d", // Format tanggal (ISO)
     });
 </script>
 @endpush
