@@ -15,6 +15,7 @@ class Patient extends Model
         'medical_record_id',
         'user_id',
         'profile_picture',
+        'age',
     ];
 
     public function user()

@@ -43,7 +43,7 @@
         <label for="whatsapp" class="form-label">WhatsApp Number</label>
         <div class="input-group">
             <div class="input-group-text"><i class="fas fa-phone"></i></div>
-            <input type="text" class="form-control" id="whatsapp" name="whatsapp" value="{{ old('whatsapp') }}" required placeholder="+62xxxxxxxxxxx">
+            <input type="text" class="form-control" id="whatsapp" name="whatsapp" value="{{ old('whatsapp') }}" required placeholder="62xxxxxxxxxxx">
         </div>
         @error('whatsapp')
         <div class="text-danger">{{ $message }}</div>
@@ -58,7 +58,10 @@
         @error('password')
         <div class="text-danger">{{ $message }}</div>
         @enderror
-    </div>
+        <small class="form-text text-muted">
+            Your password must contain at least one uppercase letter, one number, and be at least 8 characters long.
+        </small>
+    </div>    
     <div class="mb-3 text-start">
         <label for="password_confirmation" class="form-label">Confirm Password</label>
         <div class="input-group">

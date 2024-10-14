@@ -136,13 +136,14 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var bankSelect = document.getElementById('bank');
+        var bankSelect = document.getElementById('payment_method'); // Corrected variable name
         var rekeningInfo = document.getElementById('rekening-info');
         var rekeningText = document.getElementById('bankAccount');
 
         bankSelect.addEventListener('change', function() {
             var selectedBank = this.value;
 
+            // Display corresponding bank account information based on the selected bank
             if (selectedBank === 'BCA') {
                 rekeningText.textContent = '1234567890 - a.n Ciputra Mitra Hospital';
                 rekeningInfo.style.display = 'block';
@@ -153,7 +154,7 @@
                 rekeningText.textContent = '1122334455 - a.n PT. Ciputra Mitra Hospital';
                 rekeningInfo.style.display = 'block';
             } else {
-                rekeningInfo.style.display = 'none';
+                rekeningInfo.style.display = 'none'; // Hide if no valid selection
             }
         });
     });

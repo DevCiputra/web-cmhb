@@ -34,8 +34,8 @@
         <li class="nav-item dropdown">
             <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Fitur</a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/coming-soon">Skrining Depresi</a></li>
-                <li><a class="dropdown-item" href="/coming-soon">BMI</a></li>
+                <li><a class="dropdown-item" href="/coming">Skrining Depresi</a></li>
+                <li><a class="dropdown-item" href="/coming">BMI</a></li>
             </ul>
         </li>
         <li><a class="nav-link" href="#emergency">IGD 24 Jam</a></li>

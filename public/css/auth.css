@@ -38,12 +38,13 @@ body, html {
 }
 
 .auth-form {
-    padding: 100px;
+    padding: 80px;
     background-color: #fff;
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 2;
+    max-width: 500px;
 }
 
 .auth-form h2 {
