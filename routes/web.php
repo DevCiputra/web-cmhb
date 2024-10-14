@@ -76,6 +76,17 @@ Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
 
     // Rute untuk konfirmasi pembayaran
     Route::post('/consultation-payment/{id}', [OnlineConsultationController::class, 'confirmPayment'])->name('consultation.payment');
+
+    // Rute untuk halaman invoice
+    Route::get('/consultation-invoice/{id}', [OnlineConsultationController::class, 'showInvoice'])->name('consultation.invoice');
+
+    // Rute untuk konfirmasi pembayaran
+    Route::post('/consultation-payment/{id}', [OnlineConsultationController::class, 'confirmPayment'])->name('consultation.payment');
+
+    // Rute untuk approve dan cancel reservasi
+    Route::post('/reservation/{id}/approve', [OnlineConsultationController::class, 'approveReservation'])->name('reservation.approve');
+    Route::post('/reservation/{id}/cancel', [OnlineConsultationController::class, 'cancelReservation'])->name('reservation.cancel');
+
 });
 
 
