@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             RolesTableSeeder::class,
             UsersTableSeeder::class,
             ReservationStatusesTableSeeder::class,
+            ZoomAccountSeeder::class,
         ]);
         // Anda juga bisa menambahkan seeder lain di sini jika ada
         // $this->call(SeederLainnya::class);

@@ -268,9 +268,11 @@ class ReservationController extends Controller
 
     public function indexConsultation()
     {
-        $reservations = Reservation::with(['patient', 'status', 'doctorConsultationReservation'])->get();
+        // Hanya ambil reservasi yang tidak dihapus (soft delete)
+        $reservations = Reservation::with(['patient', 'status', 'doctorConsultationReservation'])
+        ->withoutTrashed()
+            ->get();
 
-        // dd($reservations);
         return view('management-data.reservation.online-consultation.index', compact('reservations'));
     }
 
