@@ -46,39 +46,37 @@ class AccountController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'address' => 'required|string|max:255',
-            'dob' => 'required|date', // Validate the date of birth
             'allergy' => 'nullable|string|max:255',
             'blood_type' => 'nullable|string|max:3',
         ]);
-    
+
         // Mengambil data pengguna yang sedang login
         $user = Auth::user();
         $patient = Patient::findOrFail($id); // Mengambil pasien berdasarkan ID
-    
+
         // Variabel untuk menyimpan path foto profil
         $profilePicture = $user->profile_picture; // Menggunakan foto lama sebagai default
-    
+
         // Handle Profile Picture Upload
         if ($request->hasFile('profile_picture')) {
             $profilePicture = $request->file('profile_picture')->store('profiles', 'public');
             // Update foto profil pada tabel users
             $user->profile_picture = $profilePicture; // Simpan path baru ke variabel user
         }
-    
+
         // Update informasi pengguna
         DB::table('users')->where('id', $user->id)->update([
             'email' => $request->email,
             'profile_picture' => $profilePicture, // Menyimpan path foto profil yang baru atau lama
         ]);
-    
+
         // Update informasi pasien
         DB::table('patients')->where('id', $patient->id)->update([
             'name' => $request->name,
             'address' => $request->address,
-            'dob' => $request->dob, // Save date of birth
             'profile_picture' => $profilePicture, // Menyimpan path foto profil yang baru atau lama
         ]);
-    
+
         // Update atau buat data alergi di tabel `allergies`
         if ($request->filled('allergy')) {
             $allergy = Allergy::where('patient_id', $patient->id)->first();
@@ -92,7 +90,7 @@ class AccountController extends Controller
                 ]);
             }
         }
-    
+
         // Update atau buat data golongan darah di tabel `blood_groups`
         if ($request->filled('blood_type')) {
             $bloodGroup = BloodGroup::where('patient_id', $patient->id)->first();
@@ -106,7 +104,7 @@ class AccountController extends Controller
                 ]);
             }
         }
-    
+
         return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
     }
     

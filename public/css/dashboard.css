@@ -400,7 +400,7 @@ h1, .h1 {
 .card-body {
     padding: 15px;
     background-color: #fff;
-    max-height: 400px;
+    height: 180px;
 }
 
 
@@ -680,6 +680,7 @@ trix-editor {
     .icon-group .eye-icon {
         width: 16px; /* Adjust size as needed */
         height: 16px;
+        margin: -28px;
     }
 
     .card-header {
@@ -690,6 +691,7 @@ trix-editor {
     .card-body {
         /* Atur ukuran font di body card */
         font-size: 0.5rem;
+        height: 100px;
     }
 
     .btn-action {

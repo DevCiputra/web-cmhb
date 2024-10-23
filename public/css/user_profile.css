@@ -288,7 +288,7 @@ body {
         padding-right: 10px;
     }
 
-        /* Emergency Section */
+    /* Emergency Section */
     .emergency-section {
         padding-bottom: 5rem;
     }
@@ -303,26 +303,42 @@ body {
         text-align: center;
         margin-bottom: 10px;
     }
-        .nav-profile .nav-tabs {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: nowrap;
-            margin-bottom: 0;
-        }
-        
-        .nav-profile .nav-tabs .nav-link {
-            flex: 1;
-            text-align: center;
-            font-size: 14px; /* Smaller font size */
-            padding: 6px 8px; /* Reduced padding for smaller screens */
-            margin-right: 2px; /* Small margin between elements */
-        }
-    
-        .nav-profile .nav-tabs .nav-link:last-child {
-            margin-right: 0; /* Remove margin for the last element */
-        }
-    
+
+    .nav-profile .nav-tabs {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        margin-bottom: 0;
+    }
+
+    .nav-profile .nav-tabs .nav-link {
+        flex: 1;
+        text-align: center;
+        font-size: 14px; /* Smaller font size */
+        padding: 6px 8px; /* Reduced padding for smaller screens */
+        margin-right: 2px; /* Small margin between elements */
+    }
+
+    .nav-profile .nav-tabs .nav-link:last-child {
+        margin-right: 0; /* Remove margin for the last element */
+    }
+
+    /* Move status badge below booking details */
+    .booking-item {
+        flex-direction: column; /* Change to column layout */
+    }
+
+    .booking-details {
+        margin-bottom: 0.5rem; /* Add space below booking details */
+    }
+
+    .status-badge {
+        margin-top: 0.5rem; /* Add some margin above status badge */
+        width: 100%; /* Ensure the badge takes the full width */
+        text-align: center; /* Center the text in the badge */
+    }
 }
+
 
 .btn-outline-success {
     background-color: #28a745; /* Mengatur background menjadi hijau */
@@ -390,5 +406,20 @@ textarea.form-control {
     background-color: #5a6268; /* Darker gray on hover */
     border-color: #5a6268; /* Darker gray border on hover */
 }
+
+.profile-header img:first-of-type:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    transition: transform 0.2s;
+}
+
+.tab-bar .nav-link {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.booking-item:hover {
+    background-color: #f1f1f1; /* Change background on hover */
+    transition: background-color 0.3s;
+}
+
 
 

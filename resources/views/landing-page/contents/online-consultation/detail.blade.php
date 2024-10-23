@@ -50,8 +50,10 @@
             <div class="row mb-3">
                 <div class="col-md-6 consultation-info-item">
                     <p><strong>Status Pemesanan:</strong>
-                        <span class="badge {{ $reservation->status->class }}">{{ $reservation->status->name }}</span>
-                    </p>
+                        <span class="badge {{ ($reservation->status_pembayaran != 'Lunas') ? 'badge-warning' : $reservation->status->class }}">
+                            {{ ($reservation->status_pembayaran != 'Lunas') ? 'Menunggu Pembayaran' : $reservation->status->name }}
+                        </span>
+                    </p>                    
                 </div>
                 <div class="col-md-6 consultation-info-item">
                     <p><strong>Total Biaya:</strong> Rp. {{ number_format($reservation->doctorConsultationReservation->doctor->consultation_fee, 0, ',', '.') }}</p>

@@ -23,6 +23,7 @@ class AuthController extends Controller
     {
         // Validasi input yang lebih ketat
         $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255', 
             'username' => 'required|string|max:255|regex:/^[a-zA-Z0-9_.-]*$/',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
@@ -74,6 +75,7 @@ class AuthController extends Controller
         // Buat data Pasien yang terhubung dengan User
         $patientCreated = Patient::create([
             'user_id' => $userCreated->id,
+            'name' => $request->name,
             'profile_picture' => $profilePicture,
         ]);
 

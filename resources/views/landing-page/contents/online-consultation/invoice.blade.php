@@ -7,11 +7,13 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
             <li class="breadcrumb-item"><a href="/account">Profil</a></li>
-            <li class="breadcrumb-item"><a href="/account">Riwayat Pesanan</a></li>
+            <li class="breadcrumb-item"><a href="/account?tab=riwayat">Riwayat Pesanan</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('consultation.detail', $reservation->id) }}">Detail Pesanan</a></li>
             <li class="breadcrumb-item active" style="color: #023770" aria-current="page">Invoice Pembayaran</li>
         </ol>
     </nav>
 </div>
+
 
 <div class="invoice-container">
     <div class="invoice-header text-center">

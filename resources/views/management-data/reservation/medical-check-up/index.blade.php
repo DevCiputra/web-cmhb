@@ -55,7 +55,7 @@
                     <img class="card-img-top" src="{{ $media ? Storage::url('service_photos/mcu/' . $media->name) : asset('images/default.jpg') }}" alt="Service Image"
                         style="width: 100%; height: 200px; object-fit: cover;">
 
-                    <div class="card-body">
+                    <div class="card-form">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <h5 class="title card-title">{{ $service->title }}</h5>
                             <div class="icon-group d-flex">

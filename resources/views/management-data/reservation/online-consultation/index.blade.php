@@ -35,7 +35,7 @@
         <!-- DataTable Card for Konsultasi Online -->
         <div class="card"
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px;">
-            <div class="card-body">
+            <div class="card-form">
                 <!-- Title and Add Button -->
                 <div class="d-flex mb-3">
                     <h4 style="color: #1C3A6B"><b>Data Reservasi Konsultasi Online</b></h4>
@@ -83,28 +83,44 @@
                                 </td>
 
                                 <td>
-                                    <span class="status-badge badge
-                @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
-                    badge-warning
-                @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
-                    {{ $reservation->status->class ?? 'badge-secondary' }}
-                @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
-                    {{ $reservation->status->class ?? 'badge-success' }}
-                @else
-                    badge-secondary
-                @endif"
-                                        style="color: black;">
+                                    <span class="status-badge badge 
                                         @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
-                                        Menunggu Pembayaran
+                                            badge-warning
                                         @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
-                                        {{ $reservation->status->name }}
+                                            badge-warning
                                         @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
-                                        {{ $reservation->status->name }}
+                                            badge-success
+                                        @elseif ($reservation->status_pembayaran == 'Dibatalkan')
+                                            badge-danger
                                         @else
-                                        Status Tidak Diketahui
+                                            badge-light
+                                        @endif"
+                                        style="color: black; 
+                                               @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
+                                                   background-color: #FFC107; /* Warning color */
+                                               @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
+                                                   background-color: #007BFF; /* Primary color */
+                                               @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
+                                                   background-color: #28A745; /* Success color */
+                                               @elseif ($reservation->status_pembayaran == 'Dibatalkan')
+                                                   background-color: #dc3545; /* Danger color */
+                                               @else
+                                                   background-color: #F8F9FA; /* Light color */
+                                               @endif">
+                                        @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
+                                            Menunggu Pembayaran
+                                        @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
+                                            Menunggu Approval
+                                        @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
+                                            Lunas
+                                        @elseif ($reservation->status_pembayaran == 'Dibatalkan')
+                                            Dibatalkan
+                                        @else
+                                            Status Tidak Diketahui
                                         @endif
                                     </span>
                                 </td>
+                                
                                 <td>
                                     <a href="{{ route('reservation.onlineconsultation.detail', $reservation->id) }}" class="btn btn-info btn-sm">Detail</a>
                                     <!-- Tambahkan action button lain sesuai kebutuhan -->
@@ -124,12 +140,12 @@
 @endsection
 
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
 <script>
     const mobileScreen = window.matchMedia("(max-width: 990px )");
+
     $(document).ready(function() {
+        // Toggle the dashboard navigation menu
         $(".dashboard-nav-dropdown-toggle").click(function() {
             $(this).closest(".dashboard-nav-dropdown")
                 .toggleClass("show")
@@ -139,6 +155,8 @@
                 .siblings()
                 .removeClass("show");
         });
+
+        // Menu toggle for mobile or compact view
         $(".menu-toggle").click(function() {
             if (mobileScreen.matches) {
                 $(".dashboard-nav").toggleClass("mobile-show");
@@ -146,6 +164,32 @@
                 $(".dashboard").toggleClass("dashboard-compact");
             }
         });
+
+        // Initialize DataTable
+        $('#dataTableKonsultasi').DataTable({
+            "paging": true,       // Enable pagination
+            "lengthMenu": [5, 10, 25, 50], // Rows per page options
+            "ordering": true,     // Enable column sorting
+            "searching": true,    // Enable the search box
+            "info": true,         // Display table info
+            "autoWidth": false,   // Disable auto width to prevent column overflow
+            "order": [[1, 'desc']], // Sort by Order ID (index 1) in descending order
+            "columnDefs": [
+                { "orderable": false, "targets": [7, 9] } // Disable sorting for columns with actions/payment proof
+            ],
+            "language": {
+                "paginate": {
+                    "previous": "Sebelumnya",
+                    "next": "Selanjutnya"
+                },
+                "lengthMenu": "Tampilkan _MENU_ entri",
+                "search": "Cari:",
+                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                "infoEmpty": "Tidak ada data tersedia",
+                "zeroRecords": "Tidak ada hasil ditemukan"
+            }
+        });
     });
 </script>
 @endpush
+

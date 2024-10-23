@@ -1,11 +1,12 @@
 @extends('auth.layouts')
 
-@section('title', 'Login')
+@section('title', 'Masuk')
 
-@section('form-title', 'Login to Your Account')
-@section('form-description', 'Enter your email and password to login.')
+@section('form-title', 'Masuk ke Akun Anda')
+@section('form-description', 'Masukkan email dan kata sandi untuk masuk.')
 
 @section('form-content')
+
 @if (session('error'))
 <div class="alert alert-danger">
     {{ session('error') }}
@@ -30,7 +31,7 @@
         @enderror
     </div>
     <div class="mb-3 text-start">
-        <label for="password" class="form-label">Password</label>
+        <label for="password" class="form-label">Kata Sandi</label>
         <div class="input-group">
             <div class="input-group-text"><i class="fa-solid fa-lock"></i></div>
             <input type="password" class="form-control" id="password" name="password" required>
@@ -40,16 +41,16 @@
         @enderror
     </div>
     <div class="d-grid">
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary">Masuk</button>
     </div>
 </form>
 
 <div class="mt-3 text-center">
-    <a href="{{ route('password.reset.request') }}" class="text-decoration-none">Forgot your password?</a>
+    <a href="{{ route('password.reset.request') }}" class="text-decoration-none">Lupa kata sandi?</a>
 </div>
 
 <div class="mt-3 text-center">
     <!-- Link ke halaman registrasi -->
-    <p>Don't have an account? <a href="{{ route('register') }}" class="text-decoration-none">Register here</a>.</p>
+    <p>Belum punya akun? <a href="{{ route('register') }}" class="text-decoration-none">Daftar di sini</a>.</p>
 </div>
 @endsection

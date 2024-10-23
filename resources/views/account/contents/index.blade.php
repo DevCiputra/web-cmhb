@@ -13,12 +13,12 @@
 
                     <!-- Menampilkan gambar profil pasien -->
                     @if ($patient && $patient->profile_picture)
-                        <img src="{{ asset('storage/' . $patient->profile_picture) }}" alt="Patient Photo"
-                            style="width: 100px; height: auto; border-radius: 50%;">
-                    @else
-                        <img src="{{ asset('images/user.jpg') }}" alt="Patient Photo"
-                            style="width: 100px; height: auto; border-radius: 50%;">
-                    @endif
+                    <img src="{{ asset('storage/' . $patient->profile_picture) }}" alt="Patient Photo"
+                        style="width: 100px; height: auto; border-radius: 50%;">
+                @else
+                    <img src="{{ asset('images/userplaceholder.png') }}" alt="Patient Photo"
+                        style="width: 100px; height: auto; border-radius: 50%;">
+                @endif                
 
                     <h5>{{ $user->username }}</h5>
                     <p>{{ $user->whatsapp }}</p>
@@ -42,6 +42,10 @@
                         <div class="tab-pane fade show active" id="profile-info" role="tabpanel"
                             aria-labelledby="profile-info-tab">
                             <div class="profile-info">
+                                <h6>Nama Lengkap</h6>
+                                <div class="mb-3">
+                                    <p>{{ $patient->name ?? 'Isi nama Anda terlebih dahulu' }}</p>
+                                </div>
                                 <h6>Alamat</h6>
                                 <div class="mb-3">
                                     <p>{{ $patient->address ?? 'Alamat tidak tersedia' }}</p>
@@ -95,7 +99,7 @@
                                         class="booking-item-link">
                                         <div class="booking-item">
                                             <div class="booking-info">
-                                                <span class="booking-code">{{ $reservation->code }}</span>
+                                                <span class="booking-code" style="margin-right:8px">{{ $reservation->code }}</span>
                                                 <div class="booking-details">
                                                     <span
                                                         class="booking-date">{{ $reservation->doctorConsultationReservation->preferred_consultation_date }}</span>
@@ -104,34 +108,37 @@
                                                         class="booking-time">{{ $reservation->doctorConsultationReservation->preferred_consultation_time ?? 'N/A' }}</span>
                                                 </div>
                                             </div>
-                                            <span
-                                                class="status-badge badge
-                                                @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1) badge-warning
-                                                @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
+                                            <span class="status-badge badge
+                                            @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->status->id == 1) 
+                                                badge-warning
+                                            @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->status->id == 1)
                                                 {{ $reservation->status->class ?? 'badge-secondary' }}
-                                                @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
+                                            @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->status->id == 2)
                                                 {{ $reservation->status->class ?? 'badge-success' }}
-                                                @else
-                                                badge-secondary @endif
-                                                ">
-                                                @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
-                                                    Menunggu Pembayaran
-                                                @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
-                                                    {{ $reservation->status->name }}
-                                                @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
-                                                    {{ $reservation->status->name }}
-                                                @else
-                                                    Status Tidak Diketahui
-                                                @endif
-                                            </span>
-
+                                            @elseif($reservation->status_pembayaran == 'Dibatalkan' && $reservation->status->name == 'Batal')
+                                                badge-danger
+                                            @else
+                                                badge-secondary 
+                                            @endif
+                                        ">
+                                            @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->status->id == 1)
+                                                Menunggu Pembayaran
+                                            @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->status->id == 1)
+                                                {{ $reservation->status->name }}
+                                            @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->status->id == 2)
+                                                {{ $reservation->status->name }}
+                                            @elseif($reservation->status_pembayaran == 'Dibatalkan' && $reservation->status->name == 'Batal')
+                                                Pesanan Dibatalkan
+                                            @else
+                                                Status Tidak Diketahui
+                                            @endif
+                                        </span>
                                         </div>
                                     </a>
                                 @endforeach
                                 <!-- Tambahkan item lainnya jika diperlukan -->
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -147,55 +154,41 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editProfileForm" action="{{ route('account-update', $patient->id) }}" method="POST"
-                        enctype="multipart/form-data">
+                    <form id="editProfileForm" action="{{ route('account-update', $patient->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-
+    
                         <!-- Preview Foto Profil -->
                         <div class="mb-3">
                             <label for="profilePhoto" class="form-label">Foto Profil</label>
                             <div>
-                                @if ($patient && $patient->profile_picture)
-                                    <img src="{{ asset('storage/' . $patient->profile_picture) }}" alt="Profile Photo"
-                                        id="previewProfilePhoto"
-                                        style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+                                @if($patient && $patient->profile_picture)
+                                <img src="{{ asset('storage/' . $patient->profile_picture) }}" alt="Profile Photo" id="previewProfilePhoto" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
                                 @else
-                                    <img src="{{ asset('userplaceholder.png') }}" alt="Default Profile Photo"
-                                        id="previewProfilePhoto"
-                                        style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+                                <img src="{{ asset('default_profile.png') }}" alt="Default Profile Photo" id="previewProfilePhoto" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
                                 @endif
                             </div>
-                            <input type="file" class="form-control mt-2" id="profilePhoto" name="profile_picture"
-                                accept="image/*" onchange="previewImage(event)">
+                            <input type="file" class="form-control mt-2" id="profilePhoto" name="profile_picture" accept="image/*" onchange="previewImage(event)">
                         </div>
-
+    
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                value="{{ $user->patient->name }}" required>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ $user->patient->name }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email"
-                                value="{{ $user->email }}" required>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">Alamat</label>
                             <textarea class="form-control" id="address" name="address" rows="3" required>{{ $patient->address }}</textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="dob" class="form-label">Tanggal Lahir</label>
-                            <input type="date" class="form-control" id="dob" name="dob" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="allergy" class="form-label">Alergi</label>
-                            <input type="text" class="form-control" id="allergy" name="allergy"
-                                value="{{ $patient->allergies->pluck('name')->implode(', ') }}">
+                            <input type="text" class="form-control" id="allergy" name="allergy" value="{{ $patient->allergies->pluck('name')->implode(', ') }}">
                         </div>
                         <div class="mb-3">
                             <label for="bloodType" class="form-label">Golongan Darah</label>
-                            <input type="text" class="form-control" id="bloodType" name="blood_type"
-                                value="{{ $patient->bloodGroup->name ?? '' }}">
+                            <input type="text" class="form-control" id="bloodType" name="blood_type" value="{{ $patient->bloodGroup->name ?? '' }}">
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                     </form>

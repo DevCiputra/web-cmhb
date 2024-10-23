@@ -46,6 +46,7 @@
                         <i class="fas fa-times-circle me-1"></i> Cancel Order
                     </button>
                 </form>
+                
                 <button class="btn btn-secondary" style="border-radius: 6px; display: flex; align-items: center;">
                     <i class="fas fa-trash me-1"></i> Delete Order
                 </button>

@@ -34,7 +34,7 @@
 
         <!-- DataTable Card -->
         <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px;">
-            <div class="card-body">
+            <div class="card-form">
                 <div class="d-flex mb-3">
                     <h4 class="card-title" style="color: #1C3A6B"><b>Data User</b></h4>
                     <div class="ms-auto">
@@ -80,7 +80,9 @@
                                     <form action="{{ route('user.data.destroy', $user->id) }}" method="POST" style="display:inline-block;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')">Hapus</button>
+                                        <button type="submit" class="btn btn-md" style="background-color: #dc3545; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none;">
+                                            Hapus
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

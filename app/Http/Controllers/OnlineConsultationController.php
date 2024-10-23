@@ -112,11 +112,13 @@ class OnlineConsultationController extends Controller
             'patient.user',
             'paymentRecords',
         ])->where('id', $id)->firstOrFail();
-
-        return view('landing-page.contents.online-consultation.invoice', compact('invoice', 'title'));
+    
+        // Get the reservation to pass it to the view
+        $reservation = Reservation::findOrFail($id);
+    
+        return view('landing-page.contents.online-consultation.invoice', compact('invoice', 'title', 'reservation'));
     }
-
-
+    
 
     public function confirmPayment(Request $request, $id)
     {
@@ -149,12 +151,16 @@ class OnlineConsultationController extends Controller
     public function cancelReservation($id)
     {
         $reservation = Reservation::findOrFail($id);
-
-        // Ubah status reservasi menjadi 'Batal'
-        $reservation->update(['reservation_status_id' => ReservationStatus::where('name', 'Batal')->first()->id]);
-
+    
+        // Ubah status reservasi menjadi 'Batal' dan status pembayaran menjadi 'Dibatalkan'
+        $reservation->update([
+            'reservation_status_id' => ReservationStatus::where('name', 'Batal')->first()->id,
+            'status_pembayaran' => 'Dibatalkan'
+        ]);
+    
         return redirect()->back()->with('success', 'Reservation has been cancelled.');
     }
+    
 
     public function approveReservation(Request $request, $id)
     {

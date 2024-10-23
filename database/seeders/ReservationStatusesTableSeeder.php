@@ -12,7 +12,7 @@ class ReservationStatusesTableSeeder extends Seeder
     public function run()
     {
         ReservationStatus::insert([
-            ['name' => 'Menunggu Approval', 'class' => 'badge-warning'],
+            ['name' => 'Menunggu Approval', 'class' => 'badge-info'],
             ['name' => 'Berhasil', 'class' => 'badge-success'],
             ['name' => 'Batal', 'class' => 'badge-danger'],
         ]);

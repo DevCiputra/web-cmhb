@@ -69,7 +69,7 @@ Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
     Route::get('/consultation-confirmation/{id}', [OnlineConsultationController::class, 'showConfirmation'])->name('consultation.confirmation');
 
     // Rute untuk halaman detail konsultasi
-    Route::get('/consultation-detail/{id}', [OnlineConsultationController::class, 'showConsultationDetail'])->name('consultation.detail');
+    // Route::get('/consultation-detail/{id}', [OnlineConsultationController::class, 'showConsultationDetail'])->name('consultation.detail');
 
     // Rute untuk halaman invoice
     Route::get('/consultation-invoice/{id}', [OnlineConsultationController::class, 'showInvoice'])->name('consultation.invoice');

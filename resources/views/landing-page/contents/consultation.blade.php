@@ -15,9 +15,7 @@
         <div id="list-doctor" class="header-section">
             <div class="container-fluid">
                 <h1 style="margin-bottom: 5px;">Konsultasi Online</h1>
-                <p style="margin-bottom: 15px;">Temukan Dokter Profesional untuk Konsultasi Online di Ciputra Mitra
-                    Hospital.</p>
-
+                <p style="margin-bottom: 15px;">Konsultasi online dengan dokter profesional di Ciputra Mitra Hospital, kapan saja dan dari mana saja.</p>
                 <!-- Filter Card Section -->
                 <div class="row justify-content-center">
                     <div class="col-md-8">
@@ -189,7 +187,6 @@
                 }
             }
         });
-
 
 
         // EMERGENCY    
