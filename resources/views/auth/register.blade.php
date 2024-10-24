@@ -54,32 +54,40 @@
         <label for="whatsapp" class="form-label">Nomor WhatsApp</label>
         <div class="input-group">
             <div class="input-group-text"><i class="fas fa-phone"></i></div>
-            <input type="text" class="form-control" id="whatsapp" name="whatsapp" value="{{ old('whatsapp') }}" required placeholder="62xxxxxxxxxxx">
+            <input type="text" class="form-control" id="whatsapp" name="whatsapp" value="{{ old('whatsapp') }}" required placeholder="08xxxxxxxxxxx">
         </div>
         @error('whatsapp')
         <div class="text-danger">{{ $message }}</div>
         @enderror
-    </div>
+    </div>    
     <div class="mb-3 text-start">
         <label for="password" class="form-label">Kata Sandi</label>
         <div class="input-group">
             <div class="input-group-text"><i class="fa-solid fa-lock"></i></div>
             <input type="password" class="form-control" id="password" name="password" required>
+            <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                <i class="fa-solid fa-eye" id="eyeIcon"></i>
+            </button>
+            <small class="form-text text-muted">
+                Kata sandi harus memiliki minimal satu huruf kapital, satu angka, dan panjang minimal 8 karakter.
+            </small>
         </div>
         @error('password')
         <div class="text-danger">{{ $message }}</div>
         @enderror
-        <small class="form-text text-muted">
-            Kata sandi harus memiliki minimal satu huruf kapital, satu angka, dan panjang minimal 8 karakter.
-        </small>
-    </div>    
+    </div>
+    
     <div class="mb-3 text-start">
         <label for="password_confirmation" class="form-label">Konfirmasi Kata Sandi</label>
         <div class="input-group">
             <div class="input-group-text"><i class="fa-solid fa-lock"></i></div>
             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+            <button type="button" class="btn btn-outline-secondary" id="togglePasswordConfirmation">
+                <i class="fa-solid fa-eye" id="eyeIconConfirm"></i>
+            </button>
         </div>
     </div>
+     
     <div class="mb-3 text-start">
         <label for="profile_picture" class="form-label">Foto Profil (Opsional)</label>
         <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*">
@@ -95,3 +103,27 @@
 </div>
 
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        togglePassword.addEventListener('click', function () {
+            // Toggle the type attribute between 'password' and 'text'
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            // Toggle the eye icon
+            eyeIcon.classList.toggle('fa-eye');
+            eyeIcon.classList.toggle('fa-eye-slash');
+        });
+
+        // Toggle Password Visibility for the confirmation field
+        const togglePasswordConfirmation = document.querySelector('#togglePasswordConfirmation');
+        const passwordConfirmation = document.querySelector('#password_confirmation');
+        const eyeIconConfirm = document.querySelector('#eyeIconConfirm');
+
+    });
+</script>
+
+

@@ -26,11 +26,11 @@ class AuthController extends Controller
     {
         // Validasi input yang lebih ketat
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255', 
+            'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|regex:/^[a-zA-Z0-9_.-]*$/',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
-            'whatsapp' => 'required|string|max:20|regex:/^\+?62\d{9,12}$/',
+            'whatsapp' => 'required|string|max:20|regex:/^08\d{8,11}$/',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -41,13 +41,13 @@ class AuthController extends Controller
         // Validasi jika email sudah digunakan
         $existingUser = User::where('email', $request->email)->first();
         if ($existingUser) {
-            return redirect()->back()->with('error', 'The email address is already registered. Please use a different one.')->withInput();
+            return redirect()->back()->with('error', 'Alamat email sudah terdaftar. Silakan gunakan alamat email lain.')->withInput();
         }
 
         // Validasi jika nomor WhatsApp sudah digunakan
         $existingWhatsApp = User::where('whatsapp', $request->whatsapp)->first();
         if ($existingWhatsApp) {
-            return redirect()->back()->with('error', 'The WhatsApp number is already registered. Please use a different one.')->withInput();
+            return redirect()->back()->with('error', 'Nomor WhatsApp sudah terdaftar. Silakan gunakan nomor lain.')->withInput();
         }
 
         // Proses pembuatan User baru
@@ -72,7 +72,7 @@ class AuthController extends Controller
 
         // Jika user gagal dibuat
         if (!$userCreated) {
-            return redirect()->back()->with('error', 'Failed to create a new user. Please try again.')->withInput();
+            return redirect()->back()->with('error', 'Gagal membuat pengguna baru. Silakan coba lagi.')->withInput();
         }
 
         // Buat data Pasien yang terhubung dengan User
@@ -84,10 +84,10 @@ class AuthController extends Controller
 
         if (!$patientCreated) {
             $userCreated->delete(); // Hapus user yang sudah dibuat
-            return redirect()->back()->with('error', 'Failed to create patient profile. Please try again.')->withInput();
+            return redirect()->back()->with('error', 'Gagal membuat profil pasien. Silakan coba lagi.')->withInput();
         }
 
-        return redirect()->route('login')->with('success', 'Registration successful! Please login.');
+        return redirect()->route('login')->with('success', 'Pendaftaran berhasil! Silakan masuk menggunakan akun Anda.');
     }
 
     public function showLoginForm()
@@ -107,33 +107,36 @@ class AuthController extends Controller
         if (auth()->attempt($credentials)) {
             $user = Auth::user();
 
+            // Fetch the associated Patient record
+            $patient = $user->patient; // Assuming a one-to-one relationship
+
             // Redirect user based on role
             switch ($user->role) {
                 case 'Admin':
-                    return redirect()->route('dashboard-page')->with('success', 'Welcome Admin!');
+                    return redirect()->route('dashboard-page')->with('success', 'Selamat datang, ' . $user->name . ' (Admin)!');
                 case 'Pasien':
-                    return redirect()->route('account-index')->with('success', 'Welcome Pasien!');
+                    // Use the patient's name instead
+                    return redirect()->route('account-index')->with('success', 'Selamat datang, ' . ($patient ? $patient->name : 'User') . '!');
                 case 'HBD':
-                    return redirect()->route('reservation.mcu.index')->with('success', 'Welcome HBD!');
+                    return redirect()->route('reservation.mcu.index')->with('success', 'Selamat datang, HBD!');
                 default:
                     auth()->logout();
-                    return redirect()->route('login')->with('error', 'Invalid role detected.');
+                    return redirect()->route('login')->with('error', 'Peran pengguna tidak valid.');
             }
         }
 
-        return redirect()->back()->with('error', 'Invalid email or password.')->withInput();
+        return redirect()->back()->with('error', 'Email atau kata sandi salah.')->withInput();
     }
 
 
     public function logout(Request $request)
     {
         auth()->logout();
-        return redirect('/'); // Atau redirect ke route lain sesuai kebutuhan
+        return redirect('/')->with('success', 'Anda telah keluar.');
     }
 
     public function showResetPasswordRequestForm(Request $request)
     {
-
         return view('auth.reset-password-request');
     }
 
@@ -150,7 +153,7 @@ class AuthController extends Controller
             ->first();
 
         if (!$user) {
-            return redirect()->back()->with('error', 'User not found with this WhatsApp number and email.');
+            return redirect()->back()->with('error', 'Pengguna dengan nomor WhatsApp dan email tersebut tidak ditemukan.');
         }
 
         // Generate token dan simpan di database dengan created_at
@@ -175,7 +178,6 @@ class AuthController extends Controller
         return view('auth.reset-password', ['token' => $token]);
     }
 
-
     public function updatePassword(Request $request, $token)
     {
         // Validasi input password
@@ -185,17 +187,14 @@ class AuthController extends Controller
 
         // Ambil token dari tabel `password_reset_tokens`
         $reset = DB::table('password_reset_tokens')->where('token', $token)->first();
-
-        // Periksa apakah token valid dan belum kedaluwarsa (10 menit)
-        if (!$reset || Carbon::now()->diffInMinutes($reset->created_at) > 10) {
-            return redirect()->route('password.reset.request')
-            ->with('error', 'Token invalid atau sudah kedaluwarsa.');
+        if (!$reset) {
+            return redirect()->back()->with('error', 'Invalid token or token has expired.');
         }
 
         // Temukan user berdasarkan email dari token
         $user = User::where('email', $reset->email)->first();
         if (!$user) {
-            return redirect()->back()->with('error', 'User tidak ditemukan.');
+            return redirect()->back()->with('error', 'User not found.');
         }
 
         // Update password user
@@ -205,6 +204,6 @@ class AuthController extends Controller
         // Hapus token reset dari tabel `password_reset_tokens`
         DB::table('password_reset_tokens')->where('email', $reset->email)->delete();
 
-        return redirect()->route('login')->with('success', 'Password berhasil diubah. Silakan login.');
+        return redirect()->route('login')->with('success', 'Password has been reset successfully. Please login.');
     }
 }
