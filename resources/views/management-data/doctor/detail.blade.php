@@ -58,7 +58,7 @@
                     <!-- Doctor Education Section -->
                     <div class="doctor-education" style="margin-top: 2rem;">
                         <h4 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem; color: #023770;">Riwayat
-                            Pendidikan</h4>
+                            Pendidikan Dokter</h4>
                         <ul style="list-style-type: disc; padding-left: 1.5rem;">
                             <li class="education-item" style="font-size: 1rem; color: #444444;">
                                 {{ $doctor->education->name }}</li>
