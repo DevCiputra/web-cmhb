@@ -62,8 +62,8 @@ class OnlineConsultationController extends Controller
 
         DoctorConsultationReservation::create([
             'reservation_id' => $reservation->id,
-            'doctor_id' => $validated['doctor_id'],
-            'preferred_consultation_date' => $validated['preferred_consultation_date'],
+            'doctor_id' => $validated['doctor_id'],'preferred_consultation_date' => $validated['preferred_consultation_date'],
+            'zoom_account_id' => null, // Atur ke null jika tidak ada nilai
         ]);
 
         return redirect()->route('consultation.confirmation', $reservation->id)
@@ -111,8 +111,6 @@ class OnlineConsultationController extends Controller
         return view('landing-page.contents.online-consultation.invoice', compact('invoice', 'title'));
     }
 
-
-
     public function confirmPayment(Request $request, $id)
     {
         $reservation = Reservation::findOrFail($id);
@@ -120,6 +118,11 @@ class OnlineConsultationController extends Controller
         $validated = $request->validate([
             'payment_proof' => 'required|image|max:2048',
             'payment_method' => 'required|string',
+        ], [
+            'payment_proof.required' => 'Bukti pembayaran harus diunggah.',
+            'payment_proof.image' => 'File yang diunggah harus berupa gambar.',
+            'payment_proof.max' => 'Ukuran gambar tidak boleh lebih dari 2 MB.',
+            'payment_method.required' => 'Metode pembayaran harus dipilih.',
         ]);
 
         $fileName = time() . '.' . $request->payment_proof->extension();

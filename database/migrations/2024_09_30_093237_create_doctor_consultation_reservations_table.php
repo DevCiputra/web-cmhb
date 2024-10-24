@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('reservation_id'); // Foreign key
             $table->unsignedBigInteger('doctor_id'); // Foreign key
-            $table->unsignedBigInteger('zoom_account_id'); // Foreign key untuk akun Zoom
+            $table->unsignedBigInteger('zoom_account_id')->nullable(); // Foreign key untuk akun Zoom
 
             $table->date('preferred_consultation_date')->nullable();
             $table->date('agreed_consultation_date')->nullable();
@@ -30,7 +30,6 @@ return new class extends Migration
 
             $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
-            $table->foreign('zoom_account_id')->references('id')->on('zoom_accounts')->onDelete('cascade'); // Referensi ke tabel zoom_accounts
         });
 
     }

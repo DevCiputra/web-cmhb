@@ -26,7 +26,8 @@
             <form action="{{ route('consultation.payment', $reservation->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('POST')
-                <!-- Order Code -->
+
+                <!-- Kode Pemesanan -->
                 <div class="form-group mb-4">
                     <label for="orderCode" class="form-label">Kode Pemesanan</label>
                     <p class="form-text">{{ $reservation->code }}</p>
@@ -74,8 +75,6 @@
                     <p class="form-text">{{ \Carbon\Carbon::parse($reservation->doctorConsultationReservation->preferred_consultation_date)->translatedFormat('l, d F Y') }}</p>
                 </div>
 
-
-
                 @if ($reservation->doctorConsultationReservation->payment_proof)
                 <!-- Bukti Pembayaran Sudah Diunggah -->
                 <div class="form-group mb-4">
@@ -88,14 +87,16 @@
                 <!-- Pilih Bank -->
                 <div class="form-group mb-4">
                     <label for="payment_method" class="form-label">Pilih Bank Transfer</label>
-                    <select class="form-select" id="payment_method" name="payment_method" required style="height: 48px;">
+                    <select class="form-select @error('payment_method') is-invalid @enderror" id="payment_method" name="payment_method" required style="height: 48px;">
                         <option selected>Pilih Bank</option>
                         <option value="BCA">BCA</option>
                         <option value="Mandiri">Mandiri</option>
                         <option value="BRI">BRI</option>
                     </select>
+                    @error('payment_method')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
-
 
                 <!-- Rekening Bank (Hidden by default) -->
                 <div class="form-group mb-4" id="rekening-info" style="display: none;">
@@ -104,10 +105,14 @@
                         <span id="bankAccount" class="highlight-text"></span>
                     </p>
                 </div>
+
                 <!-- Upload Image -->
                 <div class="form-group mb-4">
                     <label for="uploadImage" class="form-label">Unggah Bukti Pembayaran</label>
-                    <input type="file" class="form-control" id="uploadImage" name="payment_proof" required>
+                    <input type="file" class="form-control @error('payment_proof') is-invalid @enderror" id="uploadImage" name="payment_proof" required>
+                    @error('payment_proof')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 @endif
 
@@ -119,6 +124,7 @@
                 </div>
                 @endif
             </form>
+
         </div>
     </div>
 </div>

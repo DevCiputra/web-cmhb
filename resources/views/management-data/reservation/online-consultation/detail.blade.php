@@ -63,9 +63,6 @@
                         <i class="fas fa-trash me-1"></i> Delete Order
                     </button>
                 </form>
-                <button class="btn btn-secondary" style="border-radius: 6px; display: flex; align-items: center;">
-                    <i class="fas fa-trash me-1"></i> Delete Order
-                </button>
             </div>
 
             <div class="row">
