@@ -138,9 +138,17 @@ class DoctorController extends Controller
     {
         // Mengambil data dokter berdasarkan ID beserta relasi ke poliklinik, pendidikan, jadwal, dan media
         $doctor = Doctor::with(['polyclinic', 'education', 'schedules', 'medias'])->findOrFail($id);
+        $daysInIndonesian = [
+            'Senin' => 'Monday',
+            'Selasa' => 'Tuesday',
+            'Rabu' => 'Wednesday',
+            'Kamis' => 'Thursday',
+            'Jumat' => 'Friday',
+            'Sabtu' => 'Saturday'
+        ];
 
         // dd($doctor);
-        return view('management-data.doctor.detail', compact('doctor'));
+        return view('management-data.doctor.detail', compact('doctor','daysInIndonesian'));
     }
 
 
@@ -153,7 +161,16 @@ class DoctorController extends Controller
         $educations = DoctorEducation::all();
         $polyclinics = DoctorPolyclinic::all();
 
-        return view('management-data.doctor.edit', compact('doctor', 'educations', 'polyclinics'));
+        $daysInIndonesian = [
+            'Senin' => 'Monday',
+            'Selasa' => 'Tuesday',
+            'Rabu' => 'Wednesday',
+            'Kamis' => 'Thursday',
+            'Jumat' => 'Friday',
+            'Sabtu' => 'Saturday'
+        ];
+
+        return view('management-data.doctor.edit', compact('doctor', 'educations', 'polyclinics','daysInIndonesian'));
     }
 
     // Memperbarui data dokter

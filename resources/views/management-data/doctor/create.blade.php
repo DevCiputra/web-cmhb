@@ -81,40 +81,44 @@
                         @enderror
                     </div>
 
-                    <!-- Input Hari dan Jam Praktek -->
                     <div class="mb-3">
                         <label for="doctor_schedule" class="form-label">Jadwal Praktek</label>
                         <div id="schedule-container">
                             <div class="schedule-row mb-2">
-                                <div class="row">
+                                <div class="row align-items-center">
                                     <div class="col-md-4">
                                         <label for="day" class="form-label">Hari</label>
-                                        <select name="doctor_schedule[days][]" class="form-select" required>
-                                            <option value="">Pilih Hari</option>
-                                            <option value="Monday">Senin</option>
-                                            <option value="Tuesday">Selasa</option>
-                                            <option value="Wednesday">Rabu</option>
-                                            <option value="Thursday">Kamis</option>
-                                            <option value="Friday">Jumat</option>
-                                            <option value="Saturday">Sabtu</option>
-                                            <option value="Sunday">Minggu</option>
-                                        </select>
+                                        <div class="input-group">
+                                            <select name="doctor_schedule[days][]" class="form-select" required>
+                                                <option value="">Pilih Hari</option>
+                                                <option value="Monday">Senin</option>
+                                                <option value="Tuesday">Selasa</option>
+                                                <option value="Wednesday">Rabu</option>
+                                                <option value="Thursday">Kamis</option>
+                                                <option value="Friday">Jumat</option>
+                                                <option value="Saturday">Sabtu</option>
+                                                <option value="Sunday">Minggu</option>
+                                            </select>
+                                            <button type="button" class="btn btn-danger remove-schedule">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="start_time" class="form-label">Jam Mulai</label>
-                                        <input type="time" class="form-control" name="doctor_schedule[start_time][]"
-                                            required>
+                                        <input type="time" class="form-control" name="doctor_schedule[start_time][]" required>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="end_time" class="form-label">Jam Selesai</label>
-                                        <input type="time" class="form-control" name="doctor_schedule[end_time][]"
-                                            required>
+                                        <input type="time" class="form-control" name="doctor_schedule[end_time][]" required>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <button type="button" id="add-schedule" class="btn btn-primary">Tambah Jadwal Lain</button>
                     </div>
+                    
+                    
 
                     <div class="mb-3">
                         <label for="doctor_photos" class="form-label">Foto Dokter</label>
@@ -192,41 +196,50 @@
 </script>
 
 <script>
-    $(document).ready(function() {
-        let scheduleCount = 1; // Counter untuk jadwal
-
-        $('#add-schedule').on('click', function() {
-            // Buat elemen baru untuk baris jadwal
-            const newScheduleRow = `
-                <div class="schedule-row mb-2">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="day" class="form-label">Hari</label>
-                            <select name="doctor_schedule[days][]" class="form-select" required>
-                                <option value="">Pilih Hari</option>
-                                <option value="Monday">Senin</option>
-                                <option value="Tuesday">Selasa</option>
-                                <option value="Wednesday">Rabu</option>
-                                <option value="Thursday">Kamis</option>
-                                <option value="Friday">Jumat</option>
-                                <option value="Saturday">Sabtu</option>
-                                <option value="Sunday">Minggu</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="start_time" class="form-label">Jam Mulai</label>
-                            <input type="time" class="form-control" name="doctor_schedule[start_time][]" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="end_time" class="form-label">Jam Selesai</label>
-                            <input type="time" class="form-control" name="doctor_schedule[end_time][]" required>
-                        </div>
+    document.getElementById('add-schedule').addEventListener('click', function() {
+        const scheduleContainer = document.getElementById('schedule-container');
+        const newScheduleRow = document.createElement('div');
+        newScheduleRow.classList.add('schedule-row', 'mb-2');
+        newScheduleRow.innerHTML = `
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <label for="day" class="form-label">Hari</label>
+                    <div class="input-group">
+                        <select name="doctor_schedule[days][]" class="form-select" required>
+                            <option value="">Pilih Hari</option>
+                            <option value="Monday">Senin</option>
+                            <option value="Tuesday">Selasa</option>
+                            <option value="Wednesday">Rabu</option>
+                            <option value="Thursday">Kamis</option>
+                            <option value="Friday">Jumat</option>
+                            <option value="Saturday">Sabtu</option>
+                            <option value="Sunday">Minggu</option>
+                        </select>
+                        <button type="button" class="btn btn-danger remove-schedule">
+                            <i class="fas fa-minus"></i>
+                        </button>
                     </div>
-                </div>`;
-            // Tambahkan baris baru ke container
-            $('#schedule-container').append(newScheduleRow);
-            scheduleCount++;
-        });
+                </div>
+                <div class="col-md-4">
+                    <label for="start_time" class="form-label">Jam Mulai</label>
+                    <input type="time" class="form-control" name="doctor_schedule[start_time][]" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="end_time" class="form-label">Jam Selesai</label>
+                    <input type="time" class="form-control" name="doctor_schedule[end_time][]" required>
+                </div>
+            </div>
+        `;
+        scheduleContainer.appendChild(newScheduleRow);
+    });
+
+    document.getElementById('schedule-container').addEventListener('click', function(e) {
+        if (e.target.closest('.remove-schedule')) {
+            const scheduleRow = e.target.closest('.schedule-row');
+            if (scheduleRow) {
+                scheduleRow.remove();
+            }
+        }
     });
 </script>
 @endpush
