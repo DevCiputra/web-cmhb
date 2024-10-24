@@ -35,6 +35,9 @@
         <div class="input-group">
             <div class="input-group-text"><i class="fa-solid fa-lock"></i></div>
             <input type="password" class="form-control" id="password" name="password" required>
+            <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                <i class="fa-solid fa-eye" id="eyeIcon"></i>
+            </button>
         </div>
         @error('password')
         <div class="text-danger">{{ $message }}</div>
@@ -54,3 +57,26 @@
     <p>Belum punya akun? <a href="{{ route('register') }}" class="text-decoration-none">Daftar di sini</a>.</p>
 </div>
 @endsection
+|
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        togglePassword.addEventListener('click', function () {
+            // Toggle the type attribute between 'password' and 'text'
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            // Toggle the eye icon
+            eyeIcon.classList.toggle('fa-eye');
+            eyeIcon.classList.toggle('fa-eye-slash');
+        });
+
+        // Toggle Password Visibility for the confirmation field
+        const togglePasswordConfirmation = document.querySelector('#togglePasswordConfirmation');
+        const passwordConfirmation = document.querySelector('#password_confirmation');
+        const eyeIconConfirm = document.querySelector('#eyeIconConfirm');
+
+    });
+</script>
+</script>

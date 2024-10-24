@@ -156,7 +156,7 @@
                 <div class="modal-body">
                     <form id="editProfileForm" action="{{ route('account-update', $patient->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-    
+                
                         <!-- Preview Foto Profil -->
                         <div class="mb-3">
                             <label for="profilePhoto" class="form-label">Foto Profil</label>
@@ -169,7 +169,7 @@
                             </div>
                             <input type="file" class="form-control mt-2" id="profilePhoto" name="profile_picture" accept="image/*" onchange="previewImage(event)">
                         </div>
-    
+                
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="name" name="name" value="{{ $user->patient->name }}" required>
@@ -190,12 +190,13 @@
                             <label for="bloodType" class="form-label">Golongan Darah</label>
                             <input type="text" class="form-control" id="bloodType" name="blood_type" value="{{ $patient->bloodGroup->name ?? '' }}">
                         </div>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                
+                        <div class="text-end"> <!-- Aligns the button to the right -->
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                </div>
+                
             </div>
         </div>
     </div>
