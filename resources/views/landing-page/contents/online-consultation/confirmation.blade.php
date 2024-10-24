@@ -139,6 +139,7 @@
         var bankSelect = document.getElementById('payment_method'); // Corrected variable name
         var rekeningInfo = document.getElementById('rekening-info');
         var rekeningText = document.getElementById('bankAccount');
+        var form = document.querySelector('form'); // Select the form for submission handling
 
         bankSelect.addEventListener('change', function() {
             var selectedBank = this.value;
@@ -155,6 +156,15 @@
                 rekeningInfo.style.display = 'block';
             } else {
                 rekeningInfo.style.display = 'none'; // Hide if no valid selection
+            }
+        });
+
+        // Add confirmation on form submission
+        form.addEventListener('submit', function(event) {
+            var confirmation = confirm('Apakah Anda yakin ingin mengonfirmasi pembayaran? Pastikan semua informasi sudah benar.');
+
+            if (!confirmation) {
+                event.preventDefault(); // Prevent form submission if user cancels
             }
         });
     });

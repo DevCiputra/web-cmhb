@@ -20,7 +20,7 @@
 
             <div class="card-form">
                 <div class="card-body">
-                    <form action="{{ route('consultation.store') }}" method="POST">
+                    <form id="reservation-form" action="{{ route('consultation.store') }}" method="POST">
                         @csrf
                         <!-- Nama Dokter -->
                         <div class="form-group mb-4">
@@ -99,4 +99,17 @@
 @push('styles')
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/consultation.css') }}">
+@endpush
+
+@push('scripts')
+<script src="{{ asset('js/navbar.js') }}"></script>
+<script>
+    document.getElementById('reservation-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const confirmation = confirm('Apakah Anda yakin ingin melanjutkan dengan reservasi ini?');
+        if (confirmation) {
+            this.submit(); // Melanjutkan proses pengiriman form
+        }
+    });
+</script>
 @endpush

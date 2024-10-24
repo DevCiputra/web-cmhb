@@ -19,14 +19,14 @@
         @csrf
         <input type="hidden" name="token" value="{{ $token }}">
         <div class="form-group">
-            <label for="password">Password Baru:</label>
+            <label for="password">Kata Sandi Baru:</label>
             <input type="password" name="password" class="form-control" required>
         </div>
         <div class="form-group">
-            <label for="password_confirmation">Konfirmasi Password:</label>
+            <label for="password_confirmation">Konfirmasi Kata Sandi:</label>
             <input type="password" name="password_confirmation" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-primary">Ganti Password</button>
+        <button type="submit" class="btn btn-primary">Ganti Kata Sandi</button>
     </form>
 </div>
 @endsection
