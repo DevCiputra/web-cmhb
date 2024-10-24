@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResetPasswordMail;
 use App\Models\User;
 use App\Models\Patient;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -141,7 +144,7 @@ class AuthController extends Controller
             'email' => 'required|string|email',
         ]);
 
-        // Temukan user berdasarkan nomor WhatsApp dan email
+        // Temukan user berdasarkan WhatsApp dan email
         $user = User::where('whatsapp', $request->whatsapp)
             ->where('email', $request->email)
             ->first();
@@ -150,16 +153,22 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'User not found with this WhatsApp number and email.');
         }
 
-        // Generate token dan simpan ke tabel `password_reset_tokens`
+        // Generate token dan simpan di database dengan created_at
         $token = Str::random(60);
         DB::table('password_reset_tokens')->updateOrInsert(
             ['email' => $user->email],
-            ['token' => $token, 'created_at' => now()]
+            [
+                'token' => $token,
+                'created_at' => now(), // Menyimpan waktu saat ini
+            ]
         );
 
-        // Arahkan user ke halaman ganti password dengan token yang dihasilkan
-        return redirect()->route('password.reset.token', ['token' => $token]);
+        // Kirim email dengan link reset password (atau bisa melalui WhatsApp)
+        Mail::to($user->email)->send(new ResetPasswordMail($token));
+
+        return redirect()->back()->with('success', 'Reset password email has been sent.');
     }
+
 
     public function showResetForm($token)
     {
@@ -174,16 +183,19 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
         ]);
 
-        // Ambil email berdasarkan token dari tabel `password_reset_tokens`
+        // Ambil token dari tabel `password_reset_tokens`
         $reset = DB::table('password_reset_tokens')->where('token', $token)->first();
-        if (!$reset) {
-            return redirect()->back()->with('error', 'Invalid token or token has expired.');
+
+        // Periksa apakah token valid dan belum kedaluwarsa (10 menit)
+        if (!$reset || Carbon::now()->diffInMinutes($reset->created_at) > 10) {
+            return redirect()->route('password.reset.request')
+            ->with('error', 'Token invalid atau sudah kedaluwarsa.');
         }
 
         // Temukan user berdasarkan email dari token
         $user = User::where('email', $reset->email)->first();
         if (!$user) {
-            return redirect()->back()->with('error', 'User not found.');
+            return redirect()->back()->with('error', 'User tidak ditemukan.');
         }
 
         // Update password user
@@ -193,6 +205,6 @@ class AuthController extends Controller
         // Hapus token reset dari tabel `password_reset_tokens`
         DB::table('password_reset_tokens')->where('email', $reset->email)->delete();
 
-        return redirect()->route('login')->with('success', 'Password has been reset successfully. Please login.');
+        return redirect()->route('login')->with('success', 'Password berhasil diubah. Silakan login.');
     }
 }

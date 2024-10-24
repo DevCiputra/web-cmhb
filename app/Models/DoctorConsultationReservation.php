@@ -12,11 +12,13 @@ class DoctorConsultationReservation extends Model
     protected $fillable = [
         'reservation_id',
         'doctor_id',
+        'zoom_account_id', // Tambahkan ini
         'preferred_consultation_date',
         'agreed_consultation_date',
         'agreed_consultation_time',
         'zoom_link',
         'zoom_password',
+        'zoom_host_link'
     ];
 
     // Relasi dengan model Reservation
@@ -29,5 +31,11 @@ class DoctorConsultationReservation extends Model
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'doctor_id');
+    }
+
+    // Relasi dengan model ZoomAccount
+    public function zoomAccount()
+    {
+        return $this->belongsTo(ZoomAccount::class, 'zoom_account_id');
     }
 }

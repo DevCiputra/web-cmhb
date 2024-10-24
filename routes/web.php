@@ -86,6 +86,8 @@ Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
     // Rute untuk approve dan cancel reservasi
     Route::post('/reservation/{id}/approve', [OnlineConsultationController::class, 'approveReservation'])->name('reservation.approve');
     Route::post('/reservation/{id}/cancel', [OnlineConsultationController::class, 'cancelReservation'])->name('reservation.cancel');
+    // Rute untuk soft delete reservasi
+    Route::delete('/reservation/{id}/delete', [OnlineConsultationController::class, 'deleteReservation'])->name('reservation.delete');
 
 });
 

@@ -13,24 +13,24 @@ return new class extends Migration
     {
         Schema::create('doctor_consultation_reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('reservation_id'); // Foreign key ke reservations
-            $table->unsignedBigInteger('doctor_id'); // Foreign key ke doctors
+            $table->unsignedBigInteger('reservation_id'); // Foreign key
+            $table->unsignedBigInteger('doctor_id'); // Foreign key
+            $table->unsignedBigInteger('zoom_account_id'); // Foreign key untuk akun Zoom
 
-            // Tanggal yang diajukan pasien untuk konsultasi
             $table->date('preferred_consultation_date')->nullable();
-
-            // Tanggal & Waktu Konsultasi yang Disepakati
             $table->date('agreed_consultation_date')->nullable();
             $table->time('agreed_consultation_time')->nullable();
 
-            // Link & Password Zoom untuk sesi konsultasi
+            $table->text('zoom_host_link')->nullable();
             $table->string('zoom_link')->nullable();
             $table->string('zoom_password')->nullable();
 
             $table->timestamps();
+            $table->softDeletes(); // Tambah soft delete
 
             $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
+            $table->foreign('zoom_account_id')->references('id')->on('zoom_accounts')->onDelete('cascade'); // Referensi ke tabel zoom_accounts
         });
 
     }
