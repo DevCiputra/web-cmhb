@@ -55,7 +55,7 @@
         <p><strong>Link Zoom Meeting:</strong> <a href="{{ $invoice->doctorConsultationReservation->zoom_link }}" target="_blank">{{ $invoice->doctorConsultationReservation->zoom_link }}</a></p>
     </div>
     <div class="important-info">
-        <p><strong>ID Zoom Meeting:</strong> {{ $invoice->doctorConsultationReservation->zoom_password ?? 'N/A' }}</p>
+        <p><strong>Password Zoom Meeting:</strong> {{ $invoice->doctorConsultationReservation->zoom_password ?? 'N/A' }}</p>
     </div>
     @endif
 

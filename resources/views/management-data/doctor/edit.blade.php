@@ -66,16 +66,16 @@
                     <div class="mb-3">
                         <label for="doctor_schedule" class="form-label">Jadwal Praktek</label>
                         <div id="doctor_schedule">
-                            @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] as $day)
+                            @foreach($daysInIndonesian as $indonesianDay => $englishDay)
                             <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="{{ strtolower($day) }}" name="doctor_schedule[days][]" value="{{ $day }}" {{ in_array($day, $doctor->schedules->pluck('day_of_week')->toArray()) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="{{ strtolower($day) }}">{{ $day }}</label>
+                                <input class="form-check-input" type="checkbox" id="{{ strtolower($englishDay) }}" name="doctor_schedule[days][]" value="{{ $englishDay }}" {{ in_array($englishDay, $doctor->schedules->pluck('day_of_week')->toArray()) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="{{ strtolower($englishDay) }}">{{ $indonesianDay }}</label>
                                 <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="{{ strtolower($day) }}_start" name="doctor_schedule[start_time][{{ $day }}]" value="{{ $doctor->schedules->where('day_of_week', $day)->first()->start_time ?? '' }}">
-                                    <input type="time" class="form-control" id="{{ strtolower($day) }}_end" name="doctor_schedule[end_time][{{ $day }}]" value="{{ $doctor->schedules->where('day_of_week', $day)->first()->end_time ?? '' }}">
+                                    <input type="time" class="form-control me-2" id="{{ strtolower($englishDay) }}_start" name="doctor_schedule[start_time][{{ $englishDay }}]" value="{{ $doctor->schedules->where('day_of_week', $englishDay)->first()->start_time ?? '' }}">
+                                    <input type="time" class="form-control" id="{{ strtolower($englishDay) }}_end" name="doctor_schedule[end_time][{{ $englishDay }}]" value="{{ $doctor->schedules->where('day_of_week', $englishDay)->first()->end_time ?? '' }}">
                                 </div>
                             </div>
-                            @endforeach
+                            @endforeach                            
                         </div>
                     </div>
 

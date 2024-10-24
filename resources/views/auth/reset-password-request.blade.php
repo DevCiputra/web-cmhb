@@ -2,8 +2,8 @@
 
 @section('title', 'Reset Password')
 
-@section('form-title', 'Ganti Password')
-@section('form-description', 'Masukkan nomor WhatsApp dan email untuk mengganti password.')
+@section('form-title', 'Ganti Kata Sandi')
+@section('form-description', 'Masukkan nomor WhatsApp dan email untuk mengganti kata sandi.')
 
 @section('form-content')
 @if(session('success'))
@@ -37,7 +37,7 @@
         @enderror
     </div>
     <div class="d-grid">
-        <button type="submit" class="btn btn-primary">Request Password Reset</button>
+        <button type="submit" class="btn btn-primary">Kirim Permintaan</button>
     </div>
 </form>
 @endsection

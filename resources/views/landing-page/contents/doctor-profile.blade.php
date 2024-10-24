@@ -33,9 +33,7 @@
         <div class="doctor-education">
             <h4>Riwayat Pendidikan</h4>
             <ul>
-
                 <li class="education-item">{{ $doctor->education->name }}</li>
-
             </ul>
         </div>
 
@@ -46,8 +44,8 @@
                 @if($doctor->schedules->isNotEmpty())
                 @foreach($doctor->schedules as $schedule)
                 <li class="schedule-item">
-                    <!-- Menampilkan day_of_week, start_time, dan end_time -->
-                    {{ $schedule->day_of_week }}: {{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }}
+                    <!-- Menampilkan day_of_week, start_time, dan end_time dengan nama hari dalam Bahasa Indonesia -->
+                    {{ getIndonesianDay($schedule->day_of_week) }}: {{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }}
                 </li>
                 @endforeach
                 @else
@@ -55,8 +53,6 @@
                 @endif
             </ul>
         </div>
-
-
 
         <!-- Bagian Media (CV) Dokter -->
         <div class="doctor-media mt-5">
@@ -79,7 +75,6 @@
         <div class="doctor-action-buttons">
             <a href="{{ $doctor->address }}" target="_blank" class="btn btn-reservasi">Reservasi</a>
             <a href="{{ route('consultation.form', ['doctor_id' => $doctor->id]) }}" class="btn btn-konsultasi">Konsultasi Online</a>
-
         </div>
     </div>
 
@@ -123,3 +118,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/dokter_profile.css') }}">
 @endpush
+
+@php
+function getIndonesianDay($day)
+{
+    $days = [
+        'Sunday' => 'Minggu',
+        'Monday' => 'Senin',
+        'Tuesday' => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday' => 'Kamis',
+        'Friday' => 'Jumat',
+        'Saturday' => 'Sabtu',
+    ];
+    
+    return $days[$day] ?? $day; // return original if not found
+}
+@endphp
