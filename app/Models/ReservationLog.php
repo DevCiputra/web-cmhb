@@ -10,7 +10,7 @@ class ReservationLog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['reservation_id', 'user_id', 'reason'];
+    protected $fillable = ['reservation_id', 'user_id', 'reason', 'patient_name', 'user_name'];
 
     /**
      * Relasi dengan model Reservation.

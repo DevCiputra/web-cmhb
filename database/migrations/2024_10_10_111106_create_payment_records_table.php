@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('payment_confirmation_date')->nullable(); // Tanggal konfirmasi pembayaran
 
             $table->timestamps();
-
+            $table->softDeletes(); // Tambah soft delete
             $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
         });
     }

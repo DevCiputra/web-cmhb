@@ -33,12 +33,19 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-6 consultation-info-item">
-                    <p><strong>Tanggal Konsultasi:</strong> {{ $reservation->agreed_consultation_date }}</p> <!-- Mengambil dari kolom agreed_consultation_date -->
+                    <p><strong>Tanggal Konsultasi Diajukan:</strong>
+                        {{ \Carbon\Carbon::parse($reservation->doctorConsultationReservation->preferred_consultation_date)
+                ->translatedFormat('l, d-m-Y') }}
+                    </p>
                 </div>
                 <div class="col-md-6 consultation-info-item">
-                    <p><strong>Waktu Konsultasi:</strong> {{ $reservation->agreed_consultation_time }}</p> <!-- Mengambil dari kolom agreed_consultation_time -->
+                    <p><strong>Tanggal Konsultasi Disepakati:</strong>
+                        {{ \Carbon\Carbon::parse($reservation->doctorConsultationReservation->agreed_consultation_date)
+                ->translatedFormat('l, d-m-Y') }}
+                    </p>
                 </div>
             </div>
+
             <div class="row mb-3">
                 <div class="col-md-6 consultation-info-item">
                     <p><strong>Dokter:</strong> {{ $reservation->doctorConsultationReservation->doctor->name }}</p>
@@ -53,7 +60,7 @@
                         <span class="badge {{ ($reservation->status_pembayaran != 'Lunas') ? 'badge-warning' : $reservation->status->class }}">
                             {{ ($reservation->status_pembayaran != 'Lunas') ? 'Menunggu Pembayaran' : $reservation->status->name }}
                         </span>
-                    </p>                    
+                    </p>
                 </div>
                 <div class="col-md-6 consultation-info-item">
                     <p><strong>Total Biaya:</strong> Rp. {{ number_format($reservation->doctorConsultationReservation->doctor->consultation_fee, 0, ',', '.') }}</p>

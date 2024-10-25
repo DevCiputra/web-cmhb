@@ -18,27 +18,48 @@ class Reservation extends Model
         'code',
     ];
 
-    // Relasi dengan model Patient
     public function patient()
     {
         return $this->belongsTo(Patient::class);
     }
 
-    // Relasi dengan model ReservationStatus
     public function status()
     {
         return $this->belongsTo(ReservationStatus::class, 'reservation_status_id');
     }
 
-    // Relasi dengan model DoctorConsultationReservation
     public function doctorConsultationReservation()
     {
         return $this->hasOne(DoctorConsultationReservation::class, 'reservation_id');
     }
 
-    // Relasi dengan model PaymentRecord
     public function paymentRecords()
     {
         return $this->hasMany(PaymentRecord::class, 'reservation_id');
+    }
+
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class, 'reservation_id');
+    }
+
+    // Cascade soft delete untuk relasi terkait
+    protected static function booted()
+    {
+        static::deleting(function ($reservation) {
+            // Soft delete data terkait
+            $reservation->doctorConsultationReservation()->delete();
+            $reservation->paymentRecords()->delete();
+            $reservation->invoice()->delete();
+
+            // Log pembatalan
+            ReservationLog::create([
+                'reservation_id' => $reservation->id,
+                'user_id' => auth()->id(),
+                'patient_name' => $reservation->patient->name,
+                'user_name' => auth()->user()->name,
+                'reason' => 'Reservasi dibatalkan.',
+            ]);
+        });
     }
 }
