@@ -14,9 +14,9 @@
                     <h4 class="mb-1 fw-normal" style="color: #1C3A6B; font-weight: bold;">Detail Paket MCU</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="background: transparent; padding: 0; margin: 0;">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}" style="text-decoration: none; color: #1C3A6B;">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color: #1C3A6B;">Reservasi</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('reservation.mcu.index') }}" style="text-decoration: none; color: #1C3A6B;">Medical Check Up</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}" style="text-decoration: none;">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="#" style="text-decoration: none;">Reservasi</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('reservation.mcu.index') }}" style="text-decoration: none;">Medical Check Up</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Detail Paket MCU</li>
                         </ol>
                     </nav>

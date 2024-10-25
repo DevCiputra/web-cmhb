@@ -15,9 +15,9 @@
                     <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Detail Pemesanan</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}" style="text-decoration: none;">Beranda</a></li>
                             <li class="breadcrumb-item"><a href=" ">Reservasi</a></li>
-                            <li class="breadcrumb-item"><a href=" ">Konsultasi Online</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('reservation.onlineconsultation.index') }}">Konsultasi Online</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Detail Pemesanan</li>
                         </ol>
                     </nav>
@@ -46,24 +46,27 @@
             <h5 class="fw-bold" style="color: #1C3A6B;">Kode Pemesanan</h5>
             <h4 class="mb-4" style="color: #000;">{{ $reservation->code }}</h4>
 
-            <div class="d-flex mb-4">
-                <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#approveModal">
+            <div class="d-flex mb-4 button-group">
+                <!-- Approve Button -->
+                <button type="button" class="btn btn-success me-2 flex-grow-1" data-bs-toggle="modal" data-bs-target="#approveModal">
                     <i class="fas fa-check-circle me-1"></i> Approve Order
                 </button>
-                <!-- Ubah ini -->
-                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+            
+                <!-- Cancel Button -->
+                <button type="button" class="btn btn-danger me-2 flex-grow-1" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-
-                <!-- Tombol Delete dengan Form -->
-                <form action="{{ route('reservation.delete', $reservation->id) }}" method="POST" class="d-inline">
+            
+                <!-- Delete Button with Form -->
+                <form action="{{ route('reservation.delete', $reservation->id) }}" method="POST" class="d-inline  flex-grow-1">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-secondary" onclick="return confirm('Yakin ingin menghapus reservasi ini?')">
-                        <i class="fas fa-trash me-1"></i> Delete Order
+                        <i class="fas fa-trash me-1"></i> Delete Order 
                     </button>
                 </form>
             </div>
+            
 
             <div class="row">
                 <div class="col-md-6">
