@@ -26,7 +26,7 @@
                 <li><a class="dropdown-item" href="/medical-check-up">Medical Check Up (MCU)</a></li>
                 <li><a class="dropdown-item" href="/polyclinic">Pendaftaran Poli</a></li>
                 <li><a class="dropdown-item" href="/home-service">Home Service</a></li>
-                <li><a class="dropdown-item" href="/online-consultation">Konsultasi Online</a></li>
+                <li><a class="dropdown-item" href="/consultation-online">Konsultasi Online</a></li>
             </ul>
         </li>
         <li><a class="nav-link" href="/promotion">Promo</a></li>
