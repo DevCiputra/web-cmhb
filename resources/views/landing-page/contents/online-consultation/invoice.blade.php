@@ -14,8 +14,6 @@
     </nav>
 </div>
 
-
-
 <div class="invoice-container">
     <div class="invoice-header text-center">
         <div class="logo">
@@ -27,12 +25,22 @@
 
     <div class="invoice-details">
         <div class="order-id">
-            <p><strong>Kode Pesanan:</strong> {{ $invoice->code }}</p> <!-- Kode pesanan -->
+            <p><strong>Kode Pesanan:</strong> {{ $invoice->code ?? 'N/A' }}</p> <!-- Kode pesanan -->
+        </div>
+        <div class="order-id">
+            <p><strong>Kode Invoice:</strong> {{ $invoice->invoice->invoice_number ?? 'N/A' }}</p> <!-- Kode pesanan -->
         </div>
         <div class="row">
             <div class="col">
-                <p><strong>Tanggal Jatuh Tempo:</strong></p>
-                <p>{{ $invoice->doctorConsultationReservation->agreed_consultation_date ?? 'N/A' }}</p> <!-- Tanggal konsultasi -->
+                <p><strong>Tanggal Invoice:</strong></p>
+                <p>
+                    @if($invoice->invoice)
+                    {{ $invoice->invoice->created_at ? $invoice->invoice->created_at->translatedFormat('l, d F Y') : 'N/A' }} |
+                    {{ $invoice->invoice->created_at ? $invoice->invoice->created_at->format('H:i') : 'N/A' }} WITA
+                    @else
+                    N/A
+                    @endif
+                </p> <!-- Tanggal invoice -->
             </div>
             <div class="col">
                 <p><strong>Subjek:</strong></p>
@@ -49,6 +57,7 @@
             </div>
         </div>
     </div>
+
     <!-- Informasi Zoom -->
     @if($invoice->doctorConsultationReservation->zoom_link)
     <div class="important-info">
@@ -58,7 +67,6 @@
         <p><strong>Password Zoom Meeting:</strong> {{ $invoice->doctorConsultationReservation->zoom_password ?? 'N/A' }}</p>
     </div>
     @endif
-
 
     <!-- Section for Patient Details -->
     <h4 class="mb-4 mt-5" style="color: #023770;">Detail Pasien</h4>
@@ -107,9 +115,12 @@
         <div class="col-sm-12 col-md-3">
             <div class="form-group">
                 <label for="consultationTime" class="form-label">Waktu Konsultasi</label>
-                <p class="form-text">{{ $invoice->doctorConsultationReservation->agreed_consultation_time ?? 'N/A' }}</p> <!-- Waktu konsultasi -->
+                <p class="form-text">
+                    {{ $invoice->doctorConsultationReservation->agreed_consultation_time ? \Carbon\Carbon::parse($invoice->doctorConsultationReservation->agreed_consultation_time)->format('H:i') . ' WITA' : 'N/A' }}
+                </p> <!-- Waktu konsultasi -->
             </div>
         </div>
+
     </div>
 
     <!-- Invoice Summary -->
@@ -137,21 +148,22 @@
         <div class="col-sm-12 col-md-4">
             <div class="form-group">
                 <label class="form-label">Tanggal Reservasi</label>
-                <p class="form-text">{{ $invoice->created_at->format('d F Y, H:i') }}</p> <!-- Tanggal reservasi -->
+                <p class="form-text">{{ $invoice->created_at->translatedFormat('l, d F Y') }} | {{ $invoice->created_at->format('H:i') }} WITA</p> <!-- Tanggal reservasi -->
             </div>
         </div>
         <div class="col-sm-12 col-md-4">
             <div class="form-group">
                 <label class="form-label">Tanggal Pembayaran</label>
-                <p class="form-text">{{ $invoice->paymentRecords->last()->payment_confirmation_date ?? 'N/A' }}</p> <!-- Tanggal pembayaran -->
+                <p class="form-text">{{ $invoice->paymentRecords->last()->payment_confirmation_date->translatedFormat('l, d F Y') ?? 'N/A' }} | {{ $invoice->paymentRecords->last()->payment_confirmation_date->format('H:i') ?? 'N/A' }} WITA</p> <!-- Tanggal pembayaran -->
             </div>
         </div>
         <div class="col-sm-12 col-md-4">
             <div class="form-group">
                 <label class="form-label">Tanggal Pemesanan Berhasil</label>
-                <p class="form-text">{{ $invoice->status->name == 'Selesai' ? $invoice->updated_at->format('d F Y, H:i') : 'N/A' }}</p> <!-- Tanggal pemesanan berhasil -->
+                <p class="form-text">{{ $invoice->updated_at ? $invoice->updated_at->translatedFormat('l, d F Y') . ' | ' . $invoice->updated_at->format('H:i') . ' WITA' : 'N/A' }}</p> <!-- Tanggal pemesanan berhasil -->
             </div>
         </div>
+
     </div>
 </div>
 @endsection

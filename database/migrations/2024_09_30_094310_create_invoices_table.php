@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('reservation_id'); // Foreign key ke reservations
-            $table->string('invoice_number')->unique(); // Nomor invoice
-            $table->decimal('total_amount', 10, 2); // Total biaya
-            $table->enum('payment_status', ['Paid', 'Unpaid']); // Status pembayaran
+            $table->unsignedBigInteger('reservation_id')->unique(); // Satu reservation, satu invoice
+            $table->string('invoice_number')->nullable()->unique(); // Nomor invoice terisi saat pembayaran dikonfirmasi
+            $table->decimal('total_amount', 10, 2)->nullable(); // Diambil dari biaya konsultasi
+            $table->string('payment_status')->nullable();
             $table->timestamps();
-
+            $table->softDeletes(); // Tambah soft delete
             $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
         });
     }

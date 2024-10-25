@@ -7,6 +7,7 @@ use App\Models\BloodGroup;
 use App\Models\Patient;
 use App\Models\Reservation;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,27 +17,41 @@ class AccountController extends Controller
 {
     public function index()
     {
-        // Mengambil data pengguna yang sedang login
+        // Set lokal secara eksplisit
+        Carbon::setLocale('id');
+
         $user = Auth::user();
 
-        // Mengambil data pasien terkait dengan pengguna dan memuat relasi `allergies` serta `bloodGroups`
-        $patient = Patient::with(['allergies', 'bloodGroup'])->where('user_id', $user->id)->first();
+        $patient = Patient::with([
+            'allergies',
+            'bloodGroup'
+        ])
+        ->where('user_id', $user->id)
+        ->first();
 
-        // dd($patient);
-        // Mengambil data reservasi pasien dengan memuat relasi `doctorConsultation`
         $reservations = Reservation::with('status', 'doctorConsultationReservation')
         ->where('patient_id', $patient->id)
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($reservation) {
+                $doctorConsultation = $reservation->doctorConsultationReservation;
 
+                if ($doctorConsultation) {
+                    // Format tanggal dan waktu menggunakan Carbon
+                    $doctorConsultation->formatted_date = Carbon::parse($doctorConsultation->agreed_consultation_date)
+                        ->translatedFormat('l, d-m-Y');
+                    $doctorConsultation->formatted_time = Carbon::parse($doctorConsultation->agreed_consultation_time)
+                        ->format('H.i') . ' WITA';
+                }
+
+                return $reservation;
+            });
 
         $title = 'Akun Saya';
 
-        // dd($reservations);
-
-        // Mengirimkan data pengguna, pasien, dan reservasi ke view
         return view('account.contents.index', compact('title', 'user', 'patient', 'reservations'));
     }
+
 
     public function update(Request $request, $id)
     {
@@ -107,7 +122,7 @@ class AccountController extends Controller
 
         return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
     }
-    
-    
+
+
 
 }

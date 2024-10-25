@@ -77,12 +77,6 @@ Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
     // Rute untuk konfirmasi pembayaran
     Route::post('/consultation-payment/{id}', [OnlineConsultationController::class, 'confirmPayment'])->name('consultation.payment');
 
-    // Rute untuk halaman invoice
-    Route::get('/consultation-invoice/{id}', [OnlineConsultationController::class, 'showInvoice'])->name('consultation.invoice');
-
-    // Rute untuk konfirmasi pembayaran
-    Route::post('/consultation-payment/{id}', [OnlineConsultationController::class, 'confirmPayment'])->name('consultation.payment');
-
     // Rute untuk approve dan cancel reservasi
     Route::post('/reservation/{id}/approve', [OnlineConsultationController::class, 'approveReservation'])->name('reservation.approve');
     Route::post('/reservation/{id}/cancel', [OnlineConsultationController::class, 'cancelReservation'])->name('reservation.cancel');
@@ -252,31 +246,6 @@ Route::group(
 
 // PATIENT/PASIEN
 Route::get('/patient-data', [PatientController::class, 'indexDataPatient'])->name('patient.data.index');
-
-
-//RESERVASI ONLINE
-Route::get('/online-consultation', [
-    ReservationController::class,
-    'indexLandingConsultation'
-])->name('reservation.onlineconsultation.landing');
-
-Route::get('/consultation-form', function () {
-    return view('consultation-form');
-});
-
-Route::get('/consultation-confirmation', function () {
-    return view('consultation-confirmation');
-});
-
-Route::get('/consultation-detail', function () {
-    return view('consultation-detail');
-});
-
-Route::get('/consultation-invoice', function () {
-    return view('consultation-invoice');
-});
-
-
 
 
 // SOON

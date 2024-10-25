@@ -15,12 +15,17 @@
                     <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Detail Pemesanan</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href=" ">Reservasi</a></li>
-                            <li class="breadcrumb-item"><a href=" ">Konsultasi Online</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ route('reservation.onlineconsultation.index') }}">Reservasi</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="#">Konsultasi Online</a>
+                            </li>
                             <li class="breadcrumb-item" style="color: #023770">Detail Pemesanan</li>
                         </ol>
                     </nav>
+
                 </div>
             </div>
         </div>
@@ -47,13 +52,17 @@
             <h4 class="mb-4" style="color: #000;">{{ $reservation->code }}</h4>
 
             <div class="d-flex mb-4">
+                @if($reservation->payment_status != 'Belum Lunas' && $reservation->reservation_status_id != 2)
                 <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#approveModal">
                     <i class="fas fa-check-circle me-1"></i> Approve Order
                 </button>
-                <!-- Ubah ini -->
+                @endif
+
+                @if($reservation->payment_status == 'Belum Lunas' || $reservation->reservation_status_id == 2)
                 <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
+                @endif
 
                 <!-- Tombol Delete dengan Form -->
                 <form action="{{ route('reservation.delete', $reservation->id) }}" method="POST" class="d-inline">
@@ -64,6 +73,7 @@
                     </button>
                 </form>
             </div>
+
 
             <div class="row">
                 <div class="col-md-6">
@@ -163,50 +173,12 @@
     </div>
 </div>
 
-<!-- Modal Cancel Order -->
+<!-- Cancel Order Modal -->
 <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="POST" action="{{ route('reservation.cancel', $reservation->id) }}">
                 @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cancelOrderModalLabel">Pembatalan Reservasi</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="cancellationReason" class="form-label">Alasan Pembatalan</label>
-                        <textarea class="form-control" id="cancellationReason" name="cancellation_reason" rows="3" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="authorizationPassword" class="form-label">Password Otorisasi</label>
-                        <input type="password" class="form-control" id="authorizationPassword" name="authorization_password" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger">Konfirmasi Pembatalan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Cancel Order -->
-<div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form method="POST" action="{{ route('reservation.cancel', $reservation->id) }}">
-                @csrf
-                @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
                 <div class="modal-header">
                     <h5 class="modal-title" id="cancelOrderModalLabel">Pembatalan Reservasi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -215,7 +187,7 @@
                     <div class="mb-3">
                         <label for="cancellationReason" class="form-label">Alasan Pembatalan</label>
                         <textarea class="form-control @error('cancellation_reason') is-invalid @enderror"
-                            id="cancellationReason" name="cancellation_reason" rows="3">{{ old('cancellation_reason') }}</textarea>
+                            id="cancellationReason" name="cancellation_reason" rows="3" required>{{ old('cancellation_reason') }}</textarea>
                         @error('cancellation_reason')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -223,7 +195,7 @@
                     <div class="mb-3">
                         <label for="authorizationPassword" class="form-label">Password Otorisasi</label>
                         <input type="password" class="form-control @error('authorization_password') is-invalid @enderror"
-                            id="authorizationPassword" name="authorization_password">
+                            id="authorizationPassword" name="authorization_password" required>
                         @error('authorization_password')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -234,7 +206,6 @@
                     <button type="submit" class="btn btn-danger">Konfirmasi Pembatalan</button>
                 </div>
             </form>
-
         </div>
     </div>
 </div>
