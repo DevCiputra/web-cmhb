@@ -122,7 +122,4 @@ class AccountController extends Controller
 
         return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
     }
-
-
-
 }
