@@ -14,11 +14,12 @@
                 <!-- Menampilkan gambar profil pasien -->
                 @if ($patient && $patient->profile_picture)
                 <img src="{{ asset('storage/' . $patient->profile_picture) }}" alt="Patient Photo"
-                    style="width: 100px; height: auto; border-radius: 50%;">
+                    style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
                 @else
                 <img src="{{ asset('images/userplaceholder.png') }}" alt="Patient Photo"
-                    style="width: 100px; height: auto; border-radius: 50%;">
+                    style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
                 @endif
+
 
                 <h5>{{ $user->username }}</h5>
                 <p>{{ $user->whatsapp }}</p>
@@ -49,6 +50,11 @@
                             <h6>Alamat</h6>
                             <div class="mb-3">
                                 <p>{{ $patient->address ?? 'Alamat tidak tersedia' }}</p>
+                            </div>
+                            <h6>Usia</h6>
+                            <div class="mb-3">
+                                <p>{{ $patient->dob ? \Carbon\Carbon::parse($patient->dob)->age . ' Tahun' : 'Belum diisi' }}
+                                </p>
                             </div>
                             <h6>Alergi</h6>
                             <div class="mb-3">
@@ -94,7 +100,8 @@
                                 class="booking-item-link">
                                 <div class="booking-item">
                                     <div class="booking-info">
-                                        <span class="booking-code" style="margin-right:8px">{{ $reservation->code }}</span>
+                                        <span class="booking-code"
+                                            style="margin-right:8px">{{ $reservation->code }}</span>
                                         <div class="booking-details">
                                             <span class="booking-date">
                                                 {{ $reservation->doctorConsultationReservation->formatted_date ?? 'Tanggal belum diset' }}
@@ -106,9 +113,9 @@
                                         </div>
 
                                     </div>
-                                    <span class="status-badge badge
-                                            @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->status->id == 1)
-                                                badge-warning
+                                    <span
+                                        class="status-badge badge
+                                            @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->status->id == 1) badge-warning
                                             @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->status->id == 1)
                                                 {{ $reservation->status->class ?? 'badge-secondary' }}
                                             @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->status->id == 2)
@@ -116,8 +123,7 @@
                                             @elseif($reservation->status_pembayaran == 'Dibatalkan' && $reservation->status->name == 'Batal')
                                                 badge-danger
                                             @else
-                                                badge-secondary
-                                            @endif
+                                                badge-secondary @endif
                                         ">
                                         @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->status->id == 1)
                                         Menunggu Pembayaran
@@ -152,29 +158,37 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editProfileForm" action="{{ route('account-update', $patient->id) }}" method="POST" enctype="multipart/form-data">
+                <form id="editProfileForm" action="{{ route('account-update', $patient->id) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
 
                     <!-- Preview Foto Profil -->
                     <div class="mb-3">
                         <label for="profilePhoto" class="form-label">Foto Profil</label>
                         <div>
-                            @if($patient && $patient->profile_picture)
-                            <img src="{{ asset('storage/' . $patient->profile_picture) }}" alt="Profile Photo" id="previewProfilePhoto" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+                            @if ($patient && $patient->profile_picture)
+                            <img src="{{ asset('storage/' . $patient->profile_picture) }}" alt="Profile Photo"
+                                id="previewProfilePhoto"
+                                style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
                             @else
-                            <img src="{{ asset('default_profile.png') }}" alt="Default Profile Photo" id="previewProfilePhoto" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+                            <img src="{{ asset('default_profile.png') }}" alt="Default Profile Photo"
+                                id="previewProfilePhoto"
+                                style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
                             @endif
                         </div>
-                        <input type="file" class="form-control mt-2" id="profilePhoto" name="profile_picture" accept="image/*" onchange="previewImage(event)">
+                        <input type="file" class="form-control mt-2" id="profilePhoto" name="profile_picture"
+                            accept="image/*" onchange="previewImage(event)">
                     </div>
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ $user->patient->name }}" required>
+                        <input type="text" class="form-control" id="name" name="name"
+                            value="{{ $user->patient->name }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
+                        <input type="email" class="form-control" id="email" name="email"
+                            value="{{ $user->email }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Alamat</label>
@@ -182,11 +196,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="allergy" class="form-label">Alergi</label>
-                        <input type="text" class="form-control" id="allergy" name="allergy" value="{{ $patient->allergies->pluck('name')->implode(', ') }}">
+                        <input type="text" class="form-control" id="allergy" name="allergy"
+                            value="{{ $patient->allergies->pluck('name')->implode(', ') }}">
                     </div>
                     <div class="mb-3">
                         <label for="bloodType" class="form-label">Golongan Darah</label>
-                        <input type="text" class="form-control" id="bloodType" name="blood_type" value="{{ $patient->bloodGroup->name ?? '' }}">
+                        <input type="text" class="form-control" id="bloodType" name="blood_type"
+                            value="{{ $patient->bloodGroup->name ?? '' }}">
                     </div>
 
                     <div class="text-end"> <!-- Aligns the button to the right -->

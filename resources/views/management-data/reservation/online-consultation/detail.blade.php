@@ -69,7 +69,7 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-secondary" onclick="return confirm('Yakin ingin menghapus reservasi ini?')">
-                        <i class="fas fa-trash me-1"></i> Delete Order
+                        <i class="fas fa-trash me-1"></i> Delete Order 
                     </button>
                 </form>
             </div>
