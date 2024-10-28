@@ -57,12 +57,11 @@
     <p>Belum punya akun? <a href="{{ route('register') }}" class="text-decoration-none">Daftar di sini</a>.</p>
 </div>
 @endsection
-|
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
 
-        togglePassword.addEventListener('click', function () {
+        togglePassword.addEventListener('click', function() {
             // Toggle the type attribute between 'password' and 'text'
             const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
             password.setAttribute('type', type);

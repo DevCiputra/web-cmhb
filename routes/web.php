@@ -152,6 +152,8 @@ Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
 Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
     Route::get('/reservation-online-consultation', [ReservationController::class, 'indexConsultation'])->name('reservation.onlineconsultation.index');
 
+    Route::get('/reservation-count', [ReservationController::class, 'getReservationCount'])->name('reservation.count');
+
     Route::get('/reservation-online-consultation/detail/{id}', [ReservationController::class, 'detailConsultation'])->name('reservation.onlineconsultation.detail');
 
     Route::get('/reservation-online-consultation/invoice', [ReservationController::class, 'invoiceConsultation'])->name('reservation.onlineconsultation.invoice');
@@ -247,6 +249,11 @@ Route::group(
 // PATIENT/PASIEN
 Route::get('/patient-data', [PatientController::class, 'indexDataPatient'])->name('patient.data.index');
 
+//RESERVASI ONLINE
+Route::get('/online-consultation', [
+    ReservationController::class,
+    'indexLandingConsultation'
+])->name('reservation.onlineconsultation.landing');
 
 // SOON
 

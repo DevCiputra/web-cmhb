@@ -24,7 +24,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // Validasi input yang lebih ketat
+        // Validasi input dengan pesan khusus
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|regex:/^[a-zA-Z0-9_.-]*$/',
@@ -32,63 +32,72 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'whatsapp' => 'required|string|max:20|regex:/^08\d{8,11}$/',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'username.required' => 'Nama pengguna wajib diisi.',
+            'username.regex' => 'Nama pengguna hanya boleh berisi huruf, angka, titik, garis bawah, atau tanda hubung.',
+            'email.required' => 'Alamat email wajib diisi.',
+            'email.email' => 'Format alamat email tidak valid.',
+            'email.unique' => 'Alamat email sudah terdaftar.',
+            'password.required' => 'Kata sandi wajib diisi.',
+            'password.min' => 'Kata sandi harus minimal :min karakter.',
+            'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
+            'password.regex' => 'Kata sandi harus mengandung huruf besar, huruf kecil, dan angka.',
+            'whatsapp.required' => 'Nomor WhatsApp wajib diisi.',
+            'whatsapp.regex' => 'Format nomor WhatsApp tidak valid. Harus dimulai dengan 08.',
+            'profile_picture.image' => 'Foto profil harus berupa gambar.',
+            'profile_picture.mimes' => 'Foto profil harus berformat: jpeg, png, atau jpg.',
+            'profile_picture.max' => 'Ukuran foto profil maksimal :max kilobytes.',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // Validasi jika email sudah digunakan
-        $existingUser = User::where('email', $request->email)->first();
-        if ($existingUser) {
-            return redirect()->back()->with('error', 'Alamat email sudah terdaftar. Silakan gunakan alamat email lain.')->withInput();
+        // Validasi email dan nomor WhatsApp unik
+        if (User::where('email', $request->email)->exists()) {
+            return redirect()->back()
+            ->with('error', 'Alamat email sudah terdaftar. Silakan gunakan alamat email lain.')
+            ->withInput();
         }
 
-        // Validasi jika nomor WhatsApp sudah digunakan
-        $existingWhatsApp = User::where('whatsapp', $request->whatsapp)->first();
-        if ($existingWhatsApp) {
-            return redirect()->back()->with('error', 'Nomor WhatsApp sudah terdaftar. Silakan gunakan nomor lain.')->withInput();
+        if (User::where('whatsapp', $request->whatsapp)->exists()) {
+            return redirect()->back()
+            ->with('error', 'Nomor WhatsApp sudah terdaftar. Silakan gunakan nomor lain.')
+            ->withInput();
         }
 
-        // Proses pembuatan User baru
-        $sanitizedUsername = htmlspecialchars($request->username, ENT_QUOTES, 'UTF-8');
-        $sanitizedEmail = filter_var($request->email, FILTER_SANITIZE_EMAIL);
-        $sanitizedWhatsapp = htmlspecialchars($request->whatsapp, ENT_QUOTES, 'UTF-8');
+        // Sanitasi data dan simpan user
+        $profilePicture = $request->hasFile('profile_picture')
+        ? $request->file('profile_picture')->store('profiles', 'public')
+        : null;
 
-        // Handle Profile Picture Upload
-        $profilePicture = null;
-        if ($request->hasFile('profile_picture')) {
-            $profilePicture = $request->file('profile_picture')->store('profiles', 'public');
-        }
-
-        // Simpan data ke database
-        $userCreated = User::create([
-            'username' => $sanitizedUsername,
-            'email' => $sanitizedEmail,
+        $user = User::create([
+            'username' => htmlspecialchars($request->username, ENT_QUOTES, 'UTF-8'),
+            'email' => filter_var($request->email, FILTER_SANITIZE_EMAIL),
             'password' => Hash::make($request->password),
             'role' => 'Pasien',
-            'whatsapp' => $sanitizedWhatsapp,
+            'whatsapp' => htmlspecialchars($request->whatsapp, ENT_QUOTES, 'UTF-8'),
         ]);
 
-        // Jika user gagal dibuat
-        if (!$userCreated) {
+        if (!$user) {
             return redirect()->back()->with('error', 'Gagal membuat pengguna baru. Silakan coba lagi.')->withInput();
         }
 
-        // Buat data Pasien yang terhubung dengan User
-        $patientCreated = Patient::create([
-            'user_id' => $userCreated->id,
+        $patient = Patient::create([
+            'user_id' => $user->id,
             'name' => $request->name,
             'profile_picture' => $profilePicture,
         ]);
 
-        if (!$patientCreated) {
-            $userCreated->delete(); // Hapus user yang sudah dibuat
+        if (!$patient) {
+            $user->delete();
             return redirect()->back()->with('error', 'Gagal membuat profil pasien. Silakan coba lagi.')->withInput();
         }
 
         return redirect()->route('login')->with('success', 'Pendaftaran berhasil! Silakan masuk menggunakan akun Anda.');
     }
+
 
     public function showLoginForm()
     {

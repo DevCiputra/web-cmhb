@@ -13,7 +13,7 @@ class CheckRole
     {
         // Cek apakah user sudah login
         if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'You need to login first.');
+            return redirect()->route('login')->with('error', 'Silahkan log in untuk mengakses halaman');
         }
 
         // Ambil role user yang login
@@ -23,7 +23,7 @@ class CheckRole
         if (!in_array($userRole, $roles)) {
             // Jika role user tidak diizinkan, logout dan redirect ke login
             auth()->logout();
-            return redirect()->route('login')->with('error', 'You do not have permission to access this page.');
+            return redirect()->route('login')->with('error', 'Anda tidak memiliki hak akses ke halaman ini');
         }
 
         return $next($request);

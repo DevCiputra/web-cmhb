@@ -50,11 +50,6 @@
                             <div class="mb-3">
                                 <p>{{ $patient->address ?? 'Alamat tidak tersedia' }}</p>
                             </div>
-                            <h6>Usia</h6>
-                            <div class="mb-3">
-                                <p>{{ $patient->dob ? \Carbon\Carbon::parse($patient->dob)->age . ' Tahun' : 'Belum diisi' }}
-                                </p>
-                            </div>
                             <h6>Alergi</h6>
                             <div class="mb-3">
                                 <p>
