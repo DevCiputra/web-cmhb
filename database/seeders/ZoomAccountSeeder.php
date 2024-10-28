@@ -22,9 +22,9 @@ class ZoomAccountSeeder extends Seeder
 
         ZoomAccount::create([
             'account_name' => 'Zoom Admin 2',
-            'client_key' => 'C3bSXlzIRZSZMCrUYPSw',
-            'client_secret' => 'fVrqino0KMVezfX62HIF8rWLO8IQU6vU',
-            'account_id' => '1Frw0ZsiSUqEG0zNWh4DUA',
+            'client_key' => 'G0rUNsRgQlm7CMpwtp82yg',
+            'client_secret' => 'xuyKpwVzkUDbkXnzYSAOk898Zrou9htQ',
+            'account_id' => '2iBG9sIVR6Kv45XfPaq6SA',
         ]);
     }
 }
