@@ -83,7 +83,7 @@
                                 </td>
 
                                 <td>
-                                    <span class="status-badge badge 
+                                    <span class="status-badge badge
                                         @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
                                             badge-warning
                                         @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
@@ -95,7 +95,7 @@
                                         @else
                                             badge-light
                                         @endif"
-                                        style="color: black; 
+                                        style="color: black;
                                                @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
                                                    background-color: #FFC107; /* Warning color */
                                                @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
@@ -108,19 +108,19 @@
                                                    background-color: #F8F9FA; /* Light color */
                                                @endif">
                                         @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
-                                            Menunggu Pembayaran
+                                        Menunggu Pembayaran
                                         @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
-                                            Menunggu Approval
+                                        Menunggu Approval
                                         @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
-                                            Lunas
+                                        Lunas
                                         @elseif ($reservation->status_pembayaran == 'Dibatalkan')
-                                            Dibatalkan
+                                        Dibatalkan
                                         @else
-                                            Status Tidak Diketahui
+                                        Status Tidak Diketahui
                                         @endif
                                     </span>
                                 </td>
-                                
+
                                 <td>
                                     <a href="{{ route('reservation.onlineconsultation.detail', $reservation->id) }}" class="btn btn-info btn-sm">Detail</a>
                                     <!-- Tambahkan action button lain sesuai kebutuhan -->
@@ -140,56 +140,68 @@
 @endsection
 
 @push('scripts')
-
 <script>
-    const mobileScreen = window.matchMedia("(max-width: 990px )");
+    // Menghitung jumlah reservasi saat ini dari variabel PHP
+    let previousCount = "{{ $reservations->count() }}";
+
+    function playNotificationSound() {
+        const audio = new Audio('{{ asset("sound/mixkit-software-interface-back-2575.wav") }}');
+        audio.play();
+    }
+
+    function checkNewReservations() {
+        // Menggunakan AJAX untuk mendapatkan jumlah reservasi terbaru
+        $.get("{{ route('reservation.count') }}", function(data) {
+            // Memeriksa apakah ada reservasi baru
+            if (data.count > previousCount) {
+                // Mainkan suara notifikasi terlebih dahulu
+                playNotificationSound();
+
+                // Setelah suara selesai diputar, tampilkan alert
+                audio.onended = function() {
+                    alert('Ada reservasi baru!');
+
+                    // Setelah OK ditekan, refresh halaman secara otomatis
+                    location.reload();
+                };
+
+                // Perbarui jumlah reservasi sebelumnya
+                previousCount = data.count;
+            }
+        });
+    }
 
     $(document).ready(function() {
-        // Toggle the dashboard navigation menu
-        $(".dashboard-nav-dropdown-toggle").click(function() {
-            $(this).closest(".dashboard-nav-dropdown")
-                .toggleClass("show")
-                .find(".dashboard-nav-dropdown")
-                .removeClass("show");
-            $(this).parent()
-                .siblings()
-                .removeClass("show");
-        });
+        // Cek reservasi baru setiap 5 menit (300000 ms)
+        setInterval(checkNewReservations, 300000);
 
-        // Menu toggle for mobile or compact view
-        $(".menu-toggle").click(function() {
-            if (mobileScreen.matches) {
-                $(".dashboard-nav").toggleClass("mobile-show");
-            } else {
-                $(".dashboard").toggleClass("dashboard-compact");
-            }
-        });
-
-        // Initialize DataTable
+        // Inisialisasi DataTable
         $('#dataTableKonsultasi').DataTable({
-            "paging": true,       // Enable pagination
-            "lengthMenu": [5, 10, 25, 50], // Rows per page options
-            "ordering": true,     // Enable column sorting
-            "searching": true,    // Enable the search box
-            "info": true,         // Display table info
-            "autoWidth": false,   // Disable auto width to prevent column overflow
-            "order": [[1, 'desc']], // Sort by Order ID (index 1) in descending order
-            "columnDefs": [
-                { "orderable": false, "targets": [7, 9] } // Disable sorting for columns with actions/payment proof
+            paging: true,
+            lengthMenu: [5, 10, 25, 50],
+            ordering: true,
+            searching: true,
+            info: true,
+            autoWidth: false,
+            order: [
+                [1, 'desc']
             ],
-            "language": {
-                "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya"
+            columnDefs: [{
+                orderable: false,
+                targets: [7, 9]
+            }],
+            language: {
+                paginate: {
+                    previous: "Sebelumnya",
+                    next: "Selanjutnya"
                 },
-                "lengthMenu": "Tampilkan _MENU_ entri",
-                "search": "Cari:",
-                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
-                "infoEmpty": "Tidak ada data tersedia",
-                "zeroRecords": "Tidak ada hasil ditemukan"
-            }
+                lengthMenu: "Tampilkan _MENU_ entri",
+                search: "Cari:",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                infoEmpty: "Tidak ada data tersedia",
+                zeroRecords: "Tidak ada hasil ditemukan",
+            },
         });
     });
 </script>
 @endpush
-

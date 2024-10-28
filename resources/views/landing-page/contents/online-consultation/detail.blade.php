@@ -35,16 +35,21 @@
                 <div class="col-md-6 consultation-info-item">
                     <p><strong>Tanggal Konsultasi Diajukan:</strong>
                         {{ \Carbon\Carbon::parse($reservation->doctorConsultationReservation->preferred_consultation_date)
-                ->translatedFormat('l, d-m-Y') }}
+            ->translatedFormat('l, d-m-Y') }}
                     </p>
                 </div>
                 <div class="col-md-6 consultation-info-item">
                     <p><strong>Tanggal Konsultasi Disepakati:</strong>
+                        @if ($reservation->doctorConsultationReservation->agreed_consultation_date)
                         {{ \Carbon\Carbon::parse($reservation->doctorConsultationReservation->agreed_consultation_date)
                 ->translatedFormat('l, d-m-Y') }}
+                        @else
+                        <span>(Menunggu konfirmasi dokter)</span>
+                        @endif
                     </p>
                 </div>
             </div>
+
 
             <div class="row mb-3">
                 <div class="col-md-6 consultation-info-item">
@@ -57,11 +62,19 @@
             <div class="row mb-3">
                 <div class="col-md-6 consultation-info-item">
                     <p><strong>Status Pemesanan:</strong>
-                        <span class="badge {{ ($reservation->status_pembayaran != 'Lunas') ? 'badge-warning' : $reservation->status->class }}">
-                            {{ ($reservation->status_pembayaran != 'Lunas') ? 'Menunggu Pembayaran' : $reservation->status->name }}
+                        <span class="badge
+            {{
+                $reservation->status_pembayaran == 'Lunas' ? 'badge-success' :
+                ($reservation->status_pembayaran == 'Dibatalkan' ? 'badge-danger' : 'badge-warning')
+            }}">
+                            {{
+                $reservation->status_pembayaran == 'Lunas' ? 'Berhasil' :
+                ($reservation->status_pembayaran == 'Dibatalkan' ? 'Pemesanan Dibatalkan' : 'Menunggu Pembayaran')
+            }}
                         </span>
                     </p>
                 </div>
+
                 <div class="col-md-6 consultation-info-item">
                     <p><strong>Total Biaya:</strong> Rp. {{ number_format($reservation->doctorConsultationReservation->doctor->consultation_fee, 0, ',', '.') }}</p>
                 </div>
@@ -77,11 +90,19 @@
                 </div>
                 <div class="col-md-6 consultation-payment-info">
                     <p><strong>Status Pembayaran:</strong>
-                        <span class="badge {{ $reservation->status_pembayaran == 'Lunas' ? 'badge-success' : 'badge-warning' }}">
-                            {{ $reservation->status_pembayaran == 'Lunas' ? 'Lunas' : 'Belum Dibayar' }} <!-- Mengambil dari kolom status_pembayaran -->
+                        <span class="badge
+            {{
+                $reservation->status_pembayaran == 'Lunas' ? 'badge-success' :
+                ($reservation->status_pembayaran == 'Dibatalkan' ? 'badge-danger' : 'badge-warning')
+            }}">
+                            {{
+                $reservation->status_pembayaran == 'Lunas' ? 'Lunas' :
+                ($reservation->status_pembayaran == 'Dibatalkan' ? 'Pembayaran Dibatalkan' : 'Belum Dibayar')
+            }}
                         </span>
                     </p>
                 </div>
+
             </div>
 
             <!-- Button Section -->

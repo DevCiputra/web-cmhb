@@ -276,6 +276,14 @@ class ReservationController extends Controller
         return view('management-data.reservation.online-consultation.index', compact('reservations'));
     }
 
+    public function getReservationCount()
+    {
+        $count = Reservation::withoutTrashed()->count(); // Hitung jumlah reservasi yang tidak dihapus
+        return response()->json(['count' => $count]);
+    }
+
+
+
     public function detailConsultation($id)
     {
         // Ambil data reservasi beserta relasi yang relevan

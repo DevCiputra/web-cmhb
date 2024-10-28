@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class OnlineConsultationController extends Controller
 {
@@ -27,9 +28,32 @@ class OnlineConsultationController extends Controller
         return ZoomAccount::where('active', true)->inRandomOrder()->first();
     }
 
-    private function generateInvoiceNumber()
+    private function generateInvoiceNumber($patientId, $lastInvoiceNumber = 0)
     {
-        return 'INV-' . Carbon::now()->format('Ymd') . '-' . Str::uuid();
+        // Ambil data pasien berdasarkan ID
+        $patient = Patient::findOrFail($patientId);
+
+        // 1. Inisial organisasi (CMH)
+        $organizationCode = 'CMH';
+
+        // 2. Tanggal (format internasional: YYYYMMDD)
+        $date = Carbon::now()->format('Ymd');
+
+        // 3. Nomor urut invoice (contoh: 00001)
+        $nextInvoiceNumber = str_pad($lastInvoiceNumber + 1, 5, '0', STR_PAD_LEFT);
+
+        // 4. Inisial pasien (contoh: John Doe → JD)
+        $patientInitials = collect(explode(' ', $patient->name))
+            ->map(fn($word) => strtoupper(substr($word, 0, 1)))
+            ->implode('');
+
+        // 5. UUID singkat (8 karakter pertama)
+        $shortUuid = substr(Str::uuid()->toString(), 0, 8);
+
+        // Gabungkan elemen menjadi nomor invoice
+        $invoiceNumber = "{$organizationCode}/{$date}/{$nextInvoiceNumber}/{$patientInitials}-{$shortUuid}";
+
+        return $invoiceNumber;
     }
 
     public function showConsultationForm($doctor_id)
@@ -91,7 +115,12 @@ class OnlineConsultationController extends Controller
         })->implode('');
 
         $today = date('dmY');
-        $reservationCount = Reservation::whereDate('created_at', today())->count();
+
+        // Hitung semua reservasi pada hari itu termasuk yang di soft-delete
+        $reservationCount = Reservation::withTrashed()
+            ->whereDate('created_at', today())
+            ->count();
+
         $reservationNumber = str_pad($reservationCount + 1, 2, '0', STR_PAD_LEFT);
 
         return "{$today}{$initials}{$reservationNumber}";
@@ -139,11 +168,12 @@ class OnlineConsultationController extends Controller
         return view('landing-page.contents.online-consultation.invoice', compact('invoice', 'title'));
     }
 
-
     public function confirmPayment(Request $request, $id)
     {
-        $reservation = Reservation::with('invoice')->findOrFail($id);
+        // Ambil reservasi dengan relasi invoice
+        $reservation = Reservation::with('invoice', 'patient')->findOrFail($id);
 
+        // Validasi input
         $validated = $request->validate([
             'payment_proof' => 'required|image|max:2048',
             'payment_method' => 'required|string',
@@ -171,9 +201,11 @@ class OnlineConsultationController extends Controller
             'status_pembayaran' => 'Lunas',
         ]);
 
-        // Update invoice dengan nomor invoice
-        $reservation->invoice->update([
-            'invoice_number' => $this->generateInvoiceNumber(),
+        // Ambil nomor urut invoice terakhir dari database (asumsi ada field 'invoice_number')
+        $lastInvoiceNumber = (int) Invoice::where('reservation_id', $reservation->id)->max('invoice_number') ?: 0;
+
+        // Update invoice dengan nomor invoice baru
+        $reservation->invoice->update(['invoice_number' => $this->generateInvoiceNumber($reservation->patient_id, $lastInvoiceNumber),
             'payment_status' => 'Lunas',
         ]);
 
@@ -193,15 +225,14 @@ class OnlineConsultationController extends Controller
         if (!Hash::check($request->authorization_password, auth()->user()->password)) {
             return back()->withErrors(['authorization_password' => 'Password otorisasi salah']);
         }
-
-
         // dd($request);
         // Ambil reservasi dengan relasi patient
         $reservation = Reservation::with('patient')->findOrFail($id);
 
         // Ubah status reservasi menjadi 'Batal'
         $reservation->update([
-            'reservation_status_id' => ReservationStatus::where('name', 'Batal')->value('id')
+            'reservation_status_id' => ReservationStatus::where('name', 'Batal')->value('id'),
+            'status_pembayaran' => "Dibatalkan"
         ]);
 
         // dd($reservation->patient->name);
@@ -210,7 +241,7 @@ class OnlineConsultationController extends Controller
             'reservation_id' => $reservation->id,
             'user_id' => auth()->id(),
             'patient_name' => $reservation->patient->name,  // Pastikan relasi patient tersedia
-            'user_name' => auth()->user()->name,
+            'user_name' => auth()->user()->username,
             'reason' => $request->cancellation_reason,
         ]);
 
@@ -228,7 +259,6 @@ class OnlineConsultationController extends Controller
         return redirect()->back()->with('success', 'Reservasi Berhasil Dibatalkan');
     }
 
-
     public function approveReservation(Request $request, $id)
     {
         $validated = $request->validate([
@@ -236,8 +266,10 @@ class OnlineConsultationController extends Controller
             'agreed_consultation_time' => 'required|date_format:H:i',
         ]);
 
+        // Ambil reservasi dengan relasi terkait
         $reservation = Reservation::with('doctorConsultationReservation.doctor')->findOrFail($id);
 
+        // Perbarui tanggal dan waktu konsultasi
         $reservation->doctorConsultationReservation->update([
             'agreed_consultation_date' => $validated['agreed_consultation_date'],
             'agreed_consultation_time' => $validated['agreed_consultation_time'],
@@ -246,6 +278,8 @@ class OnlineConsultationController extends Controller
         try {
             // Pilih akun Zoom secara bergantian
             $zoomAccount = $this->getNextZoomAccount();
+
+            // Buat meeting Zoom
             $zoomMeeting = $this->createMeeting(new Request([
                 'title' => "Konsultasi dengan Dr. {$reservation->doctorConsultationReservation->doctor->name}",
                 'start_date_time' => "{$validated['agreed_consultation_date']} {$validated['agreed_consultation_time']}",
@@ -253,25 +287,36 @@ class OnlineConsultationController extends Controller
                 'alternative_hosts' => $reservation->doctorConsultationReservation->doctor->email,
             ]), $reservation->id);
 
-            // Simpan link Zoom di database
+            // Simpan link dan info Zoom di database
             $reservation->doctorConsultationReservation->update([
                 'zoom_link' => $zoomMeeting['join_url'],
                 'zoom_host_link' => $zoomMeeting['start_url'],
                 'zoom_password' => $zoomMeeting['password'],
             ]);
 
-            // Perbarui status reservasi
+            // Perbarui status reservasi dan status pembayaran
             $reservation->update([
                 'reservation_status_id' => ReservationStatus::where('name', 'Berhasil')->first()->id,
+                'status_pembayaran' => 'Lunas',  // Ubah menjadi Lunas saat di-approve
             ]);
 
-            return redirect()->back()->with('success', 'Reservasi Diterima dan Zoom Meeting Dijadwalkan');
+            // Cek jika reservasi sebelumnya dibatalkan, buat log perubahan status
+            if ($reservation->wasChanged('reservation_status_id')) {
+                ReservationLog::create([
+                    'reservation_id' => $reservation->id,
+                    'user_id' => auth()->id(),
+                    'patient_name' => $reservation->patient->name,
+                    'user_name' => auth()->user()->username,
+                    'reason' => 'Reservasi disetujui ulang setelah dibatalkan',
+                ]);
+            }
+
+            return redirect()->back()->with('success', 'Reservasi Berhasil Diterima dan Zoom Meeting Dijadwalkan');
         } catch (\Throwable $th) {
             Log::error('Error creating Zoom meeting:', ['error' => $th->getMessage()]);
             return redirect()->back()->with('error', 'Gagal Membuat Penjadwalan');
         }
     }
-
 
     public function createMeeting(Request $request, $reservationId): array
     {
@@ -315,7 +360,6 @@ class OnlineConsultationController extends Controller
         }
     }
 
-
     protected function generateToken(ZoomAccount $zoomAccount): string
     {
         try {
@@ -340,7 +384,6 @@ class OnlineConsultationController extends Controller
             throw $th;
         }
     }
-
 
     protected function generateMeetingPassword(): string
     {
@@ -369,15 +412,38 @@ class OnlineConsultationController extends Controller
 
     public function deleteReservation($id)
     {
-        // Temukan reservasi berdasarkan ID
-        $reservation = Reservation::findOrFail($id);
+        // Ambil reservasi beserta relasi yang dibutuhkan
+        $reservation = Reservation::with('doctorConsultationReservation', 'invoice', 'paymentRecords')->findOrFail($id);
 
-        // Soft delete reservasi dan semua relasi terkait
-        $reservation->delete();
+        try {
+            // Hapus payment records terkait (jika ada)
+            if ($reservation->paymentRecords) {
+                foreach ($reservation->paymentRecords as $paymentRecord) {
+                    // Hapus file bukti pembayaran dari storage
+                    if (Storage::disk('public')->exists($paymentRecord->payment_proof)) {
+                        Storage::disk('public')->delete($paymentRecord->payment_proof);
+                    }
+                    $paymentRecord->delete();
+                }
+            }
 
-        // Redirect ke halaman index konsultasi online dengan pesan sukses
-        return redirect()->route('reservation.onlineconsultation.index')
-            ->with('success', 'Reservasi berhasil dihapus.');
+            // Hapus invoice terkait (jika ada)
+            if ($reservation->invoice) {
+                $reservation->invoice->delete();
+            }
+
+            // Hapus doctor consultation reservation terkait (jika ada)
+            if ($reservation->doctorConsultationReservation) {
+                $reservation->doctorConsultationReservation->delete();
+            }
+
+            $reservation->delete();
+
+            return redirect()->route('reservation.onlineconsultation.index')->with('success', 'Reservasi berhasil dihapus.');
+        } catch (\Exception $e) {
+            Log::error('Gagal menghapus reservasi:', ['error' => $e->getMessage()]);
+            return redirect()->back()->with('error', 'Gagal menghapus reservasi. Silakan coba lagi.');
+        }
     }
 
 }

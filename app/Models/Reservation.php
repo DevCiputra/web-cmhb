@@ -57,8 +57,8 @@ class Reservation extends Model
                 'reservation_id' => $reservation->id,
                 'user_id' => auth()->id(),
                 'patient_name' => $reservation->patient->name,
-                'user_name' => auth()->user()->name,
-                'reason' => 'Reservasi dibatalkan.',
+                'user_name' => auth()->user()->username,
+                'reason' => 'Reservasi dihapus atas permintaan pasien',
             ]);
         });
     }

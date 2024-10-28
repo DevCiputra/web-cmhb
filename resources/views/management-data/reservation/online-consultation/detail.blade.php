@@ -40,7 +40,7 @@
         <div class="alert alert-danger">
             <ul class="mb-0">
                 @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
+                {{ $error }}
                 @endforeach
             </ul>
         </div>
@@ -52,7 +52,7 @@
             <h4 class="mb-4" style="color: #000;">{{ $reservation->code }}</h4>
 
             <div class="d-flex mb-4">
-                @if($reservation->payment_status != 'Belum Lunas' && $reservation->reservation_status_id != 2)
+                @if($reservation->status_pembayaran != 'Menunggu Pembayaran' && $reservation->reservation_status_id != 2)
                 <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#approveModal">
                     <i class="fas fa-check-circle me-1"></i> Approve Order
                 </button>
