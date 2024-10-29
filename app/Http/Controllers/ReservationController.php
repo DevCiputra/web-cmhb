@@ -282,20 +282,21 @@ class ReservationController extends Controller
         return response()->json(['count' => $count]);
     }
 
-
-
     public function detailConsultation($id)
     {
+        \Carbon\Carbon::setLocale('id'); // Set Bahasa Indonesia
+        date_default_timezone_set('Asia/Makassar'); // Set WITA sebagai timezone
+
         // Ambil data reservasi beserta relasi yang relevan
-        $reservation = Reservation::with([
-            'patient.user', // Ambil data pasien beserta user untuk nomor WhatsApp dan email
-            'status', // Ambil status reservasi dari tabel reservation_status
-            'doctorConsultationReservation.doctor.polyclinic', // Ambil dokter, poliklinik, dan sesi konsultasi
-            'paymentRecords' // Ambil catatan pembayaran dari tabel payment_records
+        $reservation = Reservation::with(['patient.user',
+            'status',
+            'doctorConsultationReservation.doctor.polyclinic',
+            'paymentRecords'
         ])->findOrFail($id);
 
         return view('management-data.reservation.online-consultation.detail', compact('reservation'));
     }
+
 
     public function invoiceConsultation()
     {

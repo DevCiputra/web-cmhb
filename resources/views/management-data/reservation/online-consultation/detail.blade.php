@@ -69,7 +69,7 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-secondary" onclick="return confirm('Yakin ingin menghapus reservasi ini?')">
-                        <i class="fas fa-trash me-1"></i> Delete Order 
+                        <i class="fas fa-trash me-1"></i> Delete Order
                     </button>
                 </form>
             </div>
@@ -85,64 +85,111 @@
                     <p><strong>Poliklinik:</strong> {{ $reservation->doctorConsultationReservation->doctor->polyclinic->name ?? 'N/A' }}</p>
                 </div>
                 <div class="col-md-6">
-                    <p><strong>Waktu Konsultasi:</strong>
-                        @if ($reservation->doctorConsultationReservation->agreed_consultation_time)
-                        {{-- Jika agreed_consultation_time tidak kosong, tampilkan agreed --}}
-                        {{ \Carbon\Carbon::parse($reservation->doctorConsultationReservation->agreed_consultation_time)->format('d F Y, H:i') }}
+                    <p><strong>Waktu Konsultasi (Permintaan Pasien):</strong>
+                        @if ($reservation->doctorConsultationReservation->preferred_consultation_date)
+                        {{ \Carbon\Carbon::parse($reservation->doctorConsultationReservation->preferred_consultation_date)
+                ->translatedFormat('l, d-m-Y') }}
                         @else
-                        {{-- Jika agreed_consultation_time kosong, tampilkan preferred --}}
-                        {{ \Carbon\Carbon::parse($reservation->doctorConsultationReservation->preferred_consultation_date)->format('d F Y, H:i') }}
+                        <span>(Belum diisi pasien)</span>
+                        @endif
+                    </p>
+
+                    <p><strong>Waktu Konsultasi (Disepakati):</strong>
+                        @if ($reservation->doctorConsultationReservation->agreed_consultation_date)
+                        {{ \Carbon\Carbon::parse($reservation->doctorConsultationReservation->agreed_consultation_date)
+                ->translatedFormat('l, d-m-Y') }}
+                        @if ($reservation->doctorConsultationReservation->agreed_consultation_time)
+                        , {{ \Carbon\Carbon::parse($reservation->doctorConsultationReservation->agreed_consultation_time)
+                    ->format('H:i') }} WITA
+                        @endif
+                        @else
+                        <span>(Menunggu konfirmasi dokter)</span>
                         @endif
                     </p>
 
                     <p><strong>Bukti Pembayaran:</strong>
                         @if ($reservation->paymentRecords->isNotEmpty())
-                        <a href="{{ asset('storage/' . $reservation->paymentRecords->last()->payment_proof) }}" target="_blank">Lihat Bukti Pembayaran</a>
+                        <a href="{{ asset('storage/' . $reservation->paymentRecords->last()->payment_proof) }}" target="_blank">
+                            Lihat Bukti Pembayaran
+                        </a>
                         @else
                         N/A
                         @endif
                     </p>
+
                     <p><strong>Biaya Konsultasi:</strong> Rp {{ number_format($reservation->doctorConsultationReservation->doctor->consultation_fee, 2) }}</p>
-                    <p><strong>Tanggal Reservasi:</strong> {{ $reservation->created_at->format('d F Y, H:i') }}</p>
+
+                    <p><strong>Tanggal Reservasi:</strong>
+                        {{ $reservation->created_at->translatedFormat('l, d-m-Y, H:i') }} WITA
+                    </p>
+
                     <p><strong>Status Pembayaran:</strong>
-                        @if ($reservation->paymentRecords->last()?->payment_confirmation_date)
-                        {{ $reservation->paymentRecords->last()->payment_confirmation_date }}
+                        @if ($reservation->paymentRecords->last()?->payment_confirmation_date) Pembayaran Lunas,
+                        {{ \Carbon\Carbon::parse($reservation->paymentRecords->last()->payment_confirmation_date)
+                ->translatedFormat('l, d-m-Y, H:i') }} WITA
                         @else
                         Belum Dibayar
                         @endif
                     </p>
                 </div>
+
             </div>
 
             <hr>
 
-            <h5 class="fw-bold" style="color: #1C3A6B;">Informasi Zoom Meeting</h5>
+            <h5 class="fw-bold mb-3" style="color: #1C3A6B;">Informasi Zoom Meeting</h5>
+
             <div class="row">
                 <div class="col-md-6">
                     <p><strong>Link Zoom (Pasien):</strong><br>
                         @if ($reservation->doctorConsultationReservation->zoom_link)
-                        <a href="{{ $reservation->doctorConsultationReservation->zoom_link }}" target="_blank" class="link-primary">Gabung Zoom</a>
+                        <a href="{{ $reservation->doctorConsultationReservation->zoom_link }}"
+                            target="_blank" class="link-primary">
+                            Gabung Zoom
+                        </a>
+                        <button class="btn btn-sm btn-outline-secondary ms-2"
+                            onclick="copyToClipboard('{{ $reservation->doctorConsultationReservation->zoom_link }}')">
+                            <i class="bi bi-clipboard"></i> Copy
+                        </button>
+
                         @else
-                        Belum Tersedia
+                        <span class="text-muted">Belum Tersedia</span>
                         @endif
                     </p>
                 </div>
+
                 <div class="col-md-6">
                     <p><strong>Link Zoom (Dokter):</strong><br>
                         @if ($reservation->doctorConsultationReservation->zoom_host_link)
-                        <a href="{{ $reservation->doctorConsultationReservation->zoom_host_link }}" target="_blank" class="link-primary">Masuk sebagai Host</a>
+                        <a href="{{ $reservation->doctorConsultationReservation->zoom_host_link }}"
+                            target="_blank" class="link-primary">
+                            Masuk sebagai Host
+                        </a>
+                        <button class="btn btn-sm btn-outline-secondary ms-2"
+                            onclick="copyToClipboard('{{ $reservation->doctorConsultationReservation->zoom_host_link }}')">
+                            <i class="bi bi-clipboard"></i> Copy
+                        </button>
+
                         @else
-                        Belum Tersedia
+                        <span class="text-muted">Belum Tersedia</span>
                         @endif
                     </p>
+
                     <p><strong>Password Meeting:</strong>
                         {{ $reservation->doctorConsultationReservation->zoom_password ?? 'Tidak Ada' }}
                     </p>
                 </div>
             </div>
+
+            <div id="copyAlert" class="alert alert-success position-fixed top-0 end-0 m-3 d-none" role="alert">
+                Link berhasil disalin!
+            </div>
+
         </div>
     </div>
 </div>
+
+
 
 <!-- Modal Approve Order -->
 <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
@@ -242,6 +289,33 @@
             }
         });
     });
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(() => {
+                showCopyAlert(); // Menampilkan notifikasi jika berhasil
+            }).catch(err => {
+                console.error('Gagal menyalin teks: ', err);
+            });
+        } else {
+            // Fallback untuk browser yang tidak mendukung navigator.clipboard
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+                showCopyAlert();
+            } catch (err) {
+                console.error('Gagal menyalin teks: ', err);
+            }
+            document.body.removeChild(tempInput);
+        }
+    }
+
+    function showCopyAlert() {
+        alert('Link berhasil disalin!');
+    }
 </script>
 
 <script>
