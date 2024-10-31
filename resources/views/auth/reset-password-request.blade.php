@@ -37,7 +37,7 @@
         @enderror
     </div>
     <div class="d-grid">
-        <button type="submit" class="btn btn-primary">Kirim Permintaan Ganti Kata Sandi </button>
+        <button type="submit" class="btn btn-primary">Kirim Permintaan</button>
     </div>
 </form>
 @endsection
