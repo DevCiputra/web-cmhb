@@ -105,12 +105,10 @@
 @endsection
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Toggle Password Visibility for the password field
-        const togglePassword = document.querySelector('#togglePassword');
-        const password = document.querySelector('#password');
-        const eyeIcon = document.querySelector('#eyeIcon');
+
 
         togglePassword.addEventListener('click', function() {
+            // Toggle the type attribute between 'password' and 'text'
             const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
             password.setAttribute('type', type);
 
@@ -124,13 +122,5 @@
         const passwordConfirmation = document.querySelector('#password_confirmation');
         const eyeIconConfirm = document.querySelector('#eyeIconConfirm');
 
-        togglePasswordConfirmation.addEventListener('click', function() {
-            const type = passwordConfirmation.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordConfirmation.setAttribute('type', type);
-
-            // Toggle the eye icon
-            eyeIconConfirm.classList.toggle('fa-eye');
-            eyeIconConfirm.classList.toggle('fa-eye-slash');
-        });
     });
 </script>

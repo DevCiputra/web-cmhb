@@ -120,7 +120,7 @@ Route::post('/password/reset/{token}', [AuthController::class, 'updatePassword']
 // MODUL PASIEN
 Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
     Route::get('/account', [AccountController::class, 'index'])->name('account-index');
-    Route::post('/account/update/{id}', [AccountController::class, 'update'])->name('account-update'); // Tambahkan {id} di sini
+    Route::post('/account/update/{id}', [AccountController::class, 'update'])->name('account-update'); 
 });
 
 // MODUL DASHBOARD

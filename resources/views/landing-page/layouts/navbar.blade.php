@@ -14,81 +14,67 @@
             <span></span>
         </label>
     </div>
-
-    <!-- Cek jika title bukan "Ciputra Mitra Hospital" -->
-    @if(isset($title) && $title !== 'Ciputra Mitra Hospital')
-    <!-- Navbar khusus (misal untuk halaman tertentu) -->
     <ul class="nav-list">
-        <li><a class="nav-link" href="/doctor">Cari Dokter</a></li>
-        <li class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Reservasi</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/medical-check-up">Medical Check Up (MCU)</a></li>
-                <li><a class="dropdown-item" href="/polyclinic">Pendaftaran Poli</a></li>
-                <li><a class="dropdown-item" href="/home-service">Home Service</a></li>
-                <li><a class="dropdown-item" href="/consultation-online">Konsultasi Online</a></li>
-            </ul>
-        </li>
-        <li><a class="nav-link" href="/promotion">Promo</a></li>
-        <li><a class="nav-link" href="/information">Informasi</a></li>
-        <li class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Fitur</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/coming">Skrining Depresi</a></li>
-                <li><a class="dropdown-item" href="/coming">BMI</a></li>
-            </ul>
-        </li>
-        <li><a class="nav-link" href="#emergency">IGD 24 Jam</a></li>
-
-        @if(Auth::check())
-        <!-- Jika halaman title == "Akun Saya" -->
-        @if(isset($title) && $title === 'Akun Saya')
-        <li>
-            <a href="{{ route('logout') }}" class="btn-account" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                Logout
-            </a>
-        </li>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
+        @if (isset($title) && $title !== 'Ciputra Mitra Hospital')
+            <li><a class="nav-link" href="/doctor">Cari Dokter</a></li>
+            <li class="nav-item dropdown">
+                <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Reservasi</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/medical-check-up">Medical Check Up (MCU)</a></li>
+                    <li><a class="dropdown-item" href="/polyclinic">Pendaftaran Poli</a></li>
+                    <li><a class="dropdown-item" href="{{ route('coming-page') }}">Home Service</a></li>
+                    <li><a class="dropdown-item" href="/consultation-online">Konsultasi Online</a></li>
+                </ul>
+            </li>
+            <li><a class="nav-link" href="{{ route('coming-page') }}">Promo</a></li>
+            <li><a class="nav-link" href="{{ route('coming-page') }}">Informasi</a></li>
+            <li class="nav-item dropdown">
+                <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Fitur</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ route('coming-page') }}">Skrining Depresi</a></li>
+                    <li><a class="dropdown-item" href="{{ route('coming-page') }}">BMI</a></li>
+                </ul>
+            </li>
         @else
-        <li><a href="{{ route('account-index') }}" class="btn-account">Akun Saya</a></li>
+            <li><a class="nav-link" href="#doctor">Cari Dokter</a></li>
+            <li class="nav-item dropdown">
+                <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Reservasi</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#reservation">Medical Check Up (MCU)</a></li>
+                    <li><a class="dropdown-item" href="#reservation">Pendaftaran Poli</a></li>
+                    <li><a class="dropdown-item" href="#reservation">Home Service</a></li>
+                    <li><a class="dropdown-item" href="#reservation">Konsultasi Online</a></li>
+                </ul>
+            </li>
+            <li><a class="nav-link" href="#promotion">Promo</a></li>
+            <li><a class="nav-link" href="#info">Informasi</a></li>
+            <li class="nav-item dropdown">
+                <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Fitur</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#feature">Skrining Depresi</a></li>
+                    <li><a class="dropdown-item" href="#feature">BMI</a></li>
+                </ul>
+            </li>
         @endif
-        @else
-        <li><a href="{{ route('register') }}" class="btn-account">Akun Saya</a></li>
-        @endif
-
+        <li class="nav-item dropdown">
+            @if (Auth::check())
+                <a href="#" class="btn-account dropdown-toggle" aria-expanded="false">
+                    {{ explode(' ', $patient->name)[0] }}
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ route('account-index') }}">Informasi Pribadi</a></li>
+                    <li><a class="dropdown-item" href="{{ route('account-index') }}">Riwayat Pemesanan</a></li>
+                    <li>
+                        <a href="{{ route('logout') }}" class="dropdown-item btn-logout"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            @else
+                <a href="{{ route('register') }}" class="btn-account">Buat Akun</a>
+            @endif
+        </li>
+        
     </ul>
-    @else
-    <!-- Navbar default (untuk halaman umum atau beranda) -->
-    <ul class="nav-list">
-        <li><a class="nav-link" href="#doctor">Cari Dokter</a></li>
-        <li class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Reservasi</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#card-mcu">Medical Check Up (MCU)</a></li>
-                <li><a class="dropdown-item" href="#card-poliklinik">Pendaftaran Poli</a></li>
-                <li><a class="dropdown-item" href="#card-home-service">Home Service</a></li>
-                <li><a class="dropdown-item" href="#card-konsultasi">Konsultasi Online</a></li>
-            </ul>
-        </li>
-        <li><a class="nav-link" href="#promotion">Promo</a></li>
-        <li><a class="nav-link" href="#info">Informasi</a></li>
-        <li class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Fitur</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#feature">Skrining Depresi</a></li>
-                <li><a class="dropdown-item" href="#feature">BMI</a></li>
-            </ul>
-        </li>
-        <li><a class="nav-link" href="#emergency">IGD 24 Jam</a></li>
-
-        @if(Auth::check())
-        <!-- Tampilkan Akun Saya jika user sudah login di halaman beranda -->
-        <li><a href="{{ route('account-index') }}" class="btn-account">Akun Saya</a></li>
-        @else
-        <li><a href="{{ route('register') }}" class="btn-account">Akun Saya</a></li>
-        @endif
-    </ul>
-    @endif
 </nav>
