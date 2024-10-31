@@ -83,6 +83,11 @@ Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
     // Rute untuk soft delete reservasi
     Route::delete('/reservation/{id}/delete', [OnlineConsultationController::class, 'deleteReservation'])->name('reservation.delete');
 
+    Route::post('/reservation/{id}/contact-patient', [OnlineConsultationController::class, 'contactPatient'])->name('reservation.contact');
+
+    Route::post('/reservation/{id}/agree-schedule', [OnlineConsultationController::class, 'agreeSchedule'])->name('reservation.schedule');
+    Route::post('/reservation/{id}/confirm-payment-status', [OnlineConsultationController::class, 'confirmPaymentStatus'])->name('reservation.confirm-paymet');
+
 });
 
 

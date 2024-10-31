@@ -22,31 +22,7 @@ class UsersTableSeeder extends Seeder
                 'role' => 'Admin',
                 'whatsapp' => '628123456789',
                 'profile_picture' => null, // Profile picture dikosongkan
-            ],
-            [
-                'username' => 'hbd_user',
-                'email' => 'hbd@example.com',
-                'password' => Hash::make('password123'), // Ganti dengan password yang aman
-                'role' => 'HBD',
-                'whatsapp' => '628987654321',
-                'profile_picture' => null, // Profile picture dikosongkan
-            ],
-            [
-                'username' => 'pasien1',
-                'email' => 'px1@example.com',
-                'password' => Hash::make('password123'), // Ganti dengan password yang aman
-                'role' => 'Pasien',
-                'whatsapp' => '08673612731',
-                'profile_picture' => null, // Profile picture dikosongkan
-            ],
-            [
-                'username' => 'pasien2',
-                'email' => 'px2@example.com',
-                'password' => Hash::make('password123'), // Ganti dengan password yang aman
-                'role' => 'Pasien',
-                'whatsapp' => '08673612732',
-                'profile_picture' => null, // Profile picture dikosongkan
-            ],
+            ]
         ]);
     }
 }

@@ -107,11 +107,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string|min:8',
+            'username' => 'required|string',
+            'password' => 'required|string',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
 
         if (auth()->attempt($credentials)) {
             $user = Auth::user();
@@ -134,7 +134,7 @@ class AuthController extends Controller
             }
         }
 
-        return redirect()->back()->with('error', 'Email atau kata sandi salah.')->withInput();
+        return redirect()->back()->with('error', 'username atau kata sandi salah.')->withInput();
     }
 
 
@@ -178,7 +178,7 @@ class AuthController extends Controller
         // Kirim email dengan link reset password (atau bisa melalui WhatsApp)
         Mail::to($user->email)->send(new ResetPasswordMail($token));
 
-        return redirect()->back()->with('success', 'Reset password email has been sent.');
+        return redirect()->back()->with('success', 'Permintaan reset password diterima, silahkan cek email untuk link resetnya');
     }
 
 
@@ -189,22 +189,30 @@ class AuthController extends Controller
 
     public function updatePassword(Request $request, $token)
     {
-        // Validasi input password
-        $request->validate([
-            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
-        ]);
-
         // Ambil token dari tabel `password_reset_tokens`
         $reset = DB::table('password_reset_tokens')->where('token', $token)->first();
-        if (!$reset) {
-            return redirect()->back()->with('error', 'Invalid token or token has expired.');
+
+        // Cek apakah token valid dan belum kedaluwarsa
+        if (!$reset || now()->diffInMinutes($reset->created_at) > 10) {
+            return redirect()->back()->with('error', 'Token tidak valid atau telah kedaluwarsa. Silakan <a href="' . route('password.reset.request') . '">request ulang reset password</a>.');
         }
 
         // Temukan user berdasarkan email dari token
         $user = User::where('email', $reset->email)->first();
         if (!$user) {
-            return redirect()->back()->with('error', 'User not found.');
+            return redirect()->back()->with('error', 'Pengguna tidak ditemukan.');
         }
+
+        // Validasi input password
+        $request->validate([
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+        ], [
+            'password.required' => 'Kata sandi wajib diisi.',
+            'password.string' => 'Kata sandi harus berupa string.',
+            'password.min' => 'Kata sandi harus memiliki minimal 8 karakter.',
+            'password.confirmed' => 'Konfirmasi kata sandi tidak sama.',
+            'password.regex' => 'Kata sandi harus memiliki setidaknya satu huruf besar, satu huruf kecil, dan satu angka.',
+        ]);
 
         // Update password user
         $user->password = Hash::make($request->password);
@@ -213,6 +221,8 @@ class AuthController extends Controller
         // Hapus token reset dari tabel `password_reset_tokens`
         DB::table('password_reset_tokens')->where('email', $reset->email)->delete();
 
-        return redirect()->route('login')->with('success', 'Password has been reset successfully. Please login.');
+        return redirect()->route('login')->with('success', 'Kata sandi telah berhasil direset. Silakan login.');
     }
+
+
 }

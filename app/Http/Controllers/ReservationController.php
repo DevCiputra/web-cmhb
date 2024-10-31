@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\ServiceMedia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class ReservationController extends Controller
@@ -278,7 +279,11 @@ class ReservationController extends Controller
 
     public function getReservationCount()
     {
-        $count = Reservation::withoutTrashed()->count(); // Hitung jumlah reservasi yang tidak dihapus
+        // Hitung jumlah reservasi yang tidak dihapus dan simpan di cache selama 5 menit
+        $count = Cache::remember('reservation_count', 300, function () {
+            return Reservation::withoutTrashed()->count();
+        });
+
         return response()->json(['count' => $count]);
     }
 
