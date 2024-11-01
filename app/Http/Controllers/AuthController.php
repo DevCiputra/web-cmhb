@@ -27,7 +27,7 @@ class AuthController extends Controller
         // Validasi input dengan pesan khusus
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|regex:/^[a-zA-Z0-9_.-]*$/',
+            'username' => 'required|string|max:15|regex:/^[a-zA-Z0-9_.-]*$/',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'whatsapp' => 'required|string|max:20|regex:/^08\d{8,11}$/',
@@ -35,6 +35,7 @@ class AuthController extends Controller
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
             'username.required' => 'Nama pengguna wajib diisi.',
+            'username.max' => 'Nama pengguna harus maksimal 15 karakter.',
             'username.regex' => 'Nama pengguna hanya boleh berisi huruf, angka, titik, garis bawah, atau tanda hubung.',
             'email.required' => 'Alamat email wajib diisi.',
             'email.email' => 'Format alamat email tidak valid.',

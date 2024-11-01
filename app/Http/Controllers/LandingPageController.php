@@ -6,29 +6,13 @@ use App\Models\Doctor;
 use App\Models\DoctorPolyclinic;
 use App\Models\Service;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Patient;
 
 class LandingPageController extends Controller
 {
     public function index()
     {
         $title = 'Ciputra Mitra Hospital';
-
-        //NAVBAR
-        // Ambil pengguna yang sedang login
-        $user = Auth::user();
-
-        // Jika pengguna tidak ada (belum login), kembalikan tampilan yang sesuai
-        if (!$user) {
-            return view('landing-page.contents.landing-page', compact('title', 'user'));
-        }
-
-        // Ambil data pasien berdasarkan user_id tanpa memanggil relasi
-        $patient = Patient::where('user_id', $user->id)->firstOrFail();
-
-        // Kirim variabel ke view
-        return view('landing-page.contents.landing-page', compact('title', 'user', 'patient'));
+        return view('landing-page.contents.landing-page', compact('title'));
     }
 
     // Method untuk menampilkan daftar dokter
@@ -53,6 +37,7 @@ class LandingPageController extends Controller
         // Fetch all polyclinics and specializations for the dropdown
         $polyclinics = DoctorPolyclinic::all();
         $specializations = Doctor::select('specialization_name')->distinct()->pluck('specialization_name');
+    
         return view('landing-page.contents.doctor', compact('title', 'doctors', 'polyclinics', 'specializations', 'query'));
     }
 
@@ -75,7 +60,7 @@ class LandingPageController extends Controller
         $doctor = Doctor::with(['photos', 'education', 'schedules', 'medias'])->find($id);
 
         // Kembali ke view untuk menampilkan detail dokter
-        return view('landing-page.contents.doctor-profile', compact('doctor', 'title', 'user', 'patient'));
+        return view('landing-page.contents.doctor-profile', compact('doctor', 'title'));
     }
 
     // Method untuk menampilkan daftar layanan Medical Check Up (MCU)
@@ -95,19 +80,7 @@ class LandingPageController extends Controller
             })
             ->paginate(8); // Set jumlah item per halaman (misalnya, 8)
 
-        //NAVBAR
-        // Ambil pengguna yang sedang login
-        $user = Auth::user();
-
-        // Jika pengguna tidak ada (belum login), kembalikan tampilan yang sesuai
-        if (!$user) {
-            return view('landing-page.contents.medical-check-up', compact('title', 'mcus', 'query', 'user'));
-        }
-
-        // Ambil data pasien berdasarkan user_id tanpa memanggil relasi
-        $patient = Patient::where('user_id', $user->id)->firstOrFail();
-
-        return view('landing-page.contents.medical-check-up', compact('title', 'mcus', 'query', 'user', 'patient'));
+        return view('landing-page.contents.medical-check-up', compact('title', 'mcus', 'query'));
     }
 
     public function searchMCU(Request $request)
@@ -138,20 +111,7 @@ class LandingPageController extends Controller
     public function homeService()
     {
         $title = 'Home Service';
-
-        //NAVBAR
-        // Ambil pengguna yang sedang login
-        $user = Auth::user();
-
-        // Jika pengguna tidak ada (belum login), kembalikan tampilan yang sesuai
-        if (!$user) {
-            return view('landing-page.contents.home-service', compact('title', 'user'));
-        }
-
-        // Ambil data pasien berdasarkan user_id tanpa memanggil relasi
-        $patient = Patient::where('user_id', $user->id)->firstOrFail();
-
-        return view('landing-page.contents.home-service', compact('title','user', 'patient'));
+        return view('landing-page.contents.home-service', compact('title'));
     }
 
     public function polyclinic(Request $request)
@@ -168,19 +128,7 @@ class LandingPageController extends Controller
             $polyclinics = DoctorPolyclinic::paginate(5); // Menampilkan semua poliklinik jika tidak ada pencarian
         }
 
-        //NAVBAR
-        // Ambil pengguna yang sedang login
-        $user = Auth::user();
-
-        // Jika pengguna tidak ada (belum login), kembalikan tampilan yang sesuai
-        if (!$user) {
-            return view('landing-page.contents.polyclinic', compact('title', 'polyclinics', 'query', 'user'));
-        }
-
-        // Ambil data pasien berdasarkan user_id tanpa memanggil relasi
-        $patient = Patient::where('user_id', $user->id)->firstOrFail();
-
-        return view('landing-page.contents.polyclinic', compact('title', 'polyclinics', 'query', 'user', 'patient'));
+        return view('landing-page.contents.polyclinic', compact('title', 'polyclinics', 'query'));
     }
 
     public function searchPolyclinic(Request $request)
@@ -196,38 +144,13 @@ class LandingPageController extends Controller
     public function promotion()
     {
         $title = 'Promosi';
-
-        //NAVBAR
-        // Ambil pengguna yang sedang login
-        $user = Auth::user();
-
-        // Jika pengguna tidak ada (belum login), kembalikan tampilan yang sesuai
-        if (!$user) {
-            return view('landing-page.contents.promotion', compact('title', 'user'));
-        }
-
-        // Ambil data pasien berdasarkan user_id tanpa memanggil relasi
-        $patient = Patient::where('user_id', $user->id)->firstOrFail();
-        return view('landing-page.contents.promotion', compact('title', 'user', 'patient'));
+        return view('landing-page.contents.promotion', compact('title'));
     }
 
     public function information()
     {
         $title = 'Informasi';
-
-        //NAVBAR
-        // Ambil pengguna yang sedang login
-        $user = Auth::user();
-
-        // Jika pengguna tidak ada (belum login), kembalikan tampilan yang sesuai
-        if (!$user) {
-            return view('landing-page.contents.information', compact('title', 'user'));
-        }
-
-        // Ambil data pasien berdasarkan user_id tanpa memanggil relasi
-        $patient = Patient::where('user_id', $user->id)->firstOrFail();
-
-        return view('landing-page.contents.information', compact('title', 'user', 'patient'));
+        return view('landing-page.contents.information', compact('title'));
     }
 
     public function consultation(Request $request)
@@ -253,21 +176,8 @@ class LandingPageController extends Controller
     
         // Get distinct specialization names for the dropdown
         $specializations = Doctor::select('specialization_name')->distinct()->pluck('specialization_name');
-
-        //NAVBAR
-        // Ambil pengguna yang sedang login
-        $user = Auth::user();
-
-        // Jika pengguna tidak ada (belum login), kembalikan tampilan yang sesuai
-        if (!$user) {
-            return view('landing-page.contents.consultation', compact('title', 'doctors', 'polyclinics', 'specializations', 'query', 'user'));
-        }
-
-        // Ambil data pasien berdasarkan user_id tanpa memanggil relasi
-        $patient = Patient::where('user_id', $user->id)->firstOrFail();
-
     
-        return view('landing-page.contents.consultation', compact('title', 'doctors', 'polyclinics', 'specializations', 'query', 'user', 'patient'));
+        return view('landing-page.contents.consultation', compact('title', 'doctors', 'polyclinics', 'specializations', 'query'));
     }
     
     public function consultationShow($id)
@@ -294,19 +204,6 @@ class LandingPageController extends Controller
     public function coming()
     {
         $title = 'Coming Soon';
-
-        //NAVBAR
-        // Ambil pengguna yang sedang login
-        $user = Auth::user();
-
-        // Jika pengguna tidak ada (belum login), kembalikan tampilan yang sesuai
-        if (!$user) {
-            return view('landing-page.contents.coming-soon', compact('title', 'user'));
-        }
-
-        // Ambil data pasien berdasarkan user_id tanpa memanggil relasi
-        $patient = Patient::where('user_id', $user->id)->firstOrFail();
-
-        return view('landing-page.contents.coming-soon', compact('title', 'user', 'patient'));
+        return view('landing-page.contents.coming-soon', compact('title'));
     }
 }
