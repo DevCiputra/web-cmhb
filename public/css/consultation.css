@@ -413,6 +413,25 @@ p {
     background-color: #005f48;
 }
 
+.reservation-code {
+    font-size: 2rem; /* Sesuaikan ukuran font jika perlu */
+    margin-top: 10px; /* Tambahkan jarak di atas untuk memperjelas */
+}
+
+.status-badge {
+    font-size: 1rem; /* Ukuran font untuk status pemesanan */
+    word-wrap: break-word; /* Memastikan teks yang panjang dibungkus agar tidak keluar dari batas */
+    max-width: 100%; /* Pastikan elemen tidak melebihi lebar card */
+    display: inline-block; /* Menjaga elemen tetap dalam baris, tapi memungkinkan untuk wrap */
+} 
+
+.status-pemesanan {
+    font-size: 0.5rem; /* Ukuran font untuk status pemesanan */
+    word-wrap: break-word; /* Memastikan teks yang panjang dibungkus agar tidak keluar dari batas */
+    max-width: 100%; /* Pastikan elemen tidak melebihi lebar card */
+    display: inline-block; /* Menjaga elemen tetap dalam baris, tapi memungkinkan untuk wrap */
+} 
+
 
 /* Responsive Styles */
 @media (max-width: 768px) {
@@ -424,8 +443,21 @@ p {
     
     .header-section p {
         font-size: 1rem;
-
     }
+
+    /* Adjustments for reservation code */
+    .highlight-text {
+        font-size: 0.9rem; /* Reduce font size */
+        padding: 4px 8px; /* Adjust padding for spacing */
+    }
+
+    /* Adjustments for booking status */
+    .booking-status {
+        font-size: 0.9rem; /* Adjust the font size for booking status */
+        color: #007BFF; /* Optionally change color to match theme */
+        margin-top: 5px; /* Add margin for spacing */
+    }
+
     .consultation-form {
         padding: 20px;
     }
@@ -481,5 +513,19 @@ p {
         font-size: 1rem;
     }
 
-    
+    .reservation-code {
+        display: block; /* Menjadikan kode reservasi tampil di bawah */
+        font-size: 1.2em; /* Sesuaikan ukuran font jika perlu */
+        margin-top: 10px; /* Tambahkan jarak di atas untuk memperjelas */
+    }
+
+    .status-badge {
+        font-size: 0.7rem; /* Ukuran font sedikit lebih besar di mobile */
+        padding: 0 5px; /* Tambahkan padding untuk estetika */
+    }
+
+    .status-pemesanan {
+        font-size: 0.7rem; /* Ukuran font sedikit lebih besar di mobile */
+        padding: 0 5px; /* Tambahkan padding untuk estetika */
+    }
 }
