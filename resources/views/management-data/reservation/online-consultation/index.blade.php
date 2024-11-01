@@ -41,6 +41,22 @@
                     <h4 style="color: #1C3A6B"><b>Data Reservasi Konsultasi Online</b></h4>
                 </div>
 
+                <!-- Filter Status -->
+                <div class="mb-3">
+                    <label for="filterStatus" class="form-label">Filter Status</label>
+                    <select id="filterStatus" class="form-select">
+                        <option value="">Semua Status</option>
+                        <option value="Menunggu Admin">Menunggu Admin</option>
+                        <option value="Konfirmasi Jadwal">Konfirmasi Jadwal</option>
+                        <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
+                        <option value="Menunggu Konfirmasi Pembayaran">Menunggu Konfirmasi Pembayaran</option>
+                        <option value="Menunggu Approval Admin">Menunggu Approval Admin</option>
+                        <option value="Pemesanan Berhasil">Pemesanan Berhasil</option>
+                        <option value="Pemesanan Dibatalkan">Pemesanan Dibatalkan</option>
+                        <option value="Status Tidak Diketahui">Status Tidak Diketahui</option>
+                    </select>
+                </div>
+
                 <!-- Description -->
                 <div class="d-flex mb-4">
                     <p class="card-text">Berikut merupakan tabel data Konsultasi Online.</p>
@@ -166,52 +182,34 @@
     // Fungsi untuk mengecek apakah ada reservasi baru
     function checkNewReservations() {
         $.get("{{ route('reservation.count') }}", function(data) {
-            // Jika ada reservasi baru
+            // Bandingkan dengan jumlah reservasi sebelumnya
             if (data.count > previousCount) {
-                alert('Ada reservasi baru!');
-                // Update jumlah reservasi
-                previousCount = data.count;
+                // Jika ada yang baru, refresh halaman
+                location.reload();
             }
         });
     }
 
+    // Set interval untuk cek setiap 10 menit
+    setInterval(checkNewReservations, 600000); // 10 menit dalam milidetik
+
+    // Filter data tabel berdasarkan status
     $(document).ready(function() {
-        // Inisialisasi DataTable
-        $('#dataTableKonsultasi').DataTable({
-            paging: true,
-            lengthMenu: [5, 10, 25, 50],
-            ordering: true,
-            searching: true,
-            info: true,
-            autoWidth: false,
-            order: [
-                [1, 'desc']
-            ],
-            columnDefs: [{
-                orderable: false,
-                targets: [7, 9]
-            }],
-            language: {
-                paginate: {
-                    previous: "Sebelumnya",
-                    next: "Selanjutnya"
-                },
-                lengthMenu: "Tampilkan _MENU_ entri",
-                search: "Cari:",
-                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
-                infoEmpty: "Tidak ada data tersedia",
-                zeroRecords: "Tidak ada hasil ditemukan",
-            },
+        $('#filterStatus').change(function() {
+            var selectedStatus = $(this).val();
+            var table = $('#dataTableKonsultasi').DataTable();
+            table.column(8).search(selectedStatus).draw();
         });
 
-        // Panggil fungsi cek reservasi baru setiap 3 menit (180000 ms)
-        setInterval(function() {
-            checkNewReservations(); // Cek reservasi baru
-            location.reload(); // Refresh halaman setiap 3 menit
-        }, 180000); // 180000 ms = 3 menit
-
-        // Cek reservasi baru setelah halaman dimuat
-        checkNewReservations();
+        // Initialize DataTable
+        $('#dataTableKonsultasi').DataTable({
+            "order": [
+                [0, "asc"]
+            ],
+            "lengthChange": false,
+            "pageLength": 10,
+            "info": false
+        });
     });
 </script>
 @endpush
