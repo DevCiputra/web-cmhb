@@ -59,7 +59,7 @@
         <!-- Dropdown Akun -->
         <li class="nav-item dropdown">
             @if (Auth::check())
-            <a href="#" class="btn-account dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <a href="#" class="btn-account dropdown-toggle">
                 {{ explode(' ', Auth::user()->username)[0] }}
             </a>
             <ul class="dropdown-menu">
