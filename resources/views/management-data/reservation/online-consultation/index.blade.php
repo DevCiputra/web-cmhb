@@ -84,43 +84,62 @@
 
                                 <td>
                                     <span class="status-badge badge
-                                        @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
-                                            badge-warning
-                                        @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
-                                            badge-warning
-                                        @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
-                                            badge-success
-                                        @elseif ($reservation->status_pembayaran == 'Dibatalkan')
-                                            badge-danger
-                                        @else
-                                            badge-light
-                                        @endif"
-                                        style="color: black;
-                                               @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
-                                                   background-color: #FFC107; /* Warning color */
-                                               @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
-                                                   background-color: #007BFF; /* Primary color */
-                                               @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
-                                                   background-color: #28A745; /* Success color */
-                                               @elseif ($reservation->status_pembayaran == 'Dibatalkan')
-                                                   background-color: #dc3545; /* Danger color */
-                                               @else
-                                                   background-color: #F8F9FA; /* Light color */
-                                               @endif">
-                                        @if ($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
+        @if (is_null($reservation->reservation_status_id) && is_null($reservation->status_pembayaran))
+            badge-secondary
+        @elseif ($reservation->reservation_status_id == 1 && is_null($reservation->status_pembayaran))
+            badge-warning
+        @elseif ($reservation->reservation_status_id == 2 && is_null($reservation->status_pembayaran))
+            badge-info
+        @elseif ($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Menunggu Konfirmasi')
+            badge-warning
+        @elseif ($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Lunas')
+            badge-info
+        @elseif ($reservation->reservation_status_id == 3 && $reservation->status_pembayaran == 'Lunas')
+            badge-success
+        @elseif ($reservation->reservation_status_id == 4 && $reservation->status_pembayaran == 'Dikembalikan')
+            badge-danger
+        @else
+            badge-light
+        @endif"
+                                        style="color: white;
+        @if (is_null($reservation->reservation_status_id) && is_null($reservation->status_pembayaran))
+            background-color: #6c757d; /* Secondary color */
+        @elseif ($reservation->reservation_status_id == 1 && is_null($reservation->status_pembayaran))
+            background-color: #FFC107; /* Warning color */
+        @elseif ($reservation->reservation_status_id == 2 && is_null($reservation->status_pembayaran))
+            background-color: #17a2b8; /* Info color */
+        @elseif ($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Menunggu Konfirmasi')
+            background-color: #FFC107; /* Warning color */
+        @elseif ($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Lunas')
+            background-color: #17a2b8; /* Info color */
+        @elseif ($reservation->reservation_status_id == 3 && $reservation->status_pembayaran == 'Lunas')
+            background-color: #28A745; /* Success color */
+        @elseif ($reservation->reservation_status_id == 4 && $reservation->status_pembayaran == 'Dikembalikan')
+            background-color: #dc3545; /* Danger color */
+        @else
+            background-color: #F8F9FA; /* Light color */
+        @endif">
+
+                                        {{-- Menampilkan teks status berdasarkan kondisi --}}
+                                        @if (is_null($reservation->reservation_status_id) && is_null($reservation->status_pembayaran))
+                                        Menunggu Admin
+                                        @elseif ($reservation->reservation_status_id == 1 && is_null($reservation->status_pembayaran))
+                                        Konfirmasi Jadwal
+                                        @elseif ($reservation->reservation_status_id == 2 && is_null($reservation->status_pembayaran))
                                         Menunggu Pembayaran
-                                        @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
-                                        Menunggu Approval
-                                        @elseif ($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
-                                        Lunas
-                                        @elseif ($reservation->status_pembayaran == 'Dibatalkan')
-                                        Dibatalkan
+                                        @elseif ($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Menunggu Konfirmasi')
+                                        Menunggu Konfirmasi Pembayaran
+                                        @elseif ($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Lunas')
+                                        Menunggu Approval Admin
+                                        @elseif ($reservation->reservation_status_id == 3 && $reservation->status_pembayaran == 'Lunas')
+                                        Pemesanan Berhasil
+                                        @elseif ($reservation->reservation_status_id == 4 && $reservation->status_pembayaran == 'Dikembalikan')
+                                        Pemesanan Dibatalkan
                                         @else
                                         Status Tidak Diketahui
                                         @endif
                                     </span>
                                 </td>
-
                                 <td>
                                     <a href="{{ route('reservation.onlineconsultation.detail', $reservation->id) }}" class="btn btn-info btn-sm">Detail</a>
                                     <!-- Tambahkan action button lain sesuai kebutuhan -->
@@ -141,40 +160,22 @@
 
 @push('scripts')
 <script>
-    // Menghitung jumlah reservasi saat ini dari variabel PHP
+    // Simpan jumlah reservasi awal
     let previousCount = "{{ $reservations->count() }}";
 
-    function playNotificationSound() {
-        const audio = new Audio('{{ asset("sound/mixkit-software-interface-back-2575.wav") }}');
-        audio.play();
-    }
-
+    // Fungsi untuk mengecek apakah ada reservasi baru
     function checkNewReservations() {
-        // Menggunakan AJAX untuk mendapatkan jumlah reservasi terbaru
         $.get("{{ route('reservation.count') }}", function(data) {
-            // Memeriksa apakah ada reservasi baru
+            // Jika ada reservasi baru
             if (data.count > previousCount) {
-                // Mainkan suara notifikasi terlebih dahulu
-                playNotificationSound();
-
-                // Setelah suara selesai diputar, tampilkan alert
-                audio.onended = function() {
-                    alert('Ada reservasi baru!');
-
-                    // Setelah OK ditekan, refresh halaman secara otomatis
-                    location.reload();
-                };
-
-                // Perbarui jumlah reservasi sebelumnya
+                alert('Ada reservasi baru!');
+                // Update jumlah reservasi
                 previousCount = data.count;
             }
         });
     }
 
     $(document).ready(function() {
-        // Cek reservasi baru setiap 5 menit (300000 ms)
-        setInterval(checkNewReservations, 300000);
-
         // Inisialisasi DataTable
         $('#dataTableKonsultasi').DataTable({
             paging: true,
@@ -202,6 +203,15 @@
                 zeroRecords: "Tidak ada hasil ditemukan",
             },
         });
+
+        // Panggil fungsi cek reservasi baru setiap 3 menit (180000 ms)
+        setInterval(function() {
+            checkNewReservations(); // Cek reservasi baru
+            location.reload(); // Refresh halaman setiap 3 menit
+        }, 180000); // 180000 ms = 3 menit
+
+        // Cek reservasi baru setelah halaman dimuat
+        checkNewReservations();
     });
 </script>
 @endpush

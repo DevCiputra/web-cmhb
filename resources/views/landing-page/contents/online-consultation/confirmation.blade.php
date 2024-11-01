@@ -23,7 +23,7 @@
 
     <div class="card-form">
         <div class="card-body">
-            <form action="{{ route('consultation.payment', $reservation->id) }}" method="POST" enctype="multipart/form-data">
+            <form id="reservation-form" action="{{ route('consultation.payment', $reservation->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('POST')
 
@@ -145,7 +145,7 @@
         var bankSelect = document.getElementById('payment_method'); // Corrected variable name
         var rekeningInfo = document.getElementById('rekening-info');
         var rekeningText = document.getElementById('bankAccount');
-        var form = document.querySelector('form'); // Select the form for submission handling
+        var form = document.getElementById('reservation-form'); // Select the form for submission handling
 
         bankSelect.addEventListener('change', function() {
             var selectedBank = this.value;
@@ -167,10 +167,15 @@
 
         // Add confirmation on form submission
         form.addEventListener('submit', function(event) {
-            var confirmation = confirm('Apakah Anda yakin ingin mengonfirmasi pembayaran? Pastikan semua informasi sudah benar.');
+            event.preventDefault(); // Prevent the default form submission
+            var confirmation = confirm('Apakah Anda yakin ingin mengonfirmasi pembayaran? Pastikan semua informasi sudah benar');
 
-            if (!confirmation) {
-                event.preventDefault(); // Prevent form submission if user cancels
+            if (confirmation) {
+                alert("Pesanan anda akan segera dicek. Mohon tunggu approval");
+                setTimeout(() => {
+                    window.location.href = "{{ route('account-index') }}"; // Redirect to Riwayat Pesanan
+                }, 2000); // Delay before redirecting
+                this.submit(); // Melanjutkan proses pengiriman form
             }
         });
     });

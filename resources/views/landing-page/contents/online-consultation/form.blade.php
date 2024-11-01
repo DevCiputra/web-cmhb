@@ -85,22 +85,6 @@
 </div>
 @endsection
 
-
-@push('scripts')
-<script src="{{ asset('js/navbar.js') }}"></script>
-@endpush
-
-@push('styles')
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('css/consultation.css') }}">
-@endpush
-
-
-@push('styles')
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('css/consultation.css') }}">
-@endpush
-
 @push('scripts')
 <script src="{{ asset('js/navbar.js') }}"></script>
 <script>
@@ -108,8 +92,17 @@
         event.preventDefault();
         const confirmation = confirm('Apakah Anda yakin ingin melanjutkan dengan reservasi ini?');
         if (confirmation) {
+            alert("Anda akan dihubungi oleh admin kami, harap tunggu untuk konfirmasi jadwal.");
+            setTimeout(() => {
+                window.location.href = "{{ route('account-index') }}"; // Redirect to Riwayat Pesanan
+            }, 2000); // Delay before redirecting
             this.submit(); // Melanjutkan proses pengiriman form
         }
     });
 </script>
+@endpush
+
+@push('styles')
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('css/consultation.css') }}">
 @endpush

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->unsignedBigInteger('patient_id');
-            $table->unsignedBigInteger('reservation_status_id');
+            $table->unsignedBigInteger('reservation_status_id')->nullable();
             $table->unsignedBigInteger('service_category_id');
-            $table->string('status_pembayaran')->default('belum bayar');
+            $table->string('status_pembayaran')->nullable();
             $table->timestamps();
             $table->softDeletes(); // Tambah soft delete
 

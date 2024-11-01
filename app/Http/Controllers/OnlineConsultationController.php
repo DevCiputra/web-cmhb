@@ -83,9 +83,9 @@ class OnlineConsultationController extends Controller
         // Buat reservation
         $reservation = Reservation::create([
             'patient_id' => $patient->id,
-            'reservation_status_id' => ReservationStatus::where('name', 'Menunggu Approval')->first()->id,
+            'reservation_status_id' => null,
             'service_category_id' => 4, // Asumsikan konsultasi
-            'status_pembayaran' => 'Menunggu Pembayaran',
+            'status_pembayaran' => null,
             'code' => $code,
         ]);
 
@@ -104,8 +104,10 @@ class OnlineConsultationController extends Controller
             'payment_status' => 'Belum Dibayar', // Status awal
         ]);
 
-        return redirect()->route('consultation.confirmation', $reservation->id)
-            ->with('success', 'Reservasi berhasil dibuat!');
+        return redirect()->route('account-index', ['tab' => 'riwayat'])
+        ->with('success', 'Reservasi berhasil dibuat!')
+        ->withInput(); // Menambahkan withInput agar parameter tab tetap ada setelah redirect
+
     }
 
     private function generateReservationCode($doctorName)
@@ -125,6 +127,31 @@ class OnlineConsultationController extends Controller
 
         return "{$today}{$initials}{$reservationNumber}";
     }
+
+    public function contactPatient($reservationId)
+    {
+        $reservation = Reservation::findOrFail($reservationId);
+
+        // Set status reservasi menjadi "Konfirmasi Jadwal"
+        $reservation->update([
+            'reservation_status_id' => ReservationStatus::where('name', 'Konfirmasi Jadwal')->first()->id,
+        ]);
+
+        return redirect()->back()->with('success', 'Pasien telah dihubungi dan status diperbarui.');
+    }
+
+    public function agreeSchedule($reservationId)
+    {
+        $reservation = Reservation::findOrFail($reservationId);
+
+        // Set status reservasi menjadi "Jadwal Dikonfirmasi"
+        $reservation->update([
+            'reservation_status_id' => ReservationStatus::where('name', 'Jadwal Dikonfirmasi')->first()->id,
+        ]);
+
+        return redirect()->back()->with('success', 'Jadwal konsultasi telah disepakati.');
+    }
+
 
     public function showConfirmation($id)
     {
@@ -197,8 +224,7 @@ class OnlineConsultationController extends Controller
         ]);
 
         // Update status pembayaran di reservation
-        $reservation->update([
-            'status_pembayaran' => 'Lunas',
+        $reservation->update(['status_pembayaran' => 'Menunggu Konfirmasi',
         ]);
 
         // Ambil nomor urut invoice terakhir dari database (asumsi ada field 'invoice_number')
@@ -206,57 +232,23 @@ class OnlineConsultationController extends Controller
 
         // Update invoice dengan nomor invoice baru
         $reservation->invoice->update(['invoice_number' => $this->generateInvoiceNumber($reservation->patient_id, $lastInvoiceNumber),
-            'payment_status' => 'Lunas',
+            'payment_status' => 'Menunggu Konfirmasi',
         ]);
 
-        return redirect()->route('consultation.detail', $id)
-        ->with('success', 'Pembayaran berhasil dikonfirmasi.');
+        return redirect()->route('account-index', ['tab' => 'riwayat'])
+        ->with('success', 'Pembayaran berhasil!')
+        ->withInput(); // Menambahkan withInput agar parameter tab tetap ada setelah redirect
     }
 
-
-    public function cancelReservation(Request $request, $id)
+    public function confirmPaymentStatus($reservationId)
     {
-        // Validasi input
-        $request->validate(['cancellation_reason' => 'required|string|max:255',
-            'authorization_password' => 'required',
-        ]);
+        $reservation = Reservation::with('invoice')->findOrFail($reservationId);
 
-        // Validasi password otorisasi
-        if (!Hash::check($request->authorization_password, auth()->user()->password)) {
-            return back()->withErrors(['authorization_password' => 'Password otorisasi salah']);
-        }
-        // dd($request);
-        // Ambil reservasi dengan relasi patient
-        $reservation = Reservation::with('patient')->findOrFail($id);
+        // Perbarui status pembayaran dan status invoice
+        $reservation->update(['status_pembayaran' => 'Lunas']);
+        $reservation->invoice->update(['payment_status' => 'Lunas']);
 
-        // Ubah status reservasi menjadi 'Batal'
-        $reservation->update([
-            'reservation_status_id' => ReservationStatus::where('name', 'Batal')->value('id'),
-            'status_pembayaran' => "Dibatalkan"
-        ]);
-
-        // dd($reservation->patient->name);
-        // Simpan log pembatalan dengan data patient yang benar
-        ReservationLog::create([
-            'reservation_id' => $reservation->id,
-            'user_id' => auth()->id(),
-            'patient_name' => $reservation->patient->name,  // Pastikan relasi patient tersedia
-            'user_name' => auth()->user()->username,
-            'reason' => $request->cancellation_reason,
-        ]);
-
-        // Update data di doctor_consultation_reservations
-        if ($reservation->doctorConsultationReservation) {
-            $reservation->doctorConsultationReservation->update([
-                'agreed_consultation_date' => null,
-                'agreed_consultation_time' => null,
-                'zoom_host_link' => null,
-                'zoom_link' => null,
-                'zoom_password' => null,
-            ]);
-        }
-
-        return redirect()->back()->with('success', 'Reservasi Berhasil Dibatalkan');
+        return redirect()->back()->with('success', 'Pembayaran telah dikonfirmasi dan status diubah menjadi Lunas.');
     }
 
     public function approveReservation(Request $request, $id)
@@ -295,9 +287,7 @@ class OnlineConsultationController extends Controller
             ]);
 
             // Perbarui status reservasi dan status pembayaran
-            $reservation->update([
-                'reservation_status_id' => ReservationStatus::where('name', 'Berhasil')->first()->id,
-                'status_pembayaran' => 'Lunas',  // Ubah menjadi Lunas saat di-approve
+            $reservation->update(['reservation_status_id' => ReservationStatus::where('name', 'Berhasil')->first()->id,
             ]);
 
             // Cek jika reservasi sebelumnya dibatalkan, buat log perubahan status
@@ -409,6 +399,53 @@ class OnlineConsultationController extends Controller
 
         return $selectedAccount;
     }
+
+    public function cancelReservation(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'cancellation_reason' => 'required|string|max:255',
+            'authorization_password' => 'required',
+        ]);
+
+        // Validasi password otorisasi
+        if (!Hash::check($request->authorization_password, auth()->user()->password)) {
+            return back()->withErrors(['authorization_password' => 'Password otorisasi salah']);
+        }
+        // dd($request);
+        // Ambil reservasi dengan relasi patient
+        $reservation = Reservation::with('patient')->findOrFail($id);
+
+        // Ubah status reservasi menjadi 'Batal'
+        $reservation->update([
+            'reservation_status_id' => ReservationStatus::where('name', 'Batal')->value('id'),
+            'status_pembayaran' => "Dikembalikan"
+        ]);
+
+        // dd($reservation->patient->name);
+        // Simpan log pembatalan dengan data patient yang benar
+        ReservationLog::create([
+            'reservation_id' => $reservation->id,
+            'user_id' => auth()->id(),
+            'patient_name' => $reservation->patient->name,  // Pastikan relasi patient tersedia
+            'user_name' => auth()->user()->username,
+            'reason' => $request->cancellation_reason,
+        ]);
+
+        // Update data di doctor_consultation_reservations
+        if ($reservation->doctorConsultationReservation) {
+            $reservation->doctorConsultationReservation->update([
+                'agreed_consultation_date' => null,
+                'agreed_consultation_time' => null,
+                'zoom_host_link' => null,
+                'zoom_link' => null,
+                'zoom_password' => null,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Reservasi Berhasil Dibatalkan');
+    }
+
 
     public function deleteReservation($id)
     {

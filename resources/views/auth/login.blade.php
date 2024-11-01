@@ -21,12 +21,12 @@
 <form method="POST" action="{{ route('login.post') }}">
     @csrf
     <div class="mb-3 text-start">
-        <label for="email" class="form-label">Email</label>
+        <label for="username" class="form-label">Username</label>
         <div class="input-group">
             <div class="input-group-text"><i class="fa-solid fa-envelope"></i></div>
-            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+            <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" required>
         </div>
-        @error('email')
+        @error('username')
         <div class="text-danger">{{ $message }}</div>
         @enderror
     </div>
@@ -77,5 +77,4 @@
         const eyeIconConfirm = document.querySelector('#eyeIconConfirm');
 
     });
-</script>
 </script>

@@ -52,19 +52,83 @@
             <h4 class="mb-4" style="color: #000;">{{ $reservation->code }}</h4>
 
             <div class="d-flex mb-4">
-                @if($reservation->status_pembayaran != 'Menunggu Pembayaran' && $reservation->reservation_status_id != 2)
-                <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#approveModal">
+                {{-- Jika status reservasi masih null dan status pembayaran juga null --}}
+                @if(is_null($reservation->reservation_status_id) && is_null($reservation->status_pembayaran))
+                <form action="{{ route('reservation.contact', $reservation->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-info me-2">
+                        <i class="fas fa-phone me-1"></i> Hubungi Pasien
+                    </button>
+                </form>
+                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                    <i class="fas fa-times-circle me-1"></i> Cancel Order
+                </button>
+
+                @elseif(optional($reservation->status)->name === 'Konfirmasi Jadwal' && is_null($reservation->status_pembayaran)
+                {{-- Jika status reservasi = Konfirmasi Jadwal dan status pembayaran = null --}}
+                )
+                <form action="{{ route('reservation.schedule', $reservation->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-warning me-2">
+                        <i class="fas fa-calendar-check me-1"></i> Sepakati Jadwal
+                    </button>
+                </form>
+                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                    <i class="fas fa-times-circle me-1"></i> Cancel Order
+                </button>
+
+                @elseif(optional($reservation->status)->name === 'Jadwal Dikonfirmasi' && is_null($reservation->status_pembayaran)
+                {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = null --}}
+                )
+                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                    <i class="fas fa-times-circle me-1"></i> Cancel Order
+                </button>
+
+                @elseif(optional($reservation->status)->name === 'Jadwal Dikonfirmasi' && $reservation->status_pembayaran === 'Menunggu Konfirmasi')
+                {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = Menunggu Konfirmasi --}}
+                <form action="{{ route('reservation.confirm-paymet', $reservation->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-success me-2">
+                        <i class="fas fa-money-bill-wave me-1"></i> Konfirmasi Pembayaran
+                    </button>
+                </form>
+                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                    <i class="fas fa-times-circle me-1"></i> Cancel Order
+                </button>
+
+                @elseif(optional($reservation->status)->name === 'Jadwal Dikonfirmasi' && $reservation->status_pembayaran === 'Lunas'
+                {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = Lunas --}}
+                )
+                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#approveModal">
                     <i class="fas fa-check-circle me-1"></i> Approve Order
                 </button>
-                @endif
+                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                    <i class="fas fa-times-circle me-1"></i> Cancel Order
+                </button>
 
-                @if($reservation->payment_status == 'Belum Lunas' || $reservation->reservation_status_id == 2)
+                @elseif(optional($reservation->status)->name === 'Berhasil' && $reservation->status_pembayaran === 'Lunas'
+                {{-- Jika status reservasi = Berhasil dan status pembayaran = Lunas --}}
+                )
+                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                    <i class="fas fa-times-circle me-1"></i> Cancel Order
+                </button>
+
+                @elseif($reservation->status_pembayaran === 'Menunggu Konfirmasi'
+                {{-- Jika status pembayaran = Menunggu Konfirmasi --}}
+                )
+                <form action="{{ route('reservation.confirm-paymet', $reservation->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-success me-2">
+                        <i class="fas fa-money-bill-wave me-1"></i> Konfirmasi Pembayaran
+                    </button>
+                </form>
                 <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
                 @endif
 
-                <!-- Tombol Delete dengan Form -->
+                {{-- Tombol Delete hanya untuk admin --}}
+                @if(auth()->user()->role === 'Admin')
                 <form action="{{ route('reservation.delete', $reservation->id) }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
@@ -72,6 +136,7 @@
                         <i class="fas fa-trash me-1"></i> Delete Order
                     </button>
                 </form>
+                @endif
             </div>
 
 

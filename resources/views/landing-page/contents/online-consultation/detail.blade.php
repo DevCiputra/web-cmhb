@@ -17,9 +17,43 @@
 <div class="container mt-5 mb-5 consultation-detail-section">
     <div class="card consultation-detail-card">
         <div class="card-header d-flex justify-content-between align-items-center consultation-card-header">
-            <h4>Detail Pesanan</h4>
-            <span class="badge badge-info" style="font-size: 1.2rem; padding: 8px 14px; border-radius: 12px;">{{ $reservation->code }}</span>
+            <h4 class="mb-0">Detail Pesanan | {{ $reservation->code }}</h4>
+            <!-- Reservation Status Section -->
+            <p class="mb-0 ms-3">
+                <strong>Status Pemesanan:</strong>
+                <span class="status-badge badge
+        @if (is_null($reservation->reservation_status_id) && is_null($reservation->status_pembayaran)) badge-secondary
+        @elseif($reservation->reservation_status_id == 1 && is_null($reservation->status_pembayaran)) badge-warning
+        @elseif($reservation->reservation_status_id == 2 && is_null($reservation->status_pembayaran)) badge-info
+        @elseif($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Menunggu Konfirmasi') badge-warning
+        @elseif($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Lunas') badge-info
+        @elseif($reservation->reservation_status_id == 3 && $reservation->status_pembayaran == 'Lunas') badge-success
+        @elseif($reservation->reservation_status_id == 4 && $reservation->status_pembayaran == 'Dikembalikan') badge-danger
+        @else badge-secondary
+        @endif">
+                    {{-- Menampilkan teks status berdasarkan kondisi --}}
+                    @if (is_null($reservation->reservation_status_id) && is_null($reservation->status_pembayaran))
+                    Menunggu Admin
+                    @elseif($reservation->reservation_status_id == 1 && is_null($reservation->status_pembayaran))
+                    Konfirmasi Jadwal
+                    @elseif($reservation->reservation_status_id == 2 && is_null($reservation->status_pembayaran))
+                    Menunggu Pembayaran
+                    @elseif($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Menunggu Konfirmasi')
+                    Menunggu Konfirmasi Pembayaran
+                    @elseif($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Lunas')
+                    Menunggu Approval Admin
+                    @elseif($reservation->reservation_status_id == 3 && $reservation->status_pembayaran == 'Lunas')
+                    Pemesanan Berhasil
+                    @elseif($reservation->reservation_status_id == 4 && $reservation->status_pembayaran == 'Dikembalikan')
+                    Pemesanan Dibatalkan
+                    @else
+                    Status Tidak Diketahui
+                    @endif
+                </span>
+
+            </p>
         </div>
+
         <div class="card-body consultation-card-body">
             <!-- Informasi Konsultasi Section -->
             <h5 class="card-title consultation-section-title">Informasi Konsultasi</h5>
@@ -50,7 +84,6 @@
                 </div>
             </div>
 
-
             <div class="row mb-3">
                 <div class="col-md-6 consultation-info-item">
                     <p><strong>Dokter:</strong> {{ $reservation->doctorConsultationReservation->doctor->name }}</p>
@@ -59,19 +92,27 @@
                     <p><strong>Spesialisasi:</strong> {{ $reservation->doctorConsultationReservation->doctor->specialization_name }}</p>
                 </div>
             </div>
+
             <div class="row mb-3">
                 <div class="col-md-6 consultation-info-item">
-                    <p><strong>Status Pemesanan:</strong>
-                        <span class="badge
-            {{
-                $reservation->status_pembayaran == 'Lunas' ? 'badge-success' :
-                ($reservation->status_pembayaran == 'Dibatalkan' ? 'badge-danger' : 'badge-warning')
-            }}">
-                            {{
-                $reservation->status_pembayaran == 'Lunas' ? 'Berhasil' :
-                ($reservation->status_pembayaran == 'Dibatalkan' ? 'Pemesanan Dibatalkan' : 'Menunggu Pembayaran')
-            }}
-                        </span>
+                    <p><strong>Detail Pembayaran</strong>
+                    <div class="col-md-6 consultation-payment-info">
+                        <p><strong>Metode Pembayaran:</strong>
+                            {{ $reservation->paymentRecords->first()->payment_method ?? 'Belum Dipilih' }}
+                        </p>
+                    </div>
+
+                    <!-- Button Section -->
+                    <div class="col-md-6 consultation-button-section">
+                        @if(is_null($reservation->status_pembayaran) && $reservation->reservation_status_id == 2)
+                        <a href="{{ route('consultation.confirmation', $reservation->id) }}" class="btn consultation-payment-button" style="background-color: #0d7c5d; color:white">Konfirmasi Pembayaran</a>
+                        @elseif($reservation->status_pembayaran === 'Lunas' && $reservation->reservation_status_id == 2)
+                        <a href="{{ route('consultation.invoice', $reservation->id) }}" class="btn consultation-invoice-button" style="background-color: #adb5bd; color:white">Lihat Invoice</a>
+                        @elseif($reservation->status_pembayaran === 'Lunas' && $reservation->reservation_status_id == 3)
+                        <a href="{{ route('consultation.invoice', $reservation->id) }}" class="btn consultation-invoice-button" style="background-color: #adb5bd; color:white">Lihat Invoice</a>
+                        @endif
+                    </div>
+
                     </p>
                 </div>
 
@@ -79,43 +120,6 @@
                     <p><strong>Total Biaya:</strong> Rp. {{ number_format($reservation->doctorConsultationReservation->doctor->consultation_fee, 0, ',', '.') }}</p>
                 </div>
             </div>
-            <hr>
-
-            <!-- Detail Pembayaran Section -->
-            <h5 class="card-title consultation-section-title">Detail Pembayaran</h5>
-            <div class="row mb-3">
-                <div class="col-md-6 consultation-payment-info">
-                    <p><strong>Metode Pembayaran:</strong> {{ $reservation->paymentRecords->first()->payment_method ?? 'Belum Dipilih' }}</p>
-
-                </div>
-                <div class="col-md-6 consultation-payment-info">
-                    <p><strong>Status Pembayaran:</strong>
-                        <span class="badge
-            {{
-                $reservation->status_pembayaran == 'Lunas' ? 'badge-success' :
-                ($reservation->status_pembayaran == 'Dibatalkan' ? 'badge-danger' : 'badge-warning')
-            }}">
-                            {{
-                $reservation->status_pembayaran == 'Lunas' ? 'Lunas' :
-                ($reservation->status_pembayaran == 'Dibatalkan' ? 'Pembayaran Dibatalkan' : 'Belum Dibayar')
-            }}
-                        </span>
-                    </p>
-                </div>
-
-            </div>
-
-            <!-- Button Section -->
-            <div class="mt-4 consultation-button-section">
-                @if($reservation->status_pembayaran == 'Menunggu Pembayaran' && $reservation->reservation_status_id == 1)
-                <a href="{{ route('consultation.confirmation', $reservation->id) }}" class="btn consultation-payment-button" style="background-color: #0d7c5d; color:white">Konfirmasi Pembayaran</a>
-                @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 1)
-                <a href="{{ route('consultation.invoice', $reservation->id) }}" class="btn consultation-invoice-button" style="background-color: #adb5bd; color:white">Lihat Invoice</a>
-                @elseif($reservation->status_pembayaran == 'Lunas' && $reservation->reservation_status_id == 2)
-                <a href="{{ route('consultation.invoice', $reservation->id) }}" class="btn consultation-invoice-button" style="background-color: #adb5bd; color:white">Lihat Invoice</a>
-                @endif
-            </div>
-
         </div>
     </div>
 </div>
