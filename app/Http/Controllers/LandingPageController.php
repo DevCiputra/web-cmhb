@@ -53,20 +53,7 @@ class LandingPageController extends Controller
         // Fetch all polyclinics and specializations for the dropdown
         $polyclinics = DoctorPolyclinic::all();
         $specializations = Doctor::select('specialization_name')->distinct()->pluck('specialization_name');
-
-        //NAVBAR
-        // Ambil pengguna yang sedang login
-        $user = Auth::user();
-
-        // Jika pengguna tidak ada (belum login), kembalikan tampilan yang sesuai
-        if (!$user) {
-            return view('landing-page.contents.doctor', compact('title', 'doctors', 'polyclinics', 'specializations', 'query', 'user'));
-        }
-
-        // Ambil data pasien berdasarkan user_id tanpa memanggil relasi
-        $patient = Patient::where('user_id', $user->id)->firstOrFail();
-    
-        return view('landing-page.contents.doctor', compact('title', 'doctors', 'polyclinics', 'specializations', 'query', 'user', 'patient'));
+        return view('landing-page.contents.doctor', compact('title', 'doctors', 'polyclinics', 'specializations', 'query'));
     }
 
     public function searchDoctor(Request $request)

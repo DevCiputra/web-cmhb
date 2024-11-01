@@ -297,20 +297,20 @@
 <script src="{{ asset('js/navbar.js') }}"></script>
 <script>
 
-$(document).ready(function() {
-    // Menambahkan efek scroll halus untuk link dalam navbar
-    $('.nav-link, .dropdown-item').on('click', function(event) {
-        event.preventDefault();
-        var target = $(this).attr('href');
+// $(document).ready(function() {
+//     // Menambahkan efek scroll halus untuk link dalam navbar
+//     $('.nav-link, .dropdown-item').on('click', function(event) {
+//         event.preventDefault();
+//         var target = $(this).attr('href');
         
-        // Offset untuk scroll, menyesuaikan dengan tinggi navbar
-        var offset = $('.nav').outerHeight(); 
+//         // Offset untuk scroll, menyesuaikan dengan tinggi navbar
+//         var offset = $('.nav').outerHeight(); 
         
-        $('html, body').animate({
-            scrollTop: $(target).offset().top - offset
-        }, 500);
-    });
-});
+//         $('html, body').animate({
+//             scrollTop: $(target).offset().top - offset
+//         }, 500);
+//     });
+// });
 
     function toggleEmergencyButtons() {
         const buttons = document.getElementById("emergency-buttons");

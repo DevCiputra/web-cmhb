@@ -901,6 +901,17 @@ a:hover {
     z-index: 1;
 } */
 
+#doctor,
+#card-mcu,
+#card-poliklinik,
+#card-home-service,
+#card-konsultasi,
+#promotion,
+#info,
+#feature,
+#emergency {
+    scroll-margin-top: 100px; /* Sesuaikan dengan tinggi navbar Anda */
+}
 
 
 
