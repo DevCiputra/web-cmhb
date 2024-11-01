@@ -1,65 +1,65 @@
 <div class="dashboard-nav">
     <header>
         <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
-        <a href="#" class="brand-logo">
+        <a href="{{ route('dashboard-page') }}" class="brand-logo">
             <img src="{{ asset('images/logo.png') }}" alt="Brand Logo" style="width: 150px;">
         </a>
     </header>
 
     <nav class="dashboard-nav-list">
-        <a href="/dashboard" class="dashboard-nav-item active">
+        <a href="{{ route('dashboard-page') }}" class="dashboard-nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
             <i class="fas fa-home"></i> Beranda
         </a>
+
         <!-- Reservasi -->
-        <div class='dashboard-nav-dropdown'>
+        <div class="dashboard-nav-dropdown {{ Request::is('reservation-*') ? 'active' : '' }}">
             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
                 <i class="fas fa-calendar-alt"></i> Reservasi
             </a>
-            <div class='dashboard-nav-dropdown-menu'>
-                <a href="/reservation-mcu" class="dashboard-nav-dropdown-item">MCU</a>
-                <a href="/reservation-polyclinic" class="dashboard-nav-dropdown-item">Pendaftaran Poli</a>
-                <a href="/reservation-homeservice" class="dashboard-nav-dropdown-item">Home Service</a>
-                <a href="/reservation-online-consultation" class="dashboard-nav-dropdown-item">Konsultasi Online</a>
+            <div class="dashboard-nav-dropdown-menu">
+                <a href="/reservation-mcu" class="dashboard-nav-dropdown-item {{ Request::is('reservation-mcu') ? 'active' : '' }}">MCU</a>
+                <a href="/reservation-polyclinic" class="dashboard-nav-dropdown-item {{ Request::is('reservation-polyclinic') ? 'active' : '' }}">Pendaftaran Poli</a>
+                <a href="/reservation-homeservice" class="dashboard-nav-dropdown-item {{ Request::is('reservation-homeservice') ? 'active' : '' }}">Home Service</a>
+                <a href="/reservation-online-consultation" class="dashboard-nav-dropdown-item {{ Request::is('reservation-online-consultation') ? 'active' : '' }}">Konsultasi Online</a>
             </div>
         </div>
 
         <!-- Informasi -->
-        <div class='dashboard-nav-dropdown'>
+        <div class="dashboard-nav-dropdown {{ Request::is('information-*') ? 'active' : '' }}">
             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
                 <i class="fas fa-info-circle"></i> Informasi
             </a>
-            <div class='dashboard-nav-dropdown-menu'>
-                <a href="/information-article" class="dashboard-nav-dropdown-item">Artikel</a>
-                <a href="/information-promote" class="dashboard-nav-dropdown-item">Promo</a>
+            <div class="dashboard-nav-dropdown-menu">
+                <a href="/information-article" class="dashboard-nav-dropdown-item {{ Request::is('information-article') ? 'active' : '' }}">Artikel</a>
+                <a href="/information-promote" class="dashboard-nav-dropdown-item {{ Request::is('information-promote') ? 'active' : '' }}">Promo</a>
             </div>
         </div>
 
         <!-- Dokter -->
-        <div class='dashboard-nav-dropdown'>
+        <div class="dashboard-nav-dropdown {{ Request::is('doctor-*') ? 'active' : '' }}">
             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
                 <i class="fas fa-user-md"></i> Dokter
             </a>
-            <div class='dashboard-nav-dropdown-menu'>
-                <a href="{{ route('doctor.data.index') }}" class="dashboard-nav-dropdown-item">Data Dokter</a>
-                <a href="{{ route('doctor.polyclinic.index') }}" class="dashboard-nav-dropdown-item">Poliklinik
-                    Dokter</a>
+            <div class="dashboard-nav-dropdown-menu">
+                <a href="{{ route('doctor.data.index') }}" class="dashboard-nav-dropdown-item {{ Request::is('doctor/data') ? 'active' : '' }}">Data Dokter</a>
+                <a href="{{ route('doctor.polyclinic.index') }}" class="dashboard-nav-dropdown-item {{ Request::is('doctor/polyclinic') ? 'active' : '' }}">Poliklinik Dokter</a>
             </div>
         </div>
 
         <!-- Master Data -->
-        <div class='dashboard-nav-dropdown'>
+        <div class="dashboard-nav-dropdown {{ Request::is('master-*') ? 'active' : '' }}">
             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
                 <i class="fas fa-folder"></i> Master Data
             </a>
-            <div class='dashboard-nav-dropdown-menu'>
-                <a href="/master-user" class="dashboard-nav-dropdown-item">User</a>
-                <a href="/master-role" class="dashboard-nav-dropdown-item">Role</a>
-                <a href="/master-info-cmh" class="dashboard-nav-dropdown-item">Informasi RS</a>
-                <a href="/master-gallery-cmh" class="dashboard-nav-dropdown-item">Galeri RS</a>
+            <div class="dashboard-nav-dropdown-menu">
+                <a href="/master-user" class="dashboard-nav-dropdown-item {{ Request::is('master-user') ? 'active' : '' }}">User</a>
+                <a href="/master-role" class="dashboard-nav-dropdown-item {{ Request::is('master-role') ? 'active' : '' }}">Role</a>
+                <a href="/master-info-cmh" class="dashboard-nav-dropdown-item {{ Request::is('master-info-cmh') ? 'active' : '' }}">Informasi RS</a>
+                <a href="/master-gallery-cmh" class="dashboard-nav-dropdown-item {{ Request::is('master-gallery-cmh') ? 'active' : '' }}">Galeri RS</a>
             </div>
         </div>
 
-        <a href="/patient-data" class="dashboard-nav-item">
+        <a href="/patient-data" class="dashboard-nav-item {{ Request::is('patient-data') ? 'active' : '' }}">
             <i class="fas fa-user-circle"></i> Pasien
         </a>
 
@@ -67,14 +67,12 @@
 
         <!-- Display Logged-in User Info -->
         <div class="user-info" style="padding: 15px; display: flex; align-items: center;">
-            <img src="{{ asset('images/userplaceholder.png') }}" alt="User Profile"
-                class="rounded-circle" style="width: 50px; height: 50px; margin-right: 10px;">
+            <img src="{{ asset('images/userplaceholder.png') }}" alt="User Profile" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 10px;">
             <span style="font-weight: bold;">{{ Auth::user()->username }}</span>
         </div>
 
         <!-- Logout Link -->
-        <a href="#" class="dashboard-nav-item"
-            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <a href="#" class="dashboard-nav-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="fas fa-sign-out-alt"></i> Logout
         </a>
 

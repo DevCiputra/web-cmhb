@@ -15,8 +15,8 @@
                     <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Tambah Data Poliklinik</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href="/dashboard_dokter">Dokter</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('doctor.polyclinic.index') }}">Daftar Poliklinik</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Tambah Data Poliklinik</li>
                         </ol>
                     </nav>

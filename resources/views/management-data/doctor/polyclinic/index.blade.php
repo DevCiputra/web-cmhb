@@ -3,18 +3,26 @@
 @section('title', 'Daftar Poliklinik Dokter')
 
 @section('content')
-<div class='dashboard-app'>
-    <header class='dashboard-toolbar'>
+<div class="dashboard-app">
+    <header class="dashboard-toolbar">
         <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
     </header>
-    <div class='dashboard-content'>
-        <div class="card-header">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-                <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Daftar Poliklinik</h4>
-                <a href="{{ route('doctor.polyclinic.create') }}" style="text-decoration: none;">
-                    <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px;">
-                        Tambah Poliklinik
-                    </button>
+
+    <div class="dashboard-content">
+        <div class="card-header mb-3">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Daftar Poliklinik</h4>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
+                            <li class="breadcrumb-item" style="color: #023770">Daftar Poliklinik</li>
+                        </ol>
+                    </nav>
+                </div>
+                <a href="{{ route('doctor.polyclinic.create') }}" class="btn btn-md"
+                    style="background-color: #007858; color: #fff; border-radius: 10px; text-decoration: none;">
+                    Tambah Poliklinik
                 </a>
             </div>
         </div>
@@ -29,7 +37,7 @@
                             <a href="{{ route('doctor.polyclinic.edit', $polyclinic->id) }}" class="btn btn-edit">
                                 <img src="{{ asset('icons/pencil-square.svg') }}" alt="Edit" class="pencil-icon">
                             </a>
-                            <form action="{{ route('doctor.polyclinic.delete', $polyclinic->id) }}" method="POST">
+                            <form action="{{ route('doctor.polyclinic.delete', $polyclinic->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus poliklinik ini?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Hapus</button>
@@ -42,14 +50,10 @@
         </div>
     </div>
 </div>
-
 @endsection
-
 
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-
 <script>
     const mobileScreen = window.matchMedia("(max-width: 990px )");
     $(document).ready(function() {
