@@ -277,6 +277,7 @@ class ReservationController extends Controller
         return view('management-data.reservation.online-consultation.index', compact('reservations'));
     }
 
+
     public function getReservationCount()
     {
         // Hitung jumlah reservasi yang tidak dihapus dan simpan di cache selama 5 menit

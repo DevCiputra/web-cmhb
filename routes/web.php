@@ -120,7 +120,7 @@ Route::post('/password/reset/{token}', [AuthController::class, 'updatePassword']
 // MODUL PASIEN
 Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
     Route::get('/account', [AccountController::class, 'index'])->name('account-index');
-    Route::post('/account/update/{id}', [AccountController::class, 'update'])->name('account-update'); 
+    Route::post('/account/update/{id}', [AccountController::class, 'update'])->name('account-update');
 });
 
 // MODUL DASHBOARD
@@ -156,6 +156,8 @@ Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
 // MODUL RESERVATION ONLINE CONSULTATION
 Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
     Route::get('/reservation-online-consultation', [ReservationController::class, 'indexConsultation'])->name('reservation.onlineconsultation.index');
+
+    Route::get('reservations/filterByDate', [ReservationController::class, 'filterByDate'])->name('reservations.filterByDate');
 
     Route::get('/reservation-count', [ReservationController::class, 'getReservationCount'])->name('reservation.count');
 
