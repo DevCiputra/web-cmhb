@@ -20,7 +20,7 @@
                                 <a href="{{ route('reservation.onlineconsultation.index') }}">Reservasi</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="#">Konsultasi Online</a>
+                                <a href="{{ route('reservation.onlineconsultation.index') }}">Konsultasi Online</a>
                             </li>
                             <li class="breadcrumb-item" style="color: #023770">Detail Pemesanan</li>
                         </ol>
@@ -138,7 +138,12 @@
                 </form>
                 @endif
             </div>
-
+            <!-- Cancellation Reason Section -->
+            @if($cancellationReason)
+            <div class="alert alert-warning mt-3" role="alert" style="font-weight: bold;">
+                <strong>Catatan:</strong> {{ $cancellationReason }}
+            </div>
+            @endif
 
             <div class="row">
                 <div class="col-md-6">

@@ -16,7 +16,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href="#">Reservasi</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('reservation.onlineconsultation.index') }}">Reservasi</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Konsultasi Online</li>
                         </ol>
                     </nav>
@@ -124,7 +124,7 @@
                                     @else
                                     badge-light
                                     @endif"
-                                    style="color: white;
+                                        style="color: white;
                                     @if (is_null($reservation->reservation_status_id) && is_null($reservation->status_pembayaran))
                                     background-color: #6c757d; /* Secondary color */
                                     @elseif ($reservation->reservation_status_id == 1 && is_null($reservation->status_pembayaran))
@@ -142,24 +142,24 @@
                                     @else
                                     background-color: #F8F9FA; /* Light color */
                                     @endif">
-                                    {{-- Menampilkan teks status berdasarkan kondisi --}}
-                                    @if (is_null($reservation->reservation_status_id) && is_null($reservation->status_pembayaran))
-                                    Menunggu Admin
-                                    @elseif ($reservation->reservation_status_id == 1 && is_null($reservation->status_pembayaran))
-                                    Konfirmasi Jadwal
-                                    @elseif ($reservation->reservation_status_id == 2 && is_null($reservation->status_pembayaran))
-                                    Menunggu Pembayaran
-                                    @elseif ($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Menunggu Konfirmasi')
-                                    Menunggu Konfirmasi Pembayaran
-                                    @elseif ($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Lunas')
-                                    Menunggu Approval Admin
-                                    @elseif ($reservation->reservation_status_id == 3 && $reservation->status_pembayaran == 'Lunas')
-                                    Pemesanan Berhasil
-                                    @elseif ($reservation->reservation_status_id == 4 && $reservation->status_pembayaran == 'Dikembalikan')
-                                    Pemesanan Dibatalkan
-                                    @else
-                                    Status Tidak Diketahui
-                                    @endif
+                                        {{-- Menampilkan teks status berdasarkan kondisi --}}
+                                        @if (is_null($reservation->reservation_status_id) && is_null($reservation->status_pembayaran))
+                                        Menunggu Admin
+                                        @elseif ($reservation->reservation_status_id == 1 && is_null($reservation->status_pembayaran))
+                                        Konfirmasi Jadwal
+                                        @elseif ($reservation->reservation_status_id == 2 && is_null($reservation->status_pembayaran))
+                                        Menunggu Pembayaran
+                                        @elseif ($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Menunggu Konfirmasi')
+                                        Menunggu Konfirmasi Pembayaran
+                                        @elseif ($reservation->reservation_status_id == 2 && $reservation->status_pembayaran == 'Lunas')
+                                        Menunggu Approval Admin
+                                        @elseif ($reservation->reservation_status_id == 3 && $reservation->status_pembayaran == 'Lunas')
+                                        Pemesanan Berhasil
+                                        @elseif ($reservation->reservation_status_id == 4 && $reservation->status_pembayaran == 'Dikembalikan')
+                                        Pemesanan Dibatalkan
+                                        @else
+                                        Status Tidak Diketahui
+                                        @endif
                                     </span>
                                 </td>
                                 <td>
@@ -178,12 +178,15 @@
 
 @endsection
 
+@push('styles')
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@endpush
+
 @push('scripts')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Initialize the datepicker
         $(".datepicker").datepicker({
             dateFormat: "yy-mm-dd" // Format to match your database date format
@@ -193,20 +196,20 @@
         var table = $('#dataTableKonsultasi').DataTable();
 
         // Filter by status
-        $('#filterStatus').on('change', function () {
+        $('#filterStatus').on('change', function() {
             var statusValue = $(this).val();
             table.column(9).search(statusValue).draw();
         });
 
         // Filter by preferred consultation date
-        $('#filterPreferredDate').on('change', function () {
+        $('#filterPreferredDate').on('change', function() {
             var dateValue = $(this).val();
             // Apply filter
             table.column(6).search(dateValue).draw();
         });
 
         // Filter by agreed consultation date
-        $('#filterAgreedDate').on('change', function () {
+        $('#filterAgreedDate').on('change', function() {
             var dateValue = $(this).val();
             // Apply filter
             table.column(7).search(dateValue).draw();

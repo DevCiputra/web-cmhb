@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Models\DoctorPolyclinic;
 use App\Models\Reservation;
+use App\Models\ReservationLog;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\ServiceMedia;
@@ -300,7 +301,10 @@ class ReservationController extends Controller
             'paymentRecords'
         ])->findOrFail($id);
 
-        return view('management-data.reservation.online-consultation.detail', compact('reservation'));
+        $cancellationLog = ReservationLog::where('reservation_id', $id)->latest()->first();
+        $cancellationReason = $cancellationLog ? $cancellationLog->reason : null;
+
+        return view('management-data.reservation.online-consultation.detail', compact('reservation', 'cancellationReason'));
     }
 
 

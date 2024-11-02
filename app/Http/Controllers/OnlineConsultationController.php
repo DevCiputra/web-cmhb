@@ -168,7 +168,11 @@ class OnlineConsultationController extends Controller
         $reservation = Reservation::with('doctorConsultationReservation', 'patient', 'status')
         ->findOrFail($id);
 
-        return view('landing-page.contents.online-consultation.detail', compact('reservation', 'title'));
+        // Ambil alasan pembatalan jika ada
+        $cancellationLog = ReservationLog::where('reservation_id', $id)->latest()->first();
+        $cancellationReason = $cancellationLog ? $cancellationLog->reason : null;
+
+        return view('landing-page.contents.online-consultation.detail', compact('reservation', 'title', 'cancellationReason'));
     }
 
     public function showInvoice($id)

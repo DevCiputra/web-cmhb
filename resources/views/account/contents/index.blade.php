@@ -118,6 +118,11 @@
                                             <span class="booking-time">
                                                 {{ $reservation->doctorConsultationReservation->formatted_time ?? 'Pukul belum diset' }}
                                             </span>
+
+                                            <!-- Menampilkan Nama Dokter -->
+                                            <span class="doctor-name">
+                                                Dokter: {{ $reservation->doctorConsultationReservation->doctor->name ?? 'Nama dokter tidak tersedia' }}
+                                            </span>
                                         </div>
 
                                     </div>
