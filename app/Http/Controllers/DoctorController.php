@@ -61,7 +61,7 @@ class DoctorController extends Controller
             'doctor_polyclinic_id' => 'required|exists:doctor_polyclinics,id', // Validasi poliklinik
             'address' => 'required|url',
             'doctor_photos' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'doctor_medias' => 'required|file|mimes:pdf,doc,docx|max:10240',
+            'doctor_medias' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
             'consultation_fee' => 'required|numeric|min:0',
             'email' => 'required|email'
         ]);

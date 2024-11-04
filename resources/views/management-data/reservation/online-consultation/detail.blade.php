@@ -54,79 +54,79 @@
             <div class="d-flex mb-4">
                 {{-- Jika status reservasi masih null dan status pembayaran juga null --}}
                 @if(is_null($reservation->reservation_status_id) && is_null($reservation->status_pembayaran))
-                <form action="{{ route('reservation.contact', $reservation->id) }}" method="POST" class="d-inline">
+                <form action="{{ route('reservation.contact', $reservation->id) }}" method="POST" class="d-inline" id="contactForm">
                     @csrf
-                    <button type="submit" class="btn btn-info me-2">
+                    <button type="button" class="btn btn-info me-2" onclick="contactPatient('{{ $reservation->patient->user->whatsapp }}')">
                         <i class="fas fa-phone me-1"></i> Hubungi Pasien
                     </button>
                 </form>
                 <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-
+            
                 @elseif(optional($reservation->status)->name === 'Konfirmasi Jadwal' && is_null($reservation->status_pembayaran)
                 {{-- Jika status reservasi = Konfirmasi Jadwal dan status pembayaran = null --}}
                 )
                 <form action="{{ route('reservation.schedule', $reservation->id) }}" method="POST" class="d-inline">
                     @csrf
-                    <button type="submit" class="btn btn-warning me-2">
+                    <button type="submit" class="btn btn-warning me-2" onclick="return confirm('Apakah Anda yakin ingin menyepakati jadwal ini?')">
                         <i class="fas fa-calendar-check me-1"></i> Sepakati Jadwal
                     </button>
                 </form>
-                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-
+            
                 @elseif(optional($reservation->status)->name === 'Jadwal Dikonfirmasi' && is_null($reservation->status_pembayaran)
                 {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = null --}}
                 )
-                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-
+            
                 @elseif(optional($reservation->status)->name === 'Jadwal Dikonfirmasi' && $reservation->status_pembayaran === 'Menunggu Konfirmasi')
                 {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = Menunggu Konfirmasi --}}
                 <form action="{{ route('reservation.confirm-paymet', $reservation->id) }}" method="POST" class="d-inline">
                     @csrf
-                    <button type="submit" class="btn btn-success me-2">
+                    <button type="submit" class="btn btn-success me-2" onclick="return confirm('Apakah Anda yakin ingin mengonfirmasi pembayaran ini?')">
                         <i class="fas fa-money-bill-wave me-1"></i> Konfirmasi Pembayaran
                     </button>
                 </form>
-                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-
+            
                 @elseif(optional($reservation->status)->name === 'Jadwal Dikonfirmasi' && $reservation->status_pembayaran === 'Lunas'
                 {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = Lunas --}}
                 )
-                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#approveModal">
+                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#approveModal" onclick="return confirm('Apakah Anda yakin ingin menyetujui pesanan ini?')">
                     <i class="fas fa-check-circle me-1"></i> Approve Order
                 </button>
-                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-
+            
                 @elseif(optional($reservation->status)->name === 'Berhasil' && $reservation->status_pembayaran === 'Lunas'
                 {{-- Jika status reservasi = Berhasil dan status pembayaran = Lunas --}}
                 )
-                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-
+            
                 @elseif($reservation->status_pembayaran === 'Menunggu Konfirmasi'
                 {{-- Jika status pembayaran = Menunggu Konfirmasi --}}
                 )
                 <form action="{{ route('reservation.confirm-paymet', $reservation->id) }}" method="POST" class="d-inline">
                     @csrf
-                    <button type="submit" class="btn btn-success me-2">
+                    <button type="submit" class="btn btn-success me-2" onclick="return confirm('Apakah Anda yakin ingin mengonfirmasi pembayaran ini?')">
                         <i class="fas fa-money-bill-wave me-1"></i> Konfirmasi Pembayaran
                     </button>
                 </form>
-                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
                 @endif
-
+            
                 {{-- Tombol Delete hanya untuk admin --}}
                 @if(auth()->user()->role === 'Admin')
                 <form action="{{ route('reservation.delete', $reservation->id) }}" method="POST" class="d-inline">
@@ -144,11 +144,17 @@
                 <strong>Catatan:</strong> {{ $cancellationReason }}
             </div>
             @endif
+            
 
             <div class="row">
                 <div class="col-md-6">
                     <p><strong>Nama Pasien:</strong> {{ $reservation->patient->name }}</p>
-                    <p><strong>No HP:</strong> {{ $reservation->patient->user->whatsapp }}</p>
+                    <p>
+                        <strong>No HP:</strong> 
+                        <a href="javascript:void(0)" onclick="contactPatient('{{ $reservation->patient->user->whatsapp }}')">
+                            {{ $reservation->patient->user->whatsapp }}
+                        </a>
+                    </p>
                     <p><strong>Email:</strong> {{ $reservation->patient->user->email }}</p>
                     <p><strong>Nama Dokter:</strong> {{ $reservation->doctorConsultationReservation->doctor->name }}</p>
                     <p><strong>Spesialis:</strong> {{ $reservation->doctorConsultationReservation->doctor->specialization_name }}</p>
@@ -173,7 +179,7 @@
                     ->format('H:i') }} WITA
                         @endif
                         @else
-                        <span>(Menunggu konfirmasi dokter)</span>
+                        <span>(Menunggu kesepakatan jadwal dengan Pasien.)</span>
                         @endif
                     </p>
 
@@ -400,5 +406,21 @@
     flatpickr("#agreedDate", {
         dateFormat: "Y-m-d", // Format tanggal (ISO)
     });
+</script>
+
+<script>
+    function contactPatient(phoneNumber) {
+        // Konfirmasi dialog
+        if (confirm('Apakah Anda yakin ingin menghubungi pasien ini?')) {
+            // Ganti country_code dengan kode negara yang sesuai
+            const country_code = '62'; // Contoh: Kode negara untuk Indonesia
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${country_code}${phoneNumber}`;
+            // Buka jendela baru untuk menghubungi pasien
+            window.open(whatsappUrl, '_blank');
+
+            // Setelah membuka WhatsApp, kirim formulir untuk melanjutkan flow
+            document.getElementById('contactForm').submit();
+        }
+    }
 </script>
 @endpush

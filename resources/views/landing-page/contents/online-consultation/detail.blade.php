@@ -93,7 +93,7 @@
                                     $reservation->doctorConsultationReservation->agreed_consultation_date,
                                 )->translatedFormat('l, d-m-Y') }}
                         @else
-                        <span>(Menunggu konfirmasi dokter)</span>
+                        <span>(Menunggu kesepakatan jadwal dengan Admin.)</span>
                         @endif
                     </p>
                 </div>

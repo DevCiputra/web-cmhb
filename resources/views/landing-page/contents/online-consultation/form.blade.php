@@ -92,7 +92,7 @@
         event.preventDefault();
         const confirmation = confirm('Apakah Anda yakin ingin melanjutkan dengan reservasi ini?');
         if (confirmation) {
-            alert("Anda akan dihubungi oleh admin kami, harap tunggu untuk konfirmasi jadwal.");
+            alert("Harap tunggu Admin kami akan menghubungi Anda untuk konfirmasi waktu konsultasi online.");
             setTimeout(() => {
                 window.location.href = "{{ route('account-index') }}"; // Redirect to Riwayat Pesanan
             }, 2000); // Delay before redirecting

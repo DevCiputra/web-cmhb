@@ -130,9 +130,9 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="doctor_medias" class="form-label">Curriculum Vitae</label>
+                        <label for="doctor_medias" class="form-label">Curriculum Vitae (Opsional)</label>
                         <input type="file" class="form-control" id="doctor_medias" name="doctor_medias"
-                            accept=".pdf,.doc,.docx" required>
+                            accept=".pdf,.doc,.docx">
                         @error('doctor_medias')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
