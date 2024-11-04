@@ -202,6 +202,7 @@ Route::group(['middleware' => ['checkrole:Admin']], function () {
     Route::put('/master-user/{id}', [UserController::class, 'update'])->name('user.data.update'); // Mengupdate user
     Route::delete('/master-user/{id}', [UserController::class, 'destroy'])->name('user.data.destroy'); // Menghapus user
 });
+
 // INFORMATION HOSPITAL DAN GALERRI
 Route::group(
     ['middleware' => ['checkrole:HBD,Admin']],
@@ -239,6 +240,7 @@ Route::group(
         // end
     }
 );
+
 // ROLE
 Route::group(
     ['middleware' => ['checkrole:Admin']],

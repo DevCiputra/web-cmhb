@@ -271,31 +271,15 @@ class OnlineConsultationController extends Controller
             'agreed_consultation_time' => $validated['agreed_consultation_time'],
         ]);
 
-        try {
-            // Pilih akun Zoom secara bergantian
-            $zoomAccount = $this->getNextZoomAccount();
+        // Periksa status saat ini
+        $previousStatusId = $reservation->reservation_status_id;
 
-            // Buat meeting Zoom
-            $zoomMeeting = $this->createMeeting(new Request([
-                'title' => "Konsultasi dengan Dr. {$reservation->doctorConsultationReservation->doctor->name}",
-                'start_date_time' => "{$validated['agreed_consultation_date']} {$validated['agreed_consultation_time']}",
-                'duration_in_minute' => 60,
-                'alternative_hosts' => $reservation->doctorConsultationReservation->doctor->email,
-            ]), $reservation->id);
+        if ($previousStatusId === 2 || $previousStatusId === 4) {
+            // Update status menjadi "3" (Disetujui)
+            $reservation->update(['reservation_status_id' => 3]);
 
-            // Simpan link dan info Zoom di database
-            $reservation->doctorConsultationReservation->update([
-                'zoom_link' => $zoomMeeting['join_url'],
-                'zoom_host_link' => $zoomMeeting['start_url'],
-                'zoom_password' => $zoomMeeting['password'],
-            ]);
-
-            // Perbarui status reservasi dan status pembayaran
-            $reservation->update(['reservation_status_id' => ReservationStatus::where('name', 'Berhasil')->first()->id,
-            ]);
-
-            // Cek jika reservasi sebelumnya dibatalkan, buat log perubahan status
-            if ($reservation->wasChanged('reservation_status_id')) {
+            // Jika status sebelumnya adalah "4" (Dibatalkan), buat log persetujuan ulang
+            if ($previousStatusId === 4) {
                 ReservationLog::create([
                     'reservation_id' => $reservation->id,
                     'user_id' => auth()->id(),
@@ -305,11 +289,35 @@ class OnlineConsultationController extends Controller
                 ]);
             }
 
-            return redirect()->back()->with('success', 'Reservasi Berhasil Diterima dan Zoom Meeting Dijadwalkan');
-        } catch (\Throwable $th) {
-            Log::error('Error creating Zoom meeting:', ['error' => $th->getMessage()]);
-            return redirect()->back()->with('error', 'Gagal Membuat Penjadwalan');
+            // Proses pembuatan meeting Zoom
+            try {
+                $zoomAccount = $this->getNextZoomAccount();
+                $zoomMeeting = $this->createMeeting(new Request([
+                    'title' => "Konsultasi dengan Dr. {$reservation->doctorConsultationReservation->doctor->name}",
+                    'start_date_time' => "{$validated['agreed_consultation_date']} {$validated['agreed_consultation_time']}",
+                    'duration_in_minute' => 60,
+                    'alternative_hosts' => $reservation->doctorConsultationReservation->doctor->email,
+                ]), $reservation->id);
+
+                // Simpan link dan info Zoom di database
+                $reservation->doctorConsultationReservation->update([
+                    'zoom_link' => $zoomMeeting['join_url'],
+                    'zoom_host_link' => $zoomMeeting['start_url'],
+                    'zoom_password' => $zoomMeeting['password'],
+                ]);
+
+                return redirect()->back()->with('success',
+                    'Reservasi Berhasil Diterima dan Zoom Meeting Dijadwalkan'
+                );
+            } catch (\Throwable $th) {
+                Log::error('Error creating Zoom meeting:',
+                    ['error' => $th->getMessage()]
+                );
+                return redirect()->back()->with('error', 'Gagal Membuat Penjadwalan');
+            }
         }
+
+        return redirect()->back()->with('error', 'Status reservasi tidak valid untuk persetujuan.');
     }
 
     public function createMeeting(Request $request, $reservationId): array

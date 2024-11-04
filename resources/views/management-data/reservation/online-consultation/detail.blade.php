@@ -63,7 +63,7 @@
                 <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-            
+
                 @elseif(optional($reservation->status)->name === 'Konfirmasi Jadwal' && is_null($reservation->status_pembayaran)
                 {{-- Jika status reservasi = Konfirmasi Jadwal dan status pembayaran = null --}}
                 )
@@ -76,14 +76,14 @@
                 <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-            
+
                 @elseif(optional($reservation->status)->name === 'Jadwal Dikonfirmasi' && is_null($reservation->status_pembayaran)
                 {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = null --}}
                 )
                 <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-            
+
                 @elseif(optional($reservation->status)->name === 'Jadwal Dikonfirmasi' && $reservation->status_pembayaran === 'Menunggu Konfirmasi')
                 {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = Menunggu Konfirmasi --}}
                 <form action="{{ route('reservation.confirm-paymet', $reservation->id) }}" method="POST" class="d-inline">
@@ -95,7 +95,7 @@
                 <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-            
+
                 @elseif(optional($reservation->status)->name === 'Jadwal Dikonfirmasi' && $reservation->status_pembayaran === 'Lunas'
                 {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = Lunas --}}
                 )
@@ -105,14 +105,14 @@
                 <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-            
+
                 @elseif(optional($reservation->status)->name === 'Berhasil' && $reservation->status_pembayaran === 'Lunas'
                 {{-- Jika status reservasi = Berhasil dan status pembayaran = Lunas --}}
                 )
                 <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
-            
+
                 @elseif($reservation->status_pembayaran === 'Menunggu Konfirmasi'
                 {{-- Jika status pembayaran = Menunggu Konfirmasi --}}
                 )
@@ -126,7 +126,7 @@
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
                 @endif
-            
+
                 {{-- Tombol Delete hanya untuk admin --}}
                 @if(auth()->user()->role === 'Admin')
                 <form action="{{ route('reservation.delete', $reservation->id) }}" method="POST" class="d-inline">
@@ -144,13 +144,13 @@
                 <strong>Catatan:</strong> {{ $cancellationReason }}
             </div>
             @endif
-            
+
 
             <div class="row">
                 <div class="col-md-6">
                     <p><strong>Nama Pasien:</strong> {{ $reservation->patient->name }}</p>
                     <p>
-                        <strong>No HP:</strong> 
+                        <strong>No HP:</strong>
                         <a href="javascript:void(0)" onclick="contactPatient('{{ $reservation->patient->user->whatsapp }}')">
                             {{ $reservation->patient->user->whatsapp }}
                         </a>
