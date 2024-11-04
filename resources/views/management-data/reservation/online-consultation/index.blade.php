@@ -184,9 +184,21 @@
 
 @push('scripts')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
 <script>
+    const mobileScreen = window.matchMedia("(max-width: 990px )");
+
     $(document).ready(function() {
+        $(".dashboard-nav-dropdown-toggle").click(function() {
+            $(this).closest(".dashboard-nav-dropdown").toggleClass("show").find(".dashboard-nav-dropdown").removeClass("show");
+            $(this).parent().siblings().removeClass("show");
+        });
+        $(".menu-toggle").click(function() {
+            if (mobileScreen.matches) {
+                $(".dashboard-nav").toggleClass("mobile-show");
+            } else {
+                $(".dashboard").toggleClass("dashboard-compact");
+            }
+        });
         // Initialize the datepicker
         $(".datepicker").datepicker({
             dateFormat: "yy-mm-dd" // Format to match your database date format
@@ -216,4 +228,8 @@
         });
     });
 </script>
+@endpush
+
+@push('styles')
+<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 @endpush
