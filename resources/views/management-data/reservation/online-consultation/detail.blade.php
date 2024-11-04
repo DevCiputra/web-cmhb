@@ -54,7 +54,7 @@
             <div class="d-flex mb-4">
                 {{-- Jika status reservasi masih null dan status pembayaran juga null --}}
                 @if(is_null($reservation->reservation_status_id) && is_null($reservation->status_pembayaran))
-                <form action="{{ route('reservation.contact', $reservation->id) }}" method="POST" class="d-inline" id="contactForm">
+                <form id="contactForm" action="{{ route('reservation.contact', $reservation->id) }}" method="POST" class="d-inline">
                     @csrf
                     <button type="button" class="btn btn-info me-2" onclick="contactPatient('{{ $reservation->patient->user->whatsapp }}')">
                         <i class="fas fa-phone me-1"></i> Hubungi Pasien

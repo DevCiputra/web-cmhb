@@ -556,6 +556,13 @@ h1, .h1 {
     color: white;
 }
 
+.btn-info {
+    background-color: #0dcaf0 !important;
+    border-color: #0dcaf0 !important;
+    color: white;
+    line-height: 40px;
+}
+
 /* Custom Button: "Tambah" and "Cari" */
 .btn-custom {
     background-color: #007858;
