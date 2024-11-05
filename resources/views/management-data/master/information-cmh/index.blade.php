@@ -44,14 +44,14 @@
                 </div>
                 <div class="row">
                     @foreach($hospitalInformations as $information)
-                    <div class="col-md-4 mb-4">
-                        <div class="card" style="box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                    <div class="col-md-3 mb-4"> <!-- Ubah col-md-4 menjadi col-md-3 untuk menambah ukuran kartu -->
+                        <div class="card" style="box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; height: 100%;"> <!-- Menambahkan height: 100% untuk menjaga konsistensi tinggi -->
                             @if($information->logo)
-                            <img src="{{ asset('storage/' . $information->logo) }}" class="card-img-top" alt="{{ $information->name }}" style="height: 200px; object-fit: cover;">
+                            <img src="{{ asset('storage/' . $information->logo) }}" class="card-img-top" alt="{{ $information->name }}" style="height: 250px; object-fit: cover;"> <!-- Menambah tinggi gambar -->
                             @endif
-                            <div class="card-body">
+                            <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $information->name }}</h5>
-                                <p class="card-text">
+                                <p class="card-text flex-grow-1">
                                     <strong>Address:</strong> {{ $information->address }}<br>
                                     <strong>Phone:</strong> {{ $information->phone }}<br>
                                     <strong>Email:</strong> {{ $information->email }}<br>
@@ -60,17 +60,18 @@
                                     <strong>Emergency Contact:</strong> {{ $information->emergency_contact }}<br>
                                     <strong>Customer Service Contact:</strong> {{ $information->customer_service_contact }}
                                 </p>
-                                <div class="d-flex justify-content-end">
-                                    <a href="{{ route('information.data.edit', $information->id) }}" class="btn btn-primary btn-sm me-2">Edit</a>
-                                    <form action="{{ route('information.data.destroy', $information->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                <div class="d-flex justify-content-between mt-2">
+                                    <a href="{{ route('information.data.edit', $information->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                    <form action="{{ route('information.data.destroy', $information->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus informasi ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     @endforeach
                 </div>
             </div>

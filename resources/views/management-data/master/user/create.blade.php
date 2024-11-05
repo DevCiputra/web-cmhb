@@ -73,11 +73,17 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-success" style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{{ route('user.data.index') }}" class="btn btn-secondary" style="border-radius: 10px; padding: 8px 12px; background-color: #6c757d; color: #fff;">
+                            Kembali
+                        </a>
+                        <!-- Tombol Simpan dengan konfirmasi -->
+                        <button type="submit" class="btn btn-success" style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;"
+                            onclick="return confirmSave()">
                             Simpan
                         </button>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -88,6 +94,10 @@
 @push('scripts')
 
 <script>
+    function confirmSave() {
+        return confirm('Apakah Anda yakin ingin menyimpan data ini?');
+    }
+
     const mobileScreen = window.matchMedia("(max-width: 990px )");
     $(document).ready(function() {
         $(".dashboard-nav-dropdown-toggle").click(function() {

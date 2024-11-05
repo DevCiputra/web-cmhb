@@ -141,8 +141,10 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        auth()->logout();
-        return redirect('/')->with('success', 'Anda telah keluar.');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/')->with('success', 'Akun anda berhasil keluar');
     }
 
     public function showResetPasswordRequestForm(Request $request)
