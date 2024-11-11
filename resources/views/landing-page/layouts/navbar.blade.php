@@ -31,7 +31,8 @@
         <li class="nav-item dropdown">
             <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Fitur</a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ route('coming-page') }}">Skrining Depresi</a></li>
+                <li><a class="dropdown-item" href="{{ route('screening.form') }}">Skrining Depresi</a></li>
+
                 <li><a class="dropdown-item" href="{{ route('coming-page') }}">BMI</a></li>
             </ul>
         </li>
