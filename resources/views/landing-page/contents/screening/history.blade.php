@@ -1,4 +1,4 @@
-@extends('management-data.layouts.app')
+@extends('landing-page.layouts.app')
 
 @section('title', 'Riwayat Skrining')
 
@@ -34,3 +34,14 @@
     @endif
 </div>
 @endsection
+
+
+@push('scripts')
+<script src="{{ asset('js/navbar.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@endpush
+
+@push('styles')
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('css/consultation.css') }}">
+@endpush

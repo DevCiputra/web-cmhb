@@ -8,11 +8,11 @@
             <div class="row align-items-center">
                 <div class="col-md-6 hero-text">
                     <h1>Care For Your Health & Happiness</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit mattis sit phasellus mollis sit
-                        aliquam sit nullam neque ultricies.</p>
+                    <p>Jaga kesehatan Anda dengan layanan medis yang terpercaya dan dukungan profesional dari para ahli.
+                    </p>
                     <div class="hero-buttons">
-                        <a href="#" class="btn btn-success btn-lg"
-                            style="margin-right: 0.5rem; border-radius: 30px;">Reservasi</a>
+                        {{-- <a href="#" class="btn btn-success btn-lg"
+                            style="margin-right: 0.5rem; border-radius: 30px;">Reservasi</a> --}}
                         <a href="/doctor" class="btn btn-outline-success btn-lg" style="border-radius: 30px;">Cari
                             Dokter</a>
                     </div>
@@ -35,7 +35,7 @@
                     <i class="fas fa-bed"></i>
                     <div>
                         <strong>40</strong>
-                        <p>BED</p>
+                        <p>BEDS</p>
                     </div>
                 </div>
                 <div class="icon-text">
@@ -222,33 +222,31 @@
     </div>
 
     <!-- Feature Section -->
-    <div id="feature" class="feature-section">
-        <div class="container">
-            <h1>Coba Fitur Kami</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar elementum tempus hac tellus
-                libero accumsan.</p>
-            <div class="row g-4">
-                <!-- Column 1 -->
-                <div class="col-md-6">
-                    <div class="feature-item" style="background-color: #DFF2ED;">
-                        <h5 class="feature-title">Skrining Depresi</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the
-                            bulk of the card's content.</p>
-                        <a href="{{ route('coming-page') }}" class="btn btn-outline-success btn-lg rounded-pill">Coba Sekarang</a>
-                    </div>
+<div id="feature" class="feature-section">
+    <div class="container">
+        <h1>Jelajahi Fitur Kami</h1>
+        <p>Temukan berbagai fitur yang dapat membantu Anda untuk menjalani hidup yang lebih sehat dan lebih baik.</p>
+        <div class="row g-4">
+            <!-- Column 1 -->
+            <div class="col-md-6">
+                <div class="feature-item" style="background-color: #DFF2ED;">
+                    <h5 class="feature-title">Skrining Depresi</h5>
+                    <p class="card-text">Lakukan skrining untuk mengetahui potensi depresi dan dapatkan rekomendasi tindakan selanjutnya yang sesuai.</p>
+                    <a href="{{ route('screening.form') }}" class="btn btn-outline-success btn-lg rounded-pill">Mulai Skrining</a>
                 </div>
-                <!-- Column 2 -->
-                <div class="col-md-6">
-                    <div class="feature-item" style="border-color: #CCE4DE;">
-                        <h5 class="feature-title">Body Mass Index (BMI)</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the
-                            bulk of the card's content.</p>
-                        <a href="{{ route('coming-page') }}" class="btn btn-success btn-lg rounded-pill">Coba Sekarang</a>
-                    </div>
+            </div>
+            <!-- Column 2 -->
+            <div class="col-md-6">
+                <div class="feature-item" style="border-color: #CCE4DE;">
+                    <h5 class="feature-title">Body Mass Index (BMI)</h5>
+                    <p class="card-text">Cek status kesehatan tubuh Anda untuk mengetahui apakah berat badan Anda ideal.</p>
+                    <a href="{{ route('coming-page') }}" class="btn btn-success btn-lg rounded-pill">Coba Sekarang</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- Emergency Section -->
     <!-- Emergency FAB -->

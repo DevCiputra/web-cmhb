@@ -1,0 +1,51 @@
+    /* General Styles */
+    * {
+        box-sizing: border-box;
+    }
+
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    /* Header Section */
+    .header-section {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .header-section h1 {
+        font-size: 2rem;
+        font-weight: bolder;
+        color: #023770;
+        margin-bottom: 1rem;
+    }
+
+    .header-section p {
+        font-size: 1rem;
+        color: #666666;
+        margin-bottom: 2rem;
+    }
+
+    /* Question Slide Container */
+    .question-slide-container {
+        margin-top: 20px;
+    }
+
+    .question-slide {
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Button Styling */
+    .btn-primary, .btn-secondary {
+        border-radius: 12px;
+    }

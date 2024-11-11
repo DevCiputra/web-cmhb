@@ -59,6 +59,13 @@
             </table>
         </div>
     </div>
+
+    <!-- Button to View Screening History -->
+    <div class="text-end mt-3 mb-3">
+        <a href="{{ route('screening.history') }}" class="btn btn-secondary" style="border-radius: 10px; background-color: #023770; color:white">
+            Lihat Riwayat Skrining
+        </a>
+    </div>
 </div>
 @endsection
 

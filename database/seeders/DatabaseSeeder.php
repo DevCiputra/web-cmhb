@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             ReservationStatusesTableSeeder::class,
             ZoomAccountSeeder::class,
+            ScreeningSeeder::class,
+            ScreeningClassificationSeeder::class
         ]);
         // Anda juga bisa menambahkan seeder lain di sini jika ada
         // $this->call(SeederLainnya::class);

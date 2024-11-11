@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\AnsweredScreening;
 
 class AccountController extends Controller
 {
@@ -40,6 +41,7 @@ class AccountController extends Controller
                 $patient->dob = Carbon::parse($patient->dob);
             }
 
+            // Get reservations
             $reservations = Reservation::with('status', 'doctorConsultationReservation')
                 ->where('patient_id', $patient->id)
                 ->orderBy('created_at', 'desc')
@@ -57,9 +59,17 @@ class AccountController extends Controller
                     return $reservation;
                 });
 
+            // Get screening history
+            $screeningHistories = AnsweredScreening::with(['responses.question', 'responses.option'])
+                ->where('patient_id', $patient->id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            // Set page title
             $title = 'Akun Saya';
 
-            return view('account.contents.index', compact('title', 'user', 'patient', 'reservations'));
+            // Pass data to the view
+            return view('account.contents.index', compact('title', 'user', 'patient', 'reservations', 'screeningHistories'));
         } catch (\Exception $e) {
             Log::error('Error in AccountController@index: ' . $e->getMessage());
             return response()->json(['error' => 'Unable to fetch account data.'], Response::HTTP_INTERNAL_SERVER_ERROR);
