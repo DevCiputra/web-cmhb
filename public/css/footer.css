@@ -51,6 +51,12 @@
     height: 24px;
 }
 
+.footer ul li a {
+    color: #023770; /* Link color */
+    text-decoration: none; /* Remove underline */
+}
+
+
 /* Media Queries for Tablet View (Portrait & Landscape) */
 @media (min-width: 769px) and (max-width: 1024px) {
     .footer h5 {

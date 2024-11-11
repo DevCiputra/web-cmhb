@@ -58,8 +58,7 @@
                 </div>
                 <div class="col-md-6 doctor-text">
                     <h1>Temukan Dokter Profesional</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit mattis sit phasellus mollis sit
-                        aliquam sit nullam neque ultricies.</p>
+                    <p>Dapatkan perawatan yang sesuai dari dokter profesional yang berpengalaman di bidangnya.</p>
                     <div class="doctor-buttons">
                         <a href="/doctor" class="btn btn-success btn-lg"
                             style="margin-right: 0.5rem; border-radius: 30px;">Cari Dokter</a>
@@ -72,9 +71,8 @@
     <!-- Reservation Section -->
     <div id="reservation" class="reservation-section">
         <div class="container">
-            <h1>Reservasi</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar elementum tempus hac tellus
-                libero accumsan.</p>
+            <h1>Reservasi Layanan</h1>
+            <p>Pilih layanan kesehatan yang Anda butuhkan dan buat reservasi dengan mudah.</p>
             <div class="row justify-content-center">
                 <!-- Column 1 -->
                 <div class="col-md-5 d-flex flex-column">
@@ -90,7 +88,7 @@
                         <div class="reservation-content">
                             <img src="{{ asset('images/homeservice.jpg') }}" alt="Home Service" class="img-fluid">
                             <div class="reservation-info">
-                                <h2>Home Service</h2>
+                                <h2> Layanan Home Service</h2>
                             </div>
                         </div>
                     </a>
@@ -99,13 +97,15 @@
                 <div class="col-md-5 d-flex flex-column">
                     <a href="{{ route('polyclinic') }}" class="reservation-item mb-3" id="card-poliklinik">
                         <div class="reservation-content">
-                            <img src="{{ asset('images/poliklinik.jpg') }}" alt="Pendaftaran Poliklinik" class="img-fluid">
+                            <img src="{{ asset('images/poliklinik.jpg') }}" alt="Pendaftaran Poliklinik"
+                                class="img-fluid">
                             <div class="reservation-info">
                                 <h2>Pendaftaran Poliklinik</h2>
                             </div>
                         </div>
                     </a>
-                    <a href="{{ route('onlineconsultation.landing') }}" class="reservation-item mb-3" id="card-konsultasi">
+                    <a href="{{ route('coming-page') }}" class="reservation-item mb-3"
+                        id="card-konsultasi">
                         <div class="reservation-content">
                             <img src="{{ asset('images/konsul.jpg') }}" alt="Konsultasi Online" class="img-fluid">
                             <div class="reservation-info">
@@ -122,8 +122,7 @@
     <div id="promotion" class="promotion-section">
         <div class="container-fluid">
             <h1 style="margin-bottom: 10px;">Promo</h1>
-            <p style="margin-bottom: 15px;">Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar
-                elementum tempus hac tellus libero accumsan.</p>
+            <p style="margin-bottom: 15px;">Dapatkan penawaran menarik untuk berbagai layanan kesehatan kami.</p>
             <a href="{{ route('coming-page') }}" class="btn btn-semua"
                 style="color:#023770; font-size: 1.2rem; margin-top: -10px; margin-bottom: 10px">
                 Lihat Semua
@@ -137,8 +136,7 @@
                 </div>
                 <div class="col-md-4 promotion-item">
                     <div class="promotion-content">
-                        <img src="{{ asset('images/promo2.jpg') }}" alt="Pendaftaran Poliklinik"
-                            class="img-fluid">
+                        <img src="{{ asset('images/promo2.jpg') }}" alt="Pendaftaran Poliklinik" class="img-fluid">
                     </div>
                 </div>
                 <div class="col-md-4 promotion-item">
@@ -236,7 +234,7 @@
                         <h5 class="feature-title">Skrining Depresi</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
-                        <a href="{{ route('screening.form') }}" class="btn btn-outline-success btn-lg rounded-pill">Coba Sekarang</a>
+                        <a href="{{ route('coming-page') }}" class="btn btn-outline-success btn-lg rounded-pill">Coba Sekarang</a>
                     </div>
                 </div>
                 <!-- Column 2 -->
@@ -257,15 +255,15 @@
     <div id="emergency" class="emergency-fab">
         <!-- Sub-menu FAB buttons that will collapse/expand -->
         <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
-            <a href="#" class="btn btn-success btn-lg mb-2 rounded-circle">
+            <a href="tel:+625116743911" class="btn btn-success btn-lg mb-2 rounded-circle">
                 <i class="fas fa-ambulance"></i>
             </a>
-            <a href="#" class="btn btn-outline-success btn-lg rounded-circle mb-2">
+            <a href="https://api.whatsapp.com/send?phone=6278033212250&text=Saya%20tertarik%20layanan%20di%20Ciputra%20Hospital%20saya%20ingin%20informasi%20mengenai...."
+                class="btn btn-outline-success btn-lg rounded-circle mb-2" target="_blank">
                 <i class="fab fa-whatsapp"></i>
             </a>
         </div>
-        <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle"
-            onclick="toggleEmergencyButtons()">
+        <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle" onclick="toggleEmergencyButtons()">
             <i class="fa-solid fa-phone"></i>
         </a>
     </div>
@@ -322,7 +320,6 @@
         }
     }
 </script>
-
 @endpush
 
 @push('styles')

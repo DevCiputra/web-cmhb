@@ -52,8 +52,8 @@
                             aria-labelledby="heading{{ $loop->index }}" data-bs-parent="#accordionPoliklinik">
                             <div class="accordion-body">
                                 <p>Reservasi pelayanan kesehatan di poliklinik {{ $polyclinic->name }}</p>
-                                <a href="#" class="btn btn-primary">Reservasi</a>
-                                <a href="/dokter" class="btn btn-outline-primary">Lihat Dokter</a>
+                                {{-- <a href="#" class="btn btn-primary">Reservasi</a> --}}
+                                <a href="/doctor" class="btn btn-outline-primary">Lihat Dokter</a>
                             </div>
                         </div>
                     </div>
@@ -88,21 +88,22 @@
                     </ul>
                 </nav>
             </div>
-
-            <!-- Emergency Section -->
-            <div id="emergency" class="emergency-fab">
-                <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
-                    <a href="#" class="btn btn-success btn-lg mb-2 rounded-circle">
-                        <i class="fas fa-ambulance"></i>
-                    </a>
-                    <a href="#" class="btn btn-outline-success btn-lg rounded-circle mb-2">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                </div>
-                <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle">
-                    <i class="fa-solid fa-phone"></i>
+        <!-- Emergency Section -->
+        <!-- Emergency FAB -->
+        <div id="emergency" class="emergency-fab">
+            <!-- Sub-menu FAB buttons that will collapse/expand -->
+            <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
+                <a href="tel:+625116743911" class="btn btn-success btn-lg mb-2 rounded-circle">
+                    <i class="fas fa-ambulance"></i>
+                </a>
+                <a href="https://api.whatsapp.com/send?phone=6278033212250&text=Saya%20tertarik%20layanan%20di%20Ciputra%20Hospital%20saya%20ingin%20informasi%20mengenai...."
+                    class="btn btn-outline-success btn-lg rounded-circle mb-2" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
                 </a>
             </div>
+            <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle" onclick="toggleEmergencyButtons()">
+                <i class="fa-solid fa-phone"></i>
+            </a>
         </div>
     </div>
 @endsection

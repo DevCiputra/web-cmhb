@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); // Foreign key ke users
             $table->string('profile_picture')->nullable();
             $table->date('dob')->nullable(); // Kolom tanggal lahir
+            $table->string('gender')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

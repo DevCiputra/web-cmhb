@@ -273,6 +273,12 @@ Route::group(
     }
 );
 
+
+// SKRININGGGGG
+Route::get('/skrining', function () {
+    return view('landing-page.contents.skrining');
+});
+
 // COMING SOON (ON PROGRESS AFTER PROD V.1)
 
 Route::get('/tambah_mcu', function () {

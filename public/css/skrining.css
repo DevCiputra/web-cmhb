@@ -1,0 +1,73 @@
+/* Reset styling dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 1.8em;
+    color: #333333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.question {
+    margin-bottom: 1.5rem;
+}
+
+.question label {
+    font-size: 1.1em;
+    color: #333333;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+}
+
+.options label {
+    font-size: 0.95em;
+    color: #555555;
+    cursor: pointer;
+}
+
+.options input[type="radio"] {
+    margin-right: 0.4rem;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
