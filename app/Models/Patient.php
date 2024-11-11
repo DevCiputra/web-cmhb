@@ -15,7 +15,8 @@ class Patient extends Model
         'medical_record_id',
         'user_id',
         'profile_picture',
-        'dob', // Tambahkan ini
+        'dob', 
+        'gender',
     ];
 
 

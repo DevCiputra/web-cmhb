@@ -264,6 +264,12 @@ Route::get('/online-consultation', [
     'indexLandingConsultation'
 ])->name('reservation.onlineconsultation.landing');
 
+
+// SKRININGGGGG
+Route::get('/skrining', function () {
+    return view('landing-page.contents.skrining');
+});
+
 // SOON
 
 Route::get('/tambah_mcu', function () {

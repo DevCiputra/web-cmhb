@@ -1,277 +1,271 @@
 @extends('landing-page.layouts.app')
 
 @section('content')
-<div class="container" style="margin-top: 80px;">
-    <!-- Hero Section -->
-    <div id="hero" class="hero-section">
-        <div class="hero-content">
-            <div class="row align-items-center">
-                <div class="col-md-6 hero-text">
-                    <h1>Care For Your Health & Happiness</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit mattis sit phasellus mollis sit
-                        aliquam sit nullam neque ultricies.</p>
-                    <div class="hero-buttons">
-                        <a href="#" class="btn btn-success btn-lg"
-                            style="margin-right: 0.5rem; border-radius: 30px;">Reservasi</a>
-                        <a href="/doctor" class="btn btn-outline-success btn-lg" style="border-radius: 30px;">Cari
-                            Dokter</a>
+    <div class="container" style="margin-top: 80px;">
+        <!-- Hero Section -->
+        <div id="hero" class="hero-section">
+            <div class="hero-content">
+                <div class="row align-items-center">
+                    <div class="col-md-6 hero-text">
+                        <h1>Care For Your Health & Happiness</h1>
+                        <p>Jaga kesehatan Anda dengan layanan medis yang terpercaya dan dukungan profesional dari para ahli.
+                        </p>
+                        <div class="hero-buttons">
+                            {{-- <a href="#" class="btn btn-success btn-lg"
+                                style="margin-right: 0.5rem; border-radius: 30px;">Reservasi</a> --}}
+                            <a href="/doctor" class="btn btn-outline-success btn-lg" style="border-radius: 30px;">Cari
+                                Dokter</a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 hero-image">
-                    <img src="{{ asset('images/hero.jpg') }}" alt="Doctor and patient" class="img-fluid">
-                </div>
-            </div>
-        </div>
-        <div class="icon-card">
-            <div class="card-content">
-                <div class="icon-text">
-                    <i class="fas fa-user-md"></i>
-                    <div>  
-                        <strong>30</strong>
-                        <p>DOKTER SPESIALIS</p>
-                    </div>
-                </div>
-                <div class="icon-text">
-                    <i class="fas fa-bed"></i>
-                    <div>
-                        <strong>40</strong>
-                        <p>BED</p>
-                    </div>
-                </div>
-                <div class="icon-text">
-                    <i class="fas fa-heartbeat"></i>
-                    <div>
-                        <strong>Cardiac Center</strong>
-                        <p>CENTER OF EXCELLENCE</p>
+                    <div class="col-md-6 hero-image">
+                        <img src="{{ asset('images/hero.jpg') }}" alt="Doctor and patient" class="img-fluid">
                     </div>
                 </div>
             </div>
+            <div class="icon-card">
+                <div class="card-content">
+                    <div class="icon-text">
+                        <i class="fas fa-user-md"></i>
+                        <div>
+                            <strong>30</strong>
+                            <p>DOKTER SPESIALIS</p>
+                        </div>
+                    </div>
+                    <div class="icon-text">
+                        <i class="fas fa-bed"></i>
+                        <div>
+                            <strong>40</strong>
+                            <p>BEDS</p>
+                        </div>
+                    </div>
+                    <div class="icon-text">
+                        <i class="fas fa-heartbeat"></i>
+                        <div>
+                            <strong>Cardiac Center</strong>
+                            <p>CENTER OF EXCELLENCE</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <!-- Doctor Section -->
-    <div id="doctor" class="doctor-section">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-md-6 doctor-image">
-                    <img src="{{ asset('images/doctors.jpg') }}" alt="Doctors" class="img-fluid">
-                </div>
-                <div class="col-md-6 doctor-text">
-                    <h1>Temukan Dokter Profesional</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit mattis sit phasellus mollis sit
-                        aliquam sit nullam neque ultricies.</p>
-                    <div class="doctor-buttons">
-                        <a href="/doctor" class="btn btn-success btn-lg"
-                            style="margin-right: 0.5rem; border-radius: 30px;">Cari Dokter</a>
+        <!-- Doctor Section -->
+        <div id="doctor" class="doctor-section">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-6 doctor-image">
+                        <img src="{{ asset('images/doctors.jpg') }}" alt="Doctors" class="img-fluid">
+                    </div>
+                    <div class="col-md-6 doctor-text">
+                        <h1>Temukan Dokter Profesional</h1>
+                        <p>Dapatkan perawatan yang sesuai dari dokter profesional yang berpengalaman di bidangnya.</p>
+                        <div class="doctor-buttons">
+                            <a href="/doctor" class="btn btn-success btn-lg"
+                                style="margin-right: 0.5rem; border-radius: 30px;">Cari Dokter</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Reservation Section -->
-    <div id="reservation" class="reservation-section">
-        <div class="container">
-            <h1>Reservasi</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar elementum tempus hac tellus
-                libero accumsan.</p>
-            <div class="row justify-content-center">
-                <!-- Column 1 -->
-                <div class="col-md-5 d-flex flex-column">
-                    <a href="{{ route('medical-check-up') }}" class="reservation-item mb-3" id="card-mcu">
-                        <div class="reservation-content">
-                            <img src="{{ asset('images/mcu.jpg') }}" alt="Medical Check Up" class="img-fluid">
-                            <div class="reservation-info">
-                                <h2>Medical Check Up (MCU)</h2>
+        <!-- Reservation Section -->
+        <div id="reservation" class="reservation-section">
+            <div class="container">
+                <h1>Reservasi Layanan</h1>
+                <p>Pilih layanan kesehatan yang Anda butuhkan dan buat reservasi dengan mudah.</p>
+                <div class="row justify-content-center">
+                    <!-- Column 1 -->
+                    <div class="col-md-5 d-flex flex-column">
+                        <a href="{{ route('medical-check-up') }}" class="reservation-item mb-3" id="card-mcu">
+                            <div class="reservation-content">
+                                <img src="{{ asset('images/mcu.jpg') }}" alt="Medical Check Up" class="img-fluid">
+                                <div class="reservation-info">
+                                    <h2>Medical Check Up (MCU)</h2>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="{{ route('coming-page') }}" class="reservation-item mb-3" id="card-home-service">
-                        <div class="reservation-content">
-                            <img src="{{ asset('images/homeservice.jpg') }}" alt="Home Service" class="img-fluid">
-                            <div class="reservation-info">
-                                <h2>Home Service</h2>
+                        </a>
+                        <a href="{{ route('coming-page') }}" class="reservation-item mb-3" id="card-home-service">
+                            <div class="reservation-content">
+                                <img src="{{ asset('images/homeservice.jpg') }}" alt="Home Service" class="img-fluid">
+                                <div class="reservation-info">
+                                    <h2> Layanan Home Service</h2>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+                    <!-- Column 2 -->
+                    <div class="col-md-5 d-flex flex-column">
+                        <a href="{{ route('polyclinic') }}" class="reservation-item mb-3" id="card-poliklinik">
+                            <div class="reservation-content">
+                                <img src="{{ asset('images/poliklinik.jpg') }}" alt="Pendaftaran Poliklinik"
+                                    class="img-fluid">
+                                <div class="reservation-info">
+                                    <h2>Pendaftaran Poliklinik</h2>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="{{ route('coming-page') }}" class="reservation-item mb-3"
+                            id="card-konsultasi">
+                            <div class="reservation-content">
+                                <img src="{{ asset('images/konsul.jpg') }}" alt="Konsultasi Online" class="img-fluid">
+                                <div class="reservation-info">
+                                    <h2>Konsultasi Online</h2>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-                <!-- Column 2 -->
-                <div class="col-md-5 d-flex flex-column">
-                    <a href="{{ route('polyclinic') }}" class="reservation-item mb-3" id="card-poliklinik">
-                        <div class="reservation-content">
-                            <img src="{{ asset('images/poliklinik.jpg') }}" alt="Pendaftaran Poliklinik" class="img-fluid">
-                            <div class="reservation-info">
-                                <h2>Pendaftaran Poliklinik</h2>
-                            </div>
+
+            </div>
+        </div>
+        <!-- Promotion Section -->
+        <div id="promotion" class="promotion-section">
+            <div class="container-fluid">
+                <h1 style="margin-bottom: 10px;">Promo</h1>
+                <p style="margin-bottom: 15px;">Dapatkan penawaran menarik untuk berbagai layanan kesehatan kami.</p>
+                <a href="{{ route('coming-page') }}" class="btn btn-semua"
+                    style="color:#023770; font-size: 1.2rem; margin-top: -10px; margin-bottom: 10px">
+                    Lihat Semua
+                    <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
+                </a>
+                <div class="row">
+                    <div class="col-md-4 promotion-item">
+                        <div class="promotion-content">
+                            <img src="{{ asset('images/promo1.jpg') }}" alt="Medical Check Up" class="img-fluid">
                         </div>
-                    </a>
-                    <a href="{{ route('onlineconsultation.landing') }}" class="reservation-item mb-3" id="card-konsultasi">
-                        <div class="reservation-content">
-                            <img src="{{ asset('images/konsul.jpg') }}" alt="Konsultasi Online" class="img-fluid">
-                            <div class="reservation-info">
-                                <h2>Konsultasi Online</h2>
-                            </div>
+                    </div>
+                    <div class="col-md-4 promotion-item">
+                        <div class="promotion-content">
+                            <img src="{{ asset('images/promo2.jpg') }}" alt="Pendaftaran Poliklinik" class="img-fluid">
                         </div>
-                    </a>
+                    </div>
+                    <div class="col-md-4 promotion-item">
+                        <div class="promotion-content">
+                            <img src="{{ asset('images/promo3.jpg') }}" alt="Home Service" class="img-fluid">
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
-    </div>
-    <!-- Promotion Section -->
-    <div id="promotion" class="promotion-section">
-        <div class="container-fluid">
-            <h1 style="margin-bottom: 10px;">Promo</h1>
-            <p style="margin-bottom: 15px;">Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar
-                elementum tempus hac tellus libero accumsan.</p>
-            <a href="{{ route('coming-page') }}" class="btn btn-semua"
-                style="color:#023770; font-size: 1.2rem; margin-top: -10px; margin-bottom: 10px">
-                Lihat Semua
-                <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
+
+        <!-- Information Section -->
+        <div id="info" class="info-section">
+            <div class="container">
+                <h1 style="margin-bottom: 10px;">Informasi Terkini</h1>
+                <p style="margin-bottom: 15px;">Temukan berita terbaru dan tips kesehatan untuk Anda.</p>
+                <a href="{{ route('coming-page') }}" class="btn btn-semua"
+                    style="color:#023770; font-size: 1.2rem; margin-top: -10px; margin-bottom: 10px">
+                    Lihat Semua
+                    <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
+                </a>
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="info-item">
+                            <div class="info-content card">
+                                <div class="badge-container">
+                                    <span class="badge">Artikel</span>
+                                </div>
+                                <img src="{{ asset('images/info1.png') }}" class="card-img-top" alt="Info 1">
+                                <div class="card-body">
+                                    <h5 class="card-title">Coming Soon</h5>
+                                    <p class="card-text">Informasi kesehatan terbaru untuk Anda.</p>
+                                    <a href="{{ route('coming-page') }}" class="btn btn-link">
+                                        Selengkapnya
+                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
+                                            class="chevron-icon">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="info-item">
+                            <div class="info-content card">
+                                <div class="badge-container">
+                                    <span class="badge">Health Tips</span>
+                                </div>
+                                <img src="{{ asset('images/info2.png') }}" class="card-img-top" alt="Info 2">
+                                <div class="card-body">
+                                    <h5 class="card-title">Coming Soon</h5>
+                                    <p class="card-text">Tips dan trik menjaga kesehatan setiap hari.</p>
+                                    <a href="{{ route('coming-page') }}" class="btn btn-link">
+                                        Selengkapnya
+                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
+                                            class="chevron-icon">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="info-item">
+                            <div class="info-content card">
+                                <div class="badge-container">
+                                    <span class="badge">Event</span>
+                                </div>
+                                <img src="{{ asset('images/info3.png') }}" class="card-img-top" alt="Info 3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Coming Soon</h5>
+                                    <p class="card-text">Berita terbaru dari dunia kesehatan untuk Anda.</p>
+                                    <a href="{{ route('coming-page') }}" class="btn btn-link">
+                                        Selengkapnya
+                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
+                                            class="chevron-icon">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Section -->
+        <div id="feature" class="feature-section">
+            <div class="container">
+                <h1>Coba Fitur Kami</h1>
+                <p>Temukan berbagai layanan kesehatan inovatif yang dirancang untuk meningkatkan kualitas hidup Anda. Setiap fitur kami memberikan kemudahan dan aksesibilitas untuk menjaga kesehatan Anda.</p>
+                <div class="row g-4">
+                    <!-- Column 1 -->
+                    <div class="col-md-6">
+                        <div class="feature-item" style="background-color: #DFF2ED;">
+                            <h5 class="feature-title">Skrining Depresi</h5>
+                            <p class="card-text">Skrining Depresi kami dirancang untuk membantu Anda mengenali gejala depresi dengan lebih baik. Dapatkan penilaian awal yang mendalam dan dukungan yang Anda butuhkan untuk kesehatan mental yang optimal.</p>
+                            <a href="{{ route('coming-page') }}" class="btn btn-outline-success btn-lg rounded-pill">Coming Soon</a>
+                        </div>
+                    </div>
+                    <!-- Column 2 -->
+                    <div class="col-md-6">
+                        <div class="feature-item" style="border-color: #CCE4DE;">
+                            <h5 class="feature-title">Body Mass Index (BMI)</h5>
+                            <p class="card-text">Ketahui status kesehatan Anda melalui perhitungan Indeks Massa Tubuh (BMI) yang akurat. Fitur ini membantu Anda memahami proporsi berat badan ideal dan langkah-langkah yang bisa diambil untuk menjaga kesehatan.</p>
+                            <a href="{{ route('coming-page') }}" class="btn btn-success btn-lg rounded-pill">Coming Soon</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Section -->
+        <!-- Emergency FAB -->
+        <div id="emergency" class="emergency-fab">
+            <!-- Sub-menu FAB buttons that will collapse/expand -->
+            <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
+                <a href="tel:+625116743911" class="btn btn-success btn-lg mb-2 rounded-circle">
+                    <i class="fas fa-ambulance"></i>
+                </a>
+                <a href="https://api.whatsapp.com/send?phone=6278033212250&text=Saya%20tertarik%20layanan%20di%20Ciputra%20Hospital%20saya%20ingin%20informasi%20mengenai...."
+                    class="btn btn-outline-success btn-lg rounded-circle mb-2" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle" onclick="toggleEmergencyButtons()">
+                <i class="fa-solid fa-phone"></i>
             </a>
-            <div class="row">
-                <div class="col-md-4 promotion-item">
-                    <div class="promotion-content">
-                        <img src="{{ asset('images/promo1.jpg') }}" alt="Medical Check Up" class="img-fluid">
-                    </div>
-                </div>
-                <div class="col-md-4 promotion-item">
-                    <div class="promotion-content">
-                        <img src="{{ asset('images/promo2.jpg') }}" alt="Pendaftaran Poliklinik"
-                            class="img-fluid">
-                    </div>
-                </div>
-                <div class="col-md-4 promotion-item">
-                    <div class="promotion-content">
-                        <img src="{{ asset('images/promo3.jpg') }}" alt="Home Service" class="img-fluid">
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
-
-    <!-- Information Section -->
-    <div id="info" class="info-section">
-        <div class="container">
-            <h1 style="margin-bottom: 10px;">What's New</h1>
-            <p style="margin-bottom: 15px;">Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar
-                elementum tempus hac tellus libero accumsan.</p>
-            <a href="{{ route('coming-page') }}"  class="btn btn-semua"
-                style="color:#023770; font-size: 1.2rem; margin-top: -10px; margin-bottom: 10px">
-                Lihat Semua
-                <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
-            </a>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="info-item">
-                        <div class="info-content card">
-                            <div class="badge-container">
-                                <span class="badge">Artikel</span>
-                            </div>
-                            <img src="{{ asset('images/info1.png') }}" class="card-img-top" alt="Info 1">
-                            <div class="card-body">
-                                <h5 class="card-title">Title 1</h5>
-                                <p class="card-text">Some quick example text to build on the card.</p>
-                                <a href="{{ route('coming-page') }}"  class="btn btn-link">
-                                    Selengkapnya
-                                    <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                        class="chevron-icon">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="info-item">
-                        <div class="info-content card">
-                            <div class="badge-container">
-                                <span class="badge">Health Tips</span>
-                            </div>
-                            <img src="{{ asset('images/info2.png') }}" class="card-img-top" alt="Info 2">
-                            <div class="card-body">
-                                <h5 class="card-title">Title 2</h5>
-                                <p class="card-text">Some quick example text to build on the card.</p>
-                                <a href="{{ route('coming-page') }}"  class="btn btn-link">
-                                    Selengkapnya
-                                    <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                        class="chevron-icon">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="info-item">
-                        <div class="info-content card">
-                            <div class="badge-container">
-                                <span class="badge">Event</span>
-                            </div>
-                            <img src="{{ asset('images/info3.png') }}" class="card-img-top" alt="Info 3">
-                            <div class="card-body">
-                                <h5 class="card-title">Title 3</h5>
-                                <p class="card-text">Some quick example text to build on the card.</p>
-                                <a href="{{ route('coming-page') }}" class="btn btn-link">
-                                    Selengkapnya
-                                    <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                        class="chevron-icon">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature Section -->
-    <div id="feature" class="feature-section">
-        <div class="container">
-            <h1>Coba Fitur Kami</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar elementum tempus hac tellus
-                libero accumsan.</p>
-            <div class="row g-4">
-                <!-- Column 1 -->
-                <div class="col-md-6">
-                    <div class="feature-item" style="background-color: #DFF2ED;">
-                        <h5 class="feature-title">Skrining Depresi</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the
-                            bulk of the card's content.</p>
-                        <a href="{{ route('coming-page') }}"  class="btn btn-outline-success btn-lg rounded-pill">Coba Sekarang</a>
-                    </div>
-                </div>
-                <!-- Column 2 -->
-                <div class="col-md-6">
-                    <div class="feature-item" style="border-color: #CCE4DE;">
-                        <h5 class="feature-title">Body Mass Index (BMI)</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the
-                            bulk of the card's content.</p>
-                        <a href="{{ route('coming-page') }}"  class="btn btn-success btn-lg rounded-pill">Coba Sekarang</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Emergency Section -->
-    <!-- Emergency FAB -->
-    <div id="emergency" class="emergency-fab">
-        <!-- Sub-menu FAB buttons that will collapse/expand -->
-        <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
-            <a href="#" class="btn btn-success btn-lg mb-2 rounded-circle">
-                <i class="fas fa-ambulance"></i>
-            </a>
-            <a href="#" class="btn btn-outline-success btn-lg rounded-circle mb-2">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-        </div>
-        <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle"
-            onclick="toggleEmergencyButtons()">
-            <i class="fa-solid fa-phone"></i>
-        </a>
-    </div>
 
 
-    {{-- <div id="emergency" class="emergency-section">
+        {{-- <div id="emergency" class="emergency-section">
             <div class="container">
                 <div class="card emergency-card border-0 shadow-sm">
                     <div class="row g-0">
@@ -291,41 +285,39 @@
                 </div>
             </div>
         </div> --}}
-</div>
+    </div>
 @endsection
 @push('scripts')
-<script src="{{ asset('js/navbar.js') }}"></script>
-<script>
+    <script src="{{ asset('js/navbar.js') }}"></script>
+    <script>
+        // $(document).ready(function() {
+        //     // Menambahkan efek scroll halus untuk link dalam navbar
+        //     $('.nav-link, .dropdown-item').on('click', function(event) {
+        //         event.preventDefault();
+        //         var target = $(this).attr('href');
 
-// $(document).ready(function() {
-//     // Menambahkan efek scroll halus untuk link dalam navbar
-//     $('.nav-link, .dropdown-item').on('click', function(event) {
-//         event.preventDefault();
-//         var target = $(this).attr('href');
-        
-//         // Offset untuk scroll, menyesuaikan dengan tinggi navbar
-//         var offset = $('.nav').outerHeight(); 
-        
-//         $('html, body').animate({
-//             scrollTop: $(target).offset().top - offset
-//         }, 500);
-//     });
-// });
+        //         // Offset untuk scroll, menyesuaikan dengan tinggi navbar
+        //         var offset = $('.nav').outerHeight(); 
 
-    function toggleEmergencyButtons() {
-        const buttons = document.getElementById("emergency-buttons");
-        buttons.classList.toggle("expand");
+        //         $('html, body').animate({
+        //             scrollTop: $(target).offset().top - offset
+        //         }, 500);
+        //     });
+        // });
 
-        if (buttons.style.maxHeight === "0px" || buttons.style.maxHeight === "") {
-            buttons.style.maxHeight = "200px"; // Expand the sub-menu (adjust height as needed)
-        } else {
-            buttons.style.maxHeight = "0px"; // Collapse the sub-menu
+        function toggleEmergencyButtons() {
+            const buttons = document.getElementById("emergency-buttons");
+            buttons.classList.toggle("expand");
+
+            if (buttons.style.maxHeight === "0px" || buttons.style.maxHeight === "") {
+                buttons.style.maxHeight = "200px"; // Expand the sub-menu (adjust height as needed)
+            } else {
+                buttons.style.maxHeight = "0px"; // Collapse the sub-menu
+            }
         }
-    }
-</script>
-
+    </script>
 @endpush
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
 @endpush

@@ -63,6 +63,11 @@
                                 <p>{{ $patient->dob ? \Carbon\Carbon::parse($patient->dob)->age . ' Tahun' : 'Belum diisi' }}</p>
                             </div>
 
+                            <h6>No. RM Ciputra Mitra Hospital</h6>
+                            <div class="mb-3">
+                                <p>{{ $patient->medical_record_id ?? 'Isi No. RM Ciputra Mitra Hospital Anda terlebih dahulu' }}</p>
+                            </div>
+
                             <h6>Alergi</h6>
                             <div class="mb-3">
                                 <p>
@@ -246,6 +251,14 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="medical_record_id" class="form-label">No. RM Ciputra Mitra Hospital</label>
+                        <input type="text" class="form-control @error('medical_record_id') is-invalid @enderror" id="medical_record_id" name="medical_record_id" value="{{ old('medical_record_id', $patient->medical_record_id)}}">
+                        @error('medical_record_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
                         <label for="address" class="form-label">Alamat</label>
                         <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" rows="3" required>{{ old('address', $patient->address) }}</textarea>
                         @error('address')
@@ -279,6 +292,24 @@
         </div>
     </div>
 </div>
+
+        <!-- Emergency Section -->
+        <!-- Emergency FAB -->
+        <div id="emergency" class="emergency-fab">
+            <!-- Sub-menu FAB buttons that will collapse/expand -->
+            <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
+                <a href="tel:+625116743911" class="btn btn-success btn-lg mb-2 rounded-circle">
+                    <i class="fas fa-ambulance"></i>
+                </a>
+                <a href="https://api.whatsapp.com/send?phone=6278033212250&text=Saya%20tertarik%20layanan%20di%20Ciputra%20Hospital%20saya%20ingin%20informasi%20mengenai...."
+                    class="btn btn-outline-success btn-lg rounded-circle mb-2" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle" onclick="toggleEmergencyButtons()">
+                <i class="fa-solid fa-phone"></i>
+            </a>
+        </div>
 
 <script>
     function previewImage(event) {
@@ -359,6 +390,17 @@
             riwayatContent.classList.remove('show', 'active');
         }
     });
+
+    function toggleEmergencyButtons() {
+            const buttons = document.getElementById("emergency-buttons");
+            buttons.classList.toggle("expand");
+
+            if (buttons.style.maxHeight === "0px" || buttons.style.maxHeight === "") {
+                buttons.style.maxHeight = "200px"; // Expand the sub-menu (adjust height as needed)
+            } else {
+                buttons.style.maxHeight = "0px"; // Collapse the sub-menu
+            }
+        }
 </script>
 @endpush
 

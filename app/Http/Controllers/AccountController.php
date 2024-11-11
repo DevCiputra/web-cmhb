@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
+
 class AccountController extends Controller
 {
     public function index()
@@ -31,8 +32,8 @@ class AccountController extends Controller
             }
 
             $patient = Patient::with(['allergies', 'bloodGroup'])
-            ->where('user_id', $user->id)
-            ->firstOrFail();
+                ->where('user_id', $user->id)
+                ->firstOrFail();
 
             // Konversi 'dob' menjadi objek Carbon jika ada
             if ($patient->dob) {
@@ -40,18 +41,18 @@ class AccountController extends Controller
             }
 
             $reservations = Reservation::with('status', 'doctorConsultationReservation')
-            ->where('patient_id', $patient->id)
+                ->where('patient_id', $patient->id)
                 ->orderBy('created_at', 'desc')
                 ->get()
                 ->map(function ($reservation) {
                     $doctorConsultation = $reservation->doctorConsultationReservation;
 
-                if ($doctorConsultation) {
-                    $doctorConsultation->formatted_date = Carbon::parse($doctorConsultation->agreed_consultation_date)
-                        ->translatedFormat('l, d-m-Y');
-                    $doctorConsultation->formatted_time = Carbon::parse($doctorConsultation->agreed_consultation_time)
-                        ->format('H.i') . ' WITA';
-                }
+                    if ($doctorConsultation) {
+                        $doctorConsultation->formatted_date = Carbon::parse($doctorConsultation->agreed_consultation_date)
+                            ->translatedFormat('l, d-m-Y');
+                        $doctorConsultation->formatted_time = Carbon::parse($doctorConsultation->agreed_consultation_time)
+                            ->format('H.i') . ' WITA';
+                    }
 
                     return $reservation;
                 });
@@ -74,26 +75,10 @@ class AccountController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
                 'address' => 'required|string|max:255',
+                'medical_record_id' => 'nullable|string|max:20', // Remove extra space here
                 'allergy' => 'nullable|string|max:255',
-                'blood_type' => 'nullable|string|max:3','dob' => 'nullable|date',
-            ], [
-                'profile_picture.image' => 'Foto profil harus berupa gambar.',
-                'profile_picture.mimes' => 'Foto profil harus bertipe jpg, jpeg, atau png.',
-                'profile_picture.max' => 'Foto profil maksimal ukuran 2MB.',
-                'name.required' => 'Nama lengkap wajib diisi.',
-                'name.string' => 'Nama lengkap harus berupa string.',
-                'name.max' => 'Nama lengkap tidak boleh lebih dari 255 karakter.',
-                'email.required' => 'Email wajib diisi.',
-                'email.email' => 'Format email tidak valid.',
-                'email.max' => 'Email tidak boleh lebih dari 255 karakter.',
-                'address.required' => 'Alamat wajib diisi.',
-                'address.string' => 'Alamat harus berupa string.',
-                'address.max' => 'Alamat tidak boleh lebih dari 255 karakter.',
-                'allergy.string' => 'Alergi harus berupa string.',
-                'allergy.max' => 'Alergi tidak boleh lebih dari 255 karakter.',
-                'blood_type.string' => 'Golongan darah harus berupa string.',
-                'blood_type.max' => 'Golongan darah tidak boleh lebih dari 3 karakter.',
-                'dob.date' => 'Tanggal lahir tidak valid.',
+                'blood_type' => 'nullable|string|max:3',
+                'dob' => 'nullable|date',
             ]);
 
             $user = Auth::user();
@@ -103,7 +88,7 @@ class AccountController extends Controller
 
             $patient = Patient::findOrFail($id);
 
-            // Cek apakah ada unggahan foto baru
+            // Check for a new profile picture upload
             if ($request->hasFile('profile_picture')) {
                 if ($patient->profile_picture && Storage::disk('public')->exists($patient->profile_picture)) {
                     Storage::disk('public')->delete($patient->profile_picture);
@@ -113,7 +98,7 @@ class AccountController extends Controller
                 $profilePicture = $patient->profile_picture;
             }
 
-            // Update dalam transaksi
+            // Update within a transaction
             DB::transaction(function () use ($user, $patient, $validated, $profilePicture) {
                 DB::table('users')->where('id', $user->id)->update([
                     'email' => $validated['email'],
@@ -124,6 +109,7 @@ class AccountController extends Controller
                     'name' => $validated['name'],
                     'address' => $validated['address'],
                     'dob' => $validated['dob'],
+                    'medical_record_id' => $validated['medical_record_id'], // Corrected field
                     'profile_picture' => $profilePicture,
                 ]);
 
@@ -142,7 +128,6 @@ class AccountController extends Controller
 
             return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
         } catch (ValidationException $e) {
-            // Kembali ke halaman sebelumnya dengan pesan error validasi
             return redirect()->back()
                 ->withErrors($e->validator)
                 ->withInput();
@@ -156,5 +141,4 @@ class AccountController extends Controller
                 ->withInput();
         }
     }
-
 }
