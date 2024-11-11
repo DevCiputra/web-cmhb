@@ -59,6 +59,24 @@
             </div>
         </div>
 
+        <!-- Skrining -->
+        <div class="dashboard-nav-dropdown {{ Request::is('screening-*') || Request::is('question-categories*') || Request::is('screening_classifications*') ? 'active' : '' }}">
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fas fa-heartbeat"></i> Skrining
+            </a>
+            <div class="dashboard-nav-dropdown-menu">
+                <a href="{{ route('screening-depretion.index') }}" class="dashboard-nav-dropdown-item {{ Request::is('screening-depretion') ? 'active' : '' }}">Skrining Depresi</a>
+
+                <!-- Menambahkan submenu untuk kategori soal -->
+                <a href="{{ route('question-categories.index') }}" class="dashboard-nav-dropdown-item {{ Request::is('question-categories*') ? 'active' : '' }}">Kategori Soal</a>
+
+                <!-- Menambahkan submenu untuk klasifikasi skrining -->
+                <a href="{{ route('screening-classifications.index') }}" class="dashboard-nav-dropdown-item {{ Request::is('screening-classifications*') ? 'active' : '' }}">Klasifikasi Skrining</a>
+
+            </div>
+        </div>
+
+        <!-- Pasien -->
         <a href="/patient-data" class="dashboard-nav-item {{ Request::is('patient-data') ? 'active' : '' }}">
             <i class="fas fa-user-circle"></i> Pasien
         </a>

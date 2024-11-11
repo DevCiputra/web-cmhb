@@ -26,7 +26,7 @@
             <div class="card-content">
                 <div class="icon-text">
                     <i class="fas fa-user-md"></i>
-                    <div>  
+                    <div>
                         <strong>30</strong>
                         <p>DOKTER SPESIALIS</p>
                     </div>
@@ -156,7 +156,7 @@
             <h1 style="margin-bottom: 10px;">What's New</h1>
             <p style="margin-bottom: 15px;">Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar
                 elementum tempus hac tellus libero accumsan.</p>
-            <a href="{{ route('coming-page') }}"  class="btn btn-semua"
+            <a href="{{ route('coming-page') }}" class="btn btn-semua"
                 style="color:#023770; font-size: 1.2rem; margin-top: -10px; margin-bottom: 10px">
                 Lihat Semua
                 <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
@@ -172,7 +172,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Title 1</h5>
                                 <p class="card-text">Some quick example text to build on the card.</p>
-                                <a href="{{ route('coming-page') }}"  class="btn btn-link">
+                                <a href="{{ route('coming-page') }}" class="btn btn-link">
                                     Selengkapnya
                                     <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
                                         class="chevron-icon">
@@ -191,7 +191,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Title 2</h5>
                                 <p class="card-text">Some quick example text to build on the card.</p>
-                                <a href="{{ route('coming-page') }}"  class="btn btn-link">
+                                <a href="{{ route('coming-page') }}" class="btn btn-link">
                                     Selengkapnya
                                     <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
                                         class="chevron-icon">
@@ -236,7 +236,7 @@
                         <h5 class="feature-title">Skrining Depresi</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
-                        <a href="{{ route('coming-page') }}"  class="btn btn-outline-success btn-lg rounded-pill">Coba Sekarang</a>
+                        <a href="{{ route('screening.form') }}" class="btn btn-outline-success btn-lg rounded-pill">Coba Sekarang</a>
                     </div>
                 </div>
                 <!-- Column 2 -->
@@ -245,7 +245,7 @@
                         <h5 class="feature-title">Body Mass Index (BMI)</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
-                        <a href="{{ route('coming-page') }}"  class="btn btn-success btn-lg rounded-pill">Coba Sekarang</a>
+                        <a href="{{ route('coming-page') }}" class="btn btn-success btn-lg rounded-pill">Coba Sekarang</a>
                     </div>
                 </div>
             </div>
@@ -296,21 +296,20 @@
 @push('scripts')
 <script src="{{ asset('js/navbar.js') }}"></script>
 <script>
+    // $(document).ready(function() {
+    //     // Menambahkan efek scroll halus untuk link dalam navbar
+    //     $('.nav-link, .dropdown-item').on('click', function(event) {
+    //         event.preventDefault();
+    //         var target = $(this).attr('href');
 
-// $(document).ready(function() {
-//     // Menambahkan efek scroll halus untuk link dalam navbar
-//     $('.nav-link, .dropdown-item').on('click', function(event) {
-//         event.preventDefault();
-//         var target = $(this).attr('href');
-        
-//         // Offset untuk scroll, menyesuaikan dengan tinggi navbar
-//         var offset = $('.nav').outerHeight(); 
-        
-//         $('html, body').animate({
-//             scrollTop: $(target).offset().top - offset
-//         }, 500);
-//     });
-// });
+    //         // Offset untuk scroll, menyesuaikan dengan tinggi navbar
+    //         var offset = $('.nav').outerHeight();
+
+    //         $('html, body').animate({
+    //             scrollTop: $(target).offset().top - offset
+    //         }, 500);
+    //     });
+    // });
 
     function toggleEmergencyButtons() {
         const buttons = document.getElementById("emergency-buttons");

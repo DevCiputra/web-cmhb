@@ -9,8 +9,13 @@ use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\OnlineConsultationController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\QuestionCategoryController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ScreeningClassificationController;
+use App\Http\Controllers\ScreeningOptionController;
+use App\Http\Controllers\ScreeningQuestionController;
+use App\Http\Controllers\ScreeningResultController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -56,6 +61,58 @@ Route::prefix('/')->group(function () {
         'indexLandingConsultation'
     ])->name('reservation.onlineconsultation.landing');
 });
+
+// SKRINING
+Route::group(
+    ['middleware' => ['checkrole:Pasien,Admin']],
+    function () {
+        Route::get('/screening', [ScreeningResultController::class, 'showForm'])->name('screening.form');
+        Route::post('/screening/submit', [ScreeningResultController::class, 'submitAnswers'])->name('screening.submit');
+
+        // Ubah route showResult untuk menerima answeredId
+        Route::get('/screening-result/{answeredId}', [ScreeningResultController::class, 'showResult'])->name('showResult');
+
+        // Route baru untuk riwayat skrining pasien
+        Route::get('/screening/history', [ScreeningResultController::class, 'showHistory'])->name('screening.history');
+    }
+);
+
+Route::group(
+    ['middleware' => ['checkrole:Admin']],
+    function () {
+        Route::get('/screening-depretion', [ScreeningQuestionController::class, 'index'])->name('screening-depretion.index');
+        Route::get('/screening-depretion/create', [ScreeningQuestionController::class, 'create'])->name('screening-depretion.create');
+        Route::post('/screening-depretion', [ScreeningQuestionController::class, 'store'])->name('screening-depretion.store');
+        Route::get('/screening-depretion/{question}/edit', [ScreeningQuestionController::class, 'edit'])->name('screening-depretion.edit');
+        Route::put('/screening-depretion/{question}', [ScreeningQuestionController::class, 'update'])->name('screening-depretion.update');
+        Route::delete('/screening-depretion/{question}', [ScreeningQuestionController::class, 'destroy'])->name('screening-depretion.destroy');
+
+        // CRUD untuk Opsi di setiap Pertanyaan
+        Route::get('/screening-depretion/{question}/options', [ScreeningOptionController::class, 'index'])->name('screening-depretion.screening-options.index');
+        Route::get('/screening-depretion/{question}/options/create', [ScreeningOptionController::class, 'create'])->name('screening-depretion.screening-options.create');
+        Route::post('/screening-depretion/{question}/options', [ScreeningOptionController::class, 'store'])->name('screening-depretion.screening-options.store');
+        Route::get('/screening-depretion/{question}/options/{option}/edit', [ScreeningOptionController::class, 'edit'])->name('screening-depretion.screening-options.edit');
+        Route::put('/screening-depretion/{question}/options/{option}', [ScreeningOptionController::class, 'update'])->name('screening-depretion.screening-options.update');
+        Route::delete('/screening-depretion/{question}/options/{option}', [ScreeningOptionController::class, 'destroy'])->name('screening-depretion.screening-options.destroy');
+
+        Route::get('/question-categories', [QuestionCategoryController::class, 'index'])->name('question-categories.index'); // Menampilkan daftar kategori
+        Route::get('/question-categories/create', [QuestionCategoryController::class, 'create'])->name('question-categories.create'); // Form tambah kategori
+        Route::post('/question-categories', [QuestionCategoryController::class, 'store'])->name('question-categories.store'); // Menyimpan kategori baru
+        Route::get('/question-categories/{questionCategory}/edit', [QuestionCategoryController::class, 'edit'])->name('question-categories.edit'); // Form edit kategori
+        Route::put('/question-categories/{questionCategory}', [QuestionCategoryController::class, 'update'])->name('question-categories.update'); // Memperbarui data kategori
+        Route::delete('/question-categories/{questionCategory}', [QuestionCategoryController::class, 'destroy'])->name('question-categories.destroy'); // Menghapus kategori
+
+        Route::get('/screening-classifications', [ScreeningClassificationController::class, 'index'])->name('screening-classifications.index'); // Menampilkan daftar klasifikasi
+        Route::get('/screening-classifications/create', [ScreeningClassificationController::class, 'create'])->name('screening-classifications.create'); // Form tambah klasifikasi
+        Route::post('/screening-classifications', [ScreeningClassificationController::class, 'store'])->name('screening-classifications.store'); // Menyimpan klasifikasi baru
+        Route::get('/screening-classifications/{id}/edit', [ScreeningClassificationController::class, 'edit'])->name('screening-classifications.edit'); // Form edit klasifikasi
+        Route::put('/screening-classifications/{id}', [ScreeningClassificationController::class, 'update'])->name('screening-classifications.update'); // Memperbarui klasifikasi
+        Route::delete('/screening-classifications/{id}', [ScreeningClassificationController::class, 'destroy'])->name('screening-classifications.destroy'); // Menghapus klasifikasi
+
+
+    }
+);
+
 
 
 // DOKTER
