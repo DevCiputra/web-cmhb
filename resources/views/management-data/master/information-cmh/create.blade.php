@@ -28,45 +28,46 @@
         <!-- Form Card -->
         <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-form" style="padding: 2rem;">
-                <form action="{{ route('information.data.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('information.data.store') }}" method="POST" enctype="multipart/form-data" onsubmit="return confirm('Apakah Anda yakin ingin menyimpan data?');">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan Nama">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan Nama" required>
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address" name="address" placeholder="Masukkan Alamat">
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Masukkan Alamat" required>
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Masukkan Nomor Telepon">
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Masukkan Nomor Telepon" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan Email">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email" required>
                     </div>
                     <div class="mb-3">
                         <label for="logo" class="form-label">Upload Logo</label>
-                        <input type="file" class="form-control" id="logo" name="logo" accept="image/*" placeholder="Upload Foto Logo">
+                        <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
                     </div>
                     <div class="mb-3">
                         <label for="vision" class="form-label">Vision</label>
-                        <input type="text" class="form-control" id="vision" name="vision" placeholder="Masukkan Visi">
+                        <input type="text" class="form-control" id="vision" name="vision" placeholder="Masukkan Visi" required>
                     </div>
                     <div class="mb-3">
                         <label for="mission" class="form-label">Mission</label>
-                        <input type="text" class="form-control" id="mission" name="mission" placeholder="Masukkan Misi">
+                        <input type="text" class="form-control" id="mission" name="mission" placeholder="Masukkan Misi" required>
                     </div>
                     <div class="mb-3">
                         <label for="emergency_contact" class="form-label">Emergency Contact</label>
-                        <input type="text" class="form-control" id="emergency_contact" name="emergency_contact" placeholder="Masukkan Kontak Darurat">
+                        <input type="text" class="form-control" id="emergency_contact" name="emergency_contact" placeholder="Masukkan Kontak Darurat" required>
                     </div>
                     <div class="mb-3">
                         <label for="customer_service_contact" class="form-label">Customer Service Contact</label>
-                        <input type="text" class="form-control" id="customer_service_contact" name="customer_service_contact" placeholder="Masukkan Kontak Layanan Pelanggan">
+                        <input type="text" class="form-control" id="customer_service_contact" name="customer_service_contact" placeholder="Masukkan Kontak Layanan Pelanggan" required>
                     </div>
                     <div class="d-flex justify-content-end">
+                        <a href="{{ route('information.data.index') }}" class="btn btn-secondary me-2">Kembali</a>
                         <button type="submit" class="btn btn-success" style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
                             Simpan
                         </button>

@@ -38,10 +38,7 @@
                     <h4 class="card-title" style="color: #1C3A6B"><b>Data Pasien</b></h4>
                     <div class="ms-auto">
                         <a href="/" style="text-decoration: none;">
-                            <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none;">
-                                <img src="{{ asset('icons/plus.svg') }}" width="16" height="16" style="filter: invert(100%); margin-right: 8px;" alt="Plus Icon">
-                                Tambah
-                            </button>
+
                         </a>
                     </div>
                 </div>

@@ -76,13 +76,18 @@
                         @enderror
                     </div>
                     <div class="d-flex justify-content-end">
+                        <!-- Tombol Batal -->
                         <a href="{{ route('user.data.index') }}" class="btn btn-secondary me-2" style="border-radius: 10px; padding: 8px 12px;">
                             Batal
                         </a>
-                        <button type="submit" class="btn btn-success" style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
+
+                        <!-- Tombol Simpan dengan konfirmasi -->
+                        <button type="submit" class="btn btn-success" style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;"
+                            onclick="return confirmSave()">
                             Simpan
                         </button>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -94,6 +99,10 @@
 @push('scripts')
 
 <script>
+    function confirmSave() {
+        return confirm('Apakah Anda yakin ingin menyimpan perubahan data ini?');
+    }
+
     const mobileScreen = window.matchMedia("(max-width: 990px )");
     $(document).ready(function() {
         $(".dashboard-nav-dropdown-toggle").click(function() {

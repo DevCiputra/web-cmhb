@@ -28,7 +28,7 @@
         <!-- Form Card -->
         <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px;">
             <div class="card-form" style="padding: 2rem;">
-                <form action="{{ route('role.data.update', $role->id) }}" method="POST">
+                <form action="{{ route('role.data.update', $role->id) }}" method="POST" onsubmit="return confirmSubmit();">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
@@ -36,6 +36,9 @@
                         <input type="text" class="form-control" id="name" name="name" value="{{ $role->name }}" placeholder="Masukkan Nama Role" required>
                     </div>
                     <div class="d-flex justify-content-end">
+                        <a href="{{ route('role.data.index') }}" class="btn btn-secondary me-2" style="border-radius: 10px; padding: 8px 12px;">
+                            Kembali
+                        </a>
                         <button type="submit" class="btn btn-success" style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
                             Simpan
                         </button>
@@ -70,5 +73,9 @@
             }
         });
     });
+
+    function confirmSubmit() {
+        return confirm('Apakah Anda yakin ingin menyimpan perubahan ini?');
+    }
 </script>
 @endpush

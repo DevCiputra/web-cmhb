@@ -31,7 +31,7 @@
                     <h4 class="card-title" style="color: #1C3A6B"><b>Data Role</b></h4>
                     <div class="ms-auto">
                         <a href="{{ route('role.data.create') }}" style="text-decoration: none;">
-                            <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none;">
+                            <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
                                 <img src="{{ asset('icons/plus.svg') }}" width="16" height="16" style="filter: invert(100%); margin-right: 8px;" alt="Plus Icon">
                                 Tambah
                             </button>
@@ -63,19 +63,18 @@
                                 <td>{{ $role->created_by }}</td>
                                 <td style="display: flex;">
                                     <a href="{{ route('role.data.edit', $role->id) }}">
-                                        <button class="btn btn-md" style="background-color: #0d6efd; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none; margin-right: 8px;">
+                                        <button class="btn btn-md" style="background-color: #0d6efd; color: #fff; border-radius: 10px; padding: 8px 12px; margin-right: 8px;">
                                             Edit
                                         </button>
                                     </a>
-                                    <form action="{{ route('role.data.destroy', $role->id) }}" method="POST">
+                                    <form action="{{ route('role.data.destroy', $role->id) }}" method="POST" onsubmit="return confirmDelete();">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-md" style="background-color: #dc3545; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none;">
+                                        <button type="submit" class="btn btn-md" style="background-color: #dc3545; color: #fff; border-radius: 10px; padding: 8px 12px;">
                                             Hapus
                                         </button>
                                     </form>
                                 </td>
-
                             </tr>
                             @endforeach
                         </tbody>
@@ -100,6 +99,10 @@
             ordering: true,
         });
     });
+
+    function confirmDelete() {
+        return confirm('Apakah Anda yakin ingin menghapus data ini?');
+    }
 </script>
 <script>
     const mobileScreen = window.matchMedia("(max-width: 990px )");
