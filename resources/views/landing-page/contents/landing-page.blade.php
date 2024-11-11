@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 hero-image">
-                        <img src="{{ asset('images/hero.jpg') }}" alt="Doctor and patient" class="img-fluid">
+                        <img src="{{ asset('images/cmh-new.jpeg') }}" alt="Doctor and patient" class="img-fluid">
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                     <div class="col-md-5 d-flex flex-column">
                         <a href="{{ route('medical-check-up') }}" class="reservation-item mb-3" id="card-mcu">
                             <div class="reservation-content">
-                                <img src="{{ asset('images/mcu.jpg') }}" alt="Medical Check Up" class="img-fluid">
+                                <img src="{{ asset('images/mcu-new.jpg') }}" alt="Medical Check Up" class="img-fluid">
                                 <div class="reservation-info">
                                     <h2>Medical Check Up (MCU)</h2>
                                 </div>
@@ -86,7 +86,7 @@
                         </a>
                         <a href="{{ route('coming-page') }}" class="reservation-item mb-3" id="card-home-service">
                             <div class="reservation-content">
-                                <img src="{{ asset('images/homeservice.jpg') }}" alt="Home Service" class="img-fluid">
+                                <img src="{{ asset('images/homeservice-new.jpg') }}" alt="Home Service" class="img-fluid">
                                 <div class="reservation-info">
                                     <h2> Layanan Home Service</h2>
                                 </div>
@@ -97,7 +97,7 @@
                     <div class="col-md-5 d-flex flex-column">
                         <a href="{{ route('polyclinic') }}" class="reservation-item mb-3" id="card-poliklinik">
                             <div class="reservation-content">
-                                <img src="{{ asset('images/poliklinik.jpg') }}" alt="Pendaftaran Poliklinik"
+                                <img src="{{ asset('images/poli-new.jpeg') }}" alt="Pendaftaran Poliklinik"
                                     class="img-fluid">
                                 <div class="reservation-info">
                                     <h2>Pendaftaran Poliklinik</h2>
@@ -107,7 +107,7 @@
                         <a href="{{ route('coming-page') }}" class="reservation-item mb-3"
                             id="card-konsultasi">
                             <div class="reservation-content">
-                                <img src="{{ asset('images/konsul.jpg') }}" alt="Konsultasi Online" class="img-fluid">
+                                <img src="{{ asset('images/konsul-new.jpeg') }}" alt="Konsultasi Online" class="img-fluid">
                                 <div class="reservation-info">
                                     <h2>Konsultasi Online</h2>
                                 </div>

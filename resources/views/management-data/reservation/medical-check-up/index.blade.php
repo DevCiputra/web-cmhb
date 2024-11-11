@@ -59,7 +59,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <h5 class="title card-title">{{ $service->title }}</h5>
                             <div class="icon-group d-flex">
-                                <a href="{{ route('reservation.mcu.detail', $service->id) }}" class="btn btn-info btn-sm btn-e">
+                                <a href="{{ route('reservation.mcu.detail', $service->id) }}" class="btn btn-sm btn-e">
                                     <img src="{{ asset('icons/eye-fill.svg') }}" alt="View Details" class="eye-icon">
                                 </a>
                                 <a href="{{ route('reservation.mcu.edit', $service->id) }}" class="btn btn-edit btn-sm btn-e">
