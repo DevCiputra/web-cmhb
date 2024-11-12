@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <h5>Tetntang Kami</h5>
+                <h5>Tentang Kami</h5>
                 <p>Ciputra Mitra Hospital selalu mengutamakan kepentingan dan kepuasan pasien dalam memberikan layanan kesehatan. Kami berkomitmen untuk menyediakan perawatan kesehatan yang terbaik, aman, dan berkualitas tinggi dengan biaya yang efisien, dengan motto “care for your health and happiness.</p>
             </div>
             <div class="col-md-4">

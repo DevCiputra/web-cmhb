@@ -1,15 +1,27 @@
 @extends('landing-page.layouts.app')
 
 @section('content')
+<!-- Breadcrumb Section -->
+<div class="container" style="margin-top: 110px;">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Beranda</a></li>
+            <li class="breadcrumb-item"><a href="/account">Profil</a></li>
+            <li class="breadcrumb-item"><a href="/account?tab=riwayat-skrining">Riwayat Skrining</a></li>
+            <li class="breadcrumb-item active" style="color: #023770" aria-current="page">Hasil Skrining</li>
+        </ol>
+    </nav>
+</div>
+
 <div class="container" style="margin-top: 80px;">
     <div class="header-section">
-        <h1 class="h3">Hasil Skrining Psikologi</h1>
+        <h1 class="h3" style="color: #023770;">Hasil Skrining Psikologi</h1>
         <p class="text-muted">Berikut adalah hasil dari skrining psikologi Anda.</p>
     </div>
 
     <!-- Ringkasan Hasil Kategori -->
-    <div class="card mb-4">
-        <div class="card-header text-center">
+    <div class="card mb-4" style="background-color: #f0f7ff;">
+        <div class="card-header text-center" style="background-color: #023770; color: white;">
             <h4>Ringkasan Hasil Skrining</h4>
         </div>
         <div class="card-body text-center">
@@ -22,8 +34,8 @@
     <div class="row">
         @foreach(['stress', 'anxiety', 'depression'] as $category)
         <div class="col-md-4">
-            <div class="card mb-4">
-                <div class="card-header text-center">
+            <div class="card mb-4" style="background-color: #f9fafe;">
+                <div class="card-header text-center" style="background-color: #023770; color: white;">
                     <h4>Klasifikasi {{ ucfirst($category) }}</h4>
                 </div>
                 <div class="card-body text-center">
@@ -37,12 +49,12 @@
 
     <!-- Tabel Ringkasan Jawaban -->
     <div class="card mb-4">
-        <div class="card-header">
+        <div class="card-header" style="background-color: #023770; color: white;">
             <h4>Ringkasan Jawaban</h4>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="background-color: #f3f8ff;">
             <table class="table table-striped">
-                <thead>
+                <thead style="background-color: #023770; color: white;">
                     <tr>
                         <th>Pertanyaan</th>
                         <th>Jawaban</th>
@@ -62,19 +74,19 @@
 
     <!-- Button to View Screening History -->
     <div class="text-end mt-3 mb-3">
-        <a href="{{ route('screening.history') }}" class="btn btn-secondary" style="border-radius: 10px; background-color: #023770; color:white">
+        <a href="{{ route('account-index', ['tab' => 'riwayat-skrining']) }}" class="btn btn-secondary" style="border-radius: 10px; background-color: #023770; color: white;">
             Lihat Riwayat Skrining
         </a>
     </div>
 </div>
 @endsection
 
-@push('scripts')
-<script src="{{ asset('js/navbar.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-@endpush
-
 @push('styles')
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/consultation.css') }}">
+@endpush
+
+@push('scripts')
+<script src="{{ asset('js/navbar.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @endpush

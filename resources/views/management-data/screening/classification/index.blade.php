@@ -19,6 +19,19 @@
                         </ol>
                     </nav>
                 </div>
+
+                <div class="d-flex align-items-center gap-2">
+                    <form method="GET" action="{{ route('screening-classifications.index') }}">
+                        <select class="form-control" name="category_filter" onchange="this.form.submit()">
+                            <option value="">Filter berdasarkan Kategori</option>
+                            @foreach($categories as $category)
+                            <option value="{{ $category }}" {{ request('category_filter') == $category ? 'selected' : '' }}>
+                                {{ $category }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -29,20 +42,11 @@
         @endif
 
         <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px;">
-            <div>
+            <div class="card-form">
                 <div class="d-flex mb-3">
-                    <h5 class="card-title" style="color: #1C3A6B"><b>Daftar Klasifikasi Skrining</b></h5>
+                    <h5 class="card-title-screening" style="color: #1C3A6B"><b>Daftar Klasifikasi Skrining</b></h5>
                     <div class="ms-auto">
-                        <form method="GET" action="{{ route('screening-classifications.index') }}">
-                            <select class="form-control" name="category_filter" onchange="this.form.submit()">
-                                <option value="">Filter berdasarkan Kategori</option>
-                                @foreach($categories as $category)
-                                <option value="{{ $category }}" {{ request('category_filter') == $category ? 'selected' : '' }}>
-                                    {{ $category }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </form>
+                        
                     </div>
                     <div class="ms-auto">
                         <a href="{{ route('screening-classifications.create') }}" style="text-decoration: none;">
@@ -74,13 +78,22 @@
                             <td>{{ $classification->max_score }}</td>
                             <td>{{ $classification->category_name }}</td> <!-- Menampilkan kategori -->
                             <td>
-                                <a href="{{ route('screening-classifications.edit', $classification->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                <form action="{{ route('screening-classifications.destroy', $classification->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus klasifikasi ini?')">
+                                <a href="{{ route('screening-classifications.edit', $classification->id) }}"
+                                   class="btn btn-warning btn-sm" 
+                                   style="border-radius: 8px; padding: 6px 12px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; height: 38px; margin-right: 8px;">
+                                    Edit
+                                </a>
+                                <form action="{{ route('screening-classifications.destroy', $classification->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                    <button type="submit" 
+                                            class="btn btn-danger btn-sm" 
+                                            style="border-radius: 8px; padding: 6px 12px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; height: 38px;" 
+                                            onclick="return confirm('Apakah Anda yakin ingin menghapus klasifikasi ini?')">
+                                        Hapus
+                                    </button>
                                 </form>
-                            </td>
+                            </td>   
                         </tr>
                         @endforeach
                     </tbody>

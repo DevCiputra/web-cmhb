@@ -571,6 +571,16 @@ h1, .h1 {
     padding: 8px 12px;
 }
 
+.custom-btn {
+    border-radius: 8px;
+    padding: 6px 12px;  /* Consistent padding for all buttons */
+    font-size: 14px;     /* Consistent font size */
+    display: flex;       /* Flexbox to center content */
+    align-items: center; /* Vertically center the text */
+    justify-content: center; /* Horizontally center the text */
+    height: 38px;        /* Same height for all buttons */
+}
+
 .btn-custom img {
     filter: invert(100%);
     margin-right: 8px;

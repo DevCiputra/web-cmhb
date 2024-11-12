@@ -20,6 +20,23 @@
                         </ol>
                     </nav>
                 </div>
+
+                <div class="d-flex align-items-center gap-2">
+                    <form action="{{ route('screening-depretion.index') }}" method="GET">
+                        <div class="d-flex align-items-center">
+                            <select name="category_id" class="form-control me-2" style="width: 500px;">
+                                <option value="">Pilih Kategori</option>
+                                @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="btn btn-primary" style="background-color: #007858; color: #fff; border-radius: 10px; padding: 10px 12px; border: none;">Filter</button>
+                        </div>
+                    </form>
+                </div>
+                
             </div>
         </div>
 
@@ -29,29 +46,10 @@
         </div>
         @endif
 
-        <!-- Filter Kategori -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <form action="{{ route('screening-depretion.index') }}" method="GET">
-                    <div class="d-flex align-items-center">
-                        <select name="category_id" class="form-control me-2">
-                            <option value="">Pilih Kategori</option>
-                            @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                            @endforeach
-                        </select>
-                        <button type="submit" class="btn btn-primary">Filter</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
         <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px;">
             <div class="card-form">
                 <div class="d-flex mb-3">
-                    <h5 class="card-title" style="color: #1C3A6B"><b>Daftar Soal Skrining</b></h5>
+                    <h5 class="card-title-screening" style="color: #1C3A6B"><b>Daftar Soal Skrining </b></h5>
                     <div class="ms-auto">
                         <a href="{{ route('screening-depretion.create') }}" style="text-decoration: none;">
                             <button class="btn btn-md btn-success" style="border-radius: 10px;">
@@ -62,14 +60,14 @@
                     </div>
                 </div>
                 <div class="d-flex mb-4">
-                    <p class="card-text">Berikut merupakan daftar soal skrining dalam bentuk card yang interaktif.</p>
+                    <p class="card-text">Berikut merupakan daftar soal skrinin. dalam bentuk card yang interaktif.</p>
                 </div>
                 <div class="row row-cols-1 row-cols-md-4 g-4">
                     @foreach($questions as $question)
                     <div class="col">
                         <div class="card h-100" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                             <div class="card-body">
-                                <h5 class="card-title" style="color: #1C3A6B;">{{ $question->question_text }}</h5>
+                                <h5 class="card-title-screening" style="color: #1C3A6B;">{{ $question->question_text }}</h5>
                                 <p class="card-text">
                                     <span class="text-muted">Kategori: {{ $question->category->name }}</span>
                                     @if($question->options->isEmpty())
@@ -84,16 +82,22 @@
                                 </p>
                             </div>
                             <div class="card-footer d-flex justify-content-between">
-                                <a href="{{ route('screening-depretion.edit', $question->id) }}" class="btn btn-sm btn-primary" style="border-radius: 8px;">Edit</a>
+                                <a href="{{ route('screening-depretion.edit', $question->id) }}" class="btn btn-sm btn-secondary custom-btn">
+                                    Edit Pertanyaan
+                                </a>
                                 <form action="{{ route('screening-depretion.destroy', $question->id) }}" method="POST" onsubmit="return confirmDeletion(event)">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm" style="background-color: #dc3545; color: #fff; border-radius: 8px;">
+                                    <button type="submit" class="btn btn-sm custom-btn btn-danger">
                                         Hapus
                                     </button>
                                 </form>
-                                <a href="{{ route('screening-depretion.screening-options.index', $question->id) }}" class="btn btn-sm btn-info" style="border-radius: 8px;">Kelola Opsi</a>
+                                <a href="{{ route('screening-depretion.screening-options.index', $question->id) }}" class="btn btn-sm btn-info custom-btn">
+                                    Kelola Opsi
+                                </a>
                             </div>
+                            
+                            
                         </div>
                     </div>
                     @endforeach

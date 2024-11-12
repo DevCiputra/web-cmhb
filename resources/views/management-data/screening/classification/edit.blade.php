@@ -15,6 +15,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('question-categories.index') }}">Klasifikasi Skrining</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Edit Klasifikasi Skrining</li>
                         </ol>
                     </nav>
@@ -22,8 +23,8 @@
             </div>
         </div>
 
-        <div class="card">
-            <div>
+        <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px;">
+            <div class="card-form">
                 <form action="{{ route('screening-classifications.update', $classification->id) }}" method="POST">
                     @csrf
                     @method('PUT')
@@ -54,7 +55,7 @@
                         <input type="number" class="form-control" id="max_score" name="max_score" value="{{ $classification->max_score }}" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                </form>
+                </form> 
             </div>
         </div>
     </div>
