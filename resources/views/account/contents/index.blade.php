@@ -386,18 +386,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const riwayatContent = document.getElementById('nav-profile');
     const riwayatSkriningContent = document.getElementById('nav-riwayat-skrining');
 
-    // Check if there's a saved active tab in localStorage, otherwise set default to 'Informasi Pribadi'
+    // Set default active tab if there's no saved active tab in localStorage
     if (!localStorage.getItem('activeTab')) {
         localStorage.setItem('activeTab', 'profile-info-tab');
-        infoTab.classList.add('active');
-        infoContent.classList.add('show', 'active');
-        riwayatTab.classList.remove('active');
-        riwayatContent.classList.remove('show', 'active');
-        riwayatSkriningTab.classList.remove('active');
-        riwayatSkriningContent.classList.remove('show', 'active');
     }
 
-    // Get the last active tab from localStorage and activate it
+    // Activate the last saved tab or default tab
     const lastTab = localStorage.getItem('activeTab');
     const activeTab = document.getElementById(lastTab);
     if (activeTab) {
@@ -412,14 +406,14 @@ document.addEventListener("DOMContentLoaded", function () {
         tab.addEventListener('click', function () {
             localStorage.setItem('activeTab', this.id); // Save the active tab to localStorage
 
-            // Remove active class and show class from all tabs and their contents
+            // Remove active and show classes from all tabs and contents
             tabs.forEach(t => {
                 t.classList.remove('active');
                 const content = document.getElementById(t.getAttribute('aria-controls'));
                 content.classList.remove('show', 'active');
             });
 
-            // Add active class to the clicked tab
+            // Add active and show classes to the clicked tab
             this.classList.add('active');
             const content = document.getElementById(this.getAttribute('aria-controls'));
             content.classList.add('show', 'active');
@@ -431,36 +425,54 @@ document.addEventListener("DOMContentLoaded", function () {
     const tab = urlParams.get('tab');
 
     if (tab === 'riwayat') {
-        // Switch to Riwayat Pesanan tab if 'riwayat' is in the URL
-        riwayatTab.classList.add('active');
-        riwayatContent.classList.add('show', 'active');
-        infoTab.classList.remove('active');
-        infoContent.classList.remove('show', 'active');
-        riwayatSkriningTab.classList.remove('active');
-        riwayatSkriningContent.classList.remove('show', 'active');
+        switchTab(riwayatTab, riwayatContent);
         localStorage.setItem('activeTab', 'nav-profile-tab');
     } else if (tab === 'riwayat-skrining') {
-        // Switch to Riwayat Skrining tab if 'riwayat-skrining' is in the URL
-        riwayatSkriningTab.classList.add('active');
-        riwayatSkriningContent.classList.add('show', 'active');
-        infoTab.classList.remove('active');
-        infoContent.classList.remove('show', 'active');
-        riwayatTab.classList.remove('active');
-        riwayatContent.classList.remove('show', 'active');
+        switchTab(riwayatSkriningTab, riwayatSkriningContent);
         localStorage.setItem('activeTab', 'nav-riwayat-skrining-tab');
     } else {
-        // Default to 'Informasi Pribadi' tab if no 'tab' param is found
-        infoTab.classList.add('active');
-        infoContent.classList.add('show', 'active');
-        riwayatTab.classList.remove('active');
-        riwayatContent.classList.remove('show', 'active');
-        riwayatSkriningTab.classList.remove('active');
-        riwayatSkriningContent.classList.remove('show', 'active');
+        switchTab(infoTab, infoContent); // Default to 'Informasi Pribadi' tab
+        localStorage.setItem('activeTab', 'profile-info-tab');
     }
-});
 
+    // Handle switching tabs when selecting from the navbar dropdown menu
+    const dropdownItems = document.querySelectorAll('.navbar-dropdown-item');
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetTab = this.getAttribute('data-tab');
+            switch (targetTab) {
+                case 'riwayat':
+                    switchTab(riwayatTab, riwayatContent);
+                    localStorage.setItem('activeTab', 'nav-profile-tab');
+                    break;
+                case 'riwayat-skrining':
+                    switchTab(riwayatSkriningTab, riwayatSkriningContent);
+                    localStorage.setItem('activeTab', 'nav-riwayat-skrining-tab');
+                    break;
+                default:
+                    switchTab(infoTab, infoContent); // Default to 'Informasi Pribadi'
+                    localStorage.setItem('activeTab', 'profile-info-tab');
+                    break;
+            }
+        });
+    });
 
+    // Function to handle tab switching
+    function switchTab(tab, content) {
+        // Remove active and show classes from all tabs and contents
+        tabs.forEach(t => {
+            t.classList.remove('active');
+            const content = document.getElementById(t.getAttribute('aria-controls'));
+            content.classList.remove('show', 'active');
+        });
 
+        // Add active and show classes to the specified tab and content
+        tab.classList.add('active');
+        content.classList.add('show', 'active');
+    }
+
+    // Function for expanding/collapsing emergency buttons
     function toggleEmergencyButtons() {
         const buttons = document.getElementById("emergency-buttons");
         buttons.classList.toggle("expand");
@@ -471,8 +483,11 @@ document.addEventListener("DOMContentLoaded", function () {
             buttons.style.maxHeight = "0px"; // Collapse the sub-menu
         }
     }
+});
 </script>
 @endpush
+
+
 
 
 

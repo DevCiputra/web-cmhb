@@ -66,6 +66,7 @@
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{ route('account-index') }}">Informasi Pribadi</a></li>
                 <li><a class="dropdown-item" href="{{ route('account-index', ['tab' => 'riwayat']) }}">Riwayat Pemesanan</a></li>
+                <li><a class="dropdown-item" href="{{ route('account-index', ['tab' => 'riwayat-skrining']) }}">Riwayat Skrining</a></li>
                 <li>
                     <a href="{{ route('logout') }}" class="dropdown-item btn-logout"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
