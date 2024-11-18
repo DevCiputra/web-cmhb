@@ -227,7 +227,20 @@
                             onclick="copyToClipboard('{{ $reservation->doctorConsultationReservation->zoom_link }}')">
                             <i class="bi bi-clipboard"></i> Copy
                         </button>
-
+                        @else
+                        <span class="text-muted">Belum Tersedia</span>
+                        @endif
+                    </p>
+                    <p><strong>ID Zoom (Pasien):</strong><br>
+                        @if ($reservation->doctorConsultationReservation->zoom_meeting_id)
+                        {{ $reservation->doctorConsultationReservation->zoom_meeting_id }}
+                        @else
+                        <span class="text-muted">Belum Tersedia</span>
+                        @endif
+                    </p>
+                    <p><strong>Password Zoom (Pasien):</strong><br>
+                        @if ($reservation->doctorConsultationReservation->zoom_password)
+                        {{ $reservation->doctorConsultationReservation->zoom_password }}
                         @else
                         <span class="text-muted">Belum Tersedia</span>
                         @endif
@@ -245,17 +258,27 @@
                             onclick="copyToClipboard('{{ $reservation->doctorConsultationReservation->zoom_host_link }}')">
                             <i class="bi bi-clipboard"></i> Copy
                         </button>
-
                         @else
                         <span class="text-muted">Belum Tersedia</span>
                         @endif
                     </p>
-
-                    <p><strong>Password Meeting:</strong>
-                        {{ $reservation->doctorConsultationReservation->zoom_password ?? 'Tidak Ada' }}
+                    <p><strong>ID Zoom (Dokter):</strong><br>
+                        @if ($reservation->doctorConsultationReservation->zoom_host_id)
+                        {{ $reservation->doctorConsultationReservation->zoom_host_id }}
+                        @else
+                        <span class="text-muted">Belum Tersedia</span>
+                        @endif
+                    </p>
+                    <p><strong>Password Zoom (Dokter):</strong><br>
+                        @if ($reservation->doctorConsultationReservation->zoom_host_password)
+                        {{ $reservation->doctorConsultationReservation->zoom_host_password }}
+                        @else
+                        <span class="text-muted">Belum Tersedia</span>
+                        @endif
                     </p>
                 </div>
             </div>
+
 
             <div id="copyAlert" class="alert alert-success position-fixed top-0 end-0 m-3 d-none" role="alert">
                 Link berhasil disalin!

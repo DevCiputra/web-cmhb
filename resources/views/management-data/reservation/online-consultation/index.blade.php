@@ -226,10 +226,11 @@
             // Apply filter
             table.column(7).search(dateValue).draw();
         });
+
+        // Auto refresh the page every 5 minutes (300000 ms)
+        setInterval(function() {
+            location.reload();
+        }, 300000); // 300000ms = 5 minutes
     });
 </script>
-@endpush
-
-@push('styles')
-<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 @endpush

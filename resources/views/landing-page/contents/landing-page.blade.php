@@ -8,13 +8,9 @@
             <div class="row align-items-center">
                 <div class="col-md-6 hero-text">
                     <h1>Care For Your Health & Happiness</h1>
-                    <p>Jaga kesehatan Anda dengan layanan medis yang terpercaya dan dukungan profesional dari para ahli.
-                    </p>
+                    <p>Jaga kesehatan Anda dengan layanan medis yang terpercaya dan dukungan profesional dari para ahli.</p>
                     <div class="hero-buttons">
-                        {{-- <a href="#" class="btn btn-success btn-lg"
-                            style="margin-right: 0.5rem; border-radius: 30px;">Reservasi</a> --}}
-                        <a href="/doctor" class="btn btn-outline-success btn-lg" style="border-radius: 30px;">Cari
-                            Dokter</a>
+                        <a href="/doctor" class="btn btn-outline-success btn-lg" style="border-radius: 30px;">Cari Dokter</a>
                     </div>
                 </div>
                 <div class="col-md-6 hero-image">
@@ -27,22 +23,22 @@
                 <div class="icon-text">
                     <i class="fas fa-user-md"></i>
                     <div>
-                        <strong>30</strong>
+                        <strong>52</strong>
                         <p>DOKTER SPESIALIS</p>
                     </div>
                 </div>
                 <div class="icon-text">
                     <i class="fas fa-bed"></i>
                     <div>
-                        <strong>40</strong>
+                        <strong>156</strong>
                         <p>BEDS</p>
                     </div>
                 </div>
+                <!-- Teks Center of Excellence -->
                 <div class="icon-text">
                     <i class="fas fa-heartbeat"></i>
                     <div>
-                        <strong>Cardiac Center</strong>
-                        <p>CENTER OF EXCELLENCE</p>
+                        <p id="center-of-excellence" style="cursor: pointer;"> <strong>CENTER OF EXCELLENCE</strong></p>
                     </div>
                 </div>
             </div>
@@ -54,7 +50,7 @@
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-md-6 doctor-image">
-                    <img src="{{ asset('images/doctors.jpg') }}" alt="Doctors" class="img-fluid">
+                    <img src="{{ asset('images/alldok.jpg') }}" alt="Doctors" class="img-fluid">
                 </div>
                 <div class="col-md-6 doctor-text">
                     <h1>Temukan Dokter Profesional</h1>
@@ -86,7 +82,7 @@
                     </a>
                     <a href="{{ route('coming-page') }}" class="reservation-item mb-3" id="card-home-service">
                         <div class="reservation-content">
-                            <img src="{{ asset('images/homeservice-new.jpg') }}" alt="Home Service" class="img-fluid">
+                            <img src="{{ asset('images/homeservis.png') }}" alt="Home Service" class="img-fluid">
                             <div class="reservation-info">
                                 <h2> Layanan Home Service</h2>
                             </div>
@@ -95,7 +91,7 @@
                 </div>
                 <!-- Column 2 -->
                 <div class="col-md-5 d-flex flex-column">
-                    <a href="{{ route('polyclinic') }}" class="reservation-item mb-3" id="card-poliklinik">
+                    <a href="{{ route('coming-page') }}" class="reservation-item mb-3" id="card-poliklinik">
                         <div class="reservation-content">
                             <img src="{{ asset('images/poli-new.jpeg') }}" alt="Pendaftaran Poliklinik"
                                 class="img-fluid">
@@ -104,10 +100,10 @@
                             </div>
                         </div>
                     </a>
-                    <a href="{{ route('coming-page') }}" class="reservation-item mb-3"
+                    <a href="{{ route('onlineconsultation.landing') }}" class="reservation-item mb-3"
                         id="card-konsultasi">
                         <div class="reservation-content">
-                            <img src="{{ asset('images/konsul-new.jpeg') }}" alt="Konsultasi Online" class="img-fluid">
+                            <img src="{{ asset('images/konsul-dokter.jpg') }}" alt="Konsultasi Online" class="img-fluid">
                             <div class="reservation-info">
                                 <h2>Konsultasi Online</h2>
                             </div>
@@ -149,7 +145,7 @@
     </div>
 
     <!-- Information Section -->
-    <div id="info" class="info-section">
+    <!-- <div id="info" class="info-section">
         <div class="container">
             <h1 style="margin-bottom: 10px;">What's New</h1>
             <p style="margin-bottom: 15px;">Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar
@@ -219,34 +215,41 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Feature Section -->
-<div id="feature" class="feature-section">
-    <div class="container">
-        <h1>Jelajahi Fitur Kami</h1>
-        <p>Temukan berbagai fitur yang dapat membantu Anda untuk menjalani hidup yang lebih sehat dan lebih baik.</p>
-        <div class="row g-4">
-            <!-- Column 1 -->
-            <div class="col-md-6">
-                <div class="feature-item" style="background-color: #DFF2ED;">
-                    <h5 class="feature-title">Skrining Depresi</h5>
-                    <p class="card-text">Lakukan skrining untuk mengetahui potensi depresi dan dapatkan rekomendasi tindakan selanjutnya yang sesuai.</p>
-                    <a href="{{ route('screening.form') }}" class="btn btn-outline-success btn-lg rounded-pill">Mulai Skrining</a>
+    <div id="feature" class="feature-section">
+        <div class="container">
+            <h1>Jelajahi Fitur Kami</h1>
+            <p>Temukan berbagai fitur yang dapat membantu Anda untuk menjalani hidup yang lebih sehat dan lebih baik.</p>
+            <div class="row g-4">
+                <!-- Column 1 -->
+                <div class="col-md-6">
+                    <div class="feature-item" style="background-color: #DFF2ED;">
+                        <h5 class="feature-title">Screening depression, anxiety & stress</h5>
+                        <p class="card-text">Lakukan screening untuk mengetahui potensi depresi, kecemasan dan stres. dapatkan rekomendasi tindakan selanjutnya yang sesuai.</p>
+                        <a href="{{ route('screening.form') }}" class="btn btn-outline-success btn-lg rounded-pill">Mulai Skrining</a>
+                    </div>
                 </div>
-            </div>
-            <!-- Column 2 -->
-            <div class="col-md-6">
-                <div class="feature-item" style="border-color: #CCE4DE;">
-                    <h5 class="feature-title">Body Mass Index (BMI)</h5>
-                    <p class="card-text">Cek status kesehatan tubuh Anda untuk mengetahui apakah berat badan Anda ideal.</p>
-                    <a href="{{ route('coming-page') }}" class="btn btn-success btn-lg rounded-pill">Coba Sekarang</a>
+                <!-- Column 2 -->
+                <div class="col-md-6">
+                    <div class="feature-item" style="border-color: #CCE4DE;">
+                        <h5 class="feature-title">Body Mass Index (BMI)</h5>
+                        <p class="card-text">Cek status kesehatan tubuh Anda untuk mengetahui apakah berat badan Anda ideal.</p>
+                        <a href="{{ route('coming-page') }}" class="btn btn-success btn-lg rounded-pill">Coba Sekarang</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
+    <!-- Modal Custom -->
+    <div id="excellenceModal" class="modal">
+        <div class="modal-content">
+            <button type="button" class="close">&times;</button>
+            <img src="{{ asset('images/coe-chp.png') }}" alt="Center of Excellence" class="img-fluid">
+        </div>
+    </div>
 
     <!-- Emergency Section -->
     <!-- Emergency FAB -->
@@ -265,56 +268,46 @@
             <i class="fa-solid fa-phone"></i>
         </a>
     </div>
-
-
-    {{-- <div id="emergency" class="emergency-section">
-            <div class="container">
-                <div class="card emergency-card border-0 shadow-sm">
-                    <div class="row g-0">
-                        <div class="col-md-8 p-4">
-                            <h1 class="display">IGD 24 JAM</h1>
-                            <h1 class="display">Layanan Emergency</h1>
-                        </div>
-                        <div class="col-md-4 d-flex flex-column justify-content-center p-4">
-                            <div class="emergency-buttons d-flex flex-column align-items-end">
-                                <a href="#" class="btn btn-danger btn-lg mb-2 rounded-pill">IGD: (0511) 6743
-                                    911</a>
-                                <a href="#" class="btn btn-outline-danger btn-lg rounded-pill">WA:
-                                    +625116743911</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
 </div>
 @endsection
 @push('scripts')
 <script src="{{ asset('js/navbar.js') }}"></script>
 <script>
-    // $(document).ready(function() {
-    //     // Menambahkan efek scroll halus untuk link dalam navbar
-    //     $('.nav-link, .dropdown-item').on('click', function(event) {
-    //         event.preventDefault();
-    //         var target = $(this).attr('href');
-
-    //         // Offset untuk scroll, menyesuaikan dengan tinggi navbar
-    //         var offset = $('.nav').outerHeight();
-
-    //         $('html, body').animate({
-    //             scrollTop: $(target).offset().top - offset
-    //         }, 500);
-    //     });
-    // });
-
     function toggleEmergencyButtons() {
         const buttons = document.getElementById("emergency-buttons");
-        buttons.classList.toggle("expand");
+        const isExpanded = buttons.classList.toggle("expand");
 
-        if (buttons.style.maxHeight === "0px" || buttons.style.maxHeight === "") {
-            buttons.style.maxHeight = "200px"; // Expand the sub-menu (adjust height as needed)
-        } else {
-            buttons.style.maxHeight = "0px"; // Collapse the sub-menu
+        // Set maxHeight untuk animasi expand/collapse
+        buttons.style.maxHeight = isExpanded ? "200px" : "0px";
+    }
+</script>
+
+
+<!-- JavaScript untuk mengontrol modal -->
+<script>
+    // JavaScript for controlling modal
+    const excellenceBtn = document.getElementById('center-of-excellence');
+    const modal = document.getElementById('excellenceModal');
+    const closeModal = document.querySelector('.close');
+
+    // Open the modal when the icon is clicked
+    excellenceBtn.onclick = function() {
+        modal.style.display = 'block';
+        // Adding a slight delay to show modal after animation starts
+        setTimeout(function() {
+            modal.style.opacity = 1;
+        }, 100);
+    }
+
+    // Close the modal when the close button is clicked
+    closeModal.onclick = function() {
+        modal.style.display = 'none';
+    }
+
+    // Close the modal if the user clicks outside of it
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
         }
     }
 </script>
@@ -322,4 +315,91 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
+<!-- CSS untuk modal -->
+<style>
+    /* Modal Styling */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Black background with opacity */
+        overflow: auto;
+        padding-top: 60px;
+        /* Spacing from the top */
+        animation: fadeIn 0.5s ease-out;
+        /* Fade-in effect when modal opens */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        /* Center the modal */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 800px;
+        /* Maximum width for a larger modal */
+        border-radius: 10px;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+        /* Soft shadow for depth */
+        transform: translateY(-30px);
+        animation: slideUp 0.5s ease-out forwards;
+        /* Slide-up effect when modal opens */
+    }
+
+    /* Close Button */
+    .close {
+        color: #aaa;
+        font-size: 36px;
+        font-weight: bold;
+        background-color: transparent;
+        border: none;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #ff4040;
+        /* Red color when hovering */
+    }
+
+    /* Image Styling */
+    .modal-body img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    /* Fade-in and Slide-up Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(-30px);
+        }
+
+        to {
+            transform: translateY(0);
+        }
+    }
+</style>
 @endpush

@@ -64,9 +64,6 @@
             </div>
             @endif
         </div>
-
-
-
         <div class="card-body consultation-card-body">
             <!-- Informasi Konsultasi Section -->
             <h5 class="card-title consultation-section-title">Informasi Konsultasi</h5>
@@ -162,13 +159,27 @@
             </div>
         </div>
     </div>
-    @endsection
+    <!-- Disclaimer Section -->
+    <div>
+        <div class="alert alert-warning" role="alert">
+            <strong>Disclaimer:</strong> Informasi pada halaman ini adalah hasil dari proses sistem otomatis. Jika terdapat kesalahan data atau Anda memiliki pertanyaan lebih lanjut, harap segera hubungi layanan pelanggan kami.
+        </div>
+    </div>
+</div>
 
-    @push('scripts')
-    <script src="{{ asset('js/navbar.js') }}"></script>
-    @endpush
+@endsection
 
-    @push('styles')
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/consultation.css') }}">
-    @endpush
+@push('scripts')
+<script src="{{ asset('js/navbar.js') }}"></script>
+<script>
+    // Refresh the page every 30 seconds
+    setTimeout(function() {
+        location.reload();
+    }, 60000);
+</script>
+@endpush
+
+@push('styles')
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('css/consultation.css') }}">
+@endpush

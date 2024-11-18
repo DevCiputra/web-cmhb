@@ -40,7 +40,6 @@
                         <input type="text" class="form-control" id="specialization_name" name="specialization_name" value="{{ old('specialization_name', $doctor->specialization_name) }}" placeholder="Masukkan Spesialis" required>
                     </div>
 
-
                     <div class="mb-3">
                         <label for="education" class="form-label">Latar Belakang Pendidikan</label>
                         <textarea class="form-control" id="education" name="education" rows="4" placeholder="Masukkan Latar Belakang Pendidikan">{{ $doctor->education->name ?? '' }}</textarea>
@@ -56,27 +55,21 @@
                         <select class="form-select" id="doctor_polyclinic_id" name="doctor_polyclinic_id" required>
                             <option value="">Pilih Poliklinik</option>
                             @foreach ($polyclinics as $polyclinic)
-                            <option value="{{ $polyclinic->id }}" {{ $doctor->doctor_polyclinic_id == $polyclinic->id ? 'selected' : '' }}>
-                                {{ $polyclinic->name }}
-                            </option>
+                            <option value="{{ $polyclinic->id }}" {{ $doctor->doctor_polyclinic_id == $polyclinic->id ? 'selected' : '' }}>{{ $polyclinic->name }}</option>
                             @endforeach
                         </select>
                     </div>
 
+                    <!-- Jadwal Praktek sebagai teks bebas menggunakan Trix Editor untuk view edit -->
                     <div class="mb-3">
                         <label for="doctor_schedule" class="form-label">Jadwal Praktek</label>
-                        <div id="doctor_schedule">
-                            @foreach($daysInIndonesian as $indonesianDay => $englishDay)
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="{{ strtolower($englishDay) }}" name="doctor_schedule[days][]" value="{{ $englishDay }}" {{ in_array($englishDay, $doctor->schedules->pluck('day_of_week')->toArray()) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="{{ strtolower($englishDay) }}">{{ $indonesianDay }}</label>
-                                <div class="d-flex">
-                                    <input type="time" class="form-control me-2" id="{{ strtolower($englishDay) }}_start" name="doctor_schedule[start_time][{{ $englishDay }}]" value="{{ $doctor->schedules->where('day_of_week', $englishDay)->first()->start_time ?? '' }}">
-                                    <input type="time" class="form-control" id="{{ strtolower($englishDay) }}_end" name="doctor_schedule[end_time][{{ $englishDay }}]" value="{{ $doctor->schedules->where('day_of_week', $englishDay)->first()->end_time ?? '' }}">
-                                </div>
-                            </div>
-                            @endforeach                            
+                        <input id="doctor_schedule" type="hidden" name="doctor_schedule" value="{{ old('doctor_schedule', $schedule ?? '') }}">
+                        <trix-editor input="doctor_schedule" placeholder="Masukkan jadwal praktek dokter secara bebas (contoh: Senin - Jumat, 09:00 - 17:00)"></trix-editor>
+                        @error('doctor_schedule')
+                        <div class="invalid-feedback">
+                            {{ $message }}
                         </div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -100,15 +93,43 @@
                         <label for="consultation_fee" class="form-label">Biaya Konsultasi (IDR)</label>
                         <input type="number" class="form-control" id="consultation_fee" name="consultation_fee" placeholder="Masukkan Biaya Konsultasi" value="{{ old('consultation_fee', $doctor->consultation_fee) }}" required>
                     </div>
+
                     <!-- Input email -->
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="email" class="form-label">Email Dokter</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="Masukan Email Dokter untuk keperluan konsultasi online" value="{{ old('email', $doctor->email) }}" required>
+                    </div> -->
+
+                    <!-- Input for new fields -->
+                    <!-- <div class="mb-3">
+                        <label for="is_published" class="form-label">Status Publikasi</label>
+                        <select class="form-select" id="is_published" name="is_published" required>
+                            <option value="1" {{ $doctor->is_published == '1' ? 'selected' : '' }}>Tersedia</option>
+                            <option value="0" {{ $doctor->is_published == '0' ? 'selected' : '' }}>Tidak Tersedia</option>
+                        </select>
+                    </div> -->
+
+                    <div class="mb-3">
+                        <label for="is_open_consultation" class="form-label">Status Konsultasi</label>
+                        <select class="form-select" id="is_open_consultation" name="is_open_consultation" required>
+                            <option value="1" {{ $doctor->is_open_consultation == '1' ? 'selected' : '' }}>Buka Konsultasi</option>
+                            <option value="0" {{ $doctor->is_open_consultation == '0' ? 'selected' : '' }}>Tutup Konsultasi</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="is_open_reservation" class="form-label">Status Reservasi</label>
+                        <select class="form-select" id="is_open_reservation" name="is_open_reservation" required>
+                            <option value="1" {{ $doctor->is_open_reservation == '1' ? 'selected' : '' }}>Buka Reservasi</option>
+                            <option value="0" {{ $doctor->is_open_reservation == '0' ? 'selected' : '' }}>Tutup Reservasi</option>
+                        </select>
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ route('doctor.data.index') }}" class="btn btn-secondary d-flex align-items-center justify-content-center">Kembali</a>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a href="{{ route('doctor.data.index') }}" class="btn btn-secondary d-inline-block">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </a>
+                        <button type="submit" class="btn btn-primary d-inline-block">Simpan Data Dokter</button>
                     </div>
                 </form>
             </div>

@@ -24,10 +24,9 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // Validasi input dengan pesan khusus
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:15|regex:/^[a-zA-Z0-9_.-]*$/',
+            'username' => 'required|string|max:15|regex:/^[a-zA-Z0-9_.-]*$/|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'whatsapp' => 'required|string|max:20|regex:/^08\d{8,11}$/',
@@ -37,6 +36,7 @@ class AuthController extends Controller
             'username.required' => 'Nama pengguna wajib diisi.',
             'username.max' => 'Nama pengguna harus maksimal 15 karakter.',
             'username.regex' => 'Nama pengguna hanya boleh berisi huruf, angka, titik, garis bawah, atau tanda hubung.',
+            'username.unique' => 'Nama pengguna tidak tersedia. Silakan gunakan nama lain.',
             'email.required' => 'Alamat email wajib diisi.',
             'email.email' => 'Format alamat email tidak valid.',
             'email.unique' => 'Alamat email sudah terdaftar.',
@@ -50,6 +50,7 @@ class AuthController extends Controller
             'profile_picture.mimes' => 'Foto profil harus berformat: jpeg, png, atau jpg.',
             'profile_picture.max' => 'Ukuran foto profil maksimal :max kilobytes.',
         ]);
+
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -125,18 +126,20 @@ class AuthController extends Controller
                 case 'Admin':
                     return redirect()->route('dashboard-page')->with('success', 'Selamat datang, ' . $user->name . ' (Admin)!');
                 case 'Pasien':
-                    // Use the patient's name instead
                     return redirect()->route('account-index')->with('success', 'Selamat datang, ' . ($patient ? $patient->name : 'User') . '!');
                 case 'HBD':
                     return redirect()->route('reservation.mcu.index')->with('success', 'Selamat datang, HBD!');
+                case 'PLP':
+                    return redirect()->route('reservation.onlineconsultation.index')->with('success', 'Selamat datang, PLP!');
                 default:
                     auth()->logout();
                     return redirect()->route('login')->with('error', 'Peran pengguna tidak valid.');
             }
         }
 
-        return redirect()->back()->with('error', 'username atau kata sandi salah.')->withInput();
+        return redirect()->back()->with('error', 'Username atau kata sandi salah.')->withInput();
     }
+
 
 
     public function logout(Request $request)

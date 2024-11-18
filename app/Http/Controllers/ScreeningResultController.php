@@ -107,11 +107,26 @@ class ScreeningResultController extends Controller
             ]
         ];
 
-        return view('landing-page.contents.screening.result', compact('result', 'title', 'answeredScreening'));
+        // Menambahkan saran dan URL berdasarkan klasifikasi total_distress
+        if ($result['total_distress']['classification'] === 'Ringan' || $result['total_distress']['classification'] === 'Sedang') {
+            $suggestion = "Silakan konsultasi dengan psikolog / psikiater bila keluhan belum membaik.";
+            $onlineConsultationUrl = route('onlineconsultation.landing');
+        } elseif ($result['total_distress']['classification'] === 'Berat' || $result['total_distress']['classification'] === 'Sangat Berat') {
+            $suggestion = "Silakan SEGERA konsultasi dengan psikolog / psikiater.";
+            $onlineConsultationUrl = route('onlineconsultation.landing');
+        } else {
+            $suggestion = "Tidak ada saran khusus, pertahankan kondisi anda.";
+            $onlineConsultationUrl = null; // Tidak ada URL jika tidak perlu konsultasi
+        }
+
+        return view('landing-page.contents.screening.result', compact('result', 'title', 'answeredScreening', 'suggestion', 'onlineConsultationUrl'));
     }
+
+
 
     public function showHistory()
     {
+        $title = "Riwayat Screening Psikologi";
         $user = auth()->user();
 
         if (!$user || !$user->patient) {
@@ -121,6 +136,6 @@ class ScreeningResultController extends Controller
         $patientId = $user->patient->id;
         $histories = AnsweredScreening::where('patient_id', $patientId)->with(['responses.question', 'responses.option'])->get();
 
-        return view('landing-page.contents.screening.history', compact('histories'));
+        return view('landing-page.contents.screening.history', compact('histories', 'title'));
     }
 }

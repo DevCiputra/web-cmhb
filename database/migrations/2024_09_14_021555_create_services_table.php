@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->text('special_information');
             $table->foreignId('service_category_id')->constrained('service_categories')->onDelete('cascade');
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->boolean('is_published');
             $table->string('price');
             $table->timestamps();

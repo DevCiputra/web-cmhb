@@ -66,7 +66,13 @@
     <div class="important-info">
         <p><strong>Password Zoom Meeting:</strong> {{ $invoice->doctorConsultationReservation->zoom_password ?? 'N/A' }}</p>
     </div>
+    @if($invoice->doctorConsultationReservation->zoom_meeting_id)
+    <div class="important-info">
+        <p><strong>ID Zoom Meeting:</strong> {{ $invoice->doctorConsultationReservation->zoom_meeting_id }}</p>
+    </div>
     @endif
+    @endif
+
 
     <!-- Section for Patient Details -->
     <h4 class="mb-4 mt-5" style="color: #023770;">Detail Pasien</h4>

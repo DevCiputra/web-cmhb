@@ -1,18 +1,19 @@
 @extends('landing-page.layouts.app')
 
 @section('content')
-<div class="container" style="margin-top: 80px;">
+
+<div class="container">
 
     <!-- Consent Modal -->
     <div class="modal fade" id="consentModal" tabindex="-1" aria-labelledby="consentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="consentModalLabel">Pemberitahuan Skrining Psikologi</h5>
+                    <h5 class="modal-title" id="consentModalLabel">Pemberitahuan Screening Psikologi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Dengan melanjutkan pengisian kuesioner ini, Anda setuju untuk mengikuti skrining psikologi. Harap dicatat, setelah mengisi kuesioner ini, disarankan untuk mencari informasi lebih lanjut kepada ahli terkait jika diperlukan.</p>
+                    <p>Dengan melanjutkan pengisian kuesioner ini, Anda setuju untuk mengikuti pemeriksaan depresi, kecemasan dan stres. Harap dicatat, dalam 1 minggu setelah mengisi kuesioner ini, disarankan untuk mencari informasi lebih lanjut kepada ahli terkait jika diperlukan.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" id="closeModalBtn">Tutup</button>
@@ -23,58 +24,61 @@
     </div>
 
     <!-- Breadcrumb Section -->
-    <div class="container" style="margin-top: 110px;">
+    <div style="margin-top: 110px;">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/account">Profile</a></li>
-                <li class="breadcrumb-item"><a href="/account">Skrining Psikologi</a></li>
+                <li class="breadcrumb-item"><a href="/">Beranda</a></li>
+                <li class="breadcrumb-item"><a href="/account">Profil</a></li>
+                <li class="breadcrumb-item"><a href="/screening">Screening Psikologi</a></li>
                 <li class="breadcrumb-item active" style="color: #023770" aria-current="page">Isi Kuesioner</li>
             </ol>
         </nav>
     </div>
 
-    <div class="header-section">
-        <h1 class="h3">Skrining Psikologi</h1>
-        <p class="text-muted">Isi setiap pertanyaan dengan memilih jawaban yang sesuai.</p>
-    </div>
-
-    @if (auth()->check())
-    <form id="screeningForm" action="{{ route('screening.submit') }}" method="POST">
-        @csrf
-        <div class="question-slide-container">
-            @foreach ($questions as $index => $question)
-            <div class="question-slide" style="display: {{ $index === 0 ? 'block' : 'none' }};">
-                <div class="form-group mb-4">
-                    <label class="form-label">{{ $question->question_text }}</label>
-                    @foreach ($question->options as $option)
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="answers[{{ $question->id }}]"
-                            id="option_{{ $option->id }}" value="{{ $option->id }}" required>
-                        <label class="form-check-label" for="option_{{ $option->id }}">
-                            {{ $option->option_text }}
-                        </label>
-                    </div>
-                    @endforeach
-                </div>
-
-                <!-- Navigation Buttons -->
-                <div class="form-group text-end mt-2">
-                    @if ($index > 0)
-                    <button type="button" class="btn btn-secondary px-4 me-2" onclick="prevSlide()">Kembali</button>
-                    @endif
-                    @if ($index < count($questions) - 1)
-                    <button type="button" class="btn btn-primary px-4" onclick="nextSlide({{ $question->id }})">Selanjutnya</button>
-                    @else
-                    <button type="submit" class="btn btn-primary px-5"
-                        style="background-color: #007858; border-color: #007858; border-radius: 12px;">
-                        Submit
-                    </button>
-                    @endif
-                </div>
-            </div>
-            @endforeach
+    <div style="margin-top: 80px;">
+        <div class="header-section">
+            <h1 class="h3">Screening Psikologi</h1>
+            <p class="text-muted">Isi setiap pertanyaan dengan memilih jawaban yang sesuai.</p>
         </div>
-    </form>
+
+        @if (auth()->check())
+        <form id="screeningForm" action="{{ route('screening.submit') }}" method="POST">
+            @csrf
+            <div class="question-slide-container">
+                @foreach ($questions as $index => $question)
+                <div class="question-slide" style="display:{{ $index === 0 ? 'block' : 'none' }};">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{ $question->question_text }}</label>
+                        @foreach ($question->options as $option)
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="answers[{{ $question->id }}]"
+                                id="option_{{ $option->id }}" value="{{ $option->id }}" required>
+                            <label class="form-check-label" for="option_{{ $option->id }}">
+                                {{ $option->option_text }}
+                            </label>
+                        </div>
+                        @endforeach
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="form-group text-end mt-2">
+                        @if ($index > 0)
+                        <button type="button" class="btn btn-secondary px-4 me-2" onclick="prevSlide()">Kembali</button>
+                        @endif
+                        @if ($index < count($questions) - 1)
+                            <button type="button" class="btn btn-primary px-4" onclick="nextSlide({{ $question->id }})">Selanjutnya</button>
+                            @else
+                            <button type="submit" class="btn btn-primary px-5"
+                                style="background-color: #007858; border-color: #007858; border-radius: 12px;">
+                                Submit
+                            </button>
+                            @endif
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </form>
+    </div>
 
     <!-- Tautan ke Riwayat Skrining -->
     <div class="text-end mt-3 mb-3">
@@ -141,4 +145,12 @@
 @push('styles')
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/screening.css') }}">
+<style>
+    main {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        /* Mengatur tinggi minimum keseluruhan layar */
+    }
+</style>
 @endpush

@@ -81,44 +81,17 @@
                         @enderror
                     </div>
 
+                    <!-- Jadwal Praktek sebagai teks bebas menggunakan Trix Editor -->
                     <div class="mb-3">
                         <label for="doctor_schedule" class="form-label">Jadwal Praktek</label>
-                        <div id="schedule-container">
-                            <div class="schedule-row mb-2">
-                                <div class="row align-items-center">
-                                    <div class="col-md-4">
-                                        <label for="day" class="form-label">Hari</label>
-                                        <div class="input-group">
-                                            <select name="doctor_schedule[days][]" class="form-select" required>
-                                                <option value="">Pilih Hari</option>
-                                                <option value="Monday">Senin</option>
-                                                <option value="Tuesday">Selasa</option>
-                                                <option value="Wednesday">Rabu</option>
-                                                <option value="Thursday">Kamis</option>
-                                                <option value="Friday">Jumat</option>
-                                                <option value="Saturday">Sabtu</option>
-                                                <option value="Sunday">Minggu</option>
-                                            </select>
-                                            <button type="button" class="btn btn-danger remove-schedule">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="start_time" class="form-label">Jam Mulai</label>
-                                        <input type="time" class="form-control" name="doctor_schedule[start_time][]" required>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="end_time" class="form-label">Jam Selesai</label>
-                                        <input type="time" class="form-control" name="doctor_schedule[end_time][]" required>
-                                    </div>
-                                </div>
-                            </div>
+                        <input id="doctor_schedule" type="hidden" name="doctor_schedule" value="{{ old('doctor_schedule') }}">
+                        <trix-editor input="doctor_schedule" placeholder="Masukkan jadwal praktek dokter secara bebas (contoh: Senin - Jumat, 09:00 - 17:00)"></trix-editor>
+                        @error('doctor_schedule')
+                        <div class="invalid-feedback">
+                            {{ $message }}
                         </div>
-                        <button type="button" id="add-schedule" class="btn btn-primary">Tambah Jadwal Lain</button>
+                        @enderror
                     </div>
-                    
-                    
 
                     <div class="mb-3">
                         <label for="doctor_photos" class="form-label">Foto Dokter</label>
@@ -147,13 +120,24 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="email" class="form-label">Email Dokter</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email Dokter untuk keperluan Konsultasi Online" required value="{{ old('email') }}">
                         @error('email')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
+                    </div> -->
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="is_open_consultation" name="is_open_consultation" value="1">
+                        <label class="form-check-label" for="is_open_consultation">Buka Konsultasi</label>
                     </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="is_open_reservation" name="is_open_reservation" value="1">
+                        <label class="form-check-label" for="is_open_reservation">Buka Reservasi</label>
+                    </div>
+
 
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-success"

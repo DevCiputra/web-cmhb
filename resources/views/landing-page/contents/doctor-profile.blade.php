@@ -1,5 +1,6 @@
 @extends('landing-page.layouts.app')
 
+
 @section('content')
 
 <!-- Main Container -->
@@ -21,13 +22,15 @@
             <h1 class="doctor-name">{{ $doctor->name }}</h1>
             <h3 class="doctor-specialist">{{ $doctor->specialization_name }}</h3>
             <div class="doctor-photo">
-                @if($doctor->photos->isNotEmpty())
-                <img src="{{ asset('storage/doctor/photos/' . $doctor->id . '/' . $doctor->photos->first()->name) }}" alt="{{ $doctor->name }}" class="img-fluid">
-                @else
-                <img src="{{ asset('images/default-doctor.png') }}" alt="Default Doctor" class="img-fluid">
-                @endif
+                @php
+                $photoUrl = $doctor->photos->isNotEmpty()
+                ? asset('storage/doctor/photos/' . $doctor->id . '/' . $doctor->photos->first()->name)
+                : asset('images/userplaceholder.png');
+                @endphp
+                <img src="{{ $photoUrl }}" alt="{{ $doctor->name ?? 'Default Doctor' }}" class="img-fluid">
             </div>
         </div>
+
 
         <!-- Doctor Education Section -->
         <div class="doctor-education">
@@ -38,26 +41,25 @@
         </div>
 
         <!-- Doctor Schedule Section -->
-        <div class="doctor-schedule">
-            <h4>Jadwal Praktek</h4>
-            <ul>
+        <div class="doctor-schedule" style="margin-top: 2rem;">
+            <h4 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem; color: #023770;">Jadwal Praktek</h4>
+            <div style="font-size: 1rem; color: #444444;">
                 @if($doctor->schedules->isNotEmpty())
                 @foreach($doctor->schedules as $schedule)
-                <li class="schedule-item">
-                    <!-- Menampilkan day_of_week, start_time, dan end_time dengan nama hari dalam Bahasa Indonesia -->
-                    {{ getIndonesianDay($schedule->day_of_week) }}: {{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }}
-                </li>
+                <!-- Menampilkan jadwal sesuai dengan format JSON atau teks dari kolom schedule -->
+                <p>{!! $schedule->schedule !!}</p>
                 @endforeach
                 @else
-                <li>Jadwal praktek tidak tersedia.</li>
+                <p>Jadwal praktek tidak tersedia.</p>
                 @endif
-            </ul>
+            </div>
         </div>
 
+
         <!-- Bagian Media (CV) Dokter -->
+        @if($doctor->medias->isNotEmpty())
         <div class="doctor-media mt-5">
             <h3>Dokumen Pendukung</h3>
-            @if($doctor->medias->isNotEmpty())
             <ul>
                 @foreach($doctor->medias as $media)
                 <li>
@@ -67,34 +69,35 @@
                 </li>
                 @endforeach
             </ul>
-            @else
-            <p>Tidak ada dokumen pendukung.</p>
-            @endif
         </div>
+        @endif
 
         <div class="doctor-action-buttons">
+            @if($doctor->is_open_reservation == 1)
             <a href="{{ $doctor->address }}" target="_blank" class="btn btn-reservasi">Reservasi</a>
+            @endif
+
+            @if($doctor->is_open_consultation == 1)
             <a href="{{ route('consultation.form', ['doctor_id' => $doctor->id]) }}" class="btn btn-konsultasi">Konsultasi Online</a>
+            @endif
         </div>
     </div>
 
-        <!-- Emergency Section -->
-        <!-- Emergency FAB -->
-        <div id="emergency" class="emergency-fab">
-            <!-- Sub-menu FAB buttons that will collapse/expand -->
-            <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
-                <a href="tel:+625116743911" class="btn btn-success btn-lg mb-2 rounded-circle">
-                    <i class="fas fa-ambulance"></i>
-                </a>
-                <a href="https://api.whatsapp.com/send?phone=6278033212250&text=Saya%20tertarik%20layanan%20di%20Ciputra%20Hospital%20saya%20ingin%20informasi%20mengenai...."
-                    class="btn btn-outline-success btn-lg rounded-circle mb-2" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-            </div>
-            <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle" onclick="toggleEmergencyButtons()">
-                <i class="fa-solid fa-phone"></i>
+    <!-- Emergency Section -->
+    <div id="emergency" class="emergency-fab">
+        <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
+            <a href="tel:+625116743911" class="btn btn-success btn-lg mb-2 rounded-circle">
+                <i class="fas fa-ambulance"></i>
+            </a>
+            <a href="https://api.whatsapp.com/send?phone=6278033212250&text=Saya%20tertarik%20layanan%20di%20Ciputra%20Hospital%20saya%20ingin%20informasi%20mengenai...."
+                class="btn btn-outline-success btn-lg rounded-circle mb-2" target="_blank">
+                <i class="fab fa-whatsapp"></i>
             </a>
         </div>
+        <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle" onclick="toggleEmergencyButtons()">
+            <i class="fa-solid fa-phone"></i>
+        </a>
+    </div>
 </div>
 
 @endsection
@@ -119,20 +122,3 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/dokter_profile.css') }}">
 @endpush
-
-@php
-function getIndonesianDay($day)
-{
-    $days = [
-        'Sunday' => 'Minggu',
-        'Monday' => 'Senin',
-        'Tuesday' => 'Selasa',
-        'Wednesday' => 'Rabu',
-        'Thursday' => 'Kamis',
-        'Friday' => 'Jumat',
-        'Saturday' => 'Sabtu',
-    ];
-    
-    return $days[$day] ?? $day; // return original if not found
-}
-@endphp

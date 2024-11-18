@@ -19,7 +19,8 @@ class DoctorConsultationReservation extends Model
         'agreed_consultation_time',
         'zoom_link',
         'zoom_password',
-        'zoom_host_link'
+        'zoom_host_link',
+        'zoom_meeting_id'
     ];
 
     // Relasi dengan model Reservation

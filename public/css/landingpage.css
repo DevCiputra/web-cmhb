@@ -177,7 +177,7 @@ a:hover {
     margin-top: 12rem; /* Jarak atas (margin top) */
     text-align: center;
     background: rgb(244,249,255);
-    background: linear-gradient(360deg, rgba(244,249,255,1) 0%, rgba(227,239,255,1) 12%, rgba(255,255,255,1) 75%); 
+    background: linear-gradient(360deg, rgba(244,249,255,1) 0%, rgba(227,239,255,1) 12%, rgba(255,255,255,1) 75%);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -509,13 +509,16 @@ a:hover {
     opacity: 0; /* Sembunyikan tombol saat collapse */
     transform: translateY(-10px); /* Sedikit geser ke atas */
     transition: transform 0.3s ease, opacity 0.3s ease; /* Tambahkan transisi untuk animasi */
+    pointer-events: none; /* Nonaktifkan interaksi */
 }
 
 /* Expand style untuk tombol-tombol sub-menu */
 .emergency-buttons.expand a {
     opacity: 1; /* Tampilkan tombol saat expand */
     transform: translateY(0); /* Kembalikan posisi ke normal */
+    pointer-events: auto; /* Aktifkan interaksi */
 }
+
 
 /* Animation for hover effect on FAB */
 .fab-btn:hover {
@@ -795,7 +798,7 @@ a:hover {
     .reservation-section .row {
         flex-direction: column;
     }
-    
+
     .col-md-5, .col-md-7 {
         flex-basis: 100%;
         max-width: 100%;
@@ -826,7 +829,7 @@ a:hover {
         background-size:35%;
         background-repeat: repeat;
     }
-    
+
     .info-item {
         max-height: 400px;
         max-width: 250px;
@@ -875,10 +878,10 @@ a:hover {
         margin-top: -8rem;
     }
 
-    .doctor-section, 
-    .reservation-section, 
-    .promotion-section, 
-    .info-section, 
+    .doctor-section,
+    .reservation-section,
+    .promotion-section,
+    .info-section,
     .feature-section {
         margin-top: 1rem;
         margin-bottom: 2rem;
@@ -887,7 +890,7 @@ a:hover {
     .footer {
         padding-top: 1.75rem;
         padding-bottom: 1.75rem;
-    }   
+    }
 }
 
 

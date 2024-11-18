@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Panggil seeder lainnya di sini
-        $this->call(DoctorPolyclinicSeeder::class);
         $this->call(ServiceCategorySeeder::class);
 
         $this->call([

@@ -292,27 +292,23 @@ class OnlineConsultationController extends Controller
             // Proses pembuatan meeting Zoom
             try {
                 $zoomAccount = $this->getNextZoomAccount();
-                $zoomMeeting = $this->createMeeting(new Request([
-                    'title' => "Konsultasi dengan Dr. {$reservation->doctorConsultationReservation->doctor->name}",
+                $zoomMeeting = $this->createMeeting(new Request(['title' => "Konsultasi dengan {$reservation->doctorConsultationReservation->doctor->name}",
                     'start_date_time' => "{$validated['agreed_consultation_date']} {$validated['agreed_consultation_time']}",
-                    'duration_in_minute' => 60,
-                    'alternative_hosts' => $reservation->doctorConsultationReservation->doctor->email,
+                    'duration_in_minute' => 40,
                 ]), $reservation->id);
 
-                // Simpan link dan info Zoom di database
-                $reservation->doctorConsultationReservation->update([
-                    'zoom_link' => $zoomMeeting['join_url'],
+                // Simpan link, password, dan ID Zoom di database
+                $reservation->doctorConsultationReservation->update(['zoom_link' => $zoomMeeting['join_url'],
                     'zoom_host_link' => $zoomMeeting['start_url'],
-                    'zoom_password' => $zoomMeeting['password'],
+                    'zoom_password' => $zoomMeeting['password'],'zoom_meeting_id' => $zoomMeeting['id'], // Simpan ID Zoom Meeting
                 ]);
 
-                return redirect()->back()->with('success',
+                return redirect()->back()->with(
+                    'success',
                     'Reservasi Berhasil Diterima dan Zoom Meeting Dijadwalkan'
                 );
             } catch (\Throwable $th) {
-                Log::error('Error creating Zoom meeting:',
-                    ['error' => $th->getMessage()]
-                );
+                Log::error('Error creating Zoom meeting:', ['error' => $th->getMessage()]);
                 return redirect()->back()->with('error', 'Gagal Membuat Penjadwalan');
             }
         }
@@ -326,7 +322,6 @@ class OnlineConsultationController extends Controller
             'title' => 'required|string|max:255',
             'start_date_time' => 'required|date',
             'duration_in_minute' => 'required|numeric',
-            'alternative_hosts' => 'required|email',
         ]);
 
         $zoomAccount = $this->getActiveZoomAccount();
@@ -342,10 +337,11 @@ class OnlineConsultationController extends Controller
                 'settings' => [
                     'host_video' => true,
                     'participant_video' => true,
-                    'join_before_host' => true,
+                    'join_before_host' => false,
                     'waiting_room' => true,
                     'meeting_authentication' => false,
                     'approval_type' => 0,
+                    'require_registration' => false,  // Disable registration (no need for participants to sign up)
                 ],
             ]);
 

@@ -16,11 +16,11 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'username' => 'admin_user',
-                'email' => 'admin@example.com',
-                'password' => Hash::make('password123'), // Ganti dengan password yang aman
+                'username' => 'AuthWebHMC',
+                'email' => 'auth@ciputramitrahospital.id',
+                'password' => Hash::make('Pqwerasd4321'), // Ganti dengan password yang aman
                 'role' => 'Admin',
-                'whatsapp' => '628123456789',
+                'whatsapp' => '081298765431',
                 'profile_picture' => null, // Profile picture dikosongkan
             ]
         ]);

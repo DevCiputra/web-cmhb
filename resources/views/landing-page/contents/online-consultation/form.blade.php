@@ -73,17 +73,38 @@
                             <p class="consultation-fee">Rp. {{ number_format($doctor->consultation_fee, 0, ',', '.') }}</p>
                         </div>
 
-                        <!-- Button Submit -->
-                        <div class="form-group text-end">
-                            <button type="submit" class="btn btn-primary px-5" style="height: 48px; background-color: #007858; border-color: #007858; border-radius: 12px;">Reservasi</button>
+                        <div class="form-group text-end d-flex justify-content-between align-items-center flex-wrap">
+                            <!-- Link to Terms and Conditions -->
+                            <a href="{{ route('terms-and-conditions') }}"
+                                class="btn btn-outline-secondary px-3 mb-2 mb-md-0 mx-2 btn-sm btn-md-lg"
+                                style="border-radius: 12px; flex: 1; text-align: center;">
+                                <i class="bi bi-file-earmark-text"></i> Disclaimer
+                            </a>
+
+                            <!-- Button Reservasi -->
+                            <button type="submit"
+                                class="btn btn-primary px-5 mb-2 mb-md-0 mx-2 btn-sm btn-md-lg"
+                                style="height: 48px; background-color: #007858; border-color: #007858; border-radius: 12px; flex: 1; text-align: center;">
+                                Reservasi
+                            </button>
                         </div>
+
                     </form>
+
+                    <!-- Disclaimer Alert -->
+                    <div class="alert alert-info mt-4" role="alert" style="border-radius: 12px;">
+                        <h4 class="alert-heading">Pemberitahuan Penting</h4>
+                        <p>Pastikan bahwa informasi yang Anda masukkan sudah benar. Setelah Anda melakukan reservasi, tim kami akan menghubungi Anda untuk konfirmasi waktu konsultasi. Biaya konsultasi tidak dapat dikembalikan setelah reservasi berhasil diproses.</p>
+                        <hr>
+                        <p class="mb-0">Dengan melanjutkan, Anda setuju dengan ketentuan ini.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
 
 @push('scripts')
 <script src="{{ asset('js/navbar.js') }}"></script>

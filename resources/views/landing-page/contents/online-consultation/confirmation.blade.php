@@ -91,7 +91,6 @@
                         <option selected>Pilih Bank</option>
                         <option value="BCA">BCA</option>
                         <option value="Mandiri">Mandiri</option>
-                        <option value="BRI">BRI</option>
                     </select>
                     @error('payment_method')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -147,13 +146,10 @@
 
             // Display corresponding bank account information based on the selected bank
             if (selectedBank === 'BCA') {
-                rekeningText.textContent = '1234567890 - a.n Ciputra Mitra Hospital';
+                rekeningText.textContent = '5020887887 - a.n PT. CIPUTRA MITRA MEDIKA';
                 rekeningInfo.style.display = 'block';
             } else if (selectedBank === 'Mandiri') {
-                rekeningText.textContent = '0987654321 - a.n PT. Ciputra Mitra Hospital';
-                rekeningInfo.style.display = 'block';
-            } else if (selectedBank === 'BRI') {
-                rekeningText.textContent = '1122334455 - a.n PT. Ciputra Mitra Hospital';
+                rekeningText.textContent = '0310022077799 - a.n PT. CIPUTRA MITRA MEDIKA';
                 rekeningInfo.style.display = 'block';
             } else {
                 rekeningInfo.style.display = 'none'; // Hide if no valid selection

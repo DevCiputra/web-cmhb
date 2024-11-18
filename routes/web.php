@@ -10,6 +10,7 @@ use App\Http\Controllers\MasterController;
 use App\Http\Controllers\OnlineConsultationController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\QuestionCategoryController;
+use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ScreeningClassificationController;
@@ -133,6 +134,8 @@ Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
     Route::get('/consultation-detail/{id}', [OnlineConsultationController::class, 'showConsultationDetail'])->name('consultation.detail');
     Route::get('/consultation-invoice/{id}', [OnlineConsultationController::class, 'showInvoice'])->name('consultation.invoice');
     Route::post('/consultation-payment/{id}', [OnlineConsultationController::class, 'confirmPayment'])->name('consultation.payment');
+    Route::get('/terms-and-conditions', [RegulationController::class, 'termsAndConditions'])->name('terms-and-conditions');
+
 });
 
 // OFFICE MANAGEMENT ONLINE CONSULTATION DATA
@@ -193,6 +196,10 @@ Route::get('/information-promote', [InformationController::class, 'indexPromote'
 // DOCTOR MANAGEMENT DATA
 Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
     Route::get('/doctor-data', [DoctorController::class, 'indexDataDoctor'])->name('doctor.data.index');
+
+    Route::post('/doctor-data/{id}/update-published', [DoctorController::class, 'updatePublishedStatus'])->name('doctor.data.updatePublished');
+
+
     Route::get('/doctor-data/create', [DoctorController::class, 'create'])->name('doctor.data.create');
     Route::post('/doctor-data/store', [DoctorController::class, 'store'])->name('doctor.data.store');
     Route::get('/doctor-data/{id}/edit', [DoctorController::class, 'edit'])->name('doctor.data.edit');

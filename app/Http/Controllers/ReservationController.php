@@ -62,7 +62,7 @@ class ReservationController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'special_information' => 'required|string',
-            'address' => 'required|string',
+            'address' => 'string',
             'price' => 'required|numeric',
             'media' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048' // Validasi foto
         ]);

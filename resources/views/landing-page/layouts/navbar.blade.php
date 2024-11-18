@@ -21,17 +21,24 @@
             <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Reservasi</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="/medical-check-up">Medical Check Up (MCU)</a></li>
-                <li><a class="dropdown-item" href="/polyclinic">Pendaftaran Poli</a></li>
+                <li><a class="dropdown-item" href="{{ route('coming-page') }}">Pendaftaran Poli</a></li>
                 <li><a class="dropdown-item" href="{{ route('coming-page') }}">Home Service</a></li>
                 <li><a class="dropdown-item" href="/consultation-online">Konsultasi Online</a></li>
             </ul>
         </li>
-        <li><a class="nav-link" href="{{ route('coming-page') }}">Promo</a></li>
-        <li><a class="nav-link" href="{{ route('coming-page') }}">Informasi</a></li>
+        <li class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Informasi</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ route('coming-page') }}">Promo</a></li>
+                <li><a class="dropdown-item" href="{{ route('coming-page') }}">Informasi</a></li>
+                <li><a class="dropdown-item" href="https://antrian.ciputramitrahospital.id/antrianPasien" target="_blank">Antrian Online</a></li>
+            </ul>
+        </li>
+
         <li class="nav-item dropdown">
             <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Fitur</a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ route('screening.form') }}">Skrining Depresi</a></li>
+                <li><a class="dropdown-item" href="{{ route('screening.form') }}">Screening Psikologi</a></li>
 
                 <li><a class="dropdown-item" href="{{ route('coming-page') }}">BMI</a></li>
             </ul>
@@ -47,12 +54,19 @@
                 <li><a class="dropdown-item" href="#reservation">Konsultasi Online</a></li>
             </ul>
         </li>
-        <li><a class="nav-link" href="#promotion">Promo</a></li>
-        <li><a class="nav-link" href="#info">Informasi</a></li>
+        <li class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Informasi</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ route('coming-page') }}">Promo</a></li>
+                <li><a class="dropdown-item" href="{{ route('coming-page') }}">Informasi</a></li>
+                <li><a class="dropdown-item" href="https://antrian.ciputramitrahospital.id/antrianPasien" target="_blank">Antrian Online</a></li>
+            </ul>
+        </li>
+
         <li class="nav-item dropdown">
             <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Fitur</a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#feature">Skrining Depresi</a></li>
+                <li><a class="dropdown-item" href="#feature">Screening Psikologi</a></li>
                 <li><a class="dropdown-item" href="#feature">BMI</a></li>
             </ul>
         </li>
@@ -80,7 +94,7 @@
             </form>
             @else
             <!-- Tombol buat akun untuk pengguna yang tidak login -->
-            <a href="{{ route('register') }}" class="btn-account">Buat Akun</a>
+            <a href="{{ route('login') }}" class="btn-account">Log In</a>
             @endif
         </li>
     </ul>

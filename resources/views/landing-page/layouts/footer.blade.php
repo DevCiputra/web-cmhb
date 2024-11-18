@@ -10,7 +10,7 @@
                 <h5>Hubungi Kami</h5>
                 <ul>
                     <li>Phone: (0511) 6743999</li>
-                    <li>Email: info@example.com</li>
+                    <!-- <li>Email: info@example.com</li> -->
                     <li>Address: Komplek Citra Land Jalan Ahmad Yani KM. 7,8 Manarap Lama, Pemurus Dalam, Kec. Kertak Hanyar, Kota Banjarmasin, Kalimantan Selatan 70654</li>
                 </ul>
             </div>
@@ -19,21 +19,21 @@
                 <ul class="social-media">
                     <li>
                         <a href="https://www.facebook.com/CiputraMitraHospitalBJM" target="_blank">
-                            <img src="icons/facebook.png" alt="Facebook">
+                            <img src="{{ asset('icons/facebook.png') }}" alt="Facebook">
                         </a>
                     </li>
                     <li>
                         <a href="https://www.tiktok.com/@ciputramitrahospital" target="_blank">
-                            <img src="icons/tiktok.png" alt="Tiktok">
+                            <img src="{{ asset('icons/tiktok.png') }}" alt="Tiktok">
                         </a>
                     </li>
                     <li>
                         <a href="https://www.instagram.com/ciputramitrahospitalbjm/" target="_blank">
-                            <img src="icons/instagram.png" alt="Instagram">
+                            <img src="{{ asset('icons/instagram.png') }}" alt="Instagram">
                         </a>
                     </li>
                 </ul>
-            </div>            
+            </div>
         </div>
         <div class="text-center">
             <p>&copy; 2024 Ciputra Mitra Hospital. All rights reserved.</p>

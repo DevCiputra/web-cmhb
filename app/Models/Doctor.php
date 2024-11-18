@@ -17,7 +17,10 @@ class Doctor extends Model
         'doctor_polyclinic_id', // Foreign key
         'address',
         'consultation_fee',
-        'email'
+        'email',
+        'is_published',          // Kolom baru
+        'is_open_consultation',   // Kolom baru
+        'is_open_reservation'     // Kolom baru
     ];
 
     // Relasi ke tabel DoctorPolyclinic (normalisasi)

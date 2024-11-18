@@ -19,12 +19,13 @@ class LandingPageController extends Controller
     public function doctor(Request $request)
     {
         $title = 'Cari Dokter';
-    
+
         // Mengambil query pencarian dari request
         $query = $request->input('search');
-    
+
         // Fetching the data for doctors with related polyclinic and photo data, with pagination
         $doctors = Doctor::with(['polyclinic', 'photos'])
+            ->where('is_published', 1) // Menambahkan filter untuk is_published = 1
             ->when($query, function ($q) use ($query) {
                 return $q->where('name', 'LIKE', "%{$query}%") // Pencarian berdasarkan nama dokter
                     ->orWhere('specialization_name', 'LIKE', "%{$query}%") // Atau berdasarkan spesialisasi
@@ -32,25 +33,25 @@ class LandingPageController extends Controller
                         $subQuery->where('name', 'LIKE', "%{$query}%");
                     });
             })
-            ->paginate(8); // Menentukan jumlah item per halaman (misalnya, 8)
-    
+            ->paginate(70); // Menentukan jumlah item per halaman (misalnya, 8)
+
         // Fetch all polyclinics and specializations for the dropdown
         $polyclinics = DoctorPolyclinic::all();
         $specializations = Doctor::select('specialization_name')->distinct()->pluck('specialization_name');
-    
+
         return view('landing-page.contents.doctor', compact('title', 'doctors', 'polyclinics', 'specializations', 'query'));
     }
 
     public function searchDoctor(Request $request)
     {
         $query = $request->input('query');
-    
+
         // Menggunakan method search dari model
         $doctors = Doctor::search($query)->with('polyclinic')->get();
-    
+
         return response()->json($doctors);
     }
-    
+
 
     // Method untuk menampilkan profil dokter
     public function showDoctor($id)
@@ -156,12 +157,14 @@ class LandingPageController extends Controller
     public function consultation(Request $request)
     {
         $title = 'Konsultasi Online';
-    
+
         // Mengambil query pencarian dari request
         $query = $request->input('search');
-    
+
         // Fetching the data for doctors with related polyclinic and photo data, with pagination
         $doctors = Doctor::with(['polyclinic', 'photos'])
+            ->where('is_published', 1)  // Menambahkan filter untuk hanya mengambil dokter yang terbit
+            ->where('is_open_consultation', 1) // Menambahkan filter untuk dokter yang membuka konsultasi
             ->when($query, function ($q) use ($query) {
                 return $q->where('name', 'LIKE', "%{$query}%") // Pencarian berdasarkan nama dokter
                     ->orWhere('specialization_name', 'LIKE', "%{$query}%") // Atau berdasarkan spesialisasi
@@ -169,36 +172,37 @@ class LandingPageController extends Controller
                         $subQuery->where('name', 'LIKE', "%{$query}%");
                     });
             })
-            ->paginate(8); // Menentukan jumlah item per halaman (misalnya, 8)
-    
+            ->paginate(100); // Menentukan jumlah item per halaman (misalnya, 8)
+
         // Fetch all polyclinics for the dropdown
         $polyclinics = DoctorPolyclinic::all();
-    
+
         // Get distinct specialization names for the dropdown
         $specializations = Doctor::select('specialization_name')->distinct()->pluck('specialization_name');
-    
+
         return view('landing-page.contents.consultation', compact('title', 'doctors', 'polyclinics', 'specializations', 'query'));
     }
-    
+
+
     public function consultationShow($id)
     {
         // Ambil data dokter berdasarkan ID
         $doctor = Doctor::with(['photos', 'education', 'schedules', 'medias'])->find($id);
-    
+
         // Kembali ke view untuk menampilkan detail dokter
         return view('landing-page.contents.doctor-profile', compact('doctor'));
     }
-    
+
     public function searchConsultation(Request $request)
     {
         $query = $request->input('query');
-    
+
         // Menggunakan method search dari model
         $doctors = Doctor::search($query)->with('polyclinic')->get();
-    
+
         return response()->json($doctors);
     }
-    
+
 
 
     public function coming()

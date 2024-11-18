@@ -23,6 +23,7 @@ return new class extends Migration
 
             $table->text('zoom_host_link')->nullable();
             $table->string('zoom_link')->nullable();
+            $table->string('zoom_meeting_id')->nullable();
             $table->string('zoom_password')->nullable();
 
             $table->timestamps();
