@@ -363,7 +363,7 @@
             <i class="fa-solid fa-phone"></i>
         </a>
     </div>
-
+    
     <script>
         function previewImage(event) {
             const output = document.getElementById('previewProfilePhoto');
@@ -375,6 +375,19 @@
 @endsection
 @push('scripts')
 <script src="{{ asset('js/navbar.js') }}"></script>
+
+<script>
+    function toggleEmergencyButtons() {
+        const buttons = document.getElementById("emergency-buttons");
+        buttons.classList.toggle("expand");
+
+        if (buttons.style.maxHeight === "0px" || buttons.style.maxHeight === "") {
+            buttons.style.maxHeight = "200px"; // Expand the sub-menu (adjust height as needed)
+        } else {
+            buttons.style.maxHeight = "0px"; // Collapse the sub-menu
+        }
+    }
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -488,20 +501,6 @@
             // Add active and show classes to the specified tab and content
             tab.classList.add('active');
             content.classList.add('show', 'active');
-        }
-
-        // Function for expanding/collapsing emergency buttons
-        function toggleEmergencyButtons() {
-            const buttons = document.getElementById("emergency-buttons");
-            if (buttons) {
-                buttons.classList.toggle("expand");
-
-                if (buttons.style.maxHeight === "0px" || buttons.style.maxHeight === "") {
-                    buttons.style.maxHeight = "200px"; // Expand the sub-menu (adjust height as needed)
-                } else {
-                    buttons.style.maxHeight = "0px"; // Collapse the sub-menu
-                }
-            }
         }
     });
 </script>

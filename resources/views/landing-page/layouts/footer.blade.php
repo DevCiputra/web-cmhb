@@ -10,7 +10,7 @@
                 <h5>Hubungi Kami</h5>
                 <ul>
                     <li>Phone: (0511) 6743999</li>
-                    <!-- <li>Email: info@example.com</li> -->
+                    <!--<li>Email: info@example.com</li>-->
                     <li>Address: Komplek Citra Land Jalan Ahmad Yani KM. 7,8 Manarap Lama, Pemurus Dalam, Kec. Kertak Hanyar, Kota Banjarmasin, Kalimantan Selatan 70654</li>
                 </ul>
             </div>

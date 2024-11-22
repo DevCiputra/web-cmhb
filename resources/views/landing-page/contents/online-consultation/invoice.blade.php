@@ -58,20 +58,20 @@
         </div>
     </div>
 
-    <!-- Informasi Zoom -->
-    @if($invoice->doctorConsultationReservation->zoom_link)
-    <div class="important-info">
-        <p><strong>Link Zoom Meeting:</strong> <a href="{{ $invoice->doctorConsultationReservation->zoom_link }}" target="_blank">{{ $invoice->doctorConsultationReservation->zoom_link }}</a></p>
-    </div>
-    <div class="important-info">
-        <p><strong>Password Zoom Meeting:</strong> {{ $invoice->doctorConsultationReservation->zoom_password ?? 'N/A' }}</p>
-    </div>
-    @if($invoice->doctorConsultationReservation->zoom_meeting_id)
-    <div class="important-info">
-        <p><strong>ID Zoom Meeting:</strong> {{ $invoice->doctorConsultationReservation->zoom_meeting_id }}</p>
-    </div>
-    @endif
-    @endif
+<!-- Informasi Zoom -->
+@if($invoice->doctorConsultationReservation->zoom_link)
+<div class="important-info">
+    <p><strong>Link Zoom Meeting:</strong> <a href="{{ $invoice->doctorConsultationReservation->zoom_link }}" target="_blank">{{ $invoice->doctorConsultationReservation->zoom_link }}</a></p>
+</div>
+<div class="important-info">
+    <p><strong>Password Zoom Meeting:</strong> {{ $invoice->doctorConsultationReservation->zoom_password ?? 'N/A' }}</p>
+</div>
+@if($invoice->doctorConsultationReservation->zoom_meeting_id)
+<div class="important-info">
+    <p><strong>ID Zoom Meeting:</strong> {{ $invoice->doctorConsultationReservation->zoom_meeting_id }}</p>
+</div>
+@endif
+@endif
 
 
     <!-- Section for Patient Details -->

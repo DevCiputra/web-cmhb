@@ -243,13 +243,6 @@
         </div>
     </div>
 
-    <!-- Modal Custom -->
-    <div id="excellenceModal" class="modal">
-        <div class="modal-content">
-            <button type="button" class="close">&times;</button>
-            <img src="{{ asset('images/coe-chp.png') }}" alt="Center of Excellence" class="img-fluid">
-        </div>
-    </div>
 
     <!-- Emergency Section -->
     <!-- Emergency FAB -->
@@ -268,6 +261,14 @@
             <i class="fa-solid fa-phone"></i>
         </a>
     </div>
+
+    <!-- Modal Custom -->
+    <div id="excellenceModal" class="modal">
+        <div class="modal-content">
+            <button type="button" class="close">&times;</button>
+            <img src="{{ asset('images/coe-chp.png') }}" alt="Center of Excellence" class="img-fluid">
+        </div>
+    </div>
 </div>
 @endsection
 @push('scripts')
@@ -275,13 +276,15 @@
 <script>
     function toggleEmergencyButtons() {
         const buttons = document.getElementById("emergency-buttons");
-        const isExpanded = buttons.classList.toggle("expand");
+        buttons.classList.toggle("expand");
 
-        // Set maxHeight untuk animasi expand/collapse
-        buttons.style.maxHeight = isExpanded ? "200px" : "0px";
+        if (buttons.style.maxHeight === "0px" || buttons.style.maxHeight === "") {
+            buttons.style.maxHeight = "200px"; // Expand the sub-menu (adjust height as needed)
+        } else {
+            buttons.style.maxHeight = "0px"; // Collapse the sub-menu
+        }
     }
 </script>
-
 
 <!-- JavaScript untuk mengontrol modal -->
 <script>

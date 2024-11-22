@@ -168,12 +168,14 @@ body {
     opacity: 0; /* Sembunyikan tombol saat collapse */
     transform: translateY(-10px); /* Sedikit geser ke atas */
     transition: transform 0.3s ease, opacity 0.3s ease; /* Tambahkan transisi untuk animasi */
+    pointer-events: none; /* Nonaktifkan interaksi */
 }
 
 /* Expand style untuk tombol-tombol sub-menu */
 .emergency-buttons.expand a {
     opacity: 1; /* Tampilkan tombol saat expand */
     transform: translateY(0); /* Kembalikan posisi ke normal */
+    pointer-events: auto; /* Aktifkan interaksi */
 }
 
 /* Animation for hover effect on FAB */
@@ -197,7 +199,7 @@ body {
 
 @media (min-width: 769px) and (max-width: 1024px) {
     .doctor-card {
-        height: 350px; /* Reduce the height of the card */
+        height: 450px; /* Reduce the height of the card */
     }
 
     .doctor-card-img-top {
@@ -268,7 +270,7 @@ body {
     .doctor-card {
         width: 80%; /* Make the card slightly smaller than full width */
         margin: 0 auto; /* Center the card on the screen */
-        height: 400px; /* Adjust the card height */
+        height: 450px; /* Adjust the card height */
     }
 
     .doctor-card-img-top {

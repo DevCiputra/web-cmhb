@@ -138,12 +138,14 @@ body {
     opacity: 0; /* Sembunyikan tombol saat collapse */
     transform: translateY(-10px); /* Sedikit geser ke atas */
     transition: transform 0.3s ease, opacity 0.3s ease; /* Tambahkan transisi untuk animasi */
+    pointer-events: none; /* Nonaktifkan interaksi */
 }
 
 /* Expand style untuk tombol-tombol sub-menu */
 .emergency-buttons.expand a {
     opacity: 1; /* Tampilkan tombol saat expand */
     transform: translateY(0); /* Kembalikan posisi ke normal */
+    pointer-events: auto; /* Aktifkan interaksi */
 }
 
 /* Animation for hover effect on FAB */

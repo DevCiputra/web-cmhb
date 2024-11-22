@@ -71,15 +71,17 @@
 
                             <img class="doctor-card-img-top" src="{{ $photoUrl }}" alt="Doctor Image">
                             <div class="doctor-card-body">
-                                <p class="polyclinic">{{ $doctor->polyclinic->name ?? 'N/A' }}</p>
-                                <h5 class="name">{{ $doctor->name }}</h5>
-                                <p class="specialist">{{ $doctor->specialization_name }}</p>
-                                <a href="{{ route('doctor.show.landing', $doctor->id) }}">
-                                    Lihat Profil
-                                    <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                        class="chevron-icon">
-                                </a>
-                            </div>
+    <p class="polyclinic">{{ $doctor->polyclinic->name ?? 'N/A' }}</p>
+    <a href="{{ route('doctor.show.landing', $doctor->id) }}" class="name-link">
+        <h5 class="name">{{ $doctor->name }}</h5>
+    </a>
+    <p class="specialist">{{ $doctor->specialization_name }}</p>
+    <a href="{{ route('doctor.show.landing', $doctor->id) }}" class="profile-link">
+        Lihat Profil
+        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
+    </a>
+</div>
+
                         </div>
                     </div>
                     @endforeach
