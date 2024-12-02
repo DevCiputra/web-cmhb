@@ -23,6 +23,9 @@ class ContentSecurityPolicy
             "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://code.jquery.com https://cdn.datatables.net https://cdnjs.cloudflare.com https://unpkg.com 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.datatables.net https://unpkg.com https://code.jquery.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://cdn.jsdelivr.net https://cdn.datatables.net; object-src 'none'; frame-src 'none';"
         );
 
+        // Menambahkan X-Frame-Options header untuk mencegah ClickJacking
+        $response->headers->set('X-Frame-Options', 'DENY');
+
         // Menambahkan X-Content-Type-Options header untuk mencegah MIME sniffing
         $response->headers->set('X-Content-Type-Options', 'nosniff');
 

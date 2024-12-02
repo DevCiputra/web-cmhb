@@ -109,7 +109,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'username' => 'required|string',
+            'username' => 'required|string|exists:users,username',
             'password' => 'required|string',
         ]);
 
@@ -118,25 +118,24 @@ class AuthController extends Controller
         if (auth()->attempt($credentials)) {
             $user = Auth::user();
 
-            // Fetch the associated Patient record
-            $patient = $user->patient; // Assuming a one-to-one relationship
-
-            // Redirect user based on role
+            // Cek peran dan alihkan berdasarkan peran
             switch ($user->role) {
                 case 'Admin':
-                    return redirect()->route('dashboard-page')->with('success', 'Selamat datang, ' . $user->name . ' (Admin)!');
+                    return redirect()->route('dashboard-page')->with('status', 'Login berhasil, selamat datang Admin!');
                 case 'Pasien':
-                    return redirect()->route('account-index')->with('success', 'Selamat datang, ' . ($patient ? $patient->name : 'User') . '!');
+                    return redirect()->route('account-index')->with('status', 'Login berhasil, selamat datang ' . ($user->patient ? $user->patient->name : 'User') . '!');
                 case 'HBD':
-                    return redirect()->route('reservation.mcu.index')->with('success', 'Selamat datang, HBD!');
+                    return redirect()->route('reservation.mcu.index')->with('status', 'Login berhasil, selamat datang HBD!');
                 case 'PLP':
-                    return redirect()->route('reservation.onlineconsultation.index')->with('success', 'Selamat datang, PLP!');
+                    return redirect()->route('reservation.onlineconsultation.index')->with('status', 'Login berhasil, selamat datang PLP!');
                 default:
+                    // Logout jika peran tidak valid dan arahkan kembali ke login
                     auth()->logout();
-                    return redirect()->route('login')->with('error', 'Peran pengguna tidak valid.');
+                    return redirect()->route('login')->with('error', 'Peran pengguna tidak valid. Silakan coba lagi.');
             }
         }
 
+        // Jika login gagal, tampilkan error umum tanpa informasi sensitif
         return redirect()->back()->with('error', 'Username atau kata sandi salah.')->withInput();
     }
 
@@ -171,13 +170,13 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Pengguna dengan nomor WhatsApp dan email tersebut tidak ditemukan.');
         }
 
-        // Generate token dan simpan di database dengan created_at
-        $token = Str::random(60);
+        // Generate token yang lebih aman dan simpan di database dengan created_at
+        $token = Str::random(60);  // Pertimbangkan untuk menggunakan token yang lebih kompleks
         DB::table('password_reset_tokens')->updateOrInsert(
             ['email' => $user->email],
             [
-                'token' => $token,
-                'created_at' => now(), // Menyimpan waktu saat ini
+                'token' => Hash::make($token), // Gunakan hash untuk menyimpan token
+                'created_at' => now(),
             ]
         );
 
@@ -214,7 +213,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
         ], [
             'password.required' => 'Kata sandi wajib diisi.',
-            'password.string' => 'Kata sandi harus berupa string.',
+            'password.string' => 'Kata sandi harus berupa huruf dan angka.',
             'password.min' => 'Kata sandi harus memiliki minimal 8 karakter.',
             'password.confirmed' => 'Konfirmasi kata sandi tidak sama.',
             'password.regex' => 'Kata sandi harus memiliki setidaknya satu huruf besar, satu huruf kecil, dan satu angka.',

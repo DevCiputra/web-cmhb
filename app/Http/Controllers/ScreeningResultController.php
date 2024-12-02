@@ -11,8 +11,12 @@ use Illuminate\Http\Request;
 class ScreeningResultController extends Controller
 {
 
-    public function showForm()
+    public function showForm(Request $request)
     {
+        if (!$request->hasValidSignature()) {
+            abort(403, 'Unauthorized access.');
+        }
+
         $title = "Form Skrining Depresi";
         $questions = ScreeningQuestion::with('options')->get();
         return view('landing-page.contents.screening.index', compact('questions', 'title'));

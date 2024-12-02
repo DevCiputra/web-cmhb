@@ -56,8 +56,12 @@ class OnlineConsultationController extends Controller
         return $invoiceNumber;
     }
 
-    public function showConsultationForm($doctor_id)
+    public function showConsultationForm($doctor_id, Request $request)
     {
+        if (!$request->hasValidSignature()) {
+            abort(403, 'Unauthorized request.');
+        }
+
         $title = 'Reservasi Konsultasi Online';
         $doctor = Doctor::findOrFail($doctor_id);
         $user = auth()->user();
@@ -65,12 +69,12 @@ class OnlineConsultationController extends Controller
         return view('landing-page.contents.online-consultation.form', compact('doctor', 'user', 'title'));
     }
 
+
     public function storeReservation(Request $request)
     {
-        $validated = $request->validate([
-            'patient_name' => 'required|string',
-            'phone_number' => 'required|string',
-            'email' => 'required|email',
+        $validated = $request->validate(['patient_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|regex:/^[0-9]{10,15}$/',
+            'email' => 'required|email|max:255',
             'doctor_id' => 'required|exists:doctors,id',
             'preferred_consultation_date' => 'required|date',
         ]);
