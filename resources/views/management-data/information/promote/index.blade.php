@@ -1,6 +1,6 @@
 @extends('management-data.layouts.app')
 
-@section('title', 'Polyclinic')
+@section('title', 'Promotion')
 
 @section('content')
 <div class='dashboard-app'>
@@ -35,7 +35,7 @@
                     </select>
 
                     <!-- Add Button -->
-                    <a href="/tambah_promosi" style="text-decoration: none;">
+                    <a href="{{ route('information.promote.create') }}" style="text-decoration: none;">
                         <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none;">
                             <img src="{{ asset('icons/plus.svg') }}" width="16" height="16" style="filter: invert(100%); margin-right: 8px;" alt="Plus Icon">
                             Tambah
@@ -46,76 +46,62 @@
         </div>
         <!-- Cards Container -->
         <div class="row cards-container">
+            {{-- CARD 1 --}}
             <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/promo1.jpg') }}" alt="Promo Image">
-                    <div class="card-body">
-                        <div class="header-container">
-                            <h5 class="title">Promo Title 1</h5>
-                            <div class="icon-group">
-                                <a href="/edit_promosi" class="btn btn-edit">
-                                    <img src="{{ asset('icons/pencil-square.svg') }}" alt="Edit Promo"
-                                        class="pencil-icon">
-                                </a>
-                                <a href="/view_promosi" class="btn btn-view">
-                                    <img src="{{ asset('icons/eye.svg') }}" alt="View Promo" class="eye-icon">
-                                </a>
-                            </div>
-                        </div>
-                        <p class="description">Promo description goes here.</p>
-                        <a href="#" class="btn btn-action">
+                <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <img class="card-img-top" src="{{ asset('images/promo1.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
+                            Edit
+                        </a>
+                        <a href="#" class="btn btn-sm btn-secondary custom-btn">
+                            Publish
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <img class="card-img-top" src="{{ asset('images/promo2.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
+                            Edit
+                        </a>
+                        <a href="#" class="btn btn-sm btn-secondary custom-btn">
+                            Publish
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-4">
+                <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <img class="card-img-top" src="{{ asset('images/promo3.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
+                            Edit
+                        </a>
+                        <a href="#" class="btn btn-sm btn-secondary custom-btn">
                             Publish
                         </a>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/promo2.jpg') }}" alt="Promo Image">
-                    <div class="card-body">
-                        <div class="header-container">
-                            <h5 class="title">Promo Title 2</h5>
-                            <div class="icon-group">
-                                <a href="/edit_promosi" class="btn btn-edit">
-                                    <img src="{{ asset('icons/pencil-square.svg') }}" alt="Edit Promo"
-                                        class="pencil-icon">
-                                </a>
-                                <a href="/view_promosi" class="btn btn-view">
-                                    <img src="{{ asset('icons/eye.svg') }}" alt="View Promo" class="eye-icon">
-                                </a>
-                            </div>
-                        </div>
-                        <p class="description">Promo description goes here.</p>
-                        <a href="#" class="btn btn-action">
+                <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <img class="card-img-top" src="{{ asset('images/promo1.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
+                            Edit
+                        </a>
+                        <a href="#" class="btn btn-sm btn-secondary custom-btn">
                             Publish
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/promo3.jpg') }}" alt="Promo Image">
-                    <div class="card-body">
-                        <div class="header-container">
-                            <h5 class="title">Promo Title 3</h5>
-                            <div class="icon-group">
-                                <a href="/edit_promosi" class="btn btn-edit">
-                                    <img src="{{ asset('icons/pencil-square.svg') }}" alt="Edit Promo"
-                                        class="pencil-icon">
-                                </a>
-                                <a href="/view_promosi" class="btn btn-view">
-                                    <img src="{{ asset('icons/eye.svg') }}" alt="View Promo" class="eye-icon">
-                                </a>
-                            </div>
-                        </div>
-                        <p class="description">Promo description goes here.</p>
-                        <a href="#" class="btn btn-action">
-                            Publish
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
+            {{-- <div class="col-md-3 mb-4">
                 <div class="card">
                     <img class="card-img-top" src="{{ asset('images/promo1.jpg') }}" alt="Promo Image">
                     <div class="card-body">
@@ -137,7 +123,7 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

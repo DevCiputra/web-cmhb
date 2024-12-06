@@ -311,6 +311,20 @@ body {
 
 }
 
+/* Hover Effect for Doctor Cards */
+.doctor-card:hover {
+    transform: translateY(-10px); /* Geser kartu sedikit ke atas */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Tambahkan bayangan lebih gelap */
+    transition: all 0.3s ease; /* Tambahkan transisi agar efek lebih halus */
+}
+
+/* Hover Effect for Emergency FAB Button */
+.fab-btn:hover {
+    transform: scale(1.2); /* Perbesar tombol saat dihover */
+    background-color: #ff0000; /* Ubah warna tombol saat dihover */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
 
 
 

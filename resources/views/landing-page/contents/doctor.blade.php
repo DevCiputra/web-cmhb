@@ -78,10 +78,10 @@
         <h5 class="name">{{ $doctor->name }}</h5>
     </a>
     <p class="specialist">{{ $doctor->specialization_name }}</p>
-    <a href="{{ route('doctor.show.landing', $doctor->id) }}" class="profile-link">
+    {{-- <a href="{{ route('doctor.show.landing', $doctor->id) }}" class="profile-link">
         Lihat Profil
         <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
-    </a>
+    </a> --}}
 </div>
 
                         </div>

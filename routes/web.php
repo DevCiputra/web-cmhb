@@ -190,8 +190,12 @@ Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
 });
 
 // INFORMATION MANAGEMENT DATA
+Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
 Route::get('/information-article', [InformationController::class, 'indexArticle'])->name('information.article.index');
+
 Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
+Route::get('/information-promote/create', [InformationController::class, 'create'])->name('information.promote.create');
+});
 
 // DOCTOR MANAGEMENT DATA
 Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {

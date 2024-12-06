@@ -413,6 +413,15 @@ h1, .h1 {
     border-top-right-radius: 10px !important;
 }
 
+.card-img-top-article {
+    width: 100%;
+    height: 250px; /* Mengubah tinggi gambar agar menyesuaikan dengan lebar card */
+    object-fit: cover;
+    object-position: center;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+
 .doctor-image {
     width: 100%;
     height: 200px;
@@ -473,6 +482,39 @@ h1, .h1 {
     width: 24px; /* Adjust size as needed */
     height: 24px;
 }
+
+.icon-group-promote {
+    display: flex;
+    justify-content: center; /* Rata tengah secara horizontal */
+    align-items: center;
+    gap: 1rem; /* Spasi antar ikon */
+    margin-top: 1rem; /* Tambahkan jarak ke atas */
+}
+
+.icon-group-promote .btn {
+    padding: 0.5rem; /* Ukuran padding agar proporsional */
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.icon-group-promote .pencil-icon,
+.icon-group-promote .eye-icon {
+    width: 20px; /* Ukuran lebih kecil */
+    height: 20px;
+}
+
+.icon-group-promote .btn-secondary {
+    padding: 0.5rem 1rem; /* Ukuran tombol 'Publish' */
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
 
 .card-body p {
     margin-bottom: 5px; /* Reduce space between paragraphs */

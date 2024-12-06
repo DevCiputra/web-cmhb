@@ -48,7 +48,7 @@
         <div class="row cards-container">
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/info1.png') }}" alt="Artikel Image">
+                    <img class="card-img-top-article" src="{{ asset('images/info1.png') }}" alt="Artikel Image">
                     <div class="card-body">
                         <div class="header-container">
                             <h5 class="title">Title</h5>
@@ -71,7 +71,7 @@
             </div>
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/info2.png') }}" alt="Artikel Image">
+                    <img class="card-img-top-article" src="{{ asset('images/info2.png') }}" alt="Artikel Image">
                     <div class="card-body">
                         <div class="header-container">
                             <h5 class="title">Title</h5>
@@ -94,7 +94,7 @@
             </div>
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/info3.png') }}" alt="Artikel Image">
+                    <img class="card-img-top-article" src="{{ asset('images/info3.png') }}" alt="Artikel Image">
                     <div class="card-body">
                         <div class="header-container">
                             <h5 class="title">Title</h5>
@@ -117,7 +117,7 @@
             </div>
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/info4.png') }}" alt="Artikel Image">
+                    <img class="card-img-top-article" src="{{ asset('images/info4.png') }}" alt="Artikel Image">
                     <div class="card-body">
                         <div class="header-container">
                             <h5 class="title">Title</h5>

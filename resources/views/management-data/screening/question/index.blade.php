@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="d-flex mb-4">
-                    <p class="card-text">Berikut merupakan daftar soal skrinin. dalam bentuk card yang interaktif.</p>
+                    <p class="card-text">Berikut merupakan daftar soal skrining.</p>
                 </div>
                 <div class="row row-cols-1 row-cols-md-4 g-4">
                     @foreach($questions as $question)
@@ -96,8 +96,6 @@
                                     Kelola Opsi
                                 </a>
                             </div>
-                            
-                            
                         </div>
                     </div>
                     @endforeach

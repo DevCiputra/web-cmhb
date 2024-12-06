@@ -11,8 +11,16 @@ class InformationController extends Controller
         return view('management-data.information.article.index');
     }
 
+    
+
     public function indexPromote()
     {
         return view('management-data.information.promote.index');
     }
+
+    public function create()
+    {
+        return view('management-data.information.promote.create');
+    }
+
 }
