@@ -2,7 +2,11 @@
     <link href="{{ asset('css/informasi_detail.css') }}" rel="stylesheet">
 </head>
 
-@include('manajemen_data.layouts.dashboard')
+@extends('management-data.layouts.app')
+
+@section('title', 'Detail Article')
+
+@section('content')
 
 <div class='dashboard-app'>
     <header class='dashboard-toolbar'>
@@ -17,7 +21,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
                             <li class="breadcrumb-item"><a href=" ">Informasi</a></li>
-                            <li class="breadcrumb-item"><a href="/dashboard_artikel ">Artikel</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('information.article.index') }}">Artikel</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Detail Artikel</li>
                         </ol>
                     </nav>
@@ -46,10 +50,9 @@
                 </div>
             </div>
         </div>
-
-       
     </div>
 </div>
+@endsection
 
 <script>
     $(document).ready(function() {
@@ -63,6 +66,26 @@
                 ['insert', ['link', 'picture', 'video']],
                 ['view', ['fullscreen', 'codeview', 'help']]
             ]
+        });
+    });
+
+    const mobileScreen = window.matchMedia("(max-width: 990px )");
+    $(document).ready(function() {
+        $(".dashboard-nav-dropdown-toggle").click(function() {
+            $(this).closest(".dashboard-nav-dropdown")
+                .toggleClass("show")
+                .find(".dashboard-nav-dropdown")
+                .removeClass("show");
+            $(this).parent()
+                .siblings()
+                .removeClass("show");
+        });
+        $(".menu-toggle").click(function() {
+            if (mobileScreen.matches) {
+                $(".dashboard-nav").toggleClass("mobile-show");
+            } else {
+                $(".dashboard").toggleClass("dashboard-compact");
+            }
         });
     });
 </script>

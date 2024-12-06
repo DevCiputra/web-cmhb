@@ -1,6 +1,6 @@
 @extends('management-data.layouts.app')
 
-@section('title', 'Artikel')
+@section('title', 'Article')
 
 @section('content')
 <div class='dashboard-app'>
@@ -35,7 +35,7 @@
                     </select>
 
                     <!-- Add Button -->
-                    <a href="/tambah_artikel" style="text-decoration: none;">
+                    <a href="{{ route('information.article.create') }}" style="text-decoration: none;">
                         <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none;">
                             <img src="{{ asset('icons/plus.svg') }}" width="16" height="16" style="filter: invert(100%); margin-right: 8px;" alt="Plus Icon">
                             Tambah
@@ -53,11 +53,11 @@
                         <div class="header-container">
                             <h5 class="title">Title</h5>
                             <div class="icon-group">
-                                <a href="/edit_artikel" class="btn btn-edit">
+                                <a href="{{ route('information.article.edit') }}" class="btn btn-edit">
                                     <img src="{{ asset('icons/pencil-square.svg') }}" alt="Pencil Square"
                                         class="pencil-icon">
                                 </a>
-                                <a href="/view_artikel" class="btn btn-view">
+                                <a href="{{ route('information.article.detail') }}" class="btn btn-view">
                                     <img src="{{ asset('icons/eye.svg') }}" alt="Eye" class="eye-icon">
                                 </a>
                             </div>

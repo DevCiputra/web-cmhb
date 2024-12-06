@@ -1,5 +1,9 @@
 @extends('management-data.layouts.app')
 
+@section('title', ' Create Promotion')
+
+@section('content')
+
 <div class='dashboard-app'>
     <header class='dashboard-toolbar'>
         <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
@@ -63,6 +67,7 @@
         </div>
     </div>
 </div>
+@endsection
 
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -103,5 +108,6 @@
     });
 </script>
 @endpush
+
 
 

@@ -51,7 +51,7 @@
                 <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     <img class="card-img-top" src="{{ asset('images/promo1.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
                     <div class="card-footer d-flex justify-content-between">
-                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
+                        <a href="{{ route('information.promote.edit') }}" class="btn btn-sm btn-success custom-btn">
                             Edit
                         </a>
                         <a href="#" class="btn btn-sm btn-secondary custom-btn">

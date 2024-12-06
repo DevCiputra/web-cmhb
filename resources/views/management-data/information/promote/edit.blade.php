@@ -1,4 +1,8 @@
-@include('manajemen_data.layouts.dashboard')
+@extends('management-data.layouts.app')
+
+@section('title', ' Edit Promotion')
+
+@section('content')
 
 <div class='dashboard-app'>
     <header class='dashboard-toolbar'>
@@ -13,7 +17,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
                             <li class="breadcrumb-item"><a href=" ">Reservasi</a></li>
-                            <li class="breadcrumb-item"><a href="/dashboard_promosi ">Promo</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('information.promotion.index') }}">Promo</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Edit Promo</li>
                         </ol>
                     </nav>
@@ -26,11 +30,11 @@
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-form" style="padding: 2rem;">
                 <form>
-                    <!-- Title -->
+                    {{-- <!-- Title -->
                     <div class="mb-3">
                         <label for="promo_title" class="form-label">Judul Promo</label>
                         <input type="text" class="form-control" id="promo_title" placeholder="Masukkan Judul Promo">
-                    </div>
+                    </div> --}}
 
                     <!-- Kategori -->
                     <div class="mb-3">
@@ -38,15 +42,15 @@
                         <input type="text" class="form-control" id="promo_categories" placeholder="Masukkan Kategori Promo">
                     </div>
 
-                    <!-- Deskripsi -->
+                    {{-- <!-- Deskripsi -->
                     <div class="mb-3">
                         <label for="promo_description" class="form-label">Deskripsi Promo</label>
                         <textarea class="form-control" id="promo_description" rows="4" placeholder="Masukkan Deskripsi Promo"></textarea>
-                    </div>
+                    </div> --}}
 
                     <!-- Foto Promo -->
                     <div class="mb-3">
-                        <label for="promo_image" class="form-label">Foto Promo</label>
+                        <label for="promo_image" class="form-label">Poster Promo</label>
                         <input type="file" class="form-control" id="promo_image" accept="image/*"
                             placeholder="Upload Foto Promo">
                     </div>
@@ -67,6 +71,7 @@
         </div>
     </div>
 </div>
+@endsection
 
 <script>
     $(document).ready(function() {
@@ -80,6 +85,26 @@
                 ['insert', ['link', 'picture', 'video']],
                 ['view', ['fullscreen', 'codeview', 'help']]
             ]
+        });
+    });
+
+    const mobileScreen = window.matchMedia("(max-width: 990px )");
+    $(document).ready(function() {
+        $(".dashboard-nav-dropdown-toggle").click(function() {
+            $(this).closest(".dashboard-nav-dropdown")
+                .toggleClass("show")
+                .find(".dashboard-nav-dropdown")
+                .removeClass("show");
+            $(this).parent()
+                .siblings()
+                .removeClass("show");
+        });
+        $(".menu-toggle").click(function() {
+            if (mobileScreen.matches) {
+                $(".dashboard-nav").toggleClass("mobile-show");
+            } else {
+                $(".dashboard").toggleClass("dashboard-compact");
+            }
         });
     });
 </script>
