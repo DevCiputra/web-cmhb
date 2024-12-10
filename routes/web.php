@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\InformationCategoryController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\MasterController;
@@ -196,9 +197,18 @@ Route::get('/information-article/create', [InformationController::class, 'create
 Route::get('/information-article/edit', [InformationController::class, 'editArticle'])->name('information.article.edit');
 Route::get('/information-article/detail', [InformationController::class, 'detailArticle'])->name('information.article.detail');
 
+
 Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
 Route::get('/information-promote/create', [InformationController::class, 'createPromote'])->name('information.promote.create');
-Route::get('/information-promote/edit', [InformationController::class, 'editPromote'])->name('information.promote.edit');
+Route::get('/information-promote/edit/{id}', [InformationController::class, 'editPromote'])->name('information.promote.edit');
+Route::post('/information-promote', [InformationController::class, 'storePromote'])->name('information.promote.store');
+// kategori
+Route::get('/information-categories', [InformationCategoryController::class, 'index'])->name('information-categories.index'); // Menampilkan daftar kategori
+Route::get('/information-categories/create', [InformationCategoryController::class, 'create'])->name('information-categories.create'); // Form tambah kategori
+Route::post('/information-categories', [InformationCategoryController::class, 'store'])->name('information-categories.store'); // Menyimpan kategori baru
+Route::get('/information-categories/{informationCategory}/edit', [InformationCategoryController::class, 'edit'])->name('information-categories.edit'); // Form edit kategori
+Route::put('/information-categories/{informationCategory}', [InformationCategoryController::class, 'update'])->name('information-categories.update'); // Memperbarui data kategori
+Route::delete('/information-categories/{informationCategory}', [InformationCategoryController::class, 'destroy'])->name('information-categories.destroy'); // Menghapus kategori
 
 });
 
