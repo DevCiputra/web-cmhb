@@ -12,6 +12,56 @@ use Illuminate\Http\Request;
 
 class InformationController extends Controller
 {
+
+    // INFORMATION CATEGORIES
+    public function indexCategory()
+    {
+        $categories = InformationCategory::all();
+        return view('management-data.information.category.index', compact('categories'));
+    }
+
+    public function createCategory()
+    {
+        return view('management-data.information.category.create');
+    }
+
+    public function storeCategory(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        InformationCategory::create($validated);
+        return redirect()->route('information.category.index')->with('success', 'Category created successfully.');
+    }
+
+    public function editCategory($id)
+    {
+        $category = InformationCategory::findOrFail($id);
+        return view('management-data.information.category.edit', compact('category'));
+    }
+
+    public function updateCategory(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $category = InformationCategory::findOrFail($id);
+        $category->update($validated);
+
+        return redirect()->route('information.category.index')->with('success', 'Category updated successfully.');
+    }
+
+    public function destroyCategory($id)
+    {
+        $category = InformationCategory::findOrFail($id);
+        $category->delete();
+
+        return redirect()->route('information.category.index')->with('success', 'Category deleted successfully.');
+    }
+
+
     public function indexArticle()
     {
         return view('management-data.information.article.index');
@@ -34,7 +84,7 @@ class InformationController extends Controller
         return view('management-data.information.article.detail');
     }
 
-    
+
 // PROMOSI
     public function indexPromote()
     {
