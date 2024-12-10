@@ -193,10 +193,15 @@ Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
 // INFORMATION MANAGEMENT DATA
 Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
 Route::get('/information-article', [InformationController::class, 'indexArticle'])->name('information.article.index');
+Route::get('/information-article/create', [InformationController::class, 'createArticle'])->name('information.article.create');
+Route::get('/information-article/edit', [InformationController::class, 'editArticle'])->name('information.article.edit');
+Route::get('/information-article/detail', [InformationController::class, 'detailArticle'])->name('information.article.detail');
 
 
 Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
-
+Route::get('/information-promote/create', [InformationController::class, 'createPromote'])->name('information.promote.create');
+Route::get('/information-promote/edit/{id}', [InformationController::class, 'editPromote'])->name('information.promote.edit');
+Route::post('/information-promote', [InformationController::class, 'storePromote'])->name('information.promote.store');
 // kategori
 Route::get('/information-categories', [InformationCategoryController::class, 'index'])->name('information-categories.index'); // Menampilkan daftar kategori
 Route::get('/information-categories/create', [InformationCategoryController::class, 'create'])->name('information-categories.create'); // Form tambah kategori
