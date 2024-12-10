@@ -67,23 +67,6 @@ class InformationController extends Controller
         return view('management-data.information.article.index');
     }
 
-    public function createArticle()
-    {
-
-        $categories = InformationCategory::all();
-        return view('management-data.information.article.create', compact('categories'));
-    }
-
-    public function editArticle()
-    {
-        return view('management-data.information.article.edit');
-    }
-
-    public function detailArticle()
-    {
-        return view('management-data.information.article.detail');
-    }
-
 
     // PROMOSI
     public function indexPromote()
