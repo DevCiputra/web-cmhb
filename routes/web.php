@@ -136,7 +136,6 @@ Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
     Route::get('/consultation-invoice/{id}', [OnlineConsultationController::class, 'showInvoice'])->name('consultation.invoice');
     Route::post('/consultation-payment/{id}', [OnlineConsultationController::class, 'confirmPayment'])->name('consultation.payment');
     Route::get('/terms-and-conditions', [RegulationController::class, 'termsAndConditions'])->name('terms-and-conditions');
-
 });
 
 // OFFICE MANAGEMENT ONLINE CONSULTATION DATA
@@ -192,24 +191,27 @@ Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
 
 // INFORMATION MANAGEMENT DATA
 Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
-Route::get('/information-article', [InformationController::class, 'indexArticle'])->name('information.article.index');
-Route::get('/information-article/create', [InformationController::class, 'createArticle'])->name('information.article.create');
+
+    Route::get('/information-category', [InformationController::class, 'indexCategory'])->name('information.category.index');
+    Route::get('/information-category/create', [InformationController::class, 'createCategory'])->name('information.category.create');
+    Route::post('/information-category', [InformationController::class, 'storeCategory'])->name('information.category.store');
+    Route::get('/information-category/{id}/edit', [InformationController::class, 'editCategory'])->name('information.category.edit');
+    Route::put('/information-category/{id}', [InformationController::class, 'updateCategory'])->name('information.category.update');
+    Route::delete('/information-category/{id}', [InformationController::class, 'destroyCategory'])->name('information.category.destroy');
+
+    Route::get('/information-article', [InformationController::class, 'indexArticle'])->name('information.article.index');
+    Route::get('/information-article/create', [InformationController::class, 'createArticle'])->name('information.article.create');
+    Route::get('/information-article/edit', [InformationController::class, 'editArticle'])->name('information.article.edit');
+    Route::get('/information-article/detail', [InformationController::class, 'detailArticle'])->name('information.article.detail');Route::get('/information-article/create', [InformationController::class, 'createArticle'])->name('information.article.create');
 Route::get('/information-article/edit', [InformationController::class, 'editArticle'])->name('information.article.edit');
 Route::get('/information-article/detail', [InformationController::class, 'detailArticle'])->name('information.article.detail');
 
 
-Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
+    Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
 Route::get('/information-promote/create', [InformationController::class, 'createPromote'])->name('information.promote.create');
 Route::get('/information-promote/edit/{id}', [InformationController::class, 'editPromote'])->name('information.promote.edit');
-Route::post('/information-promote', [InformationController::class, 'storePromote'])->name('information.promote.store');
-// kategori
-Route::get('/information-categories', [InformationCategoryController::class, 'index'])->name('information-categories.index'); // Menampilkan daftar kategori
-Route::get('/information-categories/create', [InformationCategoryController::class, 'create'])->name('information-categories.create'); // Form tambah kategori
-Route::post('/information-categories', [InformationCategoryController::class, 'store'])->name('information-categories.store'); // Menyimpan kategori baru
-Route::get('/information-categories/{informationCategory}/edit', [InformationCategoryController::class, 'edit'])->name('information-categories.edit'); // Form edit kategori
-Route::put('/information-categories/{informationCategory}', [InformationCategoryController::class, 'update'])->name('information-categories.update'); // Memperbarui data kategori
-Route::delete('/information-categories/{informationCategory}', [InformationCategoryController::class, 'destroy'])->name('information-categories.destroy'); // Menghapus kategori
-
+Route::post('/information-promote', [InformationController::class, 'storePromote'])->name('information.promote.store');    Route::get('/information-promote/create', [InformationController::class, 'createPromote'])->name('information.promote.create');
+    Route::get('/information-promote/edit', [InformationController::class, 'editPromote'])->name('information.promote.edit');
 });
 
 // DOCTOR MANAGEMENT DATA
