@@ -45,78 +45,57 @@
             {{ session('success') }}
         </div>
         @endif
-
         <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px;">
-            <div class="card-form">
-                <div class="d-flex mb-3">
-                    <h5 class="card-title-screening" style="color: #1C3A6B"><b>Daftar Kategori Informasi</b></h5>
-                    <div class="ms-auto">
-                        <a href="{{ route('information-categories.create') }}"  style="text-decoration: none;">
-                            <button class="btn btn-md btn-success" style="border-radius: 10px;">
-                                <img src="{{ asset('icons/plus.svg') }}" width="16" height="16" style="filter: invert(100%); margin-right: 8px;" alt="Plus Icon">
-                                Tambah Kategori
-                            </button>
-                        </a>
-                    </div>
+        <div class="card-form">
+            <div class="d-flex mb-3">
+                <h5 class="card-title-screening" style="color: #1C3A6B"><b>Daftar Kategori Pertanyaan</b></h5>
+                <div class="ms-auto">
+                    <a href="{{ route('information-categories.create') }}"  style="text-decoration: none;">
+                        <button class="btn btn-md btn-success" style="border-radius: 10px;">
+                            <img src="{{ asset('icons/plus.svg') }}" width="16" height="16" style="filter: invert(100%); margin-right: 8px;" alt="Plus Icon">
+                            Tambah Kategori
+                        </button>
+                    </a>
                 </div>
-                <p class="card-text">Berikut merupakan daftar Kategori Informasi.</p>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Kategori</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Dummy data for categories -->
-                            <tr>
-                                <td>1</td>
-                                <td>Kategori 1</td>
-                                <td>
-                                    <a href="{{ route('information-categories.edit', 1) }}" 
-                                       class="btn btn-warning btn-sm" 
-                                       style="border-radius: 8px; padding: 6px 12px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; height: 38px; margin-right: 8px;">
-                                        Edit
-                                    </a>
-                                    <form action="{{ route('information-categories.destroy', 1) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" 
-                                                class="btn btn-danger btn-sm" 
-                                                style="border-radius: 8px; padding: 6px 12px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; height: 38px;" 
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')">
-                                            Hapus
-                                        </button>
-                                    </form>
-                                </td>   
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Kategori 2</td>
-                                <td>
-                                    <a href="{{ route('information-categories.edit', 2) }}" 
-                                       class="btn btn-warning btn-sm" 
-                                       style="border-radius: 8px; padding: 6px 12px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; height: 38px; margin-right: 8px;">
-                                        Edit
-                                    </a>
-                                    <form action="{{ route('information-categories.destroy', 2) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" 
-                                                class="btn btn-danger btn-sm" 
-                                                style="border-radius: 8px; padding: 6px 12px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; height: 38px;" 
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')">
-                                            Hapus
-                                        </button>
-                                    </form>
-                                </td>   
-                            </tr>
-                        </tbody>
-                    </table>
             </div>
+            <p class="card-text">Berikut merupakan daftar Kategori Informasi.</p>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Kategori</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($categories as $index => $category)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $category->name }}</td>
+                            <td>
+                                <a href="{{ route('information-categories.edit', $category->id) }}" 
+                                   class="btn btn-warning btn-sm" 
+                                   style="border-radius: 8px; padding: 6px 12px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; height: 38px; margin-right: 8px;">
+                                    Edit
+                                </a>
+                                <form action="{{ route('information-categories.destroy', $category->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                            class="btn btn-danger btn-sm" 
+                                            style="border-radius: 8px; padding: 6px 12px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; height: 38px;" 
+                                            onclick="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </td>   
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
         </div>
     </div>
+</div>
 </div>
 
 @endsection

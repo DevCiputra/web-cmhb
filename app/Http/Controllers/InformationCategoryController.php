@@ -11,7 +11,7 @@ class InformationCategoryController extends Controller
     public function index()
     {
         $categories = InformationCategory::all(); // Mengambil semua kategori dari database
-        return view('management-data.screening.category.index', compact('categories'));
+        return view('management-data.information.category.index', compact('categories'));
     }
 
     // Menampilkan form tambah kategori informasi
