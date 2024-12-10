@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\InformationCategoryController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\MasterController;

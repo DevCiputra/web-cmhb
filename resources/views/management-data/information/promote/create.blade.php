@@ -1,6 +1,6 @@
 @extends('management-data.layouts.app')
 
-@section('title', ' Create Promotion')
+@section('title', 'Tambah Promosi')
 
 @section('content')
 
@@ -15,7 +15,7 @@
                     <h4 class="mb-1 fw-normal" style="color: #1C3A6B; font-weight:">Tambah Promo</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
                             <li class="breadcrumb-item"><a href=" ">Reservasi</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('information.promotion.index') }}">Promo</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Tambah Promo</li>
@@ -29,24 +29,13 @@
         <div class="card"
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-form" style="padding: 2rem;">
-                <form>
-                    {{-- <!-- Title -->
-                    <div class="mb-3">
-                        <label for="promo_title" class="form-label">Judul Promo</label>
-                        <input type="text" class="form-control" id="promo_title" placeholder="Masukkan Judul Promo">
-                    </div> --}}
-
+                <form action="{{ route('information.promote.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <!-- Kategori -->
                     <div class="mb-3">
                         <label for="promo_categories" class="form-label">Kategori Promo</label>
                         <input type="text" class="form-control" id="promo_categories" placeholder="Masukkan Kategori Promo">
                     </div>
-
-                    {{-- <!-- Deskripsi -->
-                    <div class="mb-3">
-                        <label for="promo_description" class="form-label">Deskripsi Promo</label>
-                        <textarea class="form-control" id="promo_description" rows="4" placeholder="Masukkan Deskripsi Promo"></textarea>
-                    </div> --}}
 
                     <!-- Poster Promo -->
                     <div class="mb-3">
