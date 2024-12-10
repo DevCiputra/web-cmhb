@@ -16,5 +16,14 @@ class InformationController extends Controller
     {
         return view('management-data.information.article.index');
     }
+
+
+    // PROMOSI
+    public function indexPromote(Request $request)
+    {
+        // Return ke view dengan data
+        return view('management-data.information.promote.index', compact('promotions'));
+    }
+ 
     
 }
