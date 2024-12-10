@@ -48,7 +48,7 @@
         <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px;">
         <div class="card-form">
             <div class="d-flex mb-3">
-                <h5 class="card-title-screening" style="color: #1C3A6B"><b>Daftar Kategori Pertanyaan</b></h5>
+                <h5 class="card-title-screening" style="color: #1C3A6B"><b>Daftar Kategori Informasi</b></h5>
                 <div class="ms-auto">
                     <a href="{{ route('information-categories.create') }}"  style="text-decoration: none;">
                         <button class="btn btn-md btn-success" style="border-radius: 10px;">

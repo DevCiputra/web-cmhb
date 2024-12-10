@@ -200,7 +200,7 @@ Route::get('/information-article/detail', [InformationController::class, 'detail
 
 Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
 Route::get('/information-promote/create', [InformationController::class, 'createPromote'])->name('information.promote.create');
-Route::get('/information-promote/edit/{id}', [InformationController::class, 'editPromote'])->name('information.promote.edit');
+Route::get('/information-promote/edit', [InformationController::class, 'editPromote'])->name('information.promote.edit');
 Route::post('/information-promote', [InformationController::class, 'storePromote'])->name('information.promote.store');
 // kategori
 Route::get('/information-categories', [InformationCategoryController::class, 'index'])->name('information-categories.index'); // Menampilkan daftar kategori
