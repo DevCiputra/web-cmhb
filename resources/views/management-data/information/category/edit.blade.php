@@ -4,6 +4,34 @@
 
 @section('content')
 
+<b><!-- Flexbox container for aligning the toasts -->
+    <div
+        aria-live="polite"
+        aria-atomic="true"
+        class="d-flex justify-content-center align-items-center"
+        style="min-height: 200px">
+        <!-- Then put toasts within -->
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="" class="rounded me-2" alt="{4:Bootstrap}" />
+                <strong class="me-auto">{4:Bootstrap}</strong>
+                <small>{5:11 mins ago}</small>
+                <button
+                    type="button"
+                    class="ms-2 mb-1 close"
+                    data-dismiss="toast"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Hello, world! This is a toast message.
+            </div>
+        </div>
+    </div>
+
+    $('.toast').toast(option)
+</b>
 <div class='dashboard-app'>
     <header class='dashboard-toolbar'>
         <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
@@ -34,16 +62,16 @@
                         <input type="text" name="name" class="form-control" value="{{ $informationCategory->name }}" required>
                     </div>
                     <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-success btn-sm" 
-                                style="border-radius: 8px; padding: 6px 12px; font-size: 14px; height: 38px; display: inline-flex; align-items: center; justify-content: center;">
+                        <button type="submit" class="btn btn-success btn-sm"
+                            style="border-radius: 8px; padding: 6px 12px; font-size: 14px; height: 38px; display: inline-flex; align-items: center; justify-content: center;">
                             Simpan
                         </button>
-                        <a href="{{ route('information-categories.index') }}" class="btn btn-secondary btn-sm" 
-                           style="border-radius: 8px; padding: 6px 12px; font-size: 14px; height: 38px; display: inline-flex; align-items: center; justify-content: center;">
+                        <a href="{{ route('information-categories.index') }}" class="btn btn-secondary btn-sm"
+                            style="border-radius: 8px; padding: 6px 12px; font-size: 14px; height: 38px; display: inline-flex; align-items: center; justify-content: center;">
                             Batal
                         </a>
                     </div>
-                </form> 
+                </form>
             </div>
         </div>
     </div>
