@@ -58,6 +58,7 @@ Route::prefix('/')->group(function () {
     Route::get('/information', [LandingPageController::class, 'information'])->name('information');
     Route::get('/consultation-online', [LandingPageController::class, 'consultation'])->name('onlineconsultation.landing');
     Route::get('/coming', [LandingPageController::class, 'coming'])->name('coming-page');
+    Route::get('/bmi-calculator', [LandingPageController::class, 'bmiCalculator'])->name('bmi-calculator');
     Route::get('/online-consultation', [
         ReservationController::class,
         'indexLandingConsultation'
@@ -304,6 +305,8 @@ Route::group(
 Route::get('/skrining', function () {
     return view('landing-page.contents.skrining');
 });
+
+
 
 // COMING SOON (ON PROGRESS AFTER PROD V.1)
 

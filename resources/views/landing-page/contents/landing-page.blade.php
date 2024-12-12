@@ -227,7 +227,7 @@
                 <div class="col-md-6">
                     <div class="feature-item" style="background-color: #DFF2ED;">
                         <h5 class="feature-title">Screening depression, anxiety & stress</h5>
-                        <p class="card-text">Lakukan screening untuk mengetahui potensi depresi, kecemasan dan stres. dapatkan rekomendasi tindakan selanjutnya yang sesuai.</p>
+                        <p class="card-text">Lakukan screening untuk mengetahui potensi depresi, kecemasan dan stres.</p>
                         <a href="{{ route('screening.form') }}" class="btn btn-outline-success btn-lg rounded-pill">Mulai Skrining</a>
                     </div>
                 </div>
@@ -236,13 +236,12 @@
                     <div class="feature-item" style="border-color: #CCE4DE;">
                         <h5 class="feature-title">Body Mass Index (BMI)</h5>
                         <p class="card-text">Cek status kesehatan tubuh Anda untuk mengetahui apakah berat badan Anda ideal.</p>
-                        <a href="{{ route('coming-page') }}" class="btn btn-success btn-lg rounded-pill">Coba Sekarang</a>
+                        <a href="{{ route('bmi-calculator') }}" class="btn btn-success btn-lg rounded-pill">Coba Sekarang</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <!-- Emergency Section -->
     <!-- Emergency FAB -->

@@ -203,6 +203,12 @@ class LandingPageController extends Controller
         return response()->json($doctors);
     }
 
+    public function bmiCalculator()
+    {
+        $title = 'BMI Calculator';
+        return view('landing-page.contents.bmi', compact('title'));
+    }
+
 
 
     public function coming()
