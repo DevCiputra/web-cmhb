@@ -33,12 +33,30 @@ class InformationController extends Controller
             'description' => 'required|string',
             'special_information' => 'required|string',
             'information_category_id' => $categoryId,
-            'created_by' => auth()->user()->username,
+            'media' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $validatedData['is_published'] = 0; // Set is_published ke false
+        $validatedData['created_by'] = auth()->user()->username;
 
         $article = Information::create($validatedData);
+
+        // Handle photo upload
+        if ($request->hasFile('media')) {
+            $file = $request->file('media');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+
+            // Sesuaikan path untuk direktori yang lebih rinci (misalnya berdasarkan kategori)
+            $filePath = $file->storeAs('public/service_photos/mcu', $fileName);
+
+            // Simpan informasi foto ke tabel service_media
+            InformationMedia::create([
+                'service_id' => $article->id,
+                'name' => $fileName,
+                'mime_type' => $file->getClientMimeType(),
+            ]);
+        }
+
     }
 
     public function editArticle()
@@ -57,10 +75,6 @@ class InformationController extends Controller
     {
         // Ambil ID kategori "Promosi"
         $category = InformationCategory::where('name', 'Promosi')->first();
-
-        if (!$category) {
-            return redirect()->back()->with('error', 'Kategori "Promosi" tidak ditemukan.');
-        }
 
         $categoryId = $category->id;
 

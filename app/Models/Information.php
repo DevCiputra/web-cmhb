@@ -27,6 +27,6 @@ class Information extends Model
 
     public function media()
     {
-        return $this->hasMany(ServiceMedia::class);
+        return $this->hasMany(InformationMedia::class);
     }
 }

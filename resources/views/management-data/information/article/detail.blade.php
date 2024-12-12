@@ -16,7 +16,7 @@
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div class="d-flex flex-column">
-                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B; font-weight:">Detail Artikel</h4>
+                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Detail Artikel</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
@@ -39,13 +39,13 @@
                         <span class="publish-date">Tanggal Publish: 09 Agustus 2024</span>
                     </div>
                 </div>
-                
+
                 <div class="info-content">
                     <img src="{{ asset('images/info1.png') }}" alt="info Image" class="info-image">
                     <p class="info-content"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel tellus vel justo malesuada efficitur ut eget augue. In ultrices pretium odio venenatis imperdiet. Nullam sed leo ut turpis congue efficitur. Mauris velit leo, ullamcorper et leo non, faucibus pretium eros. Mauris placerat elit posuere lacus dignissim auctor. Etiam condimentum, nisi eu pellentesque iaculis, lacus dui congue metus, ac imperdiet nulla tortor ac turpis. Ut eget velit mauris. In accumsan erat sit amet placerat tempus. Cras semper ligula orci, sed volutpat nisi ultrices ut.
-    
+
                         Suspendisse dictum posuere ipsum vel faucibus. Nunc cursus consectetur nisl, maximus mattis neque feugiat ac. Proin tempus euismod quam, id feugiat purus laoreet nec. Praesent neque massa, efficitur eget posuere non, convallis sit amet ex. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc auctor urna sit amet risus sodales interdum. Curabitur fringilla nisl a nulla porttitor eleifend. Vivamus venenatis cursus enim in pharetra.
-                        
+
                         Mauris vulputate feugiat hendrerit. Donec hendrerit porta lectus a fermentum. Proin sapien dui, tristique at velit a, egestas malesuada ante. Morbi lacinia, augue id interdum suscipit, est quam congue ipsum, at eleifend risus quam in nisi. Vivamus augue lacus, iaculis in pellentesque sit amet, sodales quis ipsum. Aenean imperdiet arcu neque, eget vehicula sem pretium ac. Pellentesque posuere lobortis nibh sed consequat. Nam porttitor laoreet metus ut euismod. In quis elementum nulla, ut porta justo. Praesent vestibulum id ligula in imperdiet. Suspendisse potenti. </p>
                 </div>
             </div>

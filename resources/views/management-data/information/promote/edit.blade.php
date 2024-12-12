@@ -12,7 +12,7 @@
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div class="d-flex flex-column">
-                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B; font-weight:">Edit Promo</h4>
+                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Edit Promo</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>

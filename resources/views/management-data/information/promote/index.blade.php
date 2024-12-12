@@ -42,23 +42,17 @@
             {{-- CARD 1 --}}
             <div class="col-md-3 mb-4">
                 <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-<<<<<<< HEAD
-                    @php
-                    $media = $promotion->medias->first(); // Ambil media pertama terkait promosi
-                    @endphp
+
                     <img class="card-img-top"
-                        src="{{ $media ? Storage::url($media->file_url) : asset('images/default.jpg') }}"
+
                         alt="Promotion Image"
                         style="width: 100%; height: 200px; object-fit: cover;">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $promotion->title }}</h5>
-                        <p class="card-text">{{ Str::limit($promotion->description, 100, '...') }}</p>
+                        <h5 class="card-title"></h5>
+                        <p class="card-text"></p>
                     </div>
-=======
-                    <img class="card-img-top" src="{{ asset('images/promo1.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
->>>>>>> 4d6119d03db89d933e74bf6e5468cfccfcd3fa3c
                     <div class="card-footer d-flex justify-content-between">
-                        <a href="{{ route('information.promote.edit') }}" class="btn btn-sm btn-success custom-btn">
+                        <a href="#" class="btn btn-sm btn-success custom-btn">
                             Edit
                         </a>
                         <a href="#" class="btn btn-sm btn-secondary custom-btn">
@@ -81,7 +75,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-3 mb-4">
                 <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     <img class="card-img-top" src="{{ asset('images/promo3.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
@@ -111,37 +105,34 @@
             {{-- <div class="col-md-3 mb-4">
                 <div class="card">
                     <img class="card-img-top" src="{{ asset('images/promo1.jpg') }}" alt="Promo Image">
-                    <div class="card-body">
-                        <div class="header-container">
-                            <h5 class="title">Promo Title 4</h5>
-                            <div class="icon-group">
-                                <a href="/edit_promosi" class="btn btn-edit">
-                                    <img src="{{ asset('icons/pencil-square.svg') }}" alt="Edit Promo"
-                                        class="pencil-icon">
-                                </a>
-                                <a href="/view_promosi" class="btn btn-view">
-                                    <img src="{{ asset('icons/eye.svg') }}" alt="View Promo" class="eye-icon">
-                                </a>
-                            </div>
-                        </div>
-                        <p class="description">Promo description goes here.</p>
-                        <a href="#" class="btn btn-action">
-                            Publish
+            <div class="card-body">
+                <div class="header-container">
+                    <h5 class="title">Promo Title 4</h5>
+                    <div class="icon-group">
+                        <a href="/edit_promosi" class="btn btn-edit">
+                            <img src="{{ asset('icons/pencil-square.svg') }}" alt="Edit Promo"
+                                class="pencil-icon">
+                        </a>
+                        <a href="/view_promosi" class="btn btn-view">
+                            <img src="{{ asset('icons/eye.svg') }}" alt="View Promo" class="eye-icon">
                         </a>
                     </div>
                 </div>
-            </div> --}}
+                <p class="description">Promo description goes here.</p>
+                <a href="#" class="btn btn-action">
+                    Publish
+                </a>
+            </div>
         </div>
-<<<<<<< HEAD
+    </div> --}}
+</div>
 
-        <!-- Pagination -->
-        <div class="d-flex justify-content-center">
-            {{ $promotions->links() }}
-        </div>
 
-=======
->>>>>>> 4d6119d03db89d933e74bf6e5468cfccfcd3fa3c
-    </div>
+<!-- Pagination -->
+<div class="d-flex justify-content-center">
+    {{ $promotions->links() }}
+</div>
+</div>
 </div>
 @endsection
 
