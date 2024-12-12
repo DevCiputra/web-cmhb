@@ -464,6 +464,7 @@ a:hover {
     text-align: left;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     color: #023770;
+    height: 300px;
 }
 
 .feature-title {

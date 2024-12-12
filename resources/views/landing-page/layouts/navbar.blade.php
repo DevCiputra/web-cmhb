@@ -40,7 +40,7 @@
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{ route('screening.form') }}">Screening Psikologi</a></li>
 
-                <li><a class="dropdown-item" href="{{ route('coming-page') }}">BMI</a></li>
+                <li><a class="dropdown-item" href="{{ route('bmi-calculator') }}">BMI</a></li>
             </ul>
         </li>
         @else

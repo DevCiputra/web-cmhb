@@ -46,6 +46,7 @@
         </div>
         @endif
         <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px;">
+<<<<<<< HEAD
             <div class="card-form">
                 <div class="d-flex mb-3">
                     <h5 class="card-title-screening" style="color: #1C3A6B"><b>Daftar Kategori Informasi</b></h5>
@@ -57,6 +58,18 @@
                             </button>
                         </a>
                     </div>
+=======
+        <div class="card-form">
+            <div class="d-flex mb-3">
+                <h5 class="card-title-screening" style="color: #1C3A6B"><b>Daftar Kategori Informasi</b></h5>
+                <div class="ms-auto">
+                    <a href="{{ route('information-categories.create') }}"  style="text-decoration: none;">
+                        <button class="btn btn-md btn-success" style="border-radius: 10px;">
+                            <img src="{{ asset('icons/plus.svg') }}" width="16" height="16" style="filter: invert(100%); margin-right: 8px;" alt="Plus Icon">
+                            Tambah Kategori
+                        </button>
+                    </a>
+>>>>>>> 4d6119d03db89d933e74bf6e5468cfccfcd3fa3c
                 </div>
                 <p class="card-text">Berikut merupakan daftar Kategori Informasi.</p>
                 <table class="table table-bordered">

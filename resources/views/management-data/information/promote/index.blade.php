@@ -37,18 +37,12 @@
                 </div>
             </div>
         </div>
-
-        @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
         <!-- Cards Container -->
         <div class="row cards-container">
-            @foreach($promotions as $promotion)
+            {{-- CARD 1 --}}
             <div class="col-md-3 mb-4">
                 <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<<<<<<< HEAD
                     @php
                     $media = $promotion->medias->first(); // Ambil media pertama terkait promosi
                     @endphp
@@ -60,24 +54,93 @@
                         <h5 class="card-title">{{ $promotion->title }}</h5>
                         <p class="card-text">{{ Str::limit($promotion->description, 100, '...') }}</p>
                     </div>
+=======
+                    <img class="card-img-top" src="{{ asset('images/promo1.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+>>>>>>> 4d6119d03db89d933e74bf6e5468cfccfcd3fa3c
                     <div class="card-footer d-flex justify-content-between">
-                        <a href="{{ route('information.promote.edit', $promotion->id) }}" class="btn btn-sm btn-success custom-btn">Edit</a>
-                        <form action="{{ route('information.promote.destroy', $promotion->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus promosi ini?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger custom-btn">Hapus</button>
-                        </form>
+                        <a href="{{ route('information.promote.edit') }}" class="btn btn-sm btn-success custom-btn">
+                            Edit
+                        </a>
+                        <a href="#" class="btn btn-sm btn-secondary custom-btn">
+                            Publish
+                        </a>
                     </div>
                 </div>
             </div>
-            @endforeach
+
+            <div class="col-md-3 mb-4">
+                <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <img class="card-img-top" src="{{ asset('images/promo2.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
+                            Edit
+                        </a>
+                        <a href="#" class="btn btn-sm btn-secondary custom-btn">
+                            Publish
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-4">
+                <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <img class="card-img-top" src="{{ asset('images/promo3.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
+                            Edit
+                        </a>
+                        <a href="#" class="btn btn-sm btn-secondary custom-btn">
+                            Publish
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <img class="card-img-top" src="{{ asset('images/promo1.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
+                            Edit
+                        </a>
+                        <a href="#" class="btn btn-sm btn-secondary custom-btn">
+                            Publish
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="col-md-3 mb-4">
+                <div class="card">
+                    <img class="card-img-top" src="{{ asset('images/promo1.jpg') }}" alt="Promo Image">
+                    <div class="card-body">
+                        <div class="header-container">
+                            <h5 class="title">Promo Title 4</h5>
+                            <div class="icon-group">
+                                <a href="/edit_promosi" class="btn btn-edit">
+                                    <img src="{{ asset('icons/pencil-square.svg') }}" alt="Edit Promo"
+                                        class="pencil-icon">
+                                </a>
+                                <a href="/view_promosi" class="btn btn-view">
+                                    <img src="{{ asset('icons/eye.svg') }}" alt="View Promo" class="eye-icon">
+                                </a>
+                            </div>
+                        </div>
+                        <p class="description">Promo description goes here.</p>
+                        <a href="#" class="btn btn-action">
+                            Publish
+                        </a>
+                    </div>
+                </div>
+            </div> --}}
         </div>
+<<<<<<< HEAD
 
         <!-- Pagination -->
         <div class="d-flex justify-content-center">
             {{ $promotions->links() }}
         </div>
 
+=======
+>>>>>>> 4d6119d03db89d933e74bf6e5468cfccfcd3fa3c
     </div>
 </div>
 @endsection

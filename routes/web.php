@@ -58,6 +58,7 @@ Route::prefix('/')->group(function () {
     Route::get('/information', [LandingPageController::class, 'information'])->name('information');
     Route::get('/consultation-online', [LandingPageController::class, 'consultation'])->name('onlineconsultation.landing');
     Route::get('/coming', [LandingPageController::class, 'coming'])->name('coming-page');
+    Route::get('/bmi-calculator', [LandingPageController::class, 'bmiCalculator'])->name('bmi-calculator');
     Route::get('/online-consultation', [
         ReservationController::class,
         'indexLandingConsultation'
@@ -136,7 +137,6 @@ Route::group(['middleware' => ['checkrole:Pasien,Admin']], function () {
     Route::get('/consultation-invoice/{id}', [OnlineConsultationController::class, 'showInvoice'])->name('consultation.invoice');
     Route::post('/consultation-payment/{id}', [OnlineConsultationController::class, 'confirmPayment'])->name('consultation.payment');
     Route::get('/terms-and-conditions', [RegulationController::class, 'termsAndConditions'])->name('terms-and-conditions');
-
 });
 
 // OFFICE MANAGEMENT ONLINE CONSULTATION DATA
@@ -192,24 +192,23 @@ Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
 
 // INFORMATION MANAGEMENT DATA
 Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
-Route::get('/information-article', [InformationController::class, 'indexArticle'])->name('information.article.index');
-Route::get('/information-article/create', [InformationController::class, 'createArticle'])->name('information.article.create');
-Route::get('/information-article/edit', [InformationController::class, 'editArticle'])->name('information.article.edit');
-Route::get('/information-article/detail', [InformationController::class, 'detailArticle'])->name('information.article.detail');
+    Route::get('/information-article', [InformationController::class, 'indexArticle'])->name('information.article.index');
+    Route::get('/information-article/create', [InformationController::class, 'createArticle'])->name('information.article.create');
+    Route::get('/information-article/edit', [InformationController::class, 'editArticle'])->name('information.article.edit');
+    Route::get('/information-article/detail', [InformationController::class, 'detailArticle'])->name('information.article.detail');
 
 
-    Route::get('/information-promotion', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
-    Route::get('/information-promotion/create', [InformationController::class, 'createPromote'])->name('information.promote.create');
-    Route::get('/information-promotion/edit/{id}', [InformationController::class, 'editPromote'])->name('information.promote.edit');
+    Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
+    Route::get('/information-promote/create', [InformationController::class, 'createPromote'])->name('information.promote.create');
+    Route::get('/information-promote/edit/{id}', [InformationController::class, 'editPromote'])->name('information.promote.edit');
     Route::post('/information-promote', [InformationController::class, 'storePromote'])->name('information.promote.store');
-
-// kategori
-Route::get('/information-categories', [InformationCategoryController::class, 'index'])->name('information-categories.index'); // Menampilkan daftar kategori
-Route::get('/information-categories/create', [InformationCategoryController::class, 'create'])->name('information-categories.create'); // Form tambah kategori
-Route::post('/information-categories', [InformationCategoryController::class, 'store'])->name('information-categories.store'); // Menyimpan kategori baru
-Route::get('/information-categories/{informationCategory}/edit', [InformationCategoryController::class, 'edit'])->name('information-categories.edit'); // Form edit kategori
-Route::put('/information-categories/{informationCategory}', [InformationCategoryController::class, 'update'])->name('information-categories.update'); // Memperbarui data kategori
-Route::delete('/information-categories/{informationCategory}', [InformationCategoryController::class, 'destroy'])->name('information-categories.destroy'); // Menghapus kategori
+    // kategori
+    Route::get('/information-categories', [InformationCategoryController::class, 'index'])->name('information-categories.index'); // Menampilkan daftar kategori
+    Route::get('/information-categories/create', [InformationCategoryController::class, 'create'])->name('information-categories.create'); // Form tambah kategori
+    Route::post('/information-categories', [InformationCategoryController::class, 'store'])->name('information-categories.store'); // Menyimpan kategori baru
+    Route::get('/information-categories/{informationCategory}/edit', [InformationCategoryController::class, 'edit'])->name('information-categories.edit'); // Form edit kategori
+    Route::put('/information-categories/{informationCategory}', [InformationCategoryController::class, 'update'])->name('information-categories.update'); // Memperbarui data kategori
+    Route::delete('/information-categories/{informationCategory}', [InformationCategoryController::class, 'destroy'])->name('information-categories.destroy'); // Menghapus kategori
 
 });
 
@@ -305,6 +304,8 @@ Route::group(
 Route::get('/skrining', function () {
     return view('landing-page.contents.skrining');
 });
+
+
 
 // COMING SOON (ON PROGRESS AFTER PROD V.1)
 

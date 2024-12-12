@@ -39,7 +39,6 @@ class InformationController extends Controller
         $validatedData['is_published'] = 0; // Set is_published ke false
 
         $article = Information::create($validatedData);
-
     }
 
     public function editArticle()
@@ -59,6 +58,10 @@ class InformationController extends Controller
         // Ambil ID kategori "Promosi"
         $category = InformationCategory::where('name', 'Promosi')->first();
 
+        if (!$category) {
+            return redirect()->back()->with('error', 'Kategori "Promosi" tidak ditemukan.');
+        }
+
         $categoryId = $category->id;
 
         // Ambil kata kunci pencarian dari input request
@@ -69,7 +72,7 @@ class InformationController extends Controller
             ->where('information_category_id', $categoryId)
             ->when($keyword, function ($query, $keyword) {
                 return $query->where('title', 'like', "%$keyword%")
-                             ->orWhere('description', 'like', "%$keyword%");
+                    ->orWhere('description', 'like', "%$keyword%");
             })
             ->orderBy('created_at', 'desc')
             ->paginate(8); // Sesuaikan jumlah item per halaman
@@ -84,8 +87,7 @@ class InformationController extends Controller
     public function createPromote()
     {
 
-        $categories = InformationCategory::all();
-        return view('management-data.information.promote.create', compact('categories'));
+        return view('management-data.information.promote.create');
     }
 
     public function editPromote()
@@ -150,6 +152,4 @@ class InformationController extends Controller
                 ->with('error', 'Terjadi kesalahan saat menyimpan promosi. Silakan coba lagi.');
         }
     }
-
-
 }
