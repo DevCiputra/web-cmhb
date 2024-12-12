@@ -31,7 +31,7 @@
             </a>
             <div class="dashboard-nav-dropdown-menu">
                 <a href="/information-article" class="dashboard-nav-dropdown-item {{ Request::is('information-article') ? 'active' : '' }}">Artikel</a>
-                <a href="/information-promote" class="dashboard-nav-dropdown-item {{ Request::is('information-promote') ? 'active' : '' }}">Promo</a>
+                <a href="/information-promotion" class="dashboard-nav-dropdown-item {{ Request::is('information-promotion') ? 'active' : '' }}">Promo</a>
                 <a href="{{ route('information-categories.index') }}" class="dashboard-nav-dropdown-item {{ Request::is('information-categories') ? 'active' : '' }}">Kategori</a>
             </div>
         </div>

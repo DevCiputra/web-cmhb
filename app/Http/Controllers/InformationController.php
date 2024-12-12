@@ -9,19 +9,37 @@ use App\Models\InformationMedia;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InformationController extends Controller
 {
     public function indexArticle()
     {
-        return view('management-data.information.article.index');
+        $articles = Information::where('information_category_id', 1)->paginate(10);
+        return view('management-data.information.article.index', compact('articles'));
     }
 
     public function createArticle()
     {
+        return view('management-data.information.article.create');
+    }
 
-        $categories = InformationCategory::all();
-        return view('management-data.information.article.create', compact('categories'));
+    public function storeArticle(Request $request)
+    {
+        $categoryId = InformationCategory::where('name', 'Artikel')->first()->id;
+
+        $validatedData = $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'special_information' => 'required|string',
+            'information_category_id' => $categoryId,
+            'created_by' => auth()->user()->username,
+        ]);
+
+        $validatedData['is_published'] = 0; // Set is_published ke false
+
+        $article = Information::create($validatedData);
+
     }
 
     public function editArticle()
@@ -40,16 +58,12 @@ class InformationController extends Controller
     {
         // Ambil ID kategori "Promosi"
         $category = InformationCategory::where('name', 'Promosi')->first();
-    
-        if (!$category) {
-            return redirect()->back()->with('error', 'Kategori "Promosi" tidak ditemukan.');
-        }
-    
+
         $categoryId = $category->id;
-    
+
         // Ambil kata kunci pencarian dari input request
         $keyword = $request->input('keyword');
-    
+
         // Filter berdasarkan kategori dan pencarian
         $promotions = Information::with('medias')
             ->where('information_category_id', $categoryId)
@@ -59,12 +73,12 @@ class InformationController extends Controller
             })
             ->orderBy('created_at', 'desc')
             ->paginate(8); // Sesuaikan jumlah item per halaman
-    
+
         // Return ke view dengan data
         return view('management-data.information.promote.index', compact('promotions'));
     }
-    
-    
+
+
 
 
     public function createPromote()
@@ -87,16 +101,16 @@ class InformationController extends Controller
             return redirect()->back()->with('error', 'Kategori "Promosi" tidak ditemukan.');
         }
         $categoryId = $category->id;
-    
+
         // Validasi data input
         $validatedData = $request->validate([
             'media' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi file gambar
         ]);
-    
+
         // Tambahkan ID kategori dan atur is_published sebagai false
         $validatedData['category_id'] = $categoryId;
         $validatedData['is_published'] = false;
-    
+
         try {
             // Simpan data informasi ke database
             $information = Information::create([
@@ -106,15 +120,15 @@ class InformationController extends Controller
                 'category_id' => $validatedData['category_id'],
                 'is_published' => $validatedData['is_published'],
             ]);
-    
+
             // Handle file media jika ada
             if ($request->hasFile('media')) {
                 $file = $request->file('media');
                 $fileName = time() . '.' . $file->getClientOriginalExtension();
-    
+
                 // Simpan file di direktori storage/public/information_media/promotions
                 $filePath = $file->storeAs('public/information_media/promotions', $fileName);
-    
+
                 // Simpan informasi media ke tabel information_media
                 InformationMedia::create([
                     'information_id' => $information->id,
@@ -123,19 +137,19 @@ class InformationController extends Controller
                     'file_url' => Storage::url($filePath), // Menyimpan URL file yang benar
                 ]);
             }
-    
+
             return redirect()
                 ->route('information.promote.index')
                 ->with('success', 'Promosi berhasil ditambahkan.');
         } catch (\Exception $e) {
             // Log error jika terjadi
             InformationLog::error('Error saat menyimpan promosi: ' . $e->getMessage());
-    
+
             return redirect()
                 ->back()
                 ->with('error', 'Terjadi kesalahan saat menyimpan promosi. Silakan coba lagi.');
         }
     }
-    
-    
+
+
 }

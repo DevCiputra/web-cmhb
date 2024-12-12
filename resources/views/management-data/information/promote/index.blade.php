@@ -27,13 +27,6 @@
                     <!-- Search Box -->
                     <input type="text" class="form-control" placeholder="Cari promo" style="max-width: 200px;">
 
-                    <!-- Dropdown Category -->
-                    <select class="form-select">
-                        <option selected>Pilih Kategori</option>
-                        <option value="1">Diskon</option>
-                        <option value="2">Penawaran Khusus</option>
-                    </select>
-
                     <!-- Add Button -->
                     <a href="{{ route('information.promote.create') }}" style="text-decoration: none;">
                         <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none;">
@@ -57,12 +50,12 @@
             <div class="col-md-3 mb-4">
                 <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     @php
-                        $media = $promotion->medias->first(); // Ambil media pertama terkait promosi
+                    $media = $promotion->medias->first(); // Ambil media pertama terkait promosi
                     @endphp
                     <img class="card-img-top"
-                         src="{{ $media ? Storage::url($media->file_url) : asset('images/default.jpg') }}"
-                         alt="Promotion Image"
-                         style="width: 100%; height: 200px; object-fit: cover;">
+                        src="{{ $media ? Storage::url($media->file_url) : asset('images/default.jpg') }}"
+                        alt="Promotion Image"
+                        style="width: 100%; height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title">{{ $promotion->title }}</h5>
                         <p class="card-text">{{ Str::limit($promotion->description, 100, '...') }}</p>
@@ -79,12 +72,12 @@
             </div>
             @endforeach
         </div>
-        
+
         <!-- Pagination -->
         <div class="d-flex justify-content-center">
             {{ $promotions->links() }}
         </div>
-        
+
     </div>
 </div>
 @endsection

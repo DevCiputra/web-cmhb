@@ -198,10 +198,11 @@ Route::get('/information-article/edit', [InformationController::class, 'editArti
 Route::get('/information-article/detail', [InformationController::class, 'detailArticle'])->name('information.article.detail');
 
 
-Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
-Route::get('/information-promote/create', [InformationController::class, 'createPromote'])->name('information.promote.create');
-Route::get('/information-promote/edit/{id}', [InformationController::class, 'editPromote'])->name('information.promote.edit');
-Route::post('/information-promote', [InformationController::class, 'storePromote'])->name('information.promote.store');
+    Route::get('/information-promotion', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
+    Route::get('/information-promotion/create', [InformationController::class, 'createPromote'])->name('information.promote.create');
+    Route::get('/information-promotion/edit/{id}', [InformationController::class, 'editPromote'])->name('information.promote.edit');
+    Route::post('/information-promote', [InformationController::class, 'storePromote'])->name('information.promote.store');
+
 // kategori
 Route::get('/information-categories', [InformationCategoryController::class, 'index'])->name('information-categories.index'); // Menampilkan daftar kategori
 Route::get('/information-categories/create', [InformationCategoryController::class, 'create'])->name('information-categories.create'); // Form tambah kategori

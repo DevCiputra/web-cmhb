@@ -12,7 +12,7 @@
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div class="d-flex flex-column">
-                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B; font-weight:">Tambah Artikel</h4>
+                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B; font-weight:bold">Tambah Artikel</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
@@ -30,32 +30,32 @@
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-form" style="padding: 2rem;">
                 <form>
-                    
+
                     <div class="mb-3">
                         <label for="title" class="form-label">Judul Artikel</label>
-                        <input type="text" class="form-control" id="article_title" placeholder="Masukkan Judul Artikel">
+                        <input type="text" class="form-control" id="article_title" name="title" placeholder="Masukkan Judul Artikel">
                     </div>
 
-                    
+
                     <div class="mb-3">
                         <label for="article_categories" class="form-label">Kategori Artikel</label>
                         <input type="text" class="form-control" id="article_categories" placeholder="Masukkan Kategori Artikel">
                     </div>
 
-                    
+
                     <div class="mb-3">
                         <label for="description" class="form-label">Isi Artikel</label>
                         <textarea class="form-control" id="article_description" rows="4" placeholder="Masukkan Isi Artikel"></textarea>
                     </div>
 
-    
+
                     <div class="mb-3">
                         <label for="image" class="form-label">Foto Artikel</label>
                         <input type="file" class="form-control" id="article_image" accept="image/*"
                             placeholder="Upload Foto Artikel">
                     </div>
 
-                    
+
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-success"
                             style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">

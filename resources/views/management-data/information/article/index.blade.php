@@ -27,13 +27,6 @@
                     <!-- Search Box -->
                     <input type="text" class="form-control" placeholder="Cari data" style="max-width: 200px;">
 
-                    <!-- Dropdown Category -->
-                    <select class="form-select">
-                        <option selected>Pilih Kategori</option>
-                        <option value="1">Kategori 1</option>
-                        <option value="2">Kategori 2</option>
-                    </select>
-
                     <!-- Add Button -->
                     <a href="{{ route('information.article.create') }}" style="text-decoration: none;">
                         <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none;">
