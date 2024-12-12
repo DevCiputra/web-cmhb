@@ -21,6 +21,13 @@
                         </ol>
                     </nav>
                 </div>
+                <div class="ms-auto">
+                    <a href="{{ route('gallery.data.create') }}" style="text-decoration: none;">
+                        <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px; border: none;">
+                            <img src="{{ asset('icons/plus.svg') }}" width="16" height="16" style="filter: invert(100%); margin-right: 8px;" alt="Plus Icon"> Tambah
+                        </button>
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -28,17 +35,6 @@
         <!-- Data Galeri -->
         <div class="card" style="border: none; border-radius: 12px;">
             <div class="card-form">
-                <div class="d-flex mb-3">
-                    <h4 class="card-title" style="color: #1C3A6B;"><b>Data Galeri RS</b></h4>
-                    <div class="ms-auto">
-                        <a href="{{ route('gallery.data.create') }}" style="text-decoration: none;">
-                            <button class="btn btn-md" style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px; border: none;">
-                                <img src="{{ asset('icons/plus.svg') }}" width="16" height="16" style="filter: invert(100%); margin-right: 8px;" alt="Plus Icon"> Tambah
-                            </button>
-                        </a>
-                    </div>
-                </div>
-
                 <div class="row">
                     @foreach ($galleries as $gallery)
                     <div class="col-md-4 mb-4">
@@ -49,12 +45,12 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ $gallery->description }}</h5>
                                 <p class="card-text"><small class="text-muted">Diupload pada {{ $gallery->created_at->format('d-m-Y') }}</small></p>
-                                <div class="d-flex justify-content-between">
-                                    <a href="{{ route('gallery.data.edit', $gallery->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <div class="d-flex ">
+                                    <a href="{{ route('gallery.data.edit', $gallery->id) }}" class="btn btn-sm btn-success custom-btn me-2">Edit</a>
                                     <form action="{{ route('gallery.data.destroy', $gallery->id) }}" method="POST" style="display:inline-block;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                                        <button type="submit" class="btn btn-sm btn-danger custom-btn" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
                                     </form>
                                 </div>
                             </div>
