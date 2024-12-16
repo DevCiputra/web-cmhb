@@ -1,6 +1,6 @@
 @extends('management-data.layouts.app')
 
-@section('title', ' Edit Article')
+@section('title', 'Edit Article')
 
 @section('content')
 
@@ -29,38 +29,37 @@
         <div class="card"
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-form" style="padding: 2rem;">
-                <form>
+                <form action="{{ route('information.article.update', $article->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Judul Artikel</label>
-                        <input type="text" class="form-control" id="article_title" placeholder="Masukkan Judul Artikel">
-                    </div>
-
-
-                    <div class="mb-3">
-                        <label for="article_categories" class="form-label">Kategori Artikel</label>
-                        <input type="text" class="form-control" id="article_categories" placeholder="Masukkan Kategori Artikel">
+                        <input type="text" class="form-control" id="article_title" name="title" value="{{ old('title', $article->title) }}" placeholder="Masukkan Judul Artikel">
                     </div>
 
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Isi Artikel</label>
-                        <textarea class="form-control" id="article_description" rows="4" placeholder="Masukkan Isi Artikel"></textarea>
+                        <textarea class="form-control" id="article_description" name="description" rows="4" placeholder="Masukkan Isi Artikel">{{ old('description', $article->description) }}</textarea>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="special_information" class="form-label">Informasi Khusus</label>
+                        <input type="text" class="form-control" id="special_information" name="special_information" value="{{ old('special_information', $article->special_information) }}" placeholder="Masukkan Informasi Khusus">
+                    </div>
 
                     <div class="mb-3">
                         <label for="image" class="form-label">Foto Artikel</label>
-                        <input type="file" class="form-control" id="article_image" accept="image/*"
-                            placeholder="Upload Foto Artikel">
+                        <input type="file" class="form-control" id="article_image" name="image" accept="image/*" placeholder="Upload Foto Artikel" onchange="previewImage(event)">
+
+                        <!-- Preview Gambar -->
+                        <div class="mt-3">
+                            <img id="image_preview" src="{{ asset('storage/articles/' . $article->media->first()->file_name) }}" alt="Article Image" class="img-fluid" width="150" style="display: {{ $article->media->first() ? 'block' : 'none' }}">
+                        </div>
                     </div>
 
-
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-danger me-2"
-                            style="background-color: #DC3545; color: #fff; border-radius: 10px; padding: 8px 12px;">
-                            Hapus
-                        </button>
                         <button type="submit" class="btn btn-success"
                             style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
                             Simpan
@@ -82,7 +81,7 @@
     $(document).ready(function() {
         $('#article_description').summernote({
             height: 400, // Set the height of the editor
-            placeholder: 'Masukkan Deskripsi MCU',
+            placeholder: 'Masukkan Deskripsi Artikel',
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'italic', 'underline', 'clear']],
@@ -93,23 +92,15 @@
         });
     });
 
-    const mobileScreen = window.matchMedia("(max-width: 990px )");
-    $(document).ready(function() {
-        $(".dashboard-nav-dropdown-toggle").click(function() {
-            $(this).closest(".dashboard-nav-dropdown")
-                .toggleClass("show")
-                .find(".dashboard-nav-dropdown")
-                .removeClass("show");
-            $(this).parent()
-                .siblings()
-                .removeClass("show");
-        });
-        $(".menu-toggle").click(function() {
-            if (mobileScreen.matches) {
-                $(".dashboard-nav").toggleClass("mobile-show");
-            } else {
-                $(".dashboard").toggleClass("dashboard-compact");
-            }
-        });
-    });
+    // Fungsi untuk menampilkan preview gambar
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const output = document.getElementById('image_preview');
+            output.style.display = 'block'; // Tampilkan gambar preview
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
 </script>
+@endpush

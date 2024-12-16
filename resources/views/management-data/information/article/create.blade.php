@@ -1,6 +1,6 @@
 @extends('management-data.layouts.app')
 
-@section('title', ' Create Article')
+@section('title', 'Create Article')
 
 @section('content')
 
@@ -16,7 +16,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href=" ">Reservasi</a></li>
+                            <li class="breadcrumb-item"><a href="#">Reservasi</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('information.article.index') }}">Article</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Tambah Artikel</li>
                         </ol>
@@ -29,32 +29,36 @@
         <div class="card"
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-form" style="padding: 2rem;">
-                <form>
+                <form method="POST" action="{{ route('information.article.store') }}" enctype="multipart/form-data">
+                    @csrf
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Judul Artikel</label>
-                        <input type="text" class="form-control" id="article_title" name="title" placeholder="Masukkan Judul Artikel">
+                        <input type="text" class="form-control" id="article_title" name="title" placeholder="Masukkan Judul Artikel" required>
                     </div>
-
 
                     <div class="mb-3">
-                        <label for="article_categories" class="form-label">Kategori Artikel</label>
-                        <input type="text" class="form-control" id="article_categories" placeholder="Masukkan Kategori Artikel">
+                        <label for="special_information" class="form-label">Informasi Khusus</label>
+                        <input type="text" class="form-control" id="special_information" name="special_information" placeholder="Masukkan Informasi Khusus (Opsional)">
                     </div>
-
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Isi Artikel</label>
-                        <textarea class="form-control" id="article_description" rows="4" placeholder="Masukkan Isi Artikel"></textarea>
+                        <textarea class="form-control" id="article_description" name="description" rows="4" placeholder="Masukkan Isi Artikel" required></textarea>
                     </div>
-
 
                     <div class="mb-3">
                         <label for="image" class="form-label">Foto Artikel</label>
-                        <input type="file" class="form-control" id="article_image" accept="image/*"
-                            placeholder="Upload Foto Artikel">
+                        <input type="file" class="form-control" id="article_image" name="image" accept="image/*">
                     </div>
 
+                    <div class="mb-3">
+                        <label for="is_published" class="form-label">Publikasikan Artikel</label>
+                        <select class="form-control" id="is_published" name="is_published">
+                            <option value="0" selected>Draft</option>
+                            <option value="1">Publikasikan</option>
+                        </select>
+                    </div>
 
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-success"
@@ -77,7 +81,7 @@
     $(document).ready(function() {
         $('#article_description').summernote({
             height: 400, // Set the height of the editor
-            placeholder: 'Masukkan Deskripsi MCU',
+            placeholder: 'Masukkan Isi Artikel',
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'italic', 'underline', 'clear']],
@@ -108,3 +112,4 @@
         });
     });
 </script>
+@endpush
