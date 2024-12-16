@@ -58,20 +58,16 @@
                                 <a href="{{ route('information.article.detail', $article->id) }}" class="btn btn-view">
                                     <img src="{{ asset('icons/eye.svg') }}" alt="View" class="eye-icon">
                                 </a>
-                                <form action="{{ route('information.article.delete', $article->id) }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    <button type="submit" class="btn btn-delete btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
-                                        <img src="{{ asset('icons/trash.svg') }}" alt="Delete" class="trash-icon">
-                                    </button>
-                                </form>
+
                             </div>
+                            
 
                         </div>
                         <p class="description">{{ Str::limit($article->description, 100, '...') }}</p>
                         <div class="btn-group">
                             @if($article->is_published == '1')
                             <!-- Tombol Draft -->
-                            <form action="{{ route('information.article.draft', $article->id) }}" method="POST" style="display: inline;">
+                            <form action="{{ route('information.article.draft', $article->id) }}" method="POST" style="display: inline; margin-right: 8px">
                                 @csrf
                                 <button type="submit" class="btn btn-warning btn-sm"
                                     onclick="return confirm('Apakah Anda yakin ingin mendraft artikel ini?')">
@@ -88,6 +84,13 @@
                                 </button>
                             </form>
                             @endif
+
+                            <form action="{{ route('information.article.delete', $article->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
+                                    Delete
+                                </button>
+                            </form>
                         </div>
 
                     </div>

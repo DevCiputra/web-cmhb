@@ -52,8 +52,11 @@
                         <p class="card-text"></p>
                     </div>
                     <div class="card-footer d-flex justify-content-between">
-                        <a href="#" class="btn btn-sm btn-success custom-btn">
+                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
                             Edit
+                        </a>
+                        <a href="#" class="btn btn-sm btn-danger custom-btn">
+                            Delete
                         </a>
                         <a href="#" class="btn btn-sm btn-secondary custom-btn">
                             Publish
@@ -69,6 +72,9 @@
                         <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
                             Edit
                         </a>
+                        <a href="#" class="btn btn-sm btn-danger custom-btn">
+                            Delete
+                        </a>
                         <a href="#" class="btn btn-sm btn-secondary custom-btn">
                             Publish
                         </a>
@@ -83,6 +89,9 @@
                         <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
                             Edit
                         </a>
+                        <a href="#" class="btn btn-sm btn-danger custom-btn">
+                            Delete
+                        </a>
                         <a href="#" class="btn btn-sm btn-secondary custom-btn">
                             Publish
                         </a>
@@ -95,6 +104,9 @@
                     <div class="card-footer d-flex justify-content-between">
                         <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
                             Edit
+                        </a>
+                        <a href="#" class="btn btn-sm btn-danger custom-btn">
+                            Delete
                         </a>
                         <a href="#" class="btn btn-sm btn-secondary custom-btn">
                             Publish
