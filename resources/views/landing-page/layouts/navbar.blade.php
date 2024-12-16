@@ -67,7 +67,7 @@
             <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Fitur</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#feature">Screening Psikologi</a></li>
-                <li><a class="dropdown-item" href="#feature">BMI</a></li>
+                <li><a class="dropdown-item" href="#feature">BMI Calculator</a></li>
             </ul>
         </li>
         @endif
