@@ -224,42 +224,16 @@ class InformationController extends Controller
 
 
     // PROMOSI
-    public function indexPromote(Request $request)
+    public function indexPromote()
     {
-        // Ambil ID kategori "Promosi"
-        $category = InformationCategory::where('name', 'Promosi')->first();
-
-        $categoryId = $category->id;
-
-        // Ambil kata kunci pencarian dari input request
-        $keyword = $request->input('keyword');
-
-        // Filter berdasarkan kategori dan pencarian
-        $promotions = Information::with('medias')
-            ->where('information_category_id', $categoryId)
-            ->when($keyword, function ($query, $keyword) {
-                return $query->where('title', 'like', "%$keyword%")
-                    ->orWhere('description', 'like', "%$keyword%");
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(8); // Sesuaikan jumlah item per halaman
-
-        // Return ke view dengan data
+        $promotions = Information::where('information_category_id', 2)->get();
         return view('management-data.information.promote.index', compact('promotions'));
     }
-
-
-
 
     public function createPromote()
     {
 
         return view('management-data.information.promote.create');
-    }
-
-    public function editPromote()
-    {
-        return view('management-data.information.promote.edit');
     }
 
     public function storePromote(Request $request)
@@ -319,4 +293,23 @@ class InformationController extends Controller
                 ->with('error', 'Terjadi kesalahan saat menyimpan promosi. Silakan coba lagi.');
         }
     }
+
+    public function editPromote($id)
+    {
+        $promotion = Information::where('information_category_id', 2)->findOrFail($id);
+        return view('management-data.information.promote.edit', compact('promotion'));
+    }
+
+
+
+    public function destroyPromote($id)
+    {
+        $promotion = Information::where('information_category_id', 2)->findOrFail($id);
+        $promotion->delete();
+
+        return redirect()
+            ->route('information.promote.index')
+            ->with('success', 'Promosi berhasil dihapus.');
+    }
+
 }

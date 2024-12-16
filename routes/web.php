@@ -205,10 +205,20 @@ Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
     Route::post('/information-article/{id}/publish', [InformationController::class, 'publishArticle'])->name('information.article.publish');
 
 
-    Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promotion.index');
+    // Routes untuk CRUD dan fungsi Publish/Draft Promosi
+    Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promote.index');
     Route::get('/information-promote/create', [InformationController::class, 'createPromote'])->name('information.promote.create');
     Route::get('/information-promote/edit/{id}', [InformationController::class, 'editPromote'])->name('information.promote.edit');
     Route::post('/information-promote', [InformationController::class, 'storePromote'])->name('information.promote.store');
+    Route::put('/information-promote/update/{id}', [InformationController::class, 'updatePromote'])->name('information.promote.update');
+    Route::delete('/information-promote/delete/{id}', [InformationController::class, 'deletePromote'])->name('information.promote.delete');
+
+    // Routes untuk fungsi Publish dan Draft Promosi
+    Route::put('/information-promote/publish/{id}', [InformationController::class, 'publishPromote'])->name('information.promote.publish');
+    Route::put('/information-promote/draft/{id}', [InformationController::class, 'draftPromote'])->name('information.promote.draft');
+
+
+
     // kategori
     Route::get('/information-categories', [InformationCategoryController::class, 'index'])->name('information-categories.index'); // Menampilkan daftar kategori
     Route::get('/information-categories/create', [InformationCategoryController::class, 'create'])->name('information-categories.create'); // Form tambah kategori

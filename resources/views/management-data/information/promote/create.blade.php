@@ -12,39 +12,38 @@
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <div class="d-flex flex-column">
-                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B; font-weight:">Tambah Promo</h4>
+                    <h4 class="mb-1 fw-normal" style="color: #1C3A6B; font-weight:">Tambah Promosi</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href=" ">Reservasi</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('information.promotion.index') }}">Promo</a></li>
-                            <li class="breadcrumb-item" style="color: #023770">Tambah Promo</li>
+                            <li class="breadcrumb-item"><a href="{{ route('information.promote.index') }}">Promosi</a></li>
+                            <li class="breadcrumb-item" style="color: #023770">Tambah Promosi</li>
                         </ol>
                     </nav>
                 </div>
             </div>
         </div>
 
-        <!-- Form Card -->
+        <!-- Form Tambah Promosi -->
         <div class="card"
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-form" style="padding: 2rem;">
                 <form action="{{ route('information.promote.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <!-- Kategori -->
+                    <!-- Judul Promosi -->
                     <div class="mb-3">
-                        <label for="promo_categories" class="form-label">Kategori Promo</label>
-                        <input type="text" class="form-control" id="promo_categories" placeholder="Masukkan Kategori Promo">
+                        <label for="title" class="form-label">Judul Promosi</label>
+                        <input type="text" class="form-control" name="title" id="title"
+                            placeholder="Masukkan Judul Promosi" required>
                     </div>
 
-                    <!-- Poster Promo -->
+                    <!-- Media Promosi -->
                     <div class="mb-3">
-                        <label for="promo_image" class="form-label">Poster Promo</label>
-                        <input type="file" class="form-control" id="promo_image" accept="image/*"
-                            placeholder="Upload Poster Promo">
+                        <label for="media" class="form-label">Media Promosi</label>
+                        <input type="file" class="form-control" name="media" id="media" accept="image/*" required>
                     </div>
 
-                    <!-- Save Button -->
+                    <!-- Tombol Simpan -->
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-success"
                             style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
@@ -97,6 +96,3 @@
     });
 </script>
 @endpush
-
-
-
