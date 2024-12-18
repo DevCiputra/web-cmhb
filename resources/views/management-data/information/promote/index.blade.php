@@ -16,7 +16,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href=" ">Informasi</a></li>
+                            <li class="breadcrumb-item"><a href="#">Informasi</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Promo</li>
                         </ol>
                     </nav>
@@ -37,121 +37,74 @@
                 </div>
             </div>
         </div>
+
         <!-- Cards Container -->
         <div class="row cards-container">
-            {{-- CARD 1 --}}
+            @forelse($promotions as $promotion)
             <div class="col-md-3 mb-4">
                 <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-
                     <img class="card-img-top"
-
+                        src="{{ $promotion->media->first() ? $promotion->media->first()->file_url : asset('images/default-image.jpg') }}"
                         alt="Promotion Image"
                         style="width: 100%; height: 200px; object-fit: cover;">
+
                     <div class="card-body">
-                        <h5 class="card-title"></h5>
-                        <p class="card-text"></p>
+                        <h5 class="card-title">{{ $promotion->title }}</h5>
+                        <p class="card-text">
+                            {{ $promotion->description ?? 'Tidak ada deskripsi' }}
+                        </p>
                     </div>
                     <div class="card-footer d-flex justify-content-between">
-                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
+                        <a href="{{ route('information.promote.edit', $promotion->id) }}" class="btn btn-sm btn-success custom-btn">
                             Edit
                         </a>
-                        <a href="#" class="btn btn-sm btn-danger custom-btn">
-                            Delete
-                        </a>
-                        <a href="#" class="btn btn-sm btn-secondary custom-btn">
-                            Publish
-                        </a>
+                        <form action="{{ route('information.promote.destroy', $promotion->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus promo ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger custom-btn">
+                                Delete
+                            </button>
+                        </form>
+                        @if(!$promotion->is_published)
+                        <!-- Tombol untuk Publish -->
+                        <form action="{{ route('information.promote.publish', $promotion->id) }}" method="POST" onsubmit="return confirm('Yakin ingin mempublikasikan promo ini?')">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-sm btn-secondary custom-btn">
+                                Publish
+                            </button>
+                        </form>
+                        @else
+                        <!-- Tombol untuk Draft -->
+                        <form action="{{ route('information.promote.draft', $promotion->id) }}" method="POST" onsubmit="return confirm('Yakin ingin memindahkan promo ke Draft?')">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-sm btn-warning custom-btn">
+                                Draft
+                            </button>
+                        </form>
+                        @endif
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-3 mb-4">
-                <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                    <img class="card-img-top" src="{{ asset('images/promo2.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
-                    <div class="card-footer d-flex justify-content-between">
-                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
-                            Edit
-                        </a>
-                        <a href="#" class="btn btn-sm btn-danger custom-btn">
-                            Delete
-                        </a>
-                        <a href="#" class="btn btn-sm btn-secondary custom-btn">
-                            Publish
-                        </a>
-                    </div>
-                </div>
+            @empty
+            <div class="col-12 text-center">
+                <p class="text-muted">Belum ada data promosi yang tersedia.</p>
             </div>
-
-            <div class="col-md-3 mb-4">
-                <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                    <img class="card-img-top" src="{{ asset('images/promo3.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
-                    <div class="card-footer d-flex justify-content-between">
-                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
-                            Edit
-                        </a>
-                        <a href="#" class="btn btn-sm btn-danger custom-btn">
-                            Delete
-                        </a>
-                        <a href="#" class="btn btn-sm btn-secondary custom-btn">
-                            Publish
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                    <img class="card-img-top" src="{{ asset('images/promo1.jpg') }}" alt="Promo Image" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
-                    <div class="card-footer d-flex justify-content-between">
-                        <a href="/edit_promosi" class="btn btn-sm btn-success custom-btn">
-                            Edit
-                        </a>
-                        <a href="#" class="btn btn-sm btn-danger custom-btn">
-                            Delete
-                        </a>
-                        <a href="#" class="btn btn-sm btn-secondary custom-btn">
-                            Publish
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {{-- <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img class="card-img-top" src="{{ asset('images/promo1.jpg') }}" alt="Promo Image">
-            <div class="card-body">
-                <div class="header-container">
-                    <h5 class="title">Promo Title 4</h5>
-                    <div class="icon-group">
-                        <a href="/edit_promosi" class="btn btn-edit">
-                            <img src="{{ asset('icons/pencil-square.svg') }}" alt="Edit Promo"
-                                class="pencil-icon">
-                        </a>
-                        <a href="/view_promosi" class="btn btn-view">
-                            <img src="{{ asset('icons/eye.svg') }}" alt="View Promo" class="eye-icon">
-                        </a>
-                    </div>
-                </div>
-                <p class="description">Promo description goes here.</p>
-                <a href="#" class="btn btn-action">
-                    Publish
-                </a>
-            </div>
+            @endforelse
         </div>
-    </div> --}}
-</div>
 
-
-<!-- Pagination -->
-<div class="d-flex justify-content-center">
-    {{ $promotions->links() }}
-</div>
-</div>
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center">
+            {{ $promotions->links() }}
+        </div>
+    </div>
 </div>
 @endsection
 
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-
 <script>
     const mobileScreen = window.matchMedia("(max-width: 990px )");
     $(document).ready(function() {

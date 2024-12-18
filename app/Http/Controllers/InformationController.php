@@ -159,25 +159,30 @@ class InformationController extends Controller
 
     public function deleteArticle($id)
     {
-        // Pastikan hanya artikel dengan category_id = 1 yang dapat dihapus
-        $article = Information::where('information_category_id', 1)
-        ->with('media') // Memuat relasi media
-        ->findOrFail($id);
+        try {
+            // Pastikan hanya artikel dengan category_id = 1 yang dapat dihapus
+            $article = Information::where('information_category_id', 1)
+                ->with('media') // Memuat relasi media
+                ->findOrFail($id);
 
-        // Hapus artikel
-        $article->delete();
+            // Lakukan soft delete pada artikel
+            $article->delete();
 
-        // Catat aksi penghapusan ke dalam log
-        InformationLog::create([
-            'information_id' => $article->id,
-            'user_id' => Auth::id(),
-            'action' => 'DELETE',
-            'changes' => 'Dilakukan penghapusan data oleh ' . Auth::user()->username,
-        ]);
+            // Catat aksi penghapusan ke dalam log
+            InformationLog::create([
+                'information_id' => $article->id,
+                'user_id' => Auth::id(),
+                'action' => 'DELETE',
+                'changes' => 'Artikel "' . $article->title . '" dihapus (soft delete) oleh ' . Auth::user()->username,
+            ]);
 
-        // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('information.article.index')->with('success', 'Artikel berhasil dihapus.');
+            // Redirect ke halaman index dengan pesan sukses
+            return redirect()->route('information.article.index')->with('success', 'Artikel berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
+
 
     public function draftArticle($id)
     {
@@ -223,12 +228,12 @@ class InformationController extends Controller
     }
 
 
-    // PROMOSI
     public function indexPromote()
     {
-        $promotions = Information::where('information_category_id', 2)->get();
+        $promotions = Information::where('information_category_id', 2)->paginate(10); // Gunakan paginate dengan jumlah item per halaman
         return view('management-data.information.promote.index', compact('promotions'));
     }
+
 
     public function createPromote()
     {
@@ -236,61 +241,51 @@ class InformationController extends Controller
         return view('management-data.information.promote.create');
     }
 
+    // Menyimpan data promosi baru
     public function storePromote(Request $request)
     {
-        // Ambil ID kategori "Promosi"
-        $category = InformationCategory::where('name', 'Promosi')->first();
-        if (!$category) {
-            return redirect()->back()->with('error', 'Kategori "Promosi" tidak ditemukan.');
-        }
-        $categoryId = $category->id;
-
-        // Validasi data input
-        $validatedData = $request->validate([
-            'media' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi file gambar
+        $validatedData = $request->validate(['title' => 'required|string|max:255',
+            'media' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // Tambahkan ID kategori dan atur is_published sebagai false
-        $validatedData['category_id'] = $categoryId;
-        $validatedData['is_published'] = false;
-
         try {
-            // Simpan data informasi ke database
-            $information = Information::create([
+            // Simpan data promosi
+            $promotion = Information::create([
                 'title' => $validatedData['title'],
-                'description' => $validatedData['description'],
-                'special_information' => $validatedData['special_information'],
-                'category_id' => $validatedData['category_id'],
-                'is_published' => $validatedData['is_published'],
+                'information_category_id' => 2, // ID kategori promosi
+                'is_published' => false,
+                'created_by' => Auth::id(),
             ]);
 
-            // Handle file media jika ada
+            // Simpan media jika ada
             if ($request->hasFile('media')) {
                 $file = $request->file('media');
-                $fileName = time() . '.' . $file->getClientOriginalExtension();
 
-                // Simpan file di direktori storage/public/information_media/promotions
-                $filePath = $file->storeAs('public/information_media/promotions', $fileName);
+                // Generate nama file terenkripsi (gunakan Str::random)
+                $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+                // Simpan file ke dalam storage/app/public/information_media/promotions
+                $filePath = $file->storeAs('promotions', $fileName, 'public');
 
                 // Simpan informasi media ke tabel information_media
-                InformationMedia::create([
-                    'information_id' => $information->id,
-                    'name' => $fileName,
-                    'mime_type' => $file->getClientMimeType(),
-                    'file_url' => Storage::url($filePath), // Menyimpan URL file yang benar
+                InformationMedia::create(['information_id' => $promotion->id,
+                    'file_name' => $fileName, // Nama file terenkripsi
+                    'mime_type' => $file->getMimeType(), // Tipe file
+                    'file_url' => Storage::url($filePath), // URL file
                 ]);
             }
 
-            return redirect()
-                ->route('information.promote.index')
-                ->with('success', 'Promosi berhasil ditambahkan.');
-        } catch (\Exception $e) {
-            // Log error jika terjadi
-            InformationLog::error('Error saat menyimpan promosi: ' . $e->getMessage());
+            // Catat log
+            InformationLog::create([
+                'information_id' => $promotion->id,
+                'user_id' => Auth::id(),
+                'action' => 'CREATE',
+                'changes' => 'Promosi dibuat oleh ' . Auth::user()->username,
+            ]);
 
-            return redirect()
-                ->back()
-                ->with('error', 'Terjadi kesalahan saat menyimpan promosi. Silakan coba lagi.');
+            return redirect()->route('information.promote.index')->with('success', 'Promosi berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 
@@ -300,16 +295,138 @@ class InformationController extends Controller
         return view('management-data.information.promote.edit', compact('promotion'));
     }
 
-
-
-    public function destroyPromote($id)
+    // Memperbarui data promosi
+    public function updatePromote(Request $request, $id)
     {
-        $promotion = Information::where('information_category_id', 2)->findOrFail($id);
-        $promotion->delete();
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'media' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
-        return redirect()
-            ->route('information.promote.index')
-            ->with('success', 'Promosi berhasil dihapus.');
+        try {
+            $promotion = Information::where('information_category_id', 2)->findOrFail($id);
+
+            // Simpan judul baru
+            $oldTitle = $promotion->title;
+            $promotion->update([
+                'title' => $validatedData['title'],
+                'updated_by' => Auth::id(),
+            ]);
+
+            // Perbarui file media jika ada
+            if ($request->hasFile('media')) {
+                $file = $request->file('media');
+
+                // Generate nama file terenkripsi
+                $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+                // Simpan file ke dalam storage/app/public/information_media/promotions
+                $filePath = $file->storeAs('promotions', $fileName, 'public');
+
+                // Hapus file media lama jika ada
+                $oldMedia = $promotion->media->first();
+                if ($oldMedia) {
+                    Storage::delete(str_replace('/storage/', 'public/', $oldMedia->file_url));
+                    $oldMedia->delete();
+                }
+
+                // Simpan informasi media baru ke tabel information_media
+                InformationMedia::create([
+                    'information_id' => $promotion->id,
+                    'file_name' => $fileName,
+                    'mime_type' => $file->getMimeType(),
+                    'file_url' => Storage::url($filePath),
+                ]);
+            }
+
+            // Catat log perubahan
+            InformationLog::create([
+                'information_id' => $promotion->id,
+                'user_id' => Auth::id(),
+                'action' => 'UPDATE',
+                'changes' => "Judul diubah dari '$oldTitle' ke '{$promotion->title}' oleh " . Auth::user()->username,
+            ]);
+
+            return redirect()->route('information.promote.index')->with('success', 'Promosi berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
+    // Menghapus data promosi
+    public function deletePromote($id)
+    {
+        try {
+            // Pastikan hanya promosi dengan category_id = 2 yang dapat dihapus
+            $promotion = Information::where('information_category_id', 2)
+            ->with('media') // Memuat relasi media
+            ->findOrFail($id);
+
+            $title = $promotion->title;
+
+            // Lakukan soft delete pada promosi
+            $promotion->delete();
+
+            // Catat aksi penghapusan ke dalam log
+            InformationLog::create([
+                'information_id' => $promotion->id,
+                'user_id' => Auth::id(),
+                'action' => 'DELETE',
+                'changes' => "Promosi '$title' dihapus (soft delete) oleh " . Auth::user()->username,
+            ]);
+
+            // Redirect ke halaman index dengan pesan sukses
+            return redirect()->route('information.promote.index')->with('success', 'Promosi berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+
+
+    // Publish promosi
+    public function publishPromote($id)
+    {
+        $promotion = Information::where('information_category_id', 2)->findOrFail($id);
+
+        try {
+            $promotion->update([
+                'is_published' => true,
+                'published_at' => now(),
+            ]);
+
+            // Catat log
+            InformationLog::create([
+                'information_id' => $promotion->id,
+                'user_id' => Auth::id(),
+                'action' => 'PUBLISH',
+                'changes' => 'Promosi dipublikasikan oleh ' . Auth::user()->username,
+            ]);
+
+            return redirect()->route('information.promote.index')->with('success', 'Promosi berhasil dipublikasikan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+
+    // Draft promosi
+    public function draftPromote($id)
+    {
+        $promotion = Information::where('information_category_id', 2)->findOrFail($id);
+
+        try {
+            $promotion->update(['is_published' => false]);
+
+            // Catat log
+            InformationLog::create([
+                'information_id' => $promotion->id,
+                'user_id' => Auth::id(),
+                'action' => 'DRAFT',
+                'changes' => 'Promosi diubah menjadi draft oleh ' . Auth::user()->username,
+            ]);
+
+            return redirect()->route('information.promote.index')->with('success', 'Promosi berhasil diubah menjadi draft.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
 }

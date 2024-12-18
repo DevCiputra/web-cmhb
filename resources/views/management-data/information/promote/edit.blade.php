@@ -1,6 +1,6 @@
 @extends('management-data.layouts.app')
 
-@section('title', ' Edit Promotion')
+@section('title', 'Edit Promotion')
 
 @section('content')
 
@@ -16,8 +16,8 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href=" ">Reservasi</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('information.promotion.index') }}">Promo</a></li>
+                            <li class="breadcrumb-item"><a href="#">Reservasi</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('information.promote.index') }}">Promo</a></li>
                             <li class="breadcrumb-item" style="color: #023770">Edit Promo</li>
                         </ol>
                     </nav>
@@ -29,38 +29,41 @@
         <div class="card"
             style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; overflow: hidden; height: auto">
             <div class="card-form" style="padding: 2rem;">
-                <form>
-                    {{-- <!-- Title -->
-                    <div class="mb-3">
-                        <label for="promo_title" class="form-label">Judul Promo</label>
-                        <input type="text" class="form-control" id="promo_title" placeholder="Masukkan Judul Promo">
-                    </div> --}}
+                <form action="{{ route('information.promote.update', $promotion->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
 
-                    <!-- Kategori -->
+                    <!-- Judul Promo -->
                     <div class="mb-3">
-                        <label for="promo_categories" class="form-label">Kategori Promo</label>
-                        <input type="text" class="form-control" id="promo_categories" placeholder="Masukkan Kategori Promo">
+                        <label for="title" class="form-label">Judul Promo</label>
+                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title"
+                            id="title" value="{{ old('title', $promotion->title) }}" placeholder="Masukkan Judul Promo">
+                        @error('title')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-
-                    {{-- <!-- Deskripsi -->
-                    <div class="mb-3">
-                        <label for="promo_description" class="form-label">Deskripsi Promo</label>
-                        <textarea class="form-control" id="promo_description" rows="4" placeholder="Masukkan Deskripsi Promo"></textarea>
-                    </div> --}}
 
                     <!-- Foto Promo -->
                     <div class="mb-3">
-                        <label for="promo_image" class="form-label">Poster Promo</label>
-                        <input type="file" class="form-control" id="promo_image" accept="image/*"
-                            placeholder="Upload Foto Promo">
+                        <label for="media" class="form-label">Poster Promo</label>
+                        <input type="file" class="form-control @error('media') is-invalid @enderror" name="media" id="media" accept="image/*">
+                        @error('media')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <div class="mt-2">
+                            <small>Media Sebelumnya:</small><br>
+                            @if($promotion->media && $promotion->media->first())
+                            <img id="image_preview" src="{{ asset('storage/promotions/' . $promotion->media->first()->file_name) }}" alt="Promo Image" class="img-fluid" width="150" style="display: {{ $promotion->media->first() ? 'block' : 'none' }}">
+                            @else
+                            <p class="text-muted">Tidak ada gambar.</p>
+                            @endif
+                        </div>
                     </div>
 
                     <!-- Save Button -->
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-danger me-2"
-                            style="background-color: #DC3545; color: #fff; border-radius: 10px; padding: 8px 12px;">
-                            Hapus
-                        </button>
+                        <a href="{{ route('information.promote.index') }}" class="btn btn-secondary me-2"
+                            style="border-radius: 10px; padding: 8px 12px;">Kembali</a>
                         <button type="submit" class="btn btn-success"
                             style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
                             Simpan
@@ -75,7 +78,10 @@
 
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<!-- Pemuatan untuk Summernote -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -91,24 +97,5 @@
             ]
         });
     });
-
-    const mobileScreen = window.matchMedia("(max-width: 990px )");
-    $(document).ready(function() {
-        $(".dashboard-nav-dropdown-toggle").click(function() {
-            $(this).closest(".dashboard-nav-dropdown")
-                .toggleClass("show")
-                .find(".dashboard-nav-dropdown")
-                .removeClass("show");
-            $(this).parent()
-                .siblings()
-                .removeClass("show");
-        });
-        $(".menu-toggle").click(function() {
-            if (mobileScreen.matches) {
-                $(".dashboard-nav").toggleClass("mobile-show");
-            } else {
-                $(".dashboard").toggleClass("dashboard-compact");
-            }
-        });
-    });
 </script>
+@endpush
