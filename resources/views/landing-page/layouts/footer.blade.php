@@ -1,17 +1,16 @@
-<!-- Footer Section -->
 <footer class="footer">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
                 <h5>Tentang Kami</h5>
-                <p>Ciputra Mitra Hospital selalu mengutamakan kepentingan dan kepuasan pasien dalam memberikan layanan kesehatan. Kami berkomitmen untuk menyediakan perawatan kesehatan yang terbaik, aman, dan berkualitas tinggi dengan biaya yang efisien, dengan motto “care for your health and happiness.</p>
+                <p>{{ $hospitalInformation->mission ?? 'Ciputra Mitra Hospital selalu mengutamakan kepentingan dan kepuasan pasien...' }}</p>
             </div>
             <div class="col-md-4">
                 <h5>Hubungi Kami</h5>
                 <ul>
-                    <li>Phone: (0511) 6743999</li>
-                    <!--<li>Email: info@example.com</li>-->
-                    <li>Address: Komplek Citra Land Jalan Ahmad Yani KM. 7,8 Manarap Lama, Pemurus Dalam, Kec. Kertak Hanyar, Kota Banjarmasin, Kalimantan Selatan 70654</li>
+                    <li>Phone: {{ $hospitalInformation->phone ?? '(0511) 6743999' }}</li>
+                    <!--<li>Email: {{ $hospitalInformation->email ?? 'info@example.com' }}</li>-->
+                    <li>Address: {{ $hospitalInformation->address ?? 'Komplek Citra Land Jalan Ahmad Yani KM. 7,8...' }}</li>
                 </ul>
             </div>
             <div class="col-md-4">
@@ -36,7 +35,7 @@
             </div>
         </div>
         <div class="text-center">
-            <p>&copy; 2024 Ciputra Mitra Hospital. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} Ciputra Mitra Hospital. All rights reserved.</p>
         </div>
     </div>
 </footer>

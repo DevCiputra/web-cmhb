@@ -60,7 +60,7 @@
                                 </a>
 
                             </div>
-                            
+
 
                         </div>
                         <p class="description">{{ Str::limit($article->description, 100, '...') }}</p>
@@ -85,8 +85,9 @@
                             </form>
                             @endif
 
-                            <form action="{{ route('information.article.delete', $article->id) }}" method="POST" style="display: inline;">
+                            <form action="{{ route('information.article.delete', $article->id) }}" method="POST" style="display: inline; ">
                                 @csrf
+                                @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
                                     Delete
                                 </button>
