@@ -7,7 +7,7 @@
         <div class="hero-content">
             <div class="row align-items-center">
                 <div class="col-md-6 hero-text">
-                    <h1>Care For Your Health & Happiness</h1>
+                    <h1>{{ $hospitalInformation->vision ?? 'Care For Your Health & Happiness' }}</h1>
                     <p>Jaga kesehatan Anda dengan layanan medis yang terpercaya dan dukungan profesional dari para ahli.</p>
                     <div class="hero-buttons">
                         <a href="/doctor" class="btn btn-outline-success btn-lg" style="border-radius: 30px;">Cari Dokter</a>
@@ -114,108 +114,71 @@
 
         </div>
     </div>
+
     <!-- Promotion Section -->
     <div id="promotion" class="promotion-section">
         <div class="container-fluid">
             <h1 style="margin-bottom: 10px;">Promo</h1>
             <p style="margin-bottom: 15px;">Dapatkan penawaran menarik untuk berbagai layanan kesehatan kami.</p>
-            <a href="{{ route('coming-page') }}" class="btn btn-semua"
+            <a href="{{ route('promotion') }}" class="btn btn-semua"
                 style="color:#023770; font-size: 1.2rem; margin-top: -10px; margin-bottom: 10px">
                 Lihat Semua
                 <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
             </a>
             <div class="row">
+                @foreach ($promotions as $promo)
                 <div class="col-md-4 promotion-item">
                     <div class="promotion-content">
-                        <img src="{{ asset('images/promo1.jpg') }}" alt="Medical Check Up" class="img-fluid">
+                        @if ($promo->media->isNotEmpty())
+                        <img src="{{ $promo->media->first()->file_url }}" alt="{{ $promo->title }}" class="img-fluid">
+                        @else
+                        <img src="{{ asset('images/default-promo.jpg') }}" alt="Default Promo" class="img-fluid">
+                        @endif
                     </div>
                 </div>
-                <div class="col-md-4 promotion-item">
-                    <div class="promotion-content">
-                        <img src="{{ asset('images/promo2.jpg') }}" alt="Pendaftaran Poliklinik" class="img-fluid">
-                    </div>
-                </div>
-                <div class="col-md-4 promotion-item">
-                    <div class="promotion-content">
-                        <img src="{{ asset('images/promo3.jpg') }}" alt="Home Service" class="img-fluid">
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
 
     <!-- Information Section -->
-    <!-- <div id="info" class="info-section">
+    <div id="info" class="info-section">
         <div class="container">
             <h1 style="margin-bottom: 10px;">What's New</h1>
-            <p style="margin-bottom: 15px;">Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar
-                elementum tempus hac tellus libero accumsan.</p>
-            <a href="{{ route('coming-page') }}" class="btn btn-semua"
+            <p style="margin-bottom: 15px;">Informasi terbaru tentang kesehatan dan layanan kami.</p>
+            <a href="{{ route('article') }}" class="btn btn-semua"
                 style="color:#023770; font-size: 1.2rem; margin-top: -10px; margin-bottom: 10px">
                 Lihat Semua
                 <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
             </a>
             <div class="row g-4">
+                @foreach ($articles as $article)
                 <div class="col-lg-4 col-md-6">
                     <div class="info-item">
                         <div class="info-content card">
                             <div class="badge-container">
                                 <span class="badge">Artikel</span>
                             </div>
-                            <img src="{{ asset('images/info1.png') }}" class="card-img-top" alt="Info 1">
+                            @if ($article->media->isNotEmpty())
+                            <img src="{{ $article->media->first()->file_url }}" class="card-img-top" alt="{{ $article->title }}">
+                            @else
+                            <img src="{{ asset('images/default-article.jpg') }}" class="card-img-top" alt="Default Article">
+                            @endif
                             <div class="card-body">
-                                <h5 class="card-title">Title 1</h5>
-                                <p class="card-text">Some quick example text to build on the card.</p>
-                                <a href="{{ route('coming-page') }}" class="btn btn-link">
+                                <h5 class="card-title">{{ $article->title }}</h5>
+                                <p class="card-text">{{ \Illuminate\Support\Str::limit($article->description, 100) }}</p>
+                                <a href="{{ route('article') }}" class="btn btn-link">
                                     Selengkapnya
-                                    <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                        class="chevron-icon">
+                                    <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="info-item">
-                        <div class="info-content card">
-                            <div class="badge-container">
-                                <span class="badge">Health Tips</span>
-                            </div>
-                            <img src="{{ asset('images/info2.png') }}" class="card-img-top" alt="Info 2">
-                            <div class="card-body">
-                                <h5 class="card-title">Title 2</h5>
-                                <p class="card-text">Some quick example text to build on the card.</p>
-                                <a href="{{ route('coming-page') }}" class="btn btn-link">
-                                    Selengkapnya
-                                    <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                        class="chevron-icon">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="info-item">
-                        <div class="info-content card">
-                            <div class="badge-container">
-                                <span class="badge">Event</span>
-                            </div>
-                            <img src="{{ asset('images/info3.png') }}" class="card-img-top" alt="Info 3">
-                            <div class="card-body">
-                                <h5 class="card-title">Title 3</h5>
-                                <p class="card-text">Some quick example text to build on the card.</p>
-                                <a href="{{ route('coming-page') }}" class="btn btn-link">
-                                    Selengkapnya
-                                    <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
-                                        class="chevron-icon">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- Feature Section -->
     <div id="feature" class="feature-section">

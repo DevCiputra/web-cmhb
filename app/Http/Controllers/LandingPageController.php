@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Doctor;
 use App\Models\DoctorPolyclinic;
+use App\Models\HospitalInformation;
+use App\Models\Information;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
@@ -12,8 +14,29 @@ class LandingPageController extends Controller
     public function index()
     {
         $title = 'Ciputra Mitra Hospital';
-        return view('landing-page.contents.landing-page', compact('title'));
+
+        // Data promo: informasi dengan kategori 2
+        $promotions = Information::where('information_category_id', 2)
+        ->where('is_published', 1)
+        ->with('media') // Mengambil media terkait
+            ->latest()
+            ->take(3)
+            ->get();
+
+        // Data artikel: informasi dengan kategori 1
+        $articles = Information::where('information_category_id', 1)
+        ->where('is_published', 1)
+        ->with('media') // Mengambil media terkait
+            ->latest()
+            ->take(3)
+            ->get();
+
+        // Data hospital information
+        $hospitalInformation = HospitalInformation::first(); // Mengambil data pertama dari tabel
+
+        return view('landing-page.contents.landing-page', compact('title', 'promotions', 'articles', 'hospitalInformation'));
     }
+
 
     // Method untuk menampilkan daftar dokter
     public function doctor(Request $request)
@@ -94,8 +117,6 @@ class LandingPageController extends Controller
         return response()->json($mcus);
     }
 
-
-
     // Method untuk menampilkan detail layanan Medical Check Up (MCU)
     public function showMcuDetail($id)
     {
@@ -145,13 +166,25 @@ class LandingPageController extends Controller
     public function promotion()
     {
         $title = 'Promosi';
-        return view('landing-page.contents.promotion', compact('title'));
+        $promotions = Information::where('information_category_id', 2)
+        ->where('is_published', 1)
+        ->with('media') // Mengambil media terkait
+            ->latest()
+            ->take(3)
+            ->get();
+        return view('landing-page.contents.promotion', compact('title', 'promotions'));
     }
 
-    public function information()
+    public function article()
     {
-        $title = 'Informasi';
-        return view('landing-page.contents.information', compact('title'));
+        $title = 'Article';
+        $articles = Information::where('information_category_id', 1)
+        ->where('is_published', 1)
+        ->with('media') // Mengambil media terkait
+        ->latest()
+            ->take(3)
+            ->get();
+        return view('landing-page.contents.information', compact('title', 'articles'));
     }
 
     public function consultation(Request $request)

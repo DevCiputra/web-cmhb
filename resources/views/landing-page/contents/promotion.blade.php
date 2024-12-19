@@ -42,53 +42,24 @@
             </div>
         </div>
 
+
         <!-- Promotions Card Section -->
         <div class="row">
+            @foreach($promotions as $promotion)
             <div class="col-md-4 promotion-item">
-                <a href="/promosi_detail" class="text-decoration-none">
+                <a href="/promosi_detail/{{ $promotion->id }}" class="text-decoration-none">
                     <div class="promotion-content">
-                        <img src="{{ asset('images/promo1.jpg') }}" alt="Medical Check Up" class="img-fluid">
+                        <!-- Gunakan gambar terkait jika ada media, fallback ke placeholder -->
+                        @if ($promotion->media->isNotEmpty())
+                        <img src="{{ $promotion->media->first()->file_url }}" alt="{{ $promotion->title }}" class="img-fluid">
+                        @else
+                        <img src="{{ asset('images/default-promo.jpg') }}" alt="Default Promo" class="img-fluid">
+                        @endif
                     </div>
                 </a>
             </div>
-            <div class="col-md-4 promotion-item">
-                <a href="/promosi_detail" class="text-decoration-none">
-                    <div class="promotion-content">
-                        <img src="{{ asset('images/promo2.jpg') }}" alt="Pendaftaran Poliklinik" class="img-fluid">
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 promotion-item">
-                <a href="/promosi_detail" class="text-decoration-none">
-                    <div class="promotion-content">
-                        <img src="{{ asset('images/promo3.jpg') }}" alt="Home Service" class="img-fluid">
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 promotion-item">
-                <a href="/promosi_detail" class="text-decoration-none">
-                    <div class="promotion-content">
-                        <img src="{{ asset('images/promo1.jpg') }}" alt="Medical Check Up" class="img-fluid">
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 promotion-item">
-                <a href="/promosi_detail" class="text-decoration-none">
-                    <div class="promotion-content">
-                        <img src="{{ asset('images/promo2.jpg') }}" alt="Pendaftaran Poliklinik" class="img-fluid">
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 promotion-item">
-                <a href="/promosi_detail" class="text-decoration-none">
-                    <div class="promotion-content">
-                        <img src="{{ asset('images/promo3.jpg') }}" alt="Home Service" class="img-fluid">
-                    </div>
-                </a>
-            </div>
+            @endforeach
         </div>
-
-
 
         <!-- Pagination Section -->
         <div class="pagination-container d-flex justify-content-end">
@@ -110,23 +81,23 @@
         </div>
     </div>
 
-        <!-- Emergency Section -->
-        <!-- Emergency FAB -->
-        <div id="emergency" class="emergency-fab">
-            <!-- Sub-menu FAB buttons that will collapse/expand -->
-            <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
-                <a href="tel:+625116743911" class="btn btn-success btn-lg mb-2 rounded-circle">
-                    <i class="fas fa-ambulance"></i>
-                </a>
-                <a href="https://api.whatsapp.com/send?phone=6278033212250&text=Saya%20tertarik%20layanan%20di%20Ciputra%20Hospital%20saya%20ingin%20informasi%20mengenai...."
-                    class="btn btn-outline-success btn-lg rounded-circle mb-2" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-            </div>
-            <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle" onclick="toggleEmergencyButtons()">
-                <i class="fa-solid fa-phone"></i>
+    <!-- Emergency Section -->
+    <!-- Emergency FAB -->
+    <div id="emergency" class="emergency-fab">
+        <!-- Sub-menu FAB buttons that will collapse/expand -->
+        <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
+            <a href="tel:+625116743911" class="btn btn-success btn-lg mb-2 rounded-circle">
+                <i class="fas fa-ambulance"></i>
+            </a>
+            <a href="https://api.whatsapp.com/send?phone=6278033212250&text=Saya%20tertarik%20layanan%20di%20Ciputra%20Hospital%20saya%20ingin%20informasi%20mengenai...."
+                class="btn btn-outline-success btn-lg rounded-circle mb-2" target="_blank">
+                <i class="fab fa-whatsapp"></i>
             </a>
         </div>
+        <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle" onclick="toggleEmergencyButtons()">
+            <i class="fa-solid fa-phone"></i>
+        </a>
+    </div>
 </div>
 
 @endsection
