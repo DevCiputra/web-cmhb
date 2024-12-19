@@ -25,7 +25,7 @@
                 <!-- Right Side: Controls -->
                 <div class="d-flex align-items-center gap-2">
                     <!-- Search Box -->
-                    <input type="text" class="form-control" placeholder="Cari promo" style="max-width: 200px;">
+                    <input id="search-promo" type="text" class="form-control" placeholder="Cari promo" style="max-width: 200px;">
 
                     <!-- Add Button -->
                     <a href="{{ route('information.promote.create') }}" style="text-decoration: none;">
@@ -41,14 +41,13 @@
         <!-- Cards Container -->
         <div class="row cards-container">
             @forelse($promotions as $promotion)
-            <div class="col-md-3 mb-4">
+            <div class="col-md-3 mb-4 promo-card" data-title="{{ $promotion->title }}" data-description="{{ $promotion->description }}">
                 <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     <img class="card-img-top"
                         src="{{ $promotion->media->first() ? $promotion->media->first()->file_url : asset('images/default-image.jpg') }}"
                         alt="Promotion Image"
-                        style="width: 100%; height: 200px; object-fit: cover;">
-
-                    <div class="card-body">
+                        style="width: 100%; height: 450px; object-fit: cover;">
+                    <div class="card-body" style="height: 100px; object-fit: cover;">
                         <h5 class="card-title">{{ $promotion->title }}</h5>
                         <p class="card-text">
                             {{ $promotion->description ?? 'Tidak ada deskripsi' }}
@@ -123,6 +122,23 @@
             } else {
                 $(".dashboard").toggleClass("dashboard-compact");
             }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#search-promo').on('input', function() {
+            const query = $(this).val().toLowerCase();
+            $('.promo-card').each(function() {
+                const title = $(this).data('title').toLowerCase();
+                const description = $(this).data('description') ? $(this).data('description').toLowerCase() : '';
+                
+                // Periksa apakah query cocok dengan judul atau deskripsi
+                if (title.includes(query) || description.includes(query)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
         });
     });
 </script>

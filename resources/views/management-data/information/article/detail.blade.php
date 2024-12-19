@@ -57,12 +57,16 @@
 
 @endsection
 
-@push('script')
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
 <script>
     $(document).ready(function() {
-        $('#deskripsiMCU').summernote({
+        $('#article_description').summernote({
             height: 400, // Set the height of the editor
-            placeholder: 'Masukkan Deskripsi MCU',
+            placeholder: 'Masukkan Deskripsi Artikel',
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'italic', 'underline', 'clear']],
@@ -72,6 +76,17 @@
             ]
         });
     });
+
+    // Fungsi untuk menampilkan preview gambar
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const output = document.getElementById('image_preview');
+            output.style.display = 'block'; // Tampilkan gambar preview
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
 
     const mobileScreen = window.matchMedia("(max-width: 990px )");
     $(document).ready(function() {
