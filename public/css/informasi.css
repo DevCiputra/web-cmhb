@@ -44,6 +44,11 @@ body {
 
 
 /* CARD INFO */
+
+.row {
+    justify-content: start;
+}
+
 .info-cards-container .col-md-3 {
     padding-left: 15px;
     padding-right: 15px;
@@ -122,9 +127,10 @@ body {
 }
 
 .pagination-container {
-    margin-top: -20px;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
+
+
 
 /* EMERGENCY SECTION */
 /* Emergency FAB container */
@@ -194,6 +200,9 @@ body {
 
 /* Media Query for tablets and smaller screens */
 @media (min-width: 769px) and (max-width: 1024px) {
+    .row {
+        justify-content: center;
+    }
     /* General container adjustments */
     .container {
         padding-left: 10px;
@@ -269,6 +278,10 @@ body {
 
 /* Additional Styles for specific cases */
 @media (max-width: 992px) {
+    .row {
+        justify-content: center;
+    }
+
     .info-card {
         max-width: 100%;
     }
@@ -276,6 +289,10 @@ body {
 
 
 @media (max-width: 768px) {
+    .row {
+        justify-content: center;
+    }
+
 
     .header-section h1 {
         margin-top: 40px;

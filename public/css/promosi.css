@@ -43,6 +43,11 @@ body {
 }
 
 /* PROMOTION CARDS */
+
+.row {
+    justify-content: start;
+}
+
 .promotion-item {
     margin-bottom: 50px;
     margin-top: 20px;
@@ -75,9 +80,11 @@ body {
 }
 
 .pagination-container {
-    margin-top: -20px;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
+
+
+    
 
 /* EMERGENCY SECTION */
 /* Emergency FAB container */
@@ -147,6 +154,9 @@ body {
 
 /* Media Query for tablets and smaller screens */
 @media (min-width: 769px) and (max-width: 1024px) {
+    .row {
+        justify-content: center;
+    }
     /* General container adjustments */
     .container {
         padding-left: 10px;
@@ -179,6 +189,9 @@ body {
 }
 
 @media (max-width: 768px) {
+    .row {
+        justify-content: center;
+    }
 
     .header-section h1 {
         margin-top: 40px;

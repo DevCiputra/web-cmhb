@@ -56,6 +56,9 @@ Route::prefix('/')->group(function () {
     Route::get('/polyclinic', [LandingPageController::class, 'polyclinic'])->name('polyclinic');
     Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
     Route::get('/article', [LandingPageController::class, 'article'])->name('article');
+    Route::get('/search-article', [LandingPageController::class, 'searchArticles'])->name('article.search');
+
+
     Route::get('/consultation-online', [LandingPageController::class, 'consultation'])->name('onlineconsultation.landing');
     Route::get('/coming', [LandingPageController::class, 'coming'])->name('coming-page');
     Route::get('/bmi-calculator', [LandingPageController::class, 'bmiCalculator'])->name('bmi-calculator');

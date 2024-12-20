@@ -119,6 +119,11 @@
     </div>
 </div>
 
+                    <!-- Pagination Section -->
+                    <div class="pagination-container d-flex justify-content-end mt-2">
+                        {{ $doctors->links() }}
+                    </div>
+
 <!-- Emergency Section -->
 <!-- Emergency FAB -->
 <div id="emergency" class="emergency-fab">

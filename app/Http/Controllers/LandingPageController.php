@@ -17,16 +17,16 @@ class LandingPageController extends Controller
 
         // Data promo: informasi dengan kategori 2
         $promotions = Information::where('information_category_id', 2)
-        ->where('is_published', 1)
-        ->with('media') // Mengambil media terkait
+            ->where('is_published', 1)
+            ->with('media') // Mengambil media terkait
             ->latest()
             ->take(3)
             ->get();
 
         // Data artikel: informasi dengan kategori 1
         $articles = Information::where('information_category_id', 1)
-        ->where('is_published', 1)
-        ->with('media') // Mengambil media terkait
+            ->where('is_published', 1)
+            ->with('media') // Mengambil media terkait
             ->latest()
             ->take(3)
             ->get();
@@ -167,25 +167,48 @@ class LandingPageController extends Controller
     {
         $title = 'Promosi';
         $promotions = Information::where('information_category_id', 2)
-        ->where('is_published', 1)
-        ->with('media') // Mengambil media terkait
+            ->where('is_published', 1)
+            ->with('media') // Mengambil media terkait
             ->latest()
-            ->take(3)
-            ->get();
+            ->paginate(6);
+
         return view('landing-page.contents.promotion', compact('title', 'promotions'));
     }
+
 
     public function article()
     {
         $title = 'Article';
         $articles = Information::where('information_category_id', 1)
-        ->where('is_published', 1)
-        ->with('media') // Mengambil media terkait
-        ->latest()
-            ->take(3)
-            ->get();
+            ->where('is_published', 1)
+            ->with('media')
+            ->latest()
+            ->paginate(4);
+
         return view('landing-page.contents.information', compact('title', 'articles'));
     }
+
+    public function searchArticles(Request $request)
+    {
+        $query = $request->input('query');
+    
+        // Ambil artikel berdasarkan query, lakukan pencarian hanya jika ada input
+        $articles = Information::when($query, function ($queryBuilder, $search) {
+            return $queryBuilder->where('title', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+        })->with('media')->paginate(6);  // Pastikan artikel dipaginate sesuai kebutuhan
+    
+        // Kembalikan response dalam format JSON dengan data pagination
+        return response()->json([
+            'articles' => $articles->items(),
+            'pagination' => $articles->links('vendor.pagination.bootstrap-5')
+        ]);
+    }
+    
+    
+    
+
+
 
     public function consultation(Request $request)
     {

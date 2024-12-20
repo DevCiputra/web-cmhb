@@ -1,116 +1,206 @@
 @extends('landing-page.layouts.app')
 
 @section('content')
+    <div class="container" style="margin-top: 80px;">
+        <!-- Breadcrumb Section -->
+        <div class="container" style="margin-top: 110px;">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Beranda</a></li>
+                    <li class="breadcrumb-item" style="color: #023770">Informasi</li>
+                </ol>
+            </nav>
+        </div>
 
-<div class="container" style="margin-top: 80px;">
-    <!-- Breadcrumb Section -->
-    <div class="container" style="margin-top: 110px;">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Beranda</a></li>
-                <li class="breadcrumb-item" style="color: #023770">Informasi</li>
-            </ol>
-        </nav>
-    </div>
-
-    <div id="information" class="header-section">
-        <div class="container-fluid">
-            <h1 style="margin-bottom: 5px;">What's New</h1>
-            <p style="margin-bottom: 15px;">Berita dan informasi terbaru seputar Ciputra Mitra Hospital.</p>
-            <!-- Filter Card Section -->
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-md-6">
-                    <div class="card-filter mb-4">
-                        <div class="filter-card-body">
-                            <div class="row">
-                                <!-- Search Bar -->
-                                <div class="col-md-8 mb-2">
-                                    <input type="text" class="form-control" placeholder="Cari dokter...">
-                                </div>
-                                <!-- Filter Dropdown -->
-                                <div class="col-md-4">
-                                    <select class="form-select">
-                                        <option selected>Kategori Informasi</option>
-                                        <option value="1">Artikel Kesehetan</option>
-                                        <option value="2">Health Tips</option>
-                                        <option value="3">Event</option>
-                                        <!-- Add more options as needed -->
-                                    </select>
+        <div id="information" class="header-section">
+            <div class="container-fluid">
+                <h1 style="margin-bottom: 5px;">What's New</h1>
+                <p style="margin-bottom: 15px;">Berita dan informasi terbaru seputar Ciputra Mitra Hospital.</p>
+                <!-- Filter Card Section -->
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-md-6">
+                        <div class="card-filter mb-4">
+                            <div class="filter-card-body">
+                                <div class="row">
+                                    <!-- Search Bar -->
+                                    <input type="text" class="form-control" id="articleSearch"
+                                        placeholder="Cari artikel..." aria-label="Cari artikel">
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <!-- Info Cards Container -->
-            <div class="info-cards-container">
-                <div class="row">
-                    @foreach($articles as $article)
-                    <div class="col-md-3 mb-4">
-                        <div class="info-card">
-                            <div class="badge-container">
 
-                            </div>
-                            @if ($article->media->isNotEmpty())
-                            <img src="{{ $article->media->first()->file_url }}" class="card-img-top" alt="{{ $article->title }}">
-                            @else
-                            <img src="{{ asset('images/default-article.jpg') }}" class="card-img-top" alt="Default Article">
-                            @endif
-                            <div class="info-card-body">
-                                <h5 class="title">{{ $article->title }}</h5>
-                                <p class="description">{{ Str::limit($article->description, 100, '...') }}</p>
-                                <a href="/informasi_detail/{{ $article->id }}" class="btn btn-selengkapnya">
-                                    Selengkapnya
-                                    <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
-                                </a>
-                            </div>
+                    <!-- Info Cards Container -->
+                    <div class="info-cards-container">
+                        <div class="row justify-content-start" id="articles-container">
+                            @foreach ($articles as $article)
+                                <div class="col-md-3 mb-4">
+                                    <div class="info-card">
+                                        <div class="badge-container"></div>
+                                        @if ($article->media->isNotEmpty())
+                                            <img src="{{ $article->media->first()->file_url }}" class="card-img-top"
+                                                alt="{{ $article->title }}">
+                                        @else
+                                            <img src="{{ asset('images/default-article.jpg') }}" class="card-img-top"
+                                                alt="Default Article">
+                                        @endif
+                                        <div class="info-card-body">
+                                            <h5 class="title">{{ $article->title }}</h5>
+                                            <p class="description">{{ Str::limit($article->description, 100, '...') }}</p>
+                                            <a href="/informasi_detail/{{ $article->id }}" class="btn btn-selengkapnya">
+                                                Selengkapnya
+                                                <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right"
+                                                    class="chevron-icon">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-                    @endforeach
+
+
+                    <!-- Pagination Section -->
+                <div class="pagination-container d-flex justify-content-end mt-2">
+                    {{ $articles->links() }}
+                </div>
+
                 </div>
             </div>
 
+            <!-- Emergency Section -->
+            <!-- Emergency FAB -->
+            <div id="emergency" class="emergency-fab">
+                <!-- Sub-menu FAB buttons that will collapse/expand -->
+                <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
+                    <a href="tel:+625116743911" class="btn btn-success btn-lg mb-2 rounded-circle">
+                        <i class="fas fa-ambulance"></i>
+                    </a>
+                    <a href="https://api.whatsapp.com/send?phone=6278033212250&text=Saya%20tertarik%20layanan%20di%20Ciputra%20Hospital%20saya%20ingin%20informasi%20mengenai...."
+                        class="btn btn-outline-success btn-lg rounded-circle mb-2" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+                <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle"
+                    onclick="toggleEmergencyButtons()">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+            </div>
+
         </div>
-    </div>
+    @endsection
+    @push('scripts')
+        <script src="{{ asset('js/navbar.js') }}"></script>
 
-    <!-- Emergency Section -->
-    <!-- Emergency FAB -->
-    <div id="emergency" class="emergency-fab">
-        <!-- Sub-menu FAB buttons that will collapse/expand -->
-        <div id="emergency-buttons" class="emergency-buttons d-flex flex-column align-items-center">
-            <a href="tel:+625116743911" class="btn btn-success btn-lg mb-2 rounded-circle">
-                <i class="fas fa-ambulance"></i>
-            </a>
-            <a href="https://api.whatsapp.com/send?phone=6278033212250&text=Saya%20tertarik%20layanan%20di%20Ciputra%20Hospital%20saya%20ingin%20informasi%20mengenai...."
-                class="btn btn-outline-success btn-lg rounded-circle mb-2" target="_blank">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-        </div>
-        <a href="#!" class="btn btn-danger fab-btn shadow-lg rounded-circle" onclick="toggleEmergencyButtons()">
-            <i class="fa-solid fa-phone"></i>
-        </a>
-    </div>
+        <script>
+            function toggleEmergencyButtons() {
+                const buttons = document.getElementById("emergency-buttons");
+                buttons.classList.toggle("expand");
 
-</div>
+                if (buttons.style.maxHeight === "0px" || buttons.style.maxHeight === "") {
+                    buttons.style.maxHeight = "200px"; // Expand the sub-menu (adjust height as needed)
+                } else {
+                    buttons.style.maxHeight = "0px"; // Collapse the sub-menu
+                }
+            }
 
-@endsection
-@push('scripts')
-<script src="{{ asset('js/navbar.js') }}"></script>
+            document.getElementById('articleSearch').addEventListener('input', function () {
+    const query = this.value.trim(); // Menghapus spasi di awal dan akhir input
+    fetchArticles(query);
+});
 
-<script>
-    function toggleEmergencyButtons() {
-        const buttons = document.getElementById("emergency-buttons");
-        buttons.classList.toggle("expand");
-
-        if (buttons.style.maxHeight === "0px" || buttons.style.maxHeight === "") {
-            buttons.style.maxHeight = "200px"; // Expand the sub-menu (adjust height as needed)
-        } else {
-            buttons.style.maxHeight = "0px"; // Collapse the sub-menu
-        }
+document.getElementById('articleSearch').addEventListener('input', function () {
+    const query = this.value.trim(); // Menghapus spasi di awal dan akhir input
+    if (query === '') {
+        // Jika input kosong, tampilkan semua artikel
+        resetArticles();
+    } else {
+        // Jika ada query, lakukan pencarian
+        fetchArticles(query);
     }
-</script>
-@endpush
+});
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/informasi.css') }}">
-@endpush
+function fetchArticles(query) {
+    fetch(`/search-article?query=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            const articlesContainer = document.getElementById('articles-container');
+            articlesContainer.innerHTML = '';
+
+            // Tampilkan artikel berdasarkan query
+            if (data.articles.length > 0) {
+                data.articles.forEach(article => {
+                    const articleCard = `
+                        <div class="col-md-3 mb-4">
+                            <div class="info-card">
+                                <div class="badge-container"></div>
+                                <img src="${article.media.length ? article.media[0].file_url : '{{ asset('images/default-article.jpg') }}'}" 
+                                    class="card-img-top" alt="${article.title}">
+                                <div class="info-card-body">
+                                    <h5 class="title">${article.title}</h5>
+                                    <p class="description">${article.description.substring(0, 100)}...</p>
+                                    <a href="/informasi_detail/${article.id}" class="btn btn-selengkapnya">
+                                        Selengkapnya
+                                        <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>`;
+                    articlesContainer.insertAdjacentHTML('beforeend', articleCard);
+                });
+            } else {
+                articlesContainer.innerHTML = '<div class="col-12 text-center"><p class="mt-4">No Results Found</p></div>';
+            }
+
+            // Update pagination links
+            const paginationContainer = document.querySelector('.pagination-container');
+            paginationContainer.innerHTML = data.pagination;
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function resetArticles() {
+    const articlesContainer = document.getElementById('articles-container');
+    articlesContainer.innerHTML = '';
+
+    // Ambil ulang semua artikel (misalnya dari variabel `@articles` di server)
+    @foreach ($articles as $article)
+        const articleCard = `
+            <div class="col-md-3 mb-4">
+                <div class="info-card">
+                    <div class="badge-container"></div>
+                    @if ($article->media->isNotEmpty())
+                        <img src="{{ $article->media->first()->file_url }}" class="card-img-top" alt="{{ $article->title }}">
+                    @else
+                        <img src="{{ asset('images/default-article.jpg') }}" class="card-img-top" alt="Default Article">
+                    @endif
+                    <div class="info-card-body">
+                        <h5 class="title">{{ $article->title }}</h5>
+                        <p class="description">{{ Str::limit($article->description, 100, '...') }}</p>
+                        <a href="/informasi_detail/{{ $article->id }}" class="btn btn-selengkapnya">
+                            Selengkapnya
+                            <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
+                        </a>
+                    </div>
+                </div>
+            </div>`;
+        articlesContainer.insertAdjacentHTML('beforeend', articleCard);
+    @endforeach
+
+    // Reset pagination (opsional, sesuaikan dengan kebutuhan Anda)
+    const paginationContainer = document.querySelector('.pagination-container');
+    paginationContainer.innerHTML = `{{ $articles->links() }}`;
+}
+
+
+        </script>
+
+
+    @endpush
+
+    @push('styles')
+        <link rel="stylesheet" href="{{ asset('css/informasi.css') }}">
+    @endpush
+
+    @push('scripts')
+        <script src="{{ asset('js/navbar.js') }}"></script>

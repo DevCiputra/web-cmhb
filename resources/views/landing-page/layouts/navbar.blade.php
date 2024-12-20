@@ -29,8 +29,8 @@
         <li class="nav-item dropdown">
             <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Informasi</a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ route('coming-page') }}">Promo</a></li>
-                <li><a class="dropdown-item" href="{{ route('coming-page') }}">Informasi</a></li>
+                <li><a class="dropdown-item" href="{{ route('promotion') }}">Promo</a></li>
+                <li><a class="dropdown-item" href="{{ route('article') }}">Artikel</a></li>
                 <li><a class="dropdown-item" href="https://antrian.ciputramitrahospital.id/antrianPasien" target="_blank">Antrian Online</a></li>
             </ul>
         </li>
@@ -57,8 +57,8 @@
         <li class="nav-item dropdown">
             <a href="#" class="dropdown-toggle" style="margin-bottom:-5px;">Informasi</a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ route('coming-page') }}">Promo</a></li>
-                <li><a class="dropdown-item" href="{{ route('coming-page') }}">Informasi</a></li>
+                <li><a class="dropdown-item" href="#promotion">Promo</a></li>
+                <li><a class="dropdown-item" href="#info">Artikel</a></li>
                 <li><a class="dropdown-item" href="https://antrian.ciputramitrahospital.id/antrianPasien" target="_blank">Antrian Online</a></li>
             </ul>
         </li>
