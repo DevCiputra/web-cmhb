@@ -176,34 +176,51 @@ class LandingPageController extends Controller
     }
 
 
-    public function article()
+    // public function article(Request $request)
+    // {
+    //     $title = 'Article';
+    //     $keyword = $request->input('keyword');
+    //     $articles = Information::query()
+    //         ->when($keyword, function ($query, $keyword) {
+    //             $query->where('title', 'like', "%$keyword%")
+    //                   ->orWhere('description', 'like', "%$keyword%");
+    //         })
+    //         ->paginate(12);
+
+    //     return view('landing-page.contents.information', compact('title', 'articles'));
+    // }
+
+    public function article(Request $request)
     {
         $title = 'Article';
+        $keyword = $request->input('keyword');
+    
+        // Menyaring artikel berdasarkan kata kunci
         $articles = Information::where('information_category_id', 1)
-            ->where('is_published', 1)
-            ->with('media')
-            ->latest()
-            ->paginate(4);
-
+            ->when($keyword, function ($query, $keyword) {
+                return $query->where('title', 'like', "%$keyword%")
+                             ->orWhere('description', 'like', "%$keyword%");
+            })
+            ->orderBy('created_at', 'desc') 
+            ->paginate(12); // Membatasi jumlah artikel yang ditampilkan per halaman
+    
         return view('landing-page.contents.information', compact('title', 'articles'));
     }
+    
 
-    public function searchArticles(Request $request)
+    public function searchArticle(Request $request)
     {
-        $query = $request->input('query');
+        $query = $request->query('query');
+        $articles = Information::where('title', 'LIKE', "%{$query}%")
+            ->orWhere('description', 'LIKE', "%{$query}%")
+            ->paginate(12); // Sesuaikan jumlah pagination
     
-        // Ambil artikel berdasarkan query, lakukan pencarian hanya jika ada input
-        $articles = Information::when($query, function ($queryBuilder, $search) {
-            return $queryBuilder->where('title', 'like', "%{$search}%")
-                ->orWhere('description', 'like', "%{$search}%");
-        })->with('media')->paginate(6);  // Pastikan artikel dipaginate sesuai kebutuhan
-    
-        // Kembalikan response dalam format JSON dengan data pagination
         return response()->json([
             'articles' => $articles->items(),
-            'pagination' => $articles->links('vendor.pagination.bootstrap-5')
+            'pagination' => $articles->links()->render(),
         ]);
     }
+    
     
     
     
