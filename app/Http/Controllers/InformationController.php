@@ -305,22 +305,27 @@ class InformationController extends Controller
     // Memperbarui data promosi
     public function updatePromote(Request $request, $id)
     {
+        // dd($request);
+        // Validasi input
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'media' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'flag' => 'required|string',
+            'flag' => 'string',
         ]);
 
         try {
+            // Ambil data promosi berdasarkan ID
             $promotion = Information::where('information_category_id', 2)->findOrFail($id);
 
-            // Simpan judul baru
-            $oldTitle = $promotion->title;
+
+            // Simpan data yang diperbarui
+            $oldValues = $promotion->getOriginal();
             $promotion->update([
                 'title' => $validatedData['title'],
-                'flag' => $validatedData['flag'],
+                'flag' => $validatedData['flag'], // Pastikan flag diperbarui
                 'updated_by' => Auth::id(),
             ]);
+            // dd($promotion);
 
             // Perbarui file media jika ada
             if ($request->hasFile('media')) {
@@ -353,7 +358,10 @@ class InformationController extends Controller
                 'information_id' => $promotion->id,
                 'user_id' => Auth::id(),
                 'action' => 'UPDATE',
-                'changes' => "Judul diubah dari '$oldTitle' ke '{$promotion->title}' oleh " . Auth::user()->username,
+                'changes' => json_encode([
+                    'before' => $oldValues,
+                    'after' => $promotion->getChanges(),
+                ]),
             ]);
 
             return redirect()->route('information.promote.index')->with('success', 'Promosi berhasil diperbarui.');
@@ -361,6 +369,7 @@ class InformationController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
+
 
     // Menghapus data promosi
     public function deletePromote($id)
