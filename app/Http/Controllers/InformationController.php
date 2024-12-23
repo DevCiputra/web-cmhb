@@ -41,6 +41,7 @@ class InformationController extends Controller
         $article->title = $request->title;
         $article->description = $request->description;
         $article->special_information = $request->special_information; // Input tambahan
+        $article->flag = $request->flag;
         $article->information_category_id = 1; // ID kategori default
         $article->created_by = Auth::user()->id; // Ambil username pengguna
         $article->is_published = $request->is_published ?? '0';
@@ -97,13 +98,14 @@ class InformationController extends Controller
         ]);
 
         // Cari artikel berdasarkan ID
-        $article = Information::where('information_category_id', 1)::findOrFail($id);
+        $article = Information::where('information_category_id', 1)->findOrFail($id);
         $oldValues = $article->getOriginal();
 
         // Update artikel dengan data baru
         $article->title = $request->title;
         $article->description = $request->description;
         $article->special_information = $request->special_information; // Update informasi khusus
+        $article->flag = $request->flag;
         $article->is_published = $request->is_published ?? '0';
         $article->published_at = $request->is_published ? now() : null; // Waktu publikasi jika dipublikasikan
         $article->save();
@@ -148,6 +150,7 @@ class InformationController extends Controller
         // Redirect ke halaman artikel dengan pesan sukses
         return redirect()->route('information.article.index')->with('success', 'Artikel berhasil diperbarui.');
     }
+
     public function detailArticle($id)
     {
         // Ambil artikel berdasarkan ID dan kategori 1 (Artikel) beserta relasi media
@@ -248,6 +251,7 @@ class InformationController extends Controller
     {
         $validatedData = $request->validate(['title' => 'required|string|max:255',
             'media' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'flag' => 'required|string',
         ]);
 
         try {
@@ -255,6 +259,7 @@ class InformationController extends Controller
             $promotion = Information::create([
                 'title' => $validatedData['title'],
                 'information_category_id' => 2, // ID kategori promosi
+                'flag' => $request->flag,
                 'is_published' => false,
                 'created_by' => Auth::id(),
             ]);
@@ -303,6 +308,7 @@ class InformationController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'media' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'flag' => 'required|string',
         ]);
 
         try {
@@ -312,6 +318,7 @@ class InformationController extends Controller
             $oldTitle = $promotion->title;
             $promotion->update([
                 'title' => $validatedData['title'],
+                'flag' => $validatedData['flag'],
                 'updated_by' => Auth::id(),
             ]);
 

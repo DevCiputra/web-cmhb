@@ -13,7 +13,7 @@ class Information extends Model
     protected $fillable = [
         'title',
         'description',
-        'flag',
+        'fla=g',
         'special_information',
         'is_published',
         'information_category_id',
