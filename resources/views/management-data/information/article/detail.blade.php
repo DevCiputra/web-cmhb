@@ -32,10 +32,16 @@
                     <h1 class="info-title">{{ $article->title }}</h1> <!-- Menampilkan judul artikel -->
                     <div class="info-meta">
                         <span class="publish-date">
-                            Tanggal Publish: 
+                            Tanggal Publish:
                             {{ $article->published_at ? \Carbon\Carbon::parse($article->published_at)->format('d F Y') : 'Belum Dipublikasikan' }}
                         </span>
-                        
+
+                        <span class="category">
+                            Kategori:
+                            {{ $article->flag ?? 'Tidak Ada Kategori' }}
+                        </span>
+
+
                     </div>
                 </div>
 

@@ -38,6 +38,17 @@
                         <input type="text" class="form-control" id="article_title" name="title" value="{{ old('title', $article->title) }}" placeholder="Masukkan Judul Artikel">
                     </div>
 
+                    <div class="mb-3">
+                        <label for="flag" class="form-label">Kategori Artikel</label>
+                        <select name="flag" id="kategoriArtikel" class="form-select" required>
+                            <option value="" disabled {{ old('flag', $article->flag) == '' ? 'selected' : '' }}>Pilih Kategori</option>
+                            <option value="Teknologi" {{ old('flag', $article->flag) == 'Teknologi' ? 'selected' : '' }}>Teknologi</option>
+                            <option value="Kesehatan" {{ old('flag', $article->flag) == 'Kesehatan' ? 'selected' : '' }}>Kesehatan</option>
+                            <option value="Pendidikan" {{ old('flag', $article->flag) == 'Pendidikan' ? 'selected' : '' }}>Pendidikan</option>
+                            <option value="GayaHidup" {{ old('flag', $article->flag) == 'GayaHidup' ? 'selected' : '' }}>Gaya Hidup</option>
+                            <option value="Ekonomi" {{ old('flag', $article->flag) == 'Ekonomi' ? 'selected' : '' }}>Ekonomi</option>
+                        </select>
+                    </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Isi Artikel</label>

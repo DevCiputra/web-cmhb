@@ -66,6 +66,23 @@
                         @enderror
                     </div>
 
+                    <div class="mb-3">
+                        <label for="flag" class="form-label">Kategori Promosi</label>
+                        <select name="flag" id="flag" class="form-select @error('flag') is-invalid @enderror" required>
+                            <option value="" disabled selected>Pilih Kategori</option>
+                            <option value="Diskon" {{ old('flag') == 'Diskon' ? 'selected' : '' }}>Diskon</option>
+                            <option value="Cashback" {{ old('flag') == 'Cashback' ? 'selected' : '' }}>Cashback</option>
+                            <option value="Voucher" {{ old('flag') == 'Voucher' ? 'selected' : '' }}>Voucher</option>
+                            <option value="GratisOngkir" {{ old('flag') == 'GratisOngkir' ? 'selected' : '' }}>Gratis Ongkir</option>
+                            <option value="Bundling" {{ old('flag') == 'Bundling' ? 'selected' : '' }}>Bundling</option>
+                        </select>
+                        @error('flag')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
                     <!-- Media Promosi -->
                     <div class="mb-3">
                         <label for="media" class="form-label">Media Promosi</label>

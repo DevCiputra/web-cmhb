@@ -31,6 +31,7 @@ class InformationController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'flag' => 'required|string',
             'description' => 'required',
             'special_information' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
@@ -89,6 +90,7 @@ class InformationController extends Controller
         // Validasi input
         $request->validate([
             'title' => 'required|string|max:255',
+            'flag' => 'required|string',
             'description' => 'required',
             'special_information' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',

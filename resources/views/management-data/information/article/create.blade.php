@@ -36,6 +36,19 @@
                         <label for="title" class="form-label">Judul Artikel</label>
                         <input type="text" class="form-control" id="article_title" name="title" placeholder="Masukkan Judul Artikel" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="flag" class="form-label">Kategori Artikel</label>
+
+                        <select name="flag" id="kategoriArtikel" class="form-select" required>
+                            <option value="" disabled selected>Pilih Kategori</option>
+                            <option value="Teknologi">Teknologi</option>
+                            <option value="Kesehatan">Kesehatan</option>
+                            <option value="Pendidikan">Pendidikan</option>
+                            <option value="GayaHidup">Gaya Hidup</option>
+                            <option value="Ekonomi">Ekonomi</option>
+                        </select>
+                    </div>
+
 
                     <div class="mb-3">
                         <label for="special_information" class="form-label">Informasi Khusus</label>
