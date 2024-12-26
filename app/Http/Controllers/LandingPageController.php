@@ -167,7 +167,7 @@ class LandingPageController extends Controller
     {
         $query = Information::where('information_category_id', 2);
         $title = 'Promosi';
-        
+
         $promotions = Information::where('information_category_id', 2)
             ->where('is_published', 1)
             ->with('media') // Mengambil media terkait
@@ -183,28 +183,14 @@ class LandingPageController extends Controller
     }
 
 
-    // public function article(Request $request)
-    // {
-    //     $title = 'Article';
-    //     $keyword = $request->input('keyword');
-    //     $articles = Information::query()
-    //         ->when($keyword, function ($query, $keyword) {
-    //             $query->where('title', 'like', "%$keyword%")
-    //                   ->orWhere('description', 'like', "%$keyword%");
-    //         })
-    //         ->paginate(12);
-
-    //     return view('landing-page.contents.information', compact('title', 'articles'));
-    // }
-
     public function article(Request $request)
     {
         $title = 'Article';
         $keyword = $request->input('keyword');
         $flag = $request->input('flag'); // Ambil nilai filter kategori
-    
+
         // Menyaring artikel berdasarkan kata kunci dan kategori
-        $articles = Information::where('information_category_id', 1)
+        $articles = Information::where('information_category_id', 1)->where('is_published', 1)
             ->when($keyword, function ($query, $keyword) {
                 return $query->where(function ($q) use ($keyword) {
                     $q->where('title', 'like', "%$keyword%")
@@ -214,12 +200,12 @@ class LandingPageController extends Controller
             ->when($flag, function ($query, $flag) {
                 return $query->where('flag', $flag); // Filter berdasarkan flag
             })
-            ->orderBy('created_at', 'desc') 
+            ->orderBy('created_at', 'desc')
             ->paginate(12); // Membatasi jumlah artikel yang ditampilkan per halaman
-    
+
         return view('landing-page.contents.information', compact('title', 'articles'));
     }
-    
+
 
     public function searchArticle(Request $request)
     {
@@ -227,7 +213,7 @@ class LandingPageController extends Controller
         $articles = Information::where('title', 'LIKE', "%{$query}%")
             ->orWhere('description', 'LIKE', "%{$query}%")
             ->paginate(12); // Sesuaikan jumlah pagination
-    
+
         return response()->json([
             'articles' => $articles->items(),
             'pagination' => $articles->links()->render(),
@@ -237,19 +223,19 @@ class LandingPageController extends Controller
     public function showArticleDetail($id)
     {
         $title = 'Detail Artikel';
-        
+
         // Ambil data artikel berdasarkan ID
         $article = Information::with(['media'])->findOrFail($id); // Ambil artikel beserta media (gambar atau file terkait)
-        
+
         // Return the view for the article detail, passing the $article variable
         return view('landing-page.contents.information-detail', compact('article', 'title'));
     }
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
 
 
 
