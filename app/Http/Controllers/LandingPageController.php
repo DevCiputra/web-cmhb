@@ -163,14 +163,21 @@ class LandingPageController extends Controller
         return response()->json($polyclinics);
     }
 
-    public function promotion()
+    public function promotion(Request $request)
     {
+        $query = Information::where('information_category_id', 2);
         $title = 'Promosi';
+        
         $promotions = Information::where('information_category_id', 2)
             ->where('is_published', 1)
             ->with('media') // Mengambil media terkait
             ->latest()
             ->paginate(6);
+
+                    // Filter berdasarkan flag jika ada
+        if ($request->has('flag') && $request->flag != '') {
+            $query->where('flag', $request->flag);
+        }
 
         return view('landing-page.contents.promotion', compact('title', 'promotions'));
     }
@@ -194,12 +201,18 @@ class LandingPageController extends Controller
     {
         $title = 'Article';
         $keyword = $request->input('keyword');
+        $flag = $request->input('flag'); // Ambil nilai filter kategori
     
-        // Menyaring artikel berdasarkan kata kunci
+        // Menyaring artikel berdasarkan kata kunci dan kategori
         $articles = Information::where('information_category_id', 1)
             ->when($keyword, function ($query, $keyword) {
-                return $query->where('title', 'like', "%$keyword%")
-                             ->orWhere('description', 'like', "%$keyword%");
+                return $query->where(function ($q) use ($keyword) {
+                    $q->where('title', 'like', "%$keyword%")
+                      ->orWhere('description', 'like', "%$keyword%");
+                });
+            })
+            ->when($flag, function ($query, $flag) {
+                return $query->where('flag', $flag); // Filter berdasarkan flag
             })
             ->orderBy('created_at', 'desc') 
             ->paginate(12); // Membatasi jumlah artikel yang ditampilkan per halaman
@@ -220,6 +233,19 @@ class LandingPageController extends Controller
             'pagination' => $articles->links()->render(),
         ]);
     }
+
+    public function showArticleDetail($id)
+    {
+        $title = 'Detail Artikel';
+        
+        // Ambil data artikel berdasarkan ID
+        $article = Information::with(['media'])->findOrFail($id); // Ambil artikel beserta media (gambar atau file terkait)
+        
+        // Return the view for the article detail, passing the $article variable
+        return view('landing-page.contents.information-detail', compact('article', 'title'));
+    }
+    
+    
     
     
     

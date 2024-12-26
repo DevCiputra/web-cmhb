@@ -18,6 +18,7 @@
 
             <div class="card-header">
                 <div class="d-flex align-items-center justify-content-between mb-3">
+                    <!-- Left Side: Title and Breadcrumb -->
                     <div class="d-flex flex-column">
                         <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Artikel</h4>
                         <nav aria-label="breadcrumb">
@@ -28,9 +29,25 @@
                             </ol>
                         </nav>
                     </div>
-                    <div class="d-flex align-items-center gap-2">
-                        <input id="search-bar" type="text" class="form-control" placeholder="Cari data"
-                            style="max-width: 200px;">
+            
+                    <!-- Right Side: Filter and Add Button -->
+                    <div class="d-flex justify-content-end align-items-center gap-3">
+                        <!-- Filter Dropdown -->
+                        <form method="GET" action="{{ route('information.article.index') }}" class="mb-0">
+                            <div class="input-group">
+                                <select name="flag" id="flag" class="form-select" onchange="this.form.submit()">
+                                    <option value="" {{ request('flag') == '' ? 'selected' : '' }}>Semua Kategori</option>
+                                    <option value="Artikel Kesehatan" {{ request('flag') == 'Artikel Kesehatan' ? 'selected' : '' }}>Artikel Kesehatan</option>
+                                    <option value="Tips Kesehatan" {{ request('flag') == 'Tips Kesehatan' ? 'selected' : '' }}>Tips Kesehatan</option>
+                                    <option value="Event" {{ request('flag') == 'Event' ? 'selected' : '' }}>Event</option>
+                                </select>
+                            </div>
+                        </form>
+            
+                        <!-- Search Bar -->
+                        <input id="search-bar" type="text" class="form-control" placeholder="Cari data" style="max-width: 200px;">
+            
+                        <!-- Add Button -->
                         <a href="{{ route('information.article.create') }}" style="text-decoration: none;">
                             <button class="btn btn-md"
                                 style="background-color: #007858; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none;">
@@ -42,6 +59,8 @@
                     </div>
                 </div>
             </div>
+            
+
 
             <div class="row cards-container">
                 @forelse ($articles as $article)
@@ -141,21 +160,21 @@
         });
 
         $(document).ready(function() {
-        $("#search-bar").on("input", function() {
-            let searchTerm = $(this).val().toLowerCase(); // Ambil nilai input dan ubah ke huruf kecil
-            $(".card-item").each(function() {
-                let title = $(this).data("title");        // Ambil data judul
-                let description = $(this).data("description"); // Ambil data deskripsi
-                
-                // Tampilkan kartu jika judul atau deskripsi cocok dengan pencarian
-                if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
+            $("#search-bar").on("input", function() {
+                let searchTerm = $(this).val().toLowerCase(); // Ambil nilai input dan ubah ke huruf kecil
+                $(".card-item").each(function() {
+                    let title = $(this).data("title"); // Ambil data judul
+                    let description = $(this).data("description"); // Ambil data deskripsi
+
+                    // Tampilkan kartu jika judul atau deskripsi cocok dengan pencarian
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
             });
         });
-    });
     </script>
 @endpush
 

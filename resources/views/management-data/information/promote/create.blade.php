@@ -71,10 +71,7 @@
                         <select name="flag" id="flag" class="form-select @error('flag') is-invalid @enderror" required>
                             <option value="" disabled selected>Pilih Kategori</option>
                             <option value="Diskon" {{ old('flag') == 'Diskon' ? 'selected' : '' }}>Diskon</option>
-                            <option value="Cashback" {{ old('flag') == 'Cashback' ? 'selected' : '' }}>Cashback</option>
-                            <option value="Voucher" {{ old('flag') == 'Voucher' ? 'selected' : '' }}>Voucher</option>
-                            <option value="GratisOngkir" {{ old('flag') == 'GratisOngkir' ? 'selected' : '' }}>Gratis Ongkir</option>
-                            <option value="Bundling" {{ old('flag') == 'Bundling' ? 'selected' : '' }}>Bundling</option>
+                            <option value="MCU" {{ old('flag') == 'MCU' ? 'selected' : '' }}>MCU</option>
                         </select>
                         @error('flag')
                         <span class="invalid-feedback" role="alert">

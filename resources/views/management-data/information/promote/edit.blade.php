@@ -48,10 +48,8 @@
                         <select name="flag" id="flag" class="form-select @error('flag') is-invalid @enderror" required>
                             <option value="" disabled {{ old('flag', $promotion->flag) == '' ? 'selected' : '' }}>Pilih Kategori</option>
                             <option value="Diskon" {{ old('flag', $promotion->flag) == 'Diskon' ? 'selected' : '' }}>Diskon</option>
-                            <option value="Cashback" {{ old('flag', $promotion->flag) == 'Cashback' ? 'selected' : '' }}>Cashback</option>
-                            <option value="Voucher" {{ old('flag', $promotion->flag) == 'Voucher' ? 'selected' : '' }}>Voucher</option>
-                            <option value="GratisOngkir" {{ old('flag', $promotion->flag) == 'GratisOngkir' ? 'selected' : '' }}>Gratis Ongkir</option>
-                            <option value="Bundling" {{ old('flag', $promotion->flag) == 'Bundling' ? 'selected' : '' }}>Bundling</option>
+                            <option value="MCU" {{ old('flag', $promotion->flag) == 'MCU' ? 'selected' : '' }}>MCU</option>
+
                         </select>
                         @error('flag')
                         <span class="invalid-feedback" role="alert">

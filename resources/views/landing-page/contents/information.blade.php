@@ -19,14 +19,31 @@
 
                 <!-- Filter Card Section -->
                 <div class="row justify-content-center">
-                    <div class="col-md-8 col-md-6">
+                    <div class="col-md-8">
                         <div class="card-filter mb-4">
                             <div class="filter-card-body">
-                                <form action="{{ route('article') }}" method="GET" class="d-flex">
-                                    <input type="text" name="keyword" class="form-control" placeholder="Cari artikel..."  value="{{ request()->input('keyword') }}">
-                                    <button type="submit" class="btn btn-md" style="background-color: #a8c0cf; color: #fff; border-radius: 10px; padding: 8px 12px;">
-                                        Cari
-                                    </button>
+                                <form method="GET" action="{{ url()->current() }}">
+                                    <div class="row">
+                                        <!-- Search Bar -->
+                                        <div class="col-md-8 mb-2">
+                                            <input 
+                                                id="search-bar" 
+                                                type="text" 
+                                                name="keyword" 
+                                                class="form-control" 
+                                                placeholder="Cari Artikel..." 
+                                                value="{{ request('keyword') }}">
+                                        </div>
+                                        <!-- Filter Dropdown -->
+                                        <div class="col-md-4">
+                                            <select name="flag" id="flag" class="form-select" onchange="this.form.submit()">
+                                                <option value="" {{ request('flag') == '' ? 'selected' : '' }}>Semua Kategori</option>
+                                                <option value="Artikel Kesehatan" {{ request('flag') == 'Artikel Kesehatan' ? 'selected' : '' }}>Artikel Kesehatan</option>
+                                                <option value="Tips Kesehatan" {{ request('flag') == 'Tips Kesehatan' ? 'selected' : '' }}>Tips Kesehatan</option>
+                                                <option value="Event" {{ request('flag') == 'Event' ? 'selected' : '' }}>Event</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -36,7 +53,7 @@
                     <div class="info-cards-container">
                         <div class="row justify-content-start" id="articles-container">
                             @foreach ($articles as $article)
-                                <div class="col-md-3 mb-4">
+                                <div class="col-md-3 mb-4 card-item" data-title="{{ strtolower($article->title) }}" data-description="{{ strtolower($article->description) }}">
                                     <div class="info-card">
                                         <div class="badge-container"></div>
                                         @if ($article->media->isNotEmpty())
@@ -47,10 +64,11 @@
                                         <div class="info-card-body">
                                             <h5 class="title">{{ $article->title }}</h5>
                                             <p class="description">{{ Str::limit($article->description, 100, '...') }}</p>
-                                            <a href="/informasi_detail/{{ $article->id }}" class="btn btn-selengkapnya">
+                                            <a href="{{ route('article.detail.landing', ['id' => $article->id]) }}" class="btn btn-selengkapnya">
                                                 Selengkapnya
                                                 <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
                                             </a>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -60,35 +78,35 @@
 
                     <!-- Pagination Section -->
                     <div class="pagination-container d-flex justify-content-end mt-2">
-                        {{ $articles->links() }}
+                        {{ $articles->appends(['keyword' => request('keyword'), 'flag' => request('flag')])->links() }}
                     </div>
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 
-    @push('scripts')
-        <script src="{{ asset('js/navbar.js') }}"></script>
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/informasi.css') }}">
+@endpush
 
-        <script>
-            function toggleEmergencyButtons() {
-                const buttons = document.getElementById("emergency-buttons");
-                buttons.classList.toggle("expand");
+@push('scripts')
+    <script src="{{ asset('js/navbar.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-bar").on("input", function() {
+                let searchTerm = $(this).val().toLowerCase();
+                $(".card-item").each(function() {
+                    let title = $(this).data("title");
+                    let description = $(this).data("description");
 
-                if (buttons.style.maxHeight === "0px" || buttons.style.maxHeight === "") {
-                    buttons.style.maxHeight = "200px"; // Expand the sub-menu (adjust height as needed)
-                } else {
-                    buttons.style.maxHeight = "0px"; // Collapse the sub-menu
-                }
-            }
-        </script>
-
-
-    @endpush
-
-    @push('styles')
-        <link rel="stylesheet" href="{{ asset('css/informasi.css') }}">
-    @endpush
-
-    @push('scripts')
-        <script src="{{ asset('js/navbar.js') }}"></script>
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

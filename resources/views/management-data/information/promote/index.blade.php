@@ -22,10 +22,26 @@
                     </nav>
                 </div>
 
+                
+
                 <!-- Right Side: Controls -->
                 <div class="d-flex align-items-center gap-2">
-                    <!-- Search Box -->
-                    <input id="search-promo" type="text" class="form-control" placeholder="Cari promo" style="max-width: 200px;">
+                    <form method="GET" action="{{ route('information.promote.index') }}">
+                        <div class="input-group mb-3">
+                            <select name="flag" id="flag" class="form-select" onchange="this.form.submit()">
+                                <option value="" {{ request('flag') == '' ? 'selected' : '' }}>Semua Kategori</option>
+                                <option value="Diskon" {{ request('flag') == 'Diskon' ? 'selected' : '' }}>Diskon</option>
+                                <option value="MCU" {{ request('flag') == 'MCU' ? 'selected' : '' }}>MCU</option>
+                            </select>
+                        </div>
+                    </form>
+                    
+                    
+                    @error('flag')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
 
                     <!-- Add Button -->
                     <a href="{{ route('information.promote.create') }}" style="text-decoration: none;">
@@ -48,6 +64,7 @@
                         alt="Promotion Image"
                         style="width: 100%; height: 450px; object-fit: cover;">
                     <div class="card-body" style="height: 100px; object-fit: cover;">
+                        <p class="card-text">{{ $promotion->flag }}</p>
                         <h5 class="card-title">{{ $promotion->title }}</h5>
                         <p class="card-text">
                             {{ $promotion->description ?? 'Tidak ada deskripsi' }}

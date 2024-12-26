@@ -14,13 +14,21 @@ use Illuminate\Support\Str;
 
 class InformationController extends Controller
 {
-    public function indexArticle()
+    public function indexArticle(Request $request)
     {
-        $articles = Information::where('information_category_id', 1)
-        ->with('media') // Menambahkan relasi media
-        ->paginate(10);
+        $query = Information::where('information_category_id', 1)
+        ->with('media'); // Menambahkan relasi media
+
+        // Filter berdasarkan flag jika ada
+        if ($request->has('flag') && $request->flag != '') {
+            $query->where('flag', $request->flag);
+        }
+
+        $articles = $query->paginate(10);
+
         return view('management-data.information.article.index', compact('articles'));
     }
+
 
     public function createArticle()
     {
@@ -233,9 +241,17 @@ class InformationController extends Controller
     }
 
 
-    public function indexPromote()
+    public function indexPromote(Request $request)
     {
-        $promotions = Information::where('information_category_id', 2)->paginate(10); // Gunakan paginate dengan jumlah item per halaman
+        $query = Information::where('information_category_id', 2);
+    
+        // Filter berdasarkan flag jika ada
+        if ($request->has('flag') && $request->flag != '') {
+            $query->where('flag', $request->flag);
+        }
+    
+        $promotions = $query->paginate(10);
+    
         return view('management-data.information.promote.index', compact('promotions'));
     }
 

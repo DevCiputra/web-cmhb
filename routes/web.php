@@ -57,6 +57,8 @@ Route::prefix('/')->group(function () {
     Route::get('/promotion', [LandingPageController::class, 'promotion'])->name('promotion');
     Route::get('/article', [LandingPageController::class, 'article'])->name('article');
     Route::get('/search-article', [LandingPageController::class, 'searchArticles'])->name('article.search');
+    Route::get('/article/detail/{id}', [LandingPageController::class, 'showArticleDetail'])
+    ->name('article.detail.landing');
 
 
     Route::get('/consultation-online', [LandingPageController::class, 'consultation'])->name('onlineconsultation.landing');
