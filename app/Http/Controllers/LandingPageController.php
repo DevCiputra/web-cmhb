@@ -174,7 +174,7 @@ class LandingPageController extends Controller
             ->latest()
             ->paginate(6);
 
-                    // Filter berdasarkan flag jika ada
+        // Filter berdasarkan flag jika ada
         if ($request->has('flag') && $request->flag != '') {
             $query->where('flag', $request->flag);
         }
@@ -194,7 +194,7 @@ class LandingPageController extends Controller
             ->when($keyword, function ($query, $keyword) {
                 return $query->where(function ($q) use ($keyword) {
                     $q->where('title', 'like', "%$keyword%")
-                      ->orWhere('description', 'like', "%$keyword%");
+                        ->orWhere('description', 'like', "%$keyword%");
                 });
             })
             ->when($flag, function ($query, $flag) {
@@ -227,8 +227,16 @@ class LandingPageController extends Controller
         // Ambil data artikel berdasarkan ID
         $article = Information::with(['media'])->findOrFail($id); // Ambil artikel beserta media (gambar atau file terkait)
 
+        // Ambil 3 artikel lain sebagai rekomendasi
+        $recommendedArticles = Information::where('information_category_id', 1)
+        ->where('is_published', 1)
+        ->where('id', '!=', $id) // Pastikan artikel yang ditampilkan bukan artikel yang sedang dibuka
+        ->inRandomOrder()
+        ->take(3)
+        ->get();
+
         // Return the view for the article detail, passing the $article variable
-        return view('landing-page.contents.information-detail', compact('article', 'title'));
+        return view('landing-page.contents.information-detail', compact('article', 'title','recommendedArticles'));
     }
 
 

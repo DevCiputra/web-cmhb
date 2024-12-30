@@ -33,20 +33,23 @@
                     @csrf
 
                     <div class="mb-3">
-                        <label for="title" class="form-label">Judul Artikel</label>
+                        <label for="title" class="form-label" >Judul Artikel</label>
                         <input type="text" class="form-control" id="article_title" name="title" placeholder="Masukkan Judul Artikel" required>
                     </div>
+                    
                     <div class="mb-3">
                         <label for="flag" class="form-label">Kategori Artikel</label>
-
-                        <select name="flag" id="kategoriArtikel" class="form-select" required>
+                        <select name="flag" id="flag" class="form-select @error('flag') is-invalid @enderror" required>
                             <option value="" disabled selected>Pilih Kategori</option>
-                            <option value="Teknologi">Teknologi</option>
-                            <option value="Kesehatan">Kesehatan</option>
-                            <option value="Pendidikan">Pendidikan</option>
-                            <option value="GayaHidup">Gaya Hidup</option>
-                            <option value="Ekonomi">Ekonomi</option>
+                            <option value="Artikel Kesehatan" {{ old('flag') == 'Artikel Kesehatan' ? 'selected' : '' }}>Artikel Kesehatan</option>
+                            <option value="Tips Kesehatan" {{ old('flag') == 'Tips Kesehatan' ? 'selected' : '' }}>Tips Kesehatan</option>
+                            <option value="Event" {{ old('flag') == 'Event' ? 'selected' : '' }}>Event</option>
                         </select>
+                        @error('flag')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
 
 
@@ -124,5 +127,12 @@
             }
         });
     });
+
+        const titleElement = document.getElementById("card-title");
+    const maxLength = 50;
+
+    if (titleElement.textContent.length > maxLength) {
+        titleElement.textContent = titleElement.textContent.slice(0, maxLength) + "...";
+    }
 </script>
 @endpush

@@ -29,24 +29,29 @@
                             </ol>
                         </nav>
                     </div>
-            
+
                     <!-- Right Side: Filter and Add Button -->
                     <div class="d-flex justify-content-end align-items-center gap-3">
                         <!-- Filter Dropdown -->
                         <form method="GET" action="{{ route('information.article.index') }}" class="mb-0">
                             <div class="input-group">
                                 <select name="flag" id="flag" class="form-select" onchange="this.form.submit()">
-                                    <option value="" {{ request('flag') == '' ? 'selected' : '' }}>Semua Kategori</option>
-                                    <option value="Artikel Kesehatan" {{ request('flag') == 'Artikel Kesehatan' ? 'selected' : '' }}>Artikel Kesehatan</option>
-                                    <option value="Tips Kesehatan" {{ request('flag') == 'Tips Kesehatan' ? 'selected' : '' }}>Tips Kesehatan</option>
+                                    <option value="" {{ request('flag') == '' ? 'selected' : '' }}>Semua Kategori
+                                    </option>
+                                    <option value="Artikel Kesehatan"
+                                        {{ request('flag') == 'Artikel Kesehatan' ? 'selected' : '' }}>Artikel Kesehatan
+                                    </option>
+                                    <option value="Tips Kesehatan"
+                                        {{ request('flag') == 'Tips Kesehatan' ? 'selected' : '' }}>Tips Kesehatan</option>
                                     <option value="Event" {{ request('flag') == 'Event' ? 'selected' : '' }}>Event</option>
                                 </select>
                             </div>
                         </form>
-            
+
                         <!-- Search Bar -->
-                        <input id="search-bar" type="text" class="form-control" placeholder="Cari data" style="max-width: 200px;">
-            
+                        <input id="search-bar" type="text" class="form-control" placeholder="Cari data"
+                            style="max-width: 200px;">
+
                         <!-- Add Button -->
                         <a href="{{ route('information.article.create') }}" style="text-decoration: none;">
                             <button class="btn btn-md"
@@ -59,12 +64,13 @@
                     </div>
                 </div>
             </div>
-            
+
 
 
             <div class="row cards-container">
                 @forelse ($articles as $article)
-                    <div class="col-md-3 mb-4 card-item" data-title="{{ strtolower($article->title) }}"
+                    <div class="col-md-3 mb-4 card-item"
+                        title card-title="{{ strtolower($article->title) }}"
                         data-description="{{ strtolower($article->description) }}">
                         <div class="card">
                             <img class="card-img-top-article"
@@ -72,7 +78,9 @@
                                 alt="Artikel Image">
                             <div class="card-body">
                                 <div class="header-container">
-                                    <h5 class="title">{{ $article->title }}</h5>
+                                    <h5 class="title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px;">
+                                        {{ strlen($article->title) > 30 ? substr($article->title, 0, 30) . '...' : $article->title }}
+                                    </h5>
                                     <div class="icon-group">
                                         <a href="{{ route('information.article.edit', $article->id) }}"
                                             class="btn btn-edit">
@@ -85,15 +93,23 @@
                                         </a>
                                     </div>
                                 </div>
-                                <p class="description" style="margin-bottom: 32px;">
-                                    {{ Str::limit($article->description, 100, '...') }}</p>
-                                <div class="btn-group">
+                                <p class="text-muted mb-2">
+                                    Dibuat: {{ $article->created_at->format('d M Y H:i') }} <br>
+                                    Diedit: {{ $article->updated_at->format('d M Y H:i') }} <br>
+                                    Status:
+                                    @if ($article->is_published)
+                                        <span class="text-success">Dipublikasikan</span>
+                                    @else
+                                        <span class="text-danger">Belum Dipublikasikan</span>
+                                    @endif
+                                </p>
+                                <div class="d-flex justify-content-end align-items-center">
                                     @if ($article->is_published == '1')
                                         <!-- Tombol Draft -->
                                         <form action="{{ route('information.article.draft', $article->id) }}"
                                             method="POST" style="display: inline; margin-right: 8px;">
                                             @csrf
-                                            <button type="submit" class="btn btn-warning btn-sm"
+                                            <button type="submit" class="btn btn-warning btn-end"
                                                 onclick="return confirm('Apakah Anda yakin ingin mendraft artikel ini?')">
                                                 Draft
                                             </button>
@@ -103,24 +119,24 @@
                                         <form action="{{ route('information.article.publish', $article->id) }}"
                                             method="POST" style="display: inline; margin-right: 8px;">
                                             @csrf
-                                            <button type="submit" class="btn btn-success btn-sm"
+                                            <button type="submit" class="btn btn-success btn-end"
                                                 onclick="return confirm('Apakah Anda yakin ingin mempublish artikel ini?')">
                                                 Publish
                                             </button>
                                         </form>
                                     @endif
-
+            
                                     <form action="{{ route('information.article.delete', $article->id) }}" method="POST"
                                         style="display: inline; ">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"
+                                        <button type="submit" class="btn btn-danger btn-end"
                                             onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
                                             Delete
                                         </button>
                                     </form>
                                 </div>
-
+            
                             </div>
                         </div>
                     </div>
@@ -130,6 +146,7 @@
                     </div>
                 @endforelse
             </div>
+            
         </div>
     </div>
 @endsection
@@ -175,6 +192,13 @@
                 });
             });
         });
+
+        const titleElement = document.getElementById("card-title");
+        const maxLength = 50;
+
+        if (titleElement.textContent.length > maxLength) {
+            titleElement.textContent = titleElement.textContent.slice(0, maxLength) + "...";
+        }
     </script>
 @endpush
 
@@ -192,5 +216,50 @@
             height: 16px;
             filter: invert(100%);
         }
+
+        /* Media query untuk layar dengan lebar maksimum 1200px */
+/* Media query untuk layar dengan lebar maksimum 1200px */
+@media (max-width: 1200px) {
+    .card-item {
+        flex: 0 0 48%; /* Setiap kartu menggunakan 48% dari lebar container */
+        max-width: 48%;
+        margin-bottom: 20px;
+    }
+}
+
+/* Media query untuk layar dengan lebar maksimum 768px */
+@media (max-width: 768px) {
+    .card-item {
+        flex: 0 0 100%; /* Setiap kartu menggunakan 100% dari lebar container */
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .card {
+        margin: 0 auto; /* Untuk memusatkan kartu jika diperlukan */
+    }
+
+    .card-img-top-article {
+        height: auto; /* Pastikan gambar tetap proporsional */
+    }
+}
+
+/* Media query untuk layar dengan lebar maksimum 576px */
+@media (max-width: 576px) {
+    .card-item {
+        padding: 10px; /* Tambahkan padding untuk tampilan lebih rapi */
+    }
+
+    .card-body {
+        padding: 10px; /* Sesuaikan padding di dalam kartu */
+    }
+
+    .btn {
+        font-size: 14px; /* Sesuaikan ukuran font tombol */
+        padding: 6px 10px; /* Kurangi padding tombol agar sesuai */
+    }
+}
+
+
     </style>
 @endpush

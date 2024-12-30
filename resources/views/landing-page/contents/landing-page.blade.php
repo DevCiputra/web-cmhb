@@ -275,6 +275,11 @@
             modal.style.display = 'none';
         }
     }
+
+    setTimeout(function() {
+        location.reload();
+    }, 300000); // 300000 ms = 5 menit
+
 </script>
 @endpush
 

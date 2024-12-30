@@ -32,8 +32,13 @@ class InformationController extends Controller
 
     public function createArticle()
     {
+        // Daftar kategori artikel (dapat disesuaikan)
+        // $categories = ['Artikel Kesehatan', 'Tips Kesehatan', 'Event'];
+    
         return view('management-data.information.article.create');
     }
+    
+    
 
     public function storeArticle(Request $request)
     {
