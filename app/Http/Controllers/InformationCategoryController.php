@@ -36,11 +36,16 @@ class InformationCategoryController extends Controller
         return redirect()->route('information-categories.index')->with('success', 'Kategori informasi berhasil ditambahkan');
     }
 
-    // Menampilkan form edit kategori informasi
     public function edit(InformationCategory $informationCategory)
     {
+        if ($informationCategory->information()->exists()) {
+            return redirect()->route('information-categories.index')
+            ->with('error', 'Kategori ini tidak dapat diedit karena sudah terkait dengan informasi.');
+        }
+
         return view('management-data.information.category.edit', compact('informationCategory'));
     }
+
 
     // Memperbarui data kategori informasi
     public function update(Request $request, InformationCategory $informationCategory)
@@ -61,8 +66,14 @@ class InformationCategoryController extends Controller
     // Menghapus kategori informasi
     public function destroy(InformationCategory $informationCategory)
     {
+        if ($informationCategory->information()->exists()) {
+            return redirect()->route('information-categories.index')
+            ->with('error', 'Kategori ini tidak dapat dihapus karena sudah terkait dengan informasi.');
+        }
+
         $informationCategory->delete();
-        return redirect()->route('information-categories.index')->with('success', 'Kategori informasi berhasil dihapus');
+        return redirect()->route('information-categories.index')
+        ->with('success', 'Kategori informasi berhasil dihapus');
     }
 }
 

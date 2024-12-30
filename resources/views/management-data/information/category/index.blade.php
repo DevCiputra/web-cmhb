@@ -20,29 +20,18 @@
                         </ol>
                     </nav>
                 </div>
-
-                <div class="d-flex align-items-center gap-2">
-                    <form action="{{ route('information-categories.index') }}" method="GET">
-                        <div class="d-flex align-items-center">
-                            <select name="category_id" class="form-control me-2" style="width: 500px;">
-                                <option value="">Pilih Kategori</option>
-                                @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                                    {{ $category->name }}
-                                </option>
-                                @endforeach
-                            </select>
-                            <button type="submit" class="btn btn-primary" style="background-color: #007858; color: #fff; border-radius: 10px; padding: 10px 12px; border: none;">Filter</button>
-                        </div>
-                    </form>
-                </div>
-
             </div>
         </div>
 
         @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
+        </div>
+        @endif
+
+        @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
         </div>
         @endif
         <div class="card" style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px;">
@@ -64,6 +53,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Kategori</th>
+                            <th>Keterangan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -73,6 +63,14 @@
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $category->name }}</td>
                             <td>
+                                @if($category->information()->exists())
+                                <span class="badge bg-danger">Digunakan</span>
+                                @else
+                                <span class="badge bg-success">Tidak Digunakan</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if(!$category->information()->exists())
                                 <a href="{{ route('information-categories.edit', $category->id) }}"
                                     class="btn btn-warning btn-sm"
                                     style="border-radius: 8px; padding: 6px 12px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; height: 38px; margin-right: 8px;">
@@ -88,10 +86,21 @@
                                         Hapus
                                     </button>
                                 </form>
+                                @else
+                                <button class="btn btn-secondary btn-sm" disabled
+                                    style="border-radius: 8px; padding: 6px 12px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; height: 38px; margin-right: 8px;">
+                                    Tidak Dapat Diedit
+                                </button>
+                                <button class="btn btn-secondary btn-sm" disabled
+                                    style="border-radius: 8px; padding: 6px 12px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; height: 38px;">
+                                    Tidak Dapat Dihapus
+                                </button>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
+
                 </table>
             </div>
         </div>

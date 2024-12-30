@@ -16,4 +16,9 @@ class InformationCategory extends Model
     {
         return $this->hasMany(Information::class);
     }
+
+    public function isUsed()
+    {
+        return $this->information()->exists();
+    }
 }

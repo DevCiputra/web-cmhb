@@ -33,10 +33,10 @@
                     @csrf
 
                     <div class="mb-3">
-                        <label for="title" class="form-label" >Judul Artikel</label>
+                        <label for="title" class="form-label">Judul Artikel</label>
                         <input type="text" class="form-control" id="article_title" name="title" placeholder="Masukkan Judul Artikel" required>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="flag" class="form-label">Kategori Artikel</label>
                         <select name="flag" id="flag" class="form-select @error('flag') is-invalid @enderror" required>
@@ -66,7 +66,25 @@
                     <div class="mb-3">
                         <label for="image" class="form-label">Foto Artikel</label>
                         <input type="file" class="form-control" id="article_image" name="image" accept="image/*">
+                        <div class="mt-3">
+                            <img id="image_preview" src="#" alt="Preview Foto Artikel" class="img-fluid" style="display: none; max-width: 150px; cursor: pointer;">
+                        </div>
                     </div>
+
+                    <!-- Modal untuk Zoom Gambar -->
+                    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body text-center">
+                                    <img id="modal_image" src="#" alt="Zoom Foto Artikel" class="img-fluid">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="mb-3">
                         <label for="is_published" class="form-label">Publikasikan Artikel</label>
@@ -128,11 +146,37 @@
         });
     });
 
-        const titleElement = document.getElementById("card-title");
+    const titleElement = document.getElementById("card-title");
     const maxLength = 50;
 
     if (titleElement.textContent.length > maxLength) {
         titleElement.textContent = titleElement.textContent.slice(0, maxLength) + "...";
     }
+</script>
+
+<script>
+    document.getElementById('article_image').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('image_preview');
+        const modalImage = document.getElementById('modal_image');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                modalImage.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    });
+
+    // Tambahkan event click pada preview untuk membuka modal
+    document.getElementById('image_preview').addEventListener('click', function() {
+        const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+        modal.show();
+    });
 </script>
 @endpush
