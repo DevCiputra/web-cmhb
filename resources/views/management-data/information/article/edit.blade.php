@@ -77,18 +77,49 @@
 
                     <div class="mb-3">
                         <label for="image" class="form-label">Foto Artikel</label>
-                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="article_image" name="image" accept="image/*"
-                            placeholder="Upload Foto Artikel" onchange="previewImage(event)">
+                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="article_image" name="image" accept="image/*" onchange="previewNewImage(event)">
                         @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
 
-                        <!-- Preview Gambar -->
+                        <!-- Preview Gambar Asli -->
                         <div class="mt-3">
-                            <img id="image_preview"
+                            <label>Gambar Asli:</label>
+                            @if($article->media && $article->media->first())
+                            <img id="original_image_preview"
                                 src="{{ asset('storage/articles/' . $article->media->first()->file_name) }}"
-                                alt="Article Image" class="img-fluid" width="150"
-                                style="display: {{ $article->media->first() ? 'block' : 'none' }}">
+                                alt="Original Article Image"
+                                class="img-fluid"
+                                width="150"
+                                style="cursor: pointer;">
+                            @else
+                            <p class="text-muted">Tidak ada gambar.</p>
+                            @endif
+                        </div>
+
+                        <!-- Preview Gambar Baru -->
+                        <div class="mt-3">
+                            <label>Gambar Baru:</label>
+                            <img id="new_image_preview"
+                                src="#"
+                                alt="New Article Image"
+                                class="img-fluid"
+                                width="150"
+                                style="display: none; cursor: pointer;">
+                        </div>
+                    </div>
+
+                    <!-- Modal untuk Zoom Gambar -->
+                    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body text-center">
+                                    <img id="modal_image" src="#" alt="Zoom Gambar" class="img-fluid">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -155,6 +186,41 @@
                 $(".dashboard").toggleClass("dashboard-compact");
             }
         });
+    });
+</script>
+
+<script>
+    // Fungsi untuk menampilkan preview gambar baru
+    function previewNewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const newImage = document.getElementById('new_image_preview');
+            const modalImage = document.getElementById('modal_image');
+            newImage.style.display = 'block'; // Tampilkan gambar baru
+            newImage.src = reader.result;
+            modalImage.src = reader.result; // Atur gambar modal
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    // Event klik untuk membuka modal zoom dari gambar asli
+    const originalImagePreview = document.getElementById('original_image_preview');
+    if (originalImagePreview) {
+        originalImagePreview.addEventListener('click', function() {
+            const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+            const modalImage = document.getElementById('modal_image');
+            modalImage.src = originalImagePreview.src;
+            modal.show();
+        });
+    }
+
+    // Event klik untuk membuka modal zoom dari gambar baru
+    const newImagePreview = document.getElementById('new_image_preview');
+    newImagePreview.addEventListener('click', function() {
+        const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+        const modalImage = document.getElementById('modal_image');
+        modalImage.src = newImagePreview.src;
+        modal.show();
     });
 </script>
 @endpush
