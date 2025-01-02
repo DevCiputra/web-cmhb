@@ -208,6 +208,10 @@ Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
 
     Route::post('/information-article/{id}/draft', [InformationController::class, 'draftArticle'])->name('information.article.draft');
     Route::post('/information-article/{id}/publish', [InformationController::class, 'publishArticle'])->name('information.article.publish');
+    Route::get('/information/article/search', [InformationController::class, 'searchArticle'])->name('information.article.search');
+
+
+
 
 
     // Routes untuk CRUD dan fungsi Publish/Draft Promosi

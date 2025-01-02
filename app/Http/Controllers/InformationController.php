@@ -17,7 +17,7 @@ class InformationController extends Controller
     public function indexArticle(Request $request)
     {
         $query = Information::where('information_category_id', 1)
-        ->with('media'); // Menambahkan relasi media
+            ->with('media'); // Menambahkan relasi media
 
         // Filter berdasarkan flag jika ada
         if ($request->has('flag') && $request->flag != '') {
@@ -34,11 +34,11 @@ class InformationController extends Controller
     {
         // Daftar kategori artikel (dapat disesuaikan)
         // $categories = ['Artikel Kesehatan', 'Tips Kesehatan', 'Event'];
-    
+
         return view('management-data.information.article.create');
     }
-    
-    
+
+
 
     public function storeArticle(Request $request)
     {
@@ -94,8 +94,8 @@ class InformationController extends Controller
     public function editArticle($id)
     {
         $article = Information::where('information_category_id', 1)
-        ->with('media') // Memuat relasi media
-        ->findOrFail($id);
+            ->with('media') // Memuat relasi media
+            ->findOrFail($id);
         return view('management-data.information.article.edit', compact('article'));
     }
 
@@ -168,8 +168,8 @@ class InformationController extends Controller
     {
         // Ambil artikel berdasarkan ID dan kategori 1 (Artikel) beserta relasi media
         $article = Information::where('information_category_id', 1)
-        ->with('media') // Memuat relasi media
-        ->findOrFail($id);
+            ->with('media') // Memuat relasi media
+            ->findOrFail($id);
 
         // Kirim data artikel ke view
         return view('management-data.information.article.detail', compact('article'));
@@ -206,7 +206,7 @@ class InformationController extends Controller
     {
         // Pastikan hanya artikel dengan category_id = 1 yang dapat didraft
         $article = Information::where('information_category_id', 1)
-        ->findOrFail($id);
+            ->findOrFail($id);
 
         // Set status menjadi draft
         $article->is_published = '0';
@@ -227,7 +227,7 @@ class InformationController extends Controller
     {
         // Pastikan hanya artikel dengan category_id = 1 yang dapat dipublish
         $article = Information::where('information_category_id', 1)
-        ->findOrFail($id);
+            ->findOrFail($id);
 
         // Set status menjadi publish
         $article->is_published = '1';
@@ -245,18 +245,31 @@ class InformationController extends Controller
         return redirect()->route('information.article.index')->with('success', 'Artikel berhasil dipublish.');
     }
 
-
+    public function searchArticle(Request $request)
+    {
+        $query = $request->query('query');
+        $articles = Information::when($query, function ($q) use ($query) {
+            $q->where('title', 'LIKE', "%{$query}%");
+        })->paginate(12);
+    
+        return response()->json([
+            'articles' => $articles->items(),
+            'pagination' => $articles->links()->render(),
+        ]);
+    }
+    
+    
     public function indexPromote(Request $request)
     {
         $query = Information::where('information_category_id', 2);
-    
+
         // Filter berdasarkan flag jika ada
         if ($request->has('flag') && $request->flag != '') {
             $query->where('flag', $request->flag);
         }
-    
+
         $promotions = $query->paginate(10);
-    
+
         return view('management-data.information.promote.index', compact('promotions'));
     }
 
@@ -270,7 +283,8 @@ class InformationController extends Controller
     // Menyimpan data promosi baru
     public function storePromote(Request $request)
     {
-        $validatedData = $request->validate(['title' => 'required|string|max:255',
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
             'media' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'flag' => 'required|string',
         ]);
@@ -296,7 +310,8 @@ class InformationController extends Controller
                 $filePath = $file->storeAs('promotions', $fileName, 'public');
 
                 // Simpan informasi media ke tabel information_media
-                InformationMedia::create(['information_id' => $promotion->id,
+                InformationMedia::create([
+                    'information_id' => $promotion->id,
                     'file_name' => $fileName, // Nama file terenkripsi
                     'mime_type' => $file->getMimeType(), // Tipe file
                     'file_url' => Storage::url($filePath), // URL file
@@ -398,8 +413,8 @@ class InformationController extends Controller
         try {
             // Pastikan hanya promosi dengan category_id = 2 yang dapat dihapus
             $promotion = Information::where('information_category_id', 2)
-            ->with('media') // Memuat relasi media
-            ->findOrFail($id);
+                ->with('media') // Memuat relasi media
+                ->findOrFail($id);
 
             $title = $promotion->title;
 

@@ -22,8 +22,6 @@
                     </nav>
                 </div>
 
-                
-
                 <!-- Right Side: Controls -->
                 <div class="d-flex align-items-center gap-2">
                     <form method="GET" action="{{ route('information.promote.index') }}">
@@ -35,7 +33,6 @@
                             </select>
                         </div>
                     </form>
-                    
                     
                     @error('flag')
                     <span class="invalid-feedback" role="alert">
@@ -57,7 +54,7 @@
         <!-- Cards Container -->
         <div class="row cards-container">
             @forelse($promotions as $promotion)
-            <div class="col-md-3 mb-4 promo-card" data-title="{{ $promotion->title }}" data-description="{{ $promotion->description }}">
+            <div class="col-md-3 mb-4 promo-card" data-title="{{ $promotion->title }}" data-description="{{ $promotion->description }}" data-image="{{ $promotion->media->first() ? $promotion->media->first()->file_url : asset('images/default-image.jpg') }}">
                 <div class="card" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     <img class="card-img-top"
                         src="{{ $promotion->media->first() ? $promotion->media->first()->file_url : asset('images/default-image.jpg') }}"
@@ -157,6 +154,27 @@
                 }
             });
         });
+
+        $('.promo-card').on('click', function() {
+            const imageUrl = $(this).data('image');
+            $('#previewImage').attr('src', imageUrl);
+            $('#imagePreviewModal').modal('show');
+        });
     });
 </script>
+
+<!-- Modal for Image Preview -->
+<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imagePreviewModalLabel">Preview Gambar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="previewImage" src="" alt="Preview" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
 @endpush
