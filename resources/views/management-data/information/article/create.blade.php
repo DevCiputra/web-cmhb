@@ -31,7 +31,7 @@
             <div class="card-form" style="padding: 2rem;">
                 <form method="POST" action="{{ route('information.article.store') }}" enctype="multipart/form-data">
                     @csrf
-                
+
                     <div class="mb-3">
                         <label for="title" class="form-label">Judul Artikel</label>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" id="article_title" name="title" placeholder="Masukkan Judul Artikel" value="{{ old('title') }}" required>
@@ -41,7 +41,7 @@
                         </span>
                         @enderror
                     </div>
-                
+
                     <div class="mb-3">
                         <label for="flag" class="form-label">Kategori Artikel</label>
                         <select name="flag" id="flag" class="form-select @error('flag') is-invalid @enderror" required>
@@ -56,7 +56,7 @@
                         </span>
                         @enderror
                     </div>
-                
+
                     <div class="mb-3">
                         <label for="special_information" class="form-label">Informasi Khusus</label>
                         <input type="text" class="form-control @error('special_information') is-invalid @enderror" id="special_information" name="special_information" placeholder="Masukkan Informasi Khusus (Opsional)" value="{{ old('special_information') }}">
@@ -66,7 +66,7 @@
                         </span>
                         @enderror
                     </div>
-                
+
                     <div class="mb-3">
                         <label for="description" class="form-label">Isi Artikel</label>
                         <input id="description_hidden" type="hidden" name="description" value="{{ old('description') }}">
@@ -77,17 +77,58 @@
                         </span>
                         @enderror
                     </div>
-                
+
                     <div class="mb-3">
                         <label for="image" class="form-label">Foto Artikel</label>
-                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="article_image" name="image" accept="image/*">
+                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="article_image" name="image" accept="image/*" onchange="previewNewImage(event)">
                         @error('image')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                        <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+
+                        <!-- Preview Gambar Asli -->
+                        <div class="mt-3">
+                            <label>Gambar Asli:</label>
+                            @if($article->media && $article->media->first())
+                            <img id="original_image_preview"
+                                src="{{ asset('storage/articles/' . $article->media->first()->file_name) }}"
+                                alt="Original Article Image"
+                                class="img-fluid"
+                                width="150"
+                                style="cursor: pointer;"
+                                onclick="showImageInModal(this)">
+                            @else
+                            <p class="text-muted">Tidak ada gambar.</p>
+                            @endif
+                        </div>
+
+                        <!-- Preview Gambar Baru -->
+                        <div class="mt-3">
+                            <label>Gambar Baru:</label>
+                            <img id="new_image_preview"
+                                src="#"
+                                alt="New Article Image"
+                                class="img-fluid"
+                                width="150"
+                                style="display: none; cursor: pointer;"
+                                onclick="showImageInModal(this)">
+                        </div>
                     </div>
-                
+
+                    <!-- Modal untuk Zoom Gambar -->
+                    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body text-center">
+                                    <img id="modal_image" src="#" alt="Zoom Gambar" class="img-fluid">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="mb-3">
                         <label for="is_published" class="form-label">Publikasikan Artikel</label>
                         <select class="form-control" id="is_published" name="is_published">
@@ -95,12 +136,12 @@
                             <option value="1" {{ old('is_published') == '1' ? 'selected' : '' }}>Publikasikan</option>
                         </select>
                     </div>
-                
+
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-success">Simpan</button>
                     </div>
                 </form>
-                
+
             </div>
         </div>
     </div>
@@ -152,35 +193,42 @@
     if (titleElement.textContent.length > maxLength) {
         titleElement.textContent = titleElement.textContent.slice(0, maxLength) + "...";
     }
-</script>
 
-<script>
-    document.getElementById('article_image').addEventListener('change', function(event) {
+    function previewNewImage(event) {
         const file = event.target.files[0];
-        const preview = document.getElementById('image_preview');
-        const modalImage = document.getElementById('modal_image');
+        const preview = document.getElementById('new_image_preview');
 
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 preview.src = e.target.result;
-                modalImage.src = e.target.result;
                 preview.style.display = 'block';
             };
             reader.readAsDataURL(file);
         } else {
             preview.style.display = 'none';
         }
-    });
+    }
 
-    // Tambahkan event click pada preview untuk membuka modal
-    document.getElementById('image_preview').addEventListener('click', function() {
-        const modal = new bootstrap.Modal(document.getElementById('imageModal'));
-        modal.show();
-    });
+    function showImageInModal(imgElement) {
+        const modalImage = document.getElementById('modal_image');
+        modalImage.src = imgElement.src;
+
+        const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        imageModal.show();
+    }
 </script>
+
+
 @endpush
 
 @push('styles')
 <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+
+<style>
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
 @endpush
