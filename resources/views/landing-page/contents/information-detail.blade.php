@@ -15,7 +15,7 @@
         </div>
 
         <div class="info-detail-article"
-            style="margin-top: 40px; font-family: 'Arial', sans-serif; line-height: 1.8; padding:20px ">
+            style="margin-top: 40px; font-family: 'Arial', sans-serif; line-height: 1.8; padding:20px;">
             <div class="info-header">
                 <h1 class="info-title-article"
                     style="font-size: 2.5rem; font-weight: bold; color: #023770; text-align: center; margin-bottom: 20px;">
@@ -34,7 +34,7 @@
             </div>
 
             <div class="info-content-article"
-                style="font-size: 1.2rem; color: #555; margin-top: 30px; line-height: 1.8; padding: 0 15px;  margin-bottom: 80px;">
+                style="font-size: 1.2rem; color: #555; margin-top: 30px; line-height: 1.8; padding: 0 15px; margin-bottom: 80px; text-align: justify; text-justify: inter-word;">
                 @if ($article->media->isNotEmpty())
                     @foreach ($article->media as $media)
                         <img src="{{ $media->file_url }}" alt="Article Image" class="info-image"
@@ -49,7 +49,7 @@
                 <p class="info-content-article"
                     style="font-size: 1.2rem; line-height: 1.8; color: #555; margin-bottom: 20px; text-align: justify; text-justify: inter-word;">
                     {!! $article->description !!}</p> <!-- Menampilkan deskripsi artikel -->
-                <p class="info-content-article" style="font-size: 1.2rem; line-height: 1.8; color: #555;">
+                <p class="info-content-article" style="font-size: 1.2rem; line-height: 1.8; color: #555; text-align: justify; text-justify: inter-word;">
                     {{ $article->special_information }}</p> <!-- Menampilkan deskripsi artikel -->
             </div>
         </div>

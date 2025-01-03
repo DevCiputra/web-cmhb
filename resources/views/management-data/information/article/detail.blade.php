@@ -53,7 +53,7 @@
                     @else
                     <img src="{{ asset('images/userplaceholder.jpg') }}" alt="Default Image" class="info-image" style="max-width: 100%; margin-bottom: 20px;"> <!-- Gambar default jika tidak ada -->
                     @endif
-                    <p class="info-content">{{ $article->description }}</p> <!-- Menampilkan deskripsi artikel -->
+                    <p class="info-content">{{ strip_tags($article->description) }}</p> <!-- Menampilkan deskripsi artikel tanpa HTML -->
                     <p class="info-content">{{ $article->special_information }}</p> <!-- Menampilkan deskripsi artikel -->
                 </div>
             </div>

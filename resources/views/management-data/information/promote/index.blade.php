@@ -71,9 +71,6 @@
                     <div class="card-body" style="height: 100px; object-fit: cover;">
                         <p class="card-text">{{ $promotion->flag }}</p>
                         <h5 class="card-title">{{ $promotion->title }}</h5>
-                        <p class="card-text">
-                            {{ $promotion->description ?? 'Tidak ada deskripsi' }}
-                        </p>
                     </div>
                     <div class="card-footer d-flex justify-content-between">
                         <a href="{{ route('information.promote.edit', $promotion->id) }}" class="btn btn-sm btn-success custom-btn">
@@ -145,9 +142,7 @@
                 $(".dashboard").toggleClass("dashboard-compact");
             }
         });
-    });
 
-    $(document).ready(function() {
         $('#search-promo').on('input', function() {
             const query = $(this).val().toLowerCase();
             $('.promo-card').each(function() {
@@ -168,8 +163,14 @@
             $('#previewImage').attr('src', imageUrl);
             $('#imagePreviewModal').modal('show');
         });
+
+        // Mencegah modal muncul saat tombol Publish atau Draft ditekan
+        $('.custom-btn').on('click', function(event) {
+            event.stopPropagation();
+        });
     });
 </script>
+
 
 <!-- Modal for Image Preview -->
 <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewModalLabel" aria-hidden="true">
