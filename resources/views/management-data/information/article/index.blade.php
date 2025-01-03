@@ -32,52 +32,43 @@
 
                     <!-- Right Side: Filter and Add Button -->
                     <div class="d-flex justify-content-end align-items-center gap-3">
-                        <form method="GET" action="{{ url()->current() }}">
-                            <div class="row">
-                                <!-- Search Bar -->
-                                <div class="col-md-8 mb-2">
-                                    <input id="search-bar" type="text" name="keyword" class="form-control"
-                                        placeholder="Cari Artikel..." value="{{ request('keyword') }}">
-                                </div>
-                                <!-- Filter Dropdown -->
-                                <div class="col-md-4">
-                                    <select name="flag" id="flag" class="form-select" onchange="this.form.submit()">
-                                        <option value="" {{ request('flag') == '' ? 'selected' : '' }}>Semua Kategori
-                                        </option>
-                                        <option value="Artikel Kesehatan"
-                                            {{ request('flag') == 'Artikel Kesehatan' ? 'selected' : '' }}>Artikel Kesehatan
-                                        </option>
-                                        <option value="Tips Kesehatan"
-                                            {{ request('flag') == 'Tips Kesehatan' ? 'selected' : '' }}>Tips Kesehatan
-                                        </option>
-                                        <option value="Event" {{ request('flag') == 'Event' ? 'selected' : '' }}>Event
-                                        </option>
-                                    </select>
-
-                                    <!-- Dropdown Order By -->
-                                    <select name="order_by" id="order_by" class="form-select"
-                                        onchange="this.form.submit()">
-                                        <option value="newest" {{ request('order_by') == 'newest' ? 'selected' : '' }}>
-                                            Terbaru</option>
-                                        <option value="oldest" {{ request('order_by') == 'oldest' ? 'selected' : '' }}>
-                                            Terlama</option>
-                                    </select>
-                                </div>
+                        <!-- Form Filter -->
+                        <form method="GET" action="{{ url()->current() }}"
+                            class="d-flex align-items-center gap-2 flex-wrap">
+                            <!-- Search Bar -->
+                            <div class="form-group mb-2">
+                                <input id="search-bar" type="text" name="keyword" class="form-control"
+                                    placeholder="Cari Artikel..." value="{{ request('keyword') }}">
+                            </div>
+                            <!-- Filter Dropdown -->
+                            <div class="form-group mb-2">
+                                <select name="flag" id="flag" class="form-select" onchange="this.form.submit()">
+                                    <option value="" {{ request('flag') == '' ? 'selected' : '' }}>Semua Kategori
+                                    </option>
+                                    <option value="Artikel Kesehatan"
+                                        {{ request('flag') == 'Artikel Kesehatan' ? 'selected' : '' }}>
+                                        Artikel Kesehatan
+                                    </option>
+                                    <option value="Tips Kesehatan"
+                                        {{ request('flag') == 'Tips Kesehatan' ? 'selected' : '' }}>
+                                        Tips Kesehatan
+                                    </option>
+                                    <option value="Event" {{ request('flag') == 'Event' ? 'selected' : '' }}>Event</option>
+                                </select>
+                            </div>
+                            <!-- Dropdown Order By -->
+                            <div class="form-group mb-2">
+                                <select name="order_by" id="order_by" class="form-select" onchange="this.form.submit()">
+                                    <option value="newest" {{ request('order_by') == 'newest' ? 'selected' : '' }}>Terbaru
+                                    </option>
+                                    <option value="oldest" {{ request('order_by') == 'oldest' ? 'selected' : '' }}>Terlama
+                                    </option>
+                                </select>
                             </div>
                         </form>
-
-
-
-
-
-                        <!-- Add Button -->
-                        <a href="{{ route('information.article.create') }}" style="text-decoration: none;">
-                            <button class="btn btn-md"
-                                style="background-color: #007858; color: #fff; border-radius: 10px; display: flex; align-items: center; padding: 8px 12px; border: none;">
-                                <img src="{{ asset('icons/plus.svg') }}" width="16" height="16"
-                                    style="filter: invert(100%); margin-right: 8px;" alt="Plus Icon">
-                                Tambah
-                            </button>
+                        <!-- Button Tambah -->
+                        <a href="#" class="btn btn-success">
+                            + Tambah
                         </a>
                     </div>
                 </div>
@@ -177,10 +168,10 @@
         $(document).ready(function() {
             $("#search-bar").on("input", function() {
                 let searchTerm = $(this).val().toLowerCase()
-            .trim(); // Ambil input, ubah ke huruf kecil, dan hilangkan spasi berlebih
+                    .trim(); // Ambil input, ubah ke huruf kecil, dan hilangkan spasi berlebih
                 $(".card-item").each(function() {
                     let title = $(this).attr("card-title")
-                .toLowerCase(); // Ambil atribut 'card-title' dari elemen card
+                        .toLowerCase(); // Ambil atribut 'card-title' dari elemen card
 
                     if (title.includes(searchTerm)) { // Cek apakah judul mengandung teks pencarian
                         $(this).show(); // Tampilkan card
