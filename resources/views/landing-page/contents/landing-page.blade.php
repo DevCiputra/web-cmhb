@@ -140,45 +140,48 @@
             </div>
         </div>
     </div>
-
-    <!-- Information Section -->
-    <div id="info" class="info-section">
-        <div class="container">
-            <h1 style="margin-bottom: 10px;">What's New</h1>
-            <p style="margin-bottom: 15px;">Informasi terbaru tentang kesehatan dan layanan kami.</p>
-            <a href="{{ route('article') }}" class="btn btn-semua"
-                style="color:#023770; font-size: 1.2rem; margin-top: -10px; margin-bottom: 10px">
-                Lihat Semua
-                <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
-            </a>
-            <div class="row g-4">
-                @foreach ($articles as $article)
-                <div class="col-lg-4 col-md-6">
-                    <div class="info-item">
-                        <div class="info-content card">
-                            <div class="badge-container">
-                                <span class="badge">Artikel</span>
-                            </div>
-                            @if ($article->media->isNotEmpty())
-                            <img src="{{ $article->media->first()->file_url }}" class="card-img-top" alt="{{ $article->title }}">
-                            @else
-                            <img src="{{ asset('images/default-article.jpg') }}" class="card-img-top" alt="Default Article">
-                            @endif
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $article->title }}</h5>
-                                <p class="card-text">{{ \Illuminate\Support\Str::limit($article->description, 100) }}</p>
-                                <a href="{{ route('article') }}" class="btn btn-link">
-                                    Selengkapnya
-                                    <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
-                                </a>
-                            </div>
+<!-- Information Section -->
+<div id="info" class="info-section">
+    <div class="container">
+        <h1 style="margin-bottom: 10px;">What's New</h1>
+        <p style="margin-bottom: 15px;">Informasi terbaru tentang kesehatan dan layanan kami.</p>
+        <a href="{{ route('article') }}" class="btn btn-semua"
+            style="color:#023770; font-size: 1.2rem; margin-top: -10px; margin-bottom: 10px">
+            Lihat Semua
+            <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
+        </a>
+        <div class="row g-4" style="display: flex; flex-wrap: wrap;">
+            @foreach ($articles as $article)
+            <div class="col-lg-4 col-md-6" style="display: flex; flex-direction: column;">
+                <div class="info-item" style="flex: 1; display: flex; flex-direction: column;">
+                    <div class="info-content card" style="display: flex; flex-direction: column; height: 100%;">
+                        <div class="badge-container">
+                            <span class="badge">Artikel</span>
+                        </div>
+                        @if ($article->media->isNotEmpty())
+                        <img src="{{ $article->media->first()->file_url }}" class="card-img-top" alt="{{ $article->title }}">
+                        @else
+                        <img src="{{ asset('images/default-article.jpg') }}" class="card-img-top" alt="Default Article">
+                        @endif
+                        <div class="card-body" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                            <h5 class="card-title">{{ $article->title }}</h5>
+                            <p class="card-text" style="line-height: 1.6; word-wrap: break-word; text-align: justify;">
+                                {{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($article->description)), 100) }}
+                            </p>
+                            
+                            <a href="{{ route('article') }}" class="btn btn-link">
+                                Selengkapnya
+                                <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
+                            </a>
                         </div>
                     </div>
                 </div>
-                @endforeach
             </div>
+            @endforeach
         </div>
     </div>
+</div>
+
 
     <!-- Feature Section -->
     <div id="feature" class="feature-section">

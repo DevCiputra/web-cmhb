@@ -24,6 +24,11 @@ class InformationController extends Controller
             $query->where('flag', $request->flag);
         }
 
+        if ($request->filled('order_by')) {
+            $order = $request->order_by === 'newest' ? 'desc' : 'asc';
+            $query->orderBy('created_at', $order);
+        }
+
         $articles = $query->paginate(10);
 
         return view('management-data.information.article.index', compact('articles'));
@@ -267,6 +272,13 @@ class InformationController extends Controller
         if ($request->has('flag') && $request->flag != '') {
             $query->where('flag', $request->flag);
         }
+
+        
+        if ($request->filled('order_by')) {
+            $order = $request->order_by === 'newest' ? 'desc' : 'asc';
+            $query->orderBy('created_at', $order);
+        }
+
 
         $promotions = $query->paginate(10);
 

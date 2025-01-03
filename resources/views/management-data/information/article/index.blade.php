@@ -36,30 +36,40 @@
                             <div class="row">
                                 <!-- Search Bar -->
                                 <div class="col-md-8 mb-2">
-                                    <input 
-                                        id="search-bar" 
-                                        type="text" 
-                                        name="keyword" 
-                                        class="form-control" 
-                                        placeholder="Cari Artikel..." 
-                                        value="{{ request('keyword') }}">
+                                    <input id="search-bar" type="text" name="keyword" class="form-control"
+                                        placeholder="Cari Artikel..." value="{{ request('keyword') }}">
                                 </div>
                                 <!-- Filter Dropdown -->
                                 <div class="col-md-4">
                                     <select name="flag" id="flag" class="form-select" onchange="this.form.submit()">
-                                        <option value="" {{ request('flag') == '' ? 'selected' : '' }}>Semua Kategori</option>
-                                        <option value="Artikel Kesehatan" {{ request('flag') == 'Artikel Kesehatan' ? 'selected' : '' }}>Artikel Kesehatan</option>
-                                        <option value="Tips Kesehatan" {{ request('flag') == 'Tips Kesehatan' ? 'selected' : '' }}>Tips Kesehatan</option>
-                                        <option value="Event" {{ request('flag') == 'Event' ? 'selected' : '' }}>Event</option>
+                                        <option value="" {{ request('flag') == '' ? 'selected' : '' }}>Semua Kategori
+                                        </option>
+                                        <option value="Artikel Kesehatan"
+                                            {{ request('flag') == 'Artikel Kesehatan' ? 'selected' : '' }}>Artikel Kesehatan
+                                        </option>
+                                        <option value="Tips Kesehatan"
+                                            {{ request('flag') == 'Tips Kesehatan' ? 'selected' : '' }}>Tips Kesehatan
+                                        </option>
+                                        <option value="Event" {{ request('flag') == 'Event' ? 'selected' : '' }}>Event
+                                        </option>
+                                    </select>
+
+                                    <!-- Dropdown Order By -->
+                                    <select name="order_by" id="order_by" class="form-select"
+                                        onchange="this.form.submit()">
+                                        <option value="newest" {{ request('order_by') == 'newest' ? 'selected' : '' }}>
+                                            Terbaru</option>
+                                        <option value="oldest" {{ request('order_by') == 'oldest' ? 'selected' : '' }}>
+                                            Terlama</option>
                                     </select>
                                 </div>
                             </div>
                         </form>
-                        
-                        
 
 
-                        
+
+
+
                         <!-- Add Button -->
                         <a href="{{ route('information.article.create') }}" style="text-decoration: none;">
                             <button class="btn btn-md"
@@ -164,41 +174,41 @@
 @push('scripts')
     <script src="{{ asset('js/navbar.js') }}"></script>
     <script>
-$(document).ready(function() {
-    $("#search-bar").on("input", function() {
-        let searchTerm = $(this).val().toLowerCase().trim(); // Ambil input, ubah ke huruf kecil, dan hilangkan spasi berlebih
-        $(".card-item").each(function() {
-            let title = $(this).attr("card-title").toLowerCase(); // Ambil atribut 'card-title' dari elemen card
+        $(document).ready(function() {
+            $("#search-bar").on("input", function() {
+                let searchTerm = $(this).val().toLowerCase()
+            .trim(); // Ambil input, ubah ke huruf kecil, dan hilangkan spasi berlebih
+                $(".card-item").each(function() {
+                    let title = $(this).attr("card-title")
+                .toLowerCase(); // Ambil atribut 'card-title' dari elemen card
 
-            if (title.includes(searchTerm)) { // Cek apakah judul mengandung teks pencarian
-                $(this).show(); // Tampilkan card
-            } else {
-                $(this).hide(); // Sembunyikan card
-            }
+                    if (title.includes(searchTerm)) { // Cek apakah judul mengandung teks pencarian
+                        $(this).show(); // Tampilkan card
+                    } else {
+                        $(this).hide(); // Sembunyikan card
+                    }
+                });
+            });
         });
-    });
-});
 
-const mobileScreen = window.matchMedia("(max-width: 990px )");
-    $(document).ready(function() {
-        $(".dashboard-nav-dropdown-toggle").click(function() {
-            $(this).closest(".dashboard-nav-dropdown")
-                .toggleClass("show")
-                .find(".dashboard-nav-dropdown")
-                .removeClass("show");
-            $(this).parent()
-                .siblings()
-                .removeClass("show");
+        const mobileScreen = window.matchMedia("(max-width: 990px )");
+        $(document).ready(function() {
+            $(".dashboard-nav-dropdown-toggle").click(function() {
+                $(this).closest(".dashboard-nav-dropdown")
+                    .toggleClass("show")
+                    .find(".dashboard-nav-dropdown")
+                    .removeClass("show");
+                $(this).parent()
+                    .siblings()
+                    .removeClass("show");
+            });
+            $(".menu-toggle").click(function() {
+                if (mobileScreen.matches) {
+                    $(".dashboard-nav").toggleClass("mobile-show");
+                } else {
+                    $(".dashboard").toggleClass("dashboard-compact");
+                }
+            });
         });
-        $(".menu-toggle").click(function() {
-            if (mobileScreen.matches) {
-                $(".dashboard-nav").toggleClass("mobile-show");
-            } else {
-                $(".dashboard").toggleClass("dashboard-compact");
-            }
-        });
-    });
-
-
     </script>
 @endpush

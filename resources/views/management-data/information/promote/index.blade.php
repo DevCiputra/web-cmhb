@@ -26,13 +26,21 @@
                 <div class="d-flex align-items-center gap-2">
                     <form method="GET" action="{{ route('information.promote.index') }}">
                         <div class="input-group mb-3">
-                            <select name="flag" id="flag" class="form-select" onchange="this.form.submit()">
+                            <!-- Dropdown Kategori -->
+                            <select name="flag" id="flag" class="form-select me-2" onchange="this.form.submit()">
                                 <option value="" {{ request('flag') == '' ? 'selected' : '' }}>Semua Kategori</option>
                                 <option value="Diskon" {{ request('flag') == 'Diskon' ? 'selected' : '' }}>Diskon</option>
                                 <option value="MCU" {{ request('flag') == 'MCU' ? 'selected' : '' }}>MCU</option>
                             </select>
+                    
+                            <!-- Dropdown Order By -->
+                            <select name="order_by" id="order_by" class="form-select" onchange="this.form.submit()">
+                                <option value="newest" {{ request('order_by') == 'newest' ? 'selected' : '' }}>Terbaru</option>
+                                <option value="oldest" {{ request('order_by') == 'oldest' ? 'selected' : '' }}>Terlama</option>
+                            </select>
                         </div>
                     </form>
+                    
                     
                     @error('flag')
                     <span class="invalid-feedback" role="alert">

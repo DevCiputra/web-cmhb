@@ -48,7 +48,7 @@
                 @endif
                 <p class="info-content-article"
                     style="font-size: 1.2rem; line-height: 1.8; color: #555; margin-bottom: 20px; text-align: justify; text-justify: inter-word;">
-                    {{ $article->description }}</p> <!-- Menampilkan deskripsi artikel -->
+                    {!! $article->description !!}</p> <!-- Menampilkan deskripsi artikel -->
                 <p class="info-content-article" style="font-size: 1.2rem; line-height: 1.8; color: #555;">
                     {{ $article->special_information }}</p> <!-- Menampilkan deskripsi artikel -->
             </div>

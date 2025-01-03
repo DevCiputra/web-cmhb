@@ -63,7 +63,9 @@
                                         @endif
                                         <div class="info-card-body">
                                             <h5 class="title">{{ $article->title }}</h5>
-                                            <p class="description">{{ Str::limit($article->description, 100, '...') }}</p>
+                                            <p class="card-text" style="line-height: 1.6; word-wrap: break-word; text-align: justify;">
+                                                {{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($article->description)), 80) }}
+                                            </p>
                                             <a href="{{ route('article.detail.landing', ['id' => $article->id]) }}" class="btn btn-selengkapnya">
                                                 Selengkapnya
                                                 <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">

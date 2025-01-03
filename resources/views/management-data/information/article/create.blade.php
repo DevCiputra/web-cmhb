@@ -31,12 +31,17 @@
             <div class="card-form" style="padding: 2rem;">
                 <form method="POST" action="{{ route('information.article.store') }}" enctype="multipart/form-data">
                     @csrf
-
+                
                     <div class="mb-3">
                         <label for="title" class="form-label">Judul Artikel</label>
-                        <input type="text" class="form-control" id="article_title" name="title" placeholder="Masukkan Judul Artikel" required>
+                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="article_title" name="title" placeholder="Masukkan Judul Artikel" value="{{ old('title') }}" required>
+                        @error('title')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
-
+                
                     <div class="mb-3">
                         <label for="flag" class="form-label">Kategori Artikel</label>
                         <select name="flag" id="flag" class="form-select @error('flag') is-invalid @enderror" required>
@@ -51,56 +56,51 @@
                         </span>
                         @enderror
                     </div>
-
-
+                
                     <div class="mb-3">
                         <label for="special_information" class="form-label">Informasi Khusus</label>
-                        <input type="text" class="form-control" id="special_information" name="special_information" placeholder="Masukkan Informasi Khusus (Opsional)">
+                        <input type="text" class="form-control @error('special_information') is-invalid @enderror" id="special_information" name="special_information" placeholder="Masukkan Informasi Khusus (Opsional)" value="{{ old('special_information') }}">
+                        @error('special_information')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
-
+                
                     <div class="mb-3">
                         <label for="description" class="form-label">Isi Artikel</label>
-                        <textarea class="form-control" id="article_description" name="description" rows="4" placeholder="Masukkan Isi Artikel" required></textarea>
+                        <input id="description_hidden" type="hidden" name="description" value="{{ old('description') }}">
+                        <trix-editor input="description_hidden" id="article_description"></trix-editor>
+                        @error('description')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
-
+                
                     <div class="mb-3">
                         <label for="image" class="form-label">Foto Artikel</label>
-                        <input type="file" class="form-control" id="article_image" name="image" accept="image/*">
-                        <div class="mt-3">
-                            <img id="image_preview" src="#" alt="Preview Foto Artikel" class="img-fluid" style="display: none; max-width: 150px; cursor: pointer;">
-                        </div>
+                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="article_image" name="image" accept="image/*">
+                        @error('image')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
-
-                    <!-- Modal untuk Zoom Gambar -->
-                    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-body text-center">
-                                    <img id="modal_image" src="#" alt="Zoom Foto Artikel" class="img-fluid">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
+                
                     <div class="mb-3">
                         <label for="is_published" class="form-label">Publikasikan Artikel</label>
                         <select class="form-control" id="is_published" name="is_published">
                             <option value="0" selected>Draft</option>
-                            <option value="1">Publikasikan</option>
+                            <option value="1" {{ old('is_published') == '1' ? 'selected' : '' }}>Publikasikan</option>
                         </select>
                     </div>
-
+                
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-success"
-                            style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
-                            Simpan
-                        </button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
                     </div>
                 </form>
+                
             </div>
         </div>
     </div>
@@ -179,4 +179,8 @@
         modal.show();
     });
 </script>
+@endpush
+
+@push('styles')
+<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 @endpush

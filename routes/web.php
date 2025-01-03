@@ -211,9 +211,6 @@ Route::group(['middleware' => ['checkrole:HBD,Admin']], function () {
     Route::get('/information/article/search', [InformationController::class, 'searchArticle'])->name('information.article.search');
 
 
-
-
-
     // Routes untuk CRUD dan fungsi Publish/Draft Promosi
     Route::get('/information-promote', [InformationController::class, 'indexPromote'])->name('information.promote.index');
     Route::get('/information-promote/create', [InformationController::class, 'createPromote'])->name('information.promote.create');
