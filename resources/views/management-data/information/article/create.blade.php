@@ -85,22 +85,6 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
 
-                        <!-- Preview Gambar Asli -->
-                        <div class="mt-3">
-                            <label>Gambar Asli:</label>
-                            @if($article->media && $article->media->first())
-                            <img id="original_image_preview"
-                                src="{{ asset('storage/articles/' . $article->media->first()->file_name) }}"
-                                alt="Original Article Image"
-                                class="img-fluid"
-                                width="150"
-                                style="cursor: pointer;"
-                                onclick="showImageInModal(this)">
-                            @else
-                            <p class="text-muted">Tidak ada gambar.</p>
-                            @endif
-                        </div>
-
                         <!-- Preview Gambar Baru -->
                         <div class="mt-3">
                             <label>Gambar Baru:</label>
