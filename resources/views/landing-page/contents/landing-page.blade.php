@@ -169,7 +169,7 @@
                                 {{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($article->description)), 100) }}
                             </p>
                             
-                            <a href="{{ route('article') }}" class="btn btn-link">
+                            <a href="{{ route('article.detail.landing', ['id' => $article->id]) }}" class="btn btn-link">
                                 Selengkapnya
                                 <img src="{{ asset('icons/chevron-right.png') }}" alt="Chevron Right" class="chevron-icon">
                             </a>

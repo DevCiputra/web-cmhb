@@ -8,7 +8,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/" style="color: #023770;">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="" style="color: #023770;">Informasi</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('article') }}" style="color: #023770;">Informasi</a></li>
                     <li class="breadcrumb-item active" style="color: #023770;">{{ $article->title }}</li>
                 </ol>
             </nav>
@@ -57,13 +57,12 @@
 
     <!-- Recommended Articles Section -->
     <div class="recommended-articles" style="margin-top: 50px; font-family: 'Arial', sans-serif;">
-        <h2 style="font-size: 2rem; font-weight: bold; color: #023770; margin-bottom: 30px; text-align: center;">Rekomendasi
-            Artikel</h2>
+        <h2 style="font-size: 2rem; font-weight: bold; color: #023770; margin-bottom: 30px; text-align: center;">Rekomendasi Artikel</h2>
         <div class="row" style="margin: 40px">
             @foreach ($recommendedArticles as $recommended)
                 <div class="col-md-4 mb-4">
                     <div class="card"
-                        style="border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+                        style="border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; height:400px;">
                         <img src="{{ $recommended->media->isNotEmpty() ? $recommended->media->first()->file_url : asset('images/userplaceholder.jpg') }}"
                             class="card-img-top" alt="{{ $recommended->title }}"
                             style="border-top-left-radius: 10px; border-top-right-radius: 10px; max-height: 200px; object-fit: cover;">
@@ -72,18 +71,18 @@
                                 style="font-size: 1.2rem; font-weight: bold; color: #023770; margin-bottom: 10px;">
                                 {{ $recommended->title }}</h5>
                             <p class="card-text"
-                                style="font-size: 1rem; color: #555; margin-bottom: 15px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-                                {{ Str::limit($recommended->description, 100, '...') }}
+                                style="line-height: 1.6; word-wrap: break-word; text-align: justify; color: #555;">
+                                {{ \Illuminate\Support\Str::limit(strip_tags($recommended->description), 100, '...') }}
                             </p>
                             <a href="{{ route('article.detail.landing', ['id' => $recommended->id]) }}" class="btn btn-primary"
-                                style="background-color: #023770; border-color: #023770; border-radius: 10px;">Baca
-                                Selengkapnya</a>
+                                style="background-color: #023770; border-color: #023770; border-radius: 10px;">Baca Selengkapnya</a>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
     </div>
+    
 
 
     <!-- Emergency Section -->

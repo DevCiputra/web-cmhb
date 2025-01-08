@@ -15,7 +15,7 @@
                      <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Edit Artikel</h4>
                      <nav aria-label="breadcrumb">
                          <ol class="breadcrumb">
-                             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
                              <li class="breadcrumb-item"><a href=" ">Reservasi</a></li>
                              <li class="breadcrumb-item"><a href="{{ route('information.article.index') }}">Artikel</a>
                              </li>
