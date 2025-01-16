@@ -58,9 +58,9 @@ class OnlineConsultationController extends Controller
 
     public function showConsultationForm($doctor_id, Request $request)
     {
-        if (!$request->hasValidSignature()) {
-            abort(403, 'Unauthorized request.');
-        }
+        // if (!$request->hasValidSignature()) {
+        //     abort(403, 'Unauthorized request.');
+        // }
 
         $title = 'Reservasi Konsultasi Online';
         $doctor = Doctor::findOrFail($doctor_id);

@@ -86,7 +86,8 @@
 
                                 </form>
 
-                                <!-- Tombol untuk mengubah status publikasi -->
+                                <div>
+                                                                    <!-- Tombol untuk mengubah status publikasi -->
                                 <form action="{{ route('doctor.data.updatePublished', $doctor->id) }}" method="POST" style="display:inline-block;" id="publishForm">
                                     @csrf
                                     <button type="button" class="btn btn-toggle-published" onclick="confirmPublish()"
@@ -94,6 +95,9 @@
                                         {{ $doctor->is_published ? 'Tampil' : 'Sembunyikan' }}
                                     </button>
                                 </form>
+                                </div>
+
+
                             </div>
                         </div>
                         <p class="specialist" style="color: #425b84">{{ $doctor->specialization_name }}</p>

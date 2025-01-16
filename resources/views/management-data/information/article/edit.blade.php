@@ -58,13 +58,17 @@
                      </div>
 
                      <div class="mb-3">
-                         <label for="description" class="form-label">Isi Artikel</label>
-                         <textarea class="form-control @error('description') is-invalid @enderror" id="article_description" name="description" rows="4"
-                             placeholder="Masukkan Isi Artikel">{{ old('description', $article->description) }}</textarea>
-                         @error('description')
-                         <div class="invalid-feedback">{{ $message }}</div>
-                         @enderror
-                     </div>
+                        <label for="description" class="form-label">Isi Artikel</label>
+                        <input id="article_description" type="hidden" name="description" value="{{ old('description', $article->description) }}">
+                        <trix-editor 
+                            class="form-control @error('description') is-invalid @enderror" 
+                            input="article_description" 
+                            placeholder="Masukkan Isi Artikel"></trix-editor>
+                        @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
 
                      <div class="mb-3">
                          <label for="special_information" class="form-label">Informasi Khusus</label>

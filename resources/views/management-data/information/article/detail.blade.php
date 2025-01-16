@@ -44,18 +44,26 @@
 
                     </div>
                 </div>
-
-                <div class="info-content">
-                    @if($article->media->isNotEmpty())
-                    @foreach($article->media as $media)
-                    <img src="{{ $media->file_url }}" alt="Article Image" class="info-image" style="max-width: 100%; margin-bottom: 20px;"> <!-- Menampilkan semua gambar yang terkait -->
+                <div class="info-content-article"
+                style="font-size: 1.2rem; color: #555; margin-top: 30px; line-height: 1.8; padding: 0 15px; margin-bottom: 80px; text-align: justify; text-justify: inter-word;">
+                @if ($article->media->isNotEmpty())
+                    @foreach ($article->media as $media)
+                        <img src="{{ $media->file_url }}" alt="Article Image" class="info-image"
+                            style="display: block; max-width: 100%; margin: 0 auto 30px; border-radius: 8px;">
+                        <!-- Menampilkan semua gambar yang terkait -->
                     @endforeach
-                    @else
-                    <img src="{{ asset('images/userplaceholder.jpg') }}" alt="Default Image" class="info-image" style="max-width: 100%; margin-bottom: 20px;"> <!-- Gambar default jika tidak ada -->
-                    @endif
-                    <p class="info-content">{{ strip_tags($article->description) }}</p> <!-- Menampilkan deskripsi artikel tanpa HTML -->
-                    <p class="info-content">{{ $article->special_information }}</p> <!-- Menampilkan deskripsi artikel -->
-                </div>
+                @else
+                    <img src="{{ asset('images/userplaceholder.jpg') }}" alt="Default Image" class="info-image"
+                        style="display: block; max-width: 100%; margin: 0 auto 30px; border-radius: 8px;">
+                    <!-- Gambar default jika tidak ada -->
+                @endif
+                <p class="info-content-article"
+                    style="font-size: 1.2rem; line-height: 1.8; color: #555; margin-bottom: 20px; text-align: justify; text-justify: inter-word;">
+                    {!! $article->description !!}</p> <!-- Menampilkan deskripsi artikel -->
+                <p class="info-content-article"
+                    style="font-size: 1.2rem; line-height: 1.8; color: #555; text-align: justify; text-justify: inter-word;">
+                    {{ $article->special_information }}</p> <!-- Menampilkan deskripsi artikel -->
+            </div>
             </div>
         </div>
     </div>
