@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('mcu_companies', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique(); // Nama Perusahaan
+            $table->string('package_name');   // Nama Paket MCU
+            $table->string('responsible_person'); // Penanggung Jawab
             $table->timestamps();
         });
     }
