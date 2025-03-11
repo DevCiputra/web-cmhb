@@ -8,6 +8,7 @@ use App\Http\Controllers\InformationCategoryController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\MasterController;
+use App\Http\Controllers\MCUFileSharingController;
 use App\Http\Controllers\OnlineConsultationController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\QuestionCategoryController;
@@ -323,8 +324,33 @@ Route::group(
     }
 );
 
+// MCU FILE SHARING
 
-// SKRININGGGGG
+Route::group(
+    ['middleware' => ['checkrole:HBD,Admin']],
+    function () {
+        Route::get('/mcu-file', [MCUFileSharingController::class, 'index'])->name('mcu.index');
+
+        // Routes untuk upload CSV
+        Route::get('/mcu/upload-csv', [McuController::class, 'showCsvUploadForm'])->name('mcu.upload_csv');
+        Route::post('/mcu/upload-csv', [McuController::class, 'processCsvUpload'])->name('mcu.process_csv');
+
+        // Routes untuk upload ZIP
+        Route::get('/mcu/upload-zip', [McuController::class, 'showZipUploadForm'])->name('mcu.upload_zip');
+        Route::post('/mcu/upload-zip', [McuController::class, 'processZipUpload'])->name('mcu.process_zip');
+
+        // Route untuk melihat isi folder (contoh: folder peserta)
+        Route::get('/mcu/folder/{id}', [McuController::class, 'viewFolder'])->name('mcu.view_folder');
+
+        // Route untuk download file (file terenkripsi)
+        Route::get('/mcu/download/{id}', [McuController::class, 'downloadEncryptedFile'])->name('mcu.download');
+
+        // (Opsional) Route untuk melihat log aktivitas akses
+        Route::get('/mcu/access-logs', [McuController::class, 'accessLogs'])->name('mcu.access_logs');
+    }
+);
+
+// SKRINING
 Route::get('/skrining', function () {
     return view('landing-page.contents.skrining');
 });
