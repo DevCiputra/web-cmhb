@@ -302,6 +302,11 @@ class LandingPageController extends Controller
         return view('landing-page.contents.bmi', compact('title'));
     }
 
+    public function fileSharing()
+    {
+        $title = 'MCU File';
+        return view('landing-page.contents.file-sharing', compact('title'));
+    }
 
 
     public function coming()

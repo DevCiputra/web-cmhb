@@ -69,6 +69,8 @@ Route::prefix('/')->group(function () {
         ReservationController::class,
         'indexLandingConsultation'
     ])->name('reservation.onlineconsultation.landing');
+
+    Route::get('/file-sharing', [LandingPageController::class, 'fileSharing'])->name('file.sharing');
 });
 
 // SKRINING
@@ -357,6 +359,8 @@ Route::get('/skrining', function () {
 
 
 
+
+
 // COMING SOON (ON PROGRESS AFTER PROD V.1)
 
 Route::get('/tambah_mcu', function () {
@@ -388,4 +392,26 @@ Route::get('/informasi', function () {
 });
 Route::get('/informasi_detail', function () {
     return view('informasi_detail');
+});
+
+
+//FILE SHARING 
+Route::get('/mcu-sharing', function () {
+    return view('management-data.file-sharing.index');
+});
+
+Route::get('/company-folder', function () {
+    return view('management-data.file-sharing.index-folder');
+});
+
+Route::get('/mcu-folder', function () {
+    return view('management-data.file-sharing.index-folder-mcu');
+});
+
+Route::get('/patient-file', function () {
+    return view('management-data.file-sharing.index-file');
+});
+
+Route::get('/patient-mcu-file', function () {
+    return view('landing-page.contents.file-sharing');
 });
