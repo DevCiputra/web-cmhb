@@ -30,14 +30,12 @@
                 </div>
             @endif
 
-            <!-- DataTable Card -->
             <div class="card"
-                style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px;">
+                style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; min-height: 95vh;">
                 <div class="card-form">
                     <div class="d-flex mb-3">
                         <h4 class="card-title" style="color: #1C3A6B"><b>Data Instansi</b></h4>
                         <div class="ms-auto">
-                            <!-- Tombol Tambah yang memunculkan modal -->
                             <a href="#" data-bs-toggle="modal" data-bs-target="#addInstansiModal"
                                 style="text-decoration: none;">
                                 <button class="btn btn-md"
@@ -47,61 +45,375 @@
                                     Tambah
                                 </button>
                             </a>
-
                         </div>
                     </div>
                     <div class="d-flex mb-4">
-                        <p class="card-text">Berikut merupakan tabel data Instansi yang terdaftar pada MCU.</p>
+                        <p class="card-text">Berikut merupakan daftar instansi yang terdaftar pada MCU.</p>
                     </div>
-                    <div style="max-height: 550px; overflow-y: auto; width: 100%;">
-                        <table class="table table-bordered" id="dataTableCompany"
-                            style="width: 100%; border-top: 1px solid grey;">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nama Instansi</th>
-                                    <th>PJ</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1100</td>
-                                    <td class="company-name">
-                                        <a href="/company-folder" style="text-decoration: none; color: inherit;">
-                                            PT Trakindo
-                                        </a>
-                                    </td>
+                    <div class="row row-cols-2 row-cols-md-4 g-3">
+                        <!-- Card Folder -->
+                        <div class="col position-relative">
+                            <a href="/company-folder" class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">PT Trakindo</p>
+                            </a>
 
-                                    <td>Nanda</td>
-                                    <td>Aktif</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#editInstansiModal">Edit</a>
-                                        <a href="/company-folder" class="btn btn-sm btn-secondary">Lihat</a>
-                                        <form action="/" method="POST" style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm"
-                                                style="background-color: #dc3545; color: #fff; border-radius: 10px; padding: 6px 10px; border: none;">
-                                                Hapus
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
-                        </table>
+                        <div class="col position-relative">
+                            <a href="/company-folder" class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">PT Astra</p>
+                            </a>
+
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col position-relative">
+                            <a href="/company-folder" class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">PT Trakindo</p>
+                            </a>
+
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col position-relative">
+                            <a href="/company-folder"
+                                class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">PT Astra</p>
+                            </a>
+
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col position-relative">
+                            <a href="/company-folder"
+                                class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">PT Trakindo</p>
+                            </a>
+
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col position-relative">
+                            <a href="/company-folder"
+                                class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">PT Astra</p>
+                            </a>
+
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col position-relative">
+                            <a href="/company-folder"
+                                class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">PT Trakindo</p>
+                            </a>
+
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col position-relative">
+                            <a href="/company-folder"
+                                class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">PT Astra</p>
+                            </a>
+
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col position-relative">
+                            <a href="/company-folder"
+                                class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">PT Trakindo</p>
+                            </a>
+
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col position-relative">
+                            <a href="/company-folder"
+                                class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">PT Astra</p>
+                            </a>
+
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col position-relative">
+                            <a href="/company-folder"
+                                class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">PT Trakindo</p>
+                            </a>
+
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        
+                        
+
+
+                        <!-- Tambahkan lebih banyak card sesuai jumlah data -->
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
 
     <!-- Tambah Modal -->
-    <div class="modal fade" id="addInstansiModal" tabindex="-1" aria-labelledby="addInstansiModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addInstansiModal" tabindex="-1" aria-labelledby="addInstansiModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
                 <div class="modal-header"
@@ -192,6 +504,51 @@
         font-weight: bold;
     }
 </style>
+
+<style>
+    .folder-card {
+        display: block;
+        padding: 16px;
+        border-radius: 10px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .folder-card:hover {
+        background-color: #e8e5c3 !important;
+        /* Warna latar belakang lebih gelap saat hover */
+        transform: translateY(-3px);
+        /* Efek mengangkat sedikit */
+    }
+
+    .folder-card:hover .folder-icon i {
+        color: #d4a017 !important;
+        /* Warna ikon berubah saat hover */
+    }
+
+    .folder-actions {
+        display: flex;
+        gap: 4px;
+        visibility: hidden;
+    }
+
+    .folder-card:hover+.folder-actions,
+    .folder-actions:hover {
+        visibility: visible;
+    }
+
+    .folder-actions button {
+        border: none;
+        padding: 4px;
+        font-size: 14px;
+        border-radius: 5px;
+        transition: background 0.2s ease;
+    }
+
+    .folder-actions button:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+</style>
+
 
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
