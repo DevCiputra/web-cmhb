@@ -20,6 +20,7 @@ use App\Http\Controllers\ScreeningOptionController;
 use App\Http\Controllers\ScreeningQuestionController;
 use App\Http\Controllers\ScreeningResultController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\McuController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
