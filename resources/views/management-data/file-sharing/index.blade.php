@@ -16,7 +16,9 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
-                                <li class="breadcrumb-item" style="color: #023770">Data Instansi</li>
+                                <li class="breadcrumb-item"><a href="/master-sharing">File Sharing</a></li>
+                                <li class="breadcrumb-item" style="color: #023770">Data Instansi</a></li>
+            
                             </ol>
                         </nav>
                     </div>

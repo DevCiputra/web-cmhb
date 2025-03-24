@@ -12,13 +12,11 @@
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <!-- Left Side: Text -->
                     <div class="d-flex flex-column">
-                        <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">Trakindo</h4>
+                        <h4 class="mb-1 fw-normal" style="color: #1C3A6B;">File Sharing</h4>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('dashboard-page') }}">Beranda</a></li>
-                                <li class="breadcrumb-item"><a href="/master-sharing">File Sharing</a></li>
-                                <li class="breadcrumb-item"><a href="/folder-sharing">Data Instansi</a></li>
-                                <li class="breadcrumb-item" style="color: #023770">Trakindo</a></li>
+                                <li class="breadcrumb-item" style="color: #023770">File Sharing</li>
                             </ol>
                         </nav>
                     </div>
@@ -48,12 +46,10 @@
                             <input type="text" id="searchFolder" class="form-control form-control-sm" placeholder="Cari folder...">
                         </div>
                     </div>
-                    
-                    
                     <div class="d-flex mb-3">
-                        <h4 class="card-title" style="color: #1C3A6B"><b>Data Trakindo</b></h4>
+                        <h4 class="card-title" style="color: #1C3A6B"><b>Folder Master</b></h4>
                         <div class="ms-auto">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#addInstansiModal"
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#addMasterModal"
                                 style="text-decoration: none;">
                                 <button class="btn btn-md"
                                     style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
@@ -63,65 +59,91 @@
                                 </button>
                             </a>
                         </div>
-                        
                     </div>
                     <div class="d-flex mb-4">
-                        <p class="card-text">Berikut merupakan daftar MCU dari Instansi.</p>
+                        <p class="card-text">Berikut merupakan daftar folder File Sharing.</p>
                     </div>
-                <!-- Dummy Folder List -->
-            <div class="list-group mb-3">
-                <div class="list-group-item folder-item d-flex align-items-center justify-content-between">
-                    <a href="/mcu-folder" class="folder-link">
-                        <i class="fas fa-folder text-warning"></i> MCU 2025-03-11
-                    </a>
-                    <div>
-                        <button class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-danger btn-delete-folder"><i class="fas fa-trash"></i>
-                            Hapus</button>
-                    </div>
-                </div>
-                <div class="list-group-item folder-item d-flex align-items-center justify-content-between">
-                    <a href="/mcu-folder" class="folder-link">
-                        <i class="fas fa-folder text-warning"></i> MCU 2025-02-20
-                    </a>
-                    <div>
-                        <button class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-danger btn-delete-folder"><i class="fas fa-trash"></i>
-                            Hapus</button>
-                    </div>
-                </div>
-                <div class="list-group-item folder-item d-flex align-items-center justify-content-between">
-                    <a href="/mcu-folder" class="folder-link">
-                        <i class="fas fa-folder text-warning"></i> MCU 2025-01-15
-                    </a>
-                    <div>
-                        <button class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-danger btn-delete-folder"><i class="fas fa-trash"></i>
-                            Hapus</button>
+                    <div class="row row-cols-2 row-cols-md-4 g-3">
+                        <!-- Card Folder -->
+                        <div class="col position-relative">
+                            <a href="/folder-sharing" class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">HBD</p>
+                            </a>
+
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col position-relative">
+                            <a href="/folder-sharing" class="folder-card text-decoration-none text-center position-relative"
+                                style="background-color: #f5f2dc">
+                                <div class="folder-icon">
+                                    <i class="fas fa-folder fa-3x text-warning"></i>
+                                </div>
+                                <p class="folder-name mt-2">IT</p>
+                            </a>
+
+                            <!-- Responsive Dropdown Button -->
+                            <div class="dropdown position-absolute top-0 end-0 p-1 me-2">
+                                <button class="btn btn-sm btn-light text-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <button class="dropdown-item text-secondary edit-folder" data-bs-toggle="modal"
+                                            data-bs-target="#editInstansiModal">
+                                            <i class="fas fa-edit me-2"></i>Edit Folder
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-folder">
+                                            <i class="fas fa-trash me-2"></i>Delete Folder
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tambahkan lebih banyak card sesuai jumlah data -->
                     </div>
                 </div>
             </div>
-            </div>
-
-            
-
-
-
-
-
-
 
         </div>
     </div>
 
+
     <!-- Tambah Modal -->
-    <div class="modal fade" id="addFolderModal" tabindex="-1" aria-labelledby="addFolderModalLabel"
+    <div class="modal fade" id="addMasterModal" tabindex="-1" aria-labelledby="addMasterModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
                 <div class="modal-header"
                     style="background-color: #1C3A6B; color: #fff; border-top-left-radius: 12px; border-top-right-radius: 12px;">
-                    <h5 class="modal-title" id="addFolderModalLabel">Tambah Folder</h5>
+                    <h5 class="modal-title" id="addMasterModalLabel">Tambah Folder</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         style="filter: invert(1);"></button>
                 </div>
@@ -132,11 +154,6 @@
                             <label for="nama_folder" class="form-label fw-bold">Nama Folder</label>
                             <input type="text" class="form-control" id="nama_folder" name="nama_folder"
                                 placeholder="Masukkan nama folder" required>
-                        </div>
-                        <div class="modal-footer border-0">
-                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn"
-                                style="background-color: #007858; border-color: #007858; border-radius: 8px;">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -166,12 +183,6 @@
                             <input type="text" class="form-control" id="edit_nama_folder" name="nama_folder"
                                 required>
                         </div>
-                        <div class="modal-footer border-0">
-                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn"
-                                style="background-color: #007858; border-color: #007858; border-radius: 8px;">Simpan
-                                Perubahan</button>
-                        </div>
                     </form>
                 </div>
             </div>
@@ -179,54 +190,72 @@
     </div>
 @endsection
 
+<style>
+    td a {
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s ease;
+    }
+
+    td a:hover {
+        color: #007858;
+        /* Ganti dengan warna yang kamu inginkan */
+        font-weight: bold;
+    }
+</style>
+
+<style>
+    .folder-card {
+        display: block;
+        padding: 16px;
+        border-radius: 10px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .folder-card:hover {
+        background-color: #e8e5c3 !important;
+        /* Warna latar belakang lebih gelap saat hover */
+        transform: translateY(-3px);
+        /* Efek mengangkat sedikit */
+    }
+
+    .folder-card:hover .folder-icon i {
+        color: #d4a017 !important;
+        /* Warna ikon berubah saat hover */
+    }
+
+    .folder-actions {
+        display: flex;
+        gap: 4px;
+        visibility: hidden;
+    }
+
+    .folder-card:hover+.folder-actions,
+    .folder-actions:hover {
+        visibility: visible;
+    }
+
+    .folder-actions button {
+        border: none;
+        padding: 4px;
+        font-size: 14px;
+        border-radius: 5px;
+        transition: background 0.2s ease;
+    }
+
+    .folder-actions button:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+
 @push('scripts')
-    <style>
-        .dropdown-menu {
-            position: absolute !important;
-            z-index: 1050;
-            /* Pastikan dropdown ada di atas elemen lain */
-            top: 100% !important;
-            /* Agar dropdown muncul di bawah tombol */
-            left: auto !important;
-            transform: none !important;
-            /* Hindari transformasi aneh */
-        }
-
-
-        .card {
-            overflow: visible !important;
-        }
-
-        .folder-item {
-            transition: background-color 0.3s ease;
-        }
-
-        .folder-item:hover {
-            background-color: #f8f9fa;
-            /* Warna hover */
-        }
-
-        .folder-link {
-            text-decoration: none;
-            color: inherit;
-            flex-grow: 1;
-            /* Agar area klik mencakup seluruh teks */
-        }
-
-        .btn {
-            margin-left: 5px;
-        }
-    </style>
-
-
-    </style>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
     <script>
         $(document).ready(function() {
-            $('#dataTableComapany').DataTable();
+            $('#dataTableCompany').DataTable();
         });
     </script>
 
@@ -251,51 +280,4 @@
             });
         });
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.btn-delete-folder').forEach(button => {
-                button.addEventListener('click', function() {
-                    alert('Folder berhasil dihapus! (Dummy action)');
-                });
-            });
-        });
-    </script>
-
-
-
-    <!-- JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.btn-delete-folder').forEach(button => {
-                button.addEventListener('click', function() {
-                    alert('Folder berhasil dihapus! (Dummy action)');
-                });
-            });
-        });
-    </script>
-
-<script>
-    $(document).ready(function() {
-        // Filter berdasarkan tanggal dan teks
-        function filterFolders() {
-            let searchText = $('#searchFolder').val().toLowerCase();
-            let selectedDate = $('#filterTanggal').val();
-
-            $('.folder-item').each(function() {
-                let folderName = $(this).find('.folder-link').text().toLowerCase();
-                let folderDate = $(this).find('.folder-link').text().match(/\d{4}-\d{2}-\d{2}/); // Ambil tanggal dari teks
-                
-                let matchesSearch = searchText === '' || folderName.includes(searchText);
-                let matchesDate = selectedDate === '' || (folderDate && folderDate[0] === selectedDate);
-
-                $(this).toggle(matchesSearch && matchesDate);
-            });
-        }
-
-        // Event listener untuk pencarian dan filter tanggal
-        $('#searchFolder, #filterTanggal').on('input', filterFolders);
-    });
-</script>
-
-
 @endpush

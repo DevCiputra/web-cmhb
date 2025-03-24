@@ -397,7 +397,12 @@ Route::get('/informasi_detail', function () {
 
 
 //FILE SHARING 
-Route::get('/mcu-sharing', function () {
+
+Route::get('/master-sharing', function () {
+    return view('management-data.file-sharing.index-master');
+});
+
+Route::get('/folder-sharing', function () {
     return view('management-data.file-sharing.index');
 });
 
