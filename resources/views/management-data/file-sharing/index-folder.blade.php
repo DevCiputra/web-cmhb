@@ -37,6 +37,21 @@
             <div class="card"
                 style="box-shadow: 4px 4px 24px 0px rgba(0, 0, 0, 0.04); border: none; border-radius: 12px; min-height: 95vh;">
                 <div class="card-form">
+                    <div class="d-flex justify-content-between mb-3">
+                        <!-- Filter Tanggal -->
+                        <div class="d-flex align-items-center">
+                            <label for="filterTanggal" class="me-2">Filter Tanggal:</label>
+                            <input type="date" id="filterTanggal" class="form-control form-control-sm">
+                        </div>
+                    
+                        <!-- Search Box -->
+                        <div class="d-flex align-items-center">
+                            <label for="searchFolder" class="me-2">Cari Folder:</label>
+                            <input type="text" id="searchFolder" class="form-control form-control-sm" placeholder="Cari folder...">
+                        </div>
+                    </div>
+                    
+                    
                     <div class="d-flex mb-3">
                         <h4 class="card-title" style="color: #1C3A6B"><b>Data Trakindo</b></h4>
                         <div class="ms-auto">
@@ -50,6 +65,7 @@
                                 </button>
                             </a>
                         </div>
+                        
                     </div>
                     <div class="d-flex mb-4">
                         <p class="card-text">Berikut merupakan daftar MCU dari Instansi.</p>
@@ -259,4 +275,29 @@
             });
         });
     </script>
+
+<script>
+    $(document).ready(function() {
+        // Filter berdasarkan tanggal dan teks
+        function filterFolders() {
+            let searchText = $('#searchFolder').val().toLowerCase();
+            let selectedDate = $('#filterTanggal').val();
+
+            $('.folder-item').each(function() {
+                let folderName = $(this).find('.folder-link').text().toLowerCase();
+                let folderDate = $(this).find('.folder-link').text().match(/\d{4}-\d{2}-\d{2}/); // Ambil tanggal dari teks
+                
+                let matchesSearch = searchText === '' || folderName.includes(searchText);
+                let matchesDate = selectedDate === '' || (folderDate && folderDate[0] === selectedDate);
+
+                $(this).toggle(matchesSearch && matchesDate);
+            });
+        }
+
+        // Event listener untuk pencarian dan filter tanggal
+        $('#searchFolder, #filterTanggal').on('input', filterFolders);
+    });
+</script>
+
+
 @endpush
