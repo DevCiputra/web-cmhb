@@ -109,11 +109,11 @@
         <a href="/patient-data" class="dashboard-nav-item {{ Request::is('patient-data') ? 'active' : '' }}">
             <i class="fas fa-user-circle"></i> Pasien
         </a>
-
         <!-- File Sharing -->
-        <a href="/sharing-master" class="dashboard-nav-item {{ Request::is('mcu-sharing') ? 'active' : '' }}">
+        <a href="/sharing-master" class="dashboard-nav-item {{ Request::is('sharing-master*') ? 'active' : '' }}">
             <i class="fas fa-archive"></i> File Sharing
         </a>
+
 
         <div class="nav-item-divider"></div>
 
