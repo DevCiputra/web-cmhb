@@ -111,7 +111,7 @@
         </a>
 
         <!-- File Sharing -->
-        <a href="/master-sharing" class="dashboard-nav-item {{ Request::is('mcu-sharing') ? 'active' : '' }}">
+        <a href="/sharing-master" class="dashboard-nav-item {{ Request::is('mcu-sharing') ? 'active' : '' }}">
             <i class="fas fa-archive"></i> File Sharing
         </a>
 

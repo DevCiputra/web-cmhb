@@ -398,7 +398,7 @@ Route::get('/informasi_detail', function () {
 
 //FILE SHARING 
 
-Route::get('/master-sharing', function () {
+Route::get('/sharing-master', function () {
     return view('management-data.file-sharing.index-master');
 });
 
