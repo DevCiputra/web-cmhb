@@ -15,6 +15,7 @@ class McuParticipant extends Model
         'name',       // Nama Pasien
         'birth_date', // Tanggal Lahir
         'username',   // Username untuk autentikasi
+        'gender',
         'password',   // Password untuk autentikasi (simpan hash)
         'email'       // Opsional
     ];

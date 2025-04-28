@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('company_id');
             $table->string('name'); // Nama Pasien
             $table->date('birth_date'); // Tanggal Lahir
+            $table->string('gender', 50)->nullable();
             $table->string('username')->unique(); // Username Autentikasi
             $table->string('password'); // Password Autentikasi
             $table->string('email')->nullable(); // Email Opsional

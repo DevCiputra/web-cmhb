@@ -21,14 +21,11 @@
                 <a href="/reservation-mcu"
                     class="dashboard-nav-dropdown-item {{ Request::is('reservation-mcu') ? 'active' : '' }}">MCU</a>
                 <a href="/reservation-polyclinic"
-                    class="dashboard-nav-dropdown-item {{ Request::is('reservation-polyclinic') ? 'active' : '' }}">Pendaftaran
-                    Poli</a>
+                    class="dashboard-nav-dropdown-item {{ Request::is('reservation-polyclinic') ? 'active' : '' }}">Pendaftaran Poli</a>
                 <a href="/reservation-homeservice"
-                    class="dashboard-nav-dropdown-item {{ Request::is('reservation-homeservice') ? 'active' : '' }}">Home
-                    Service</a>
+                    class="dashboard-nav-dropdown-item {{ Request::is('reservation-homeservice') ? 'active' : '' }}">Home Service</a>
                 <a href="/reservation-online-consultation"
-                    class="dashboard-nav-dropdown-item {{ Request::is('reservation-online-consultation') ? 'active' : '' }}">Konsultasi
-                    Online</a>
+                    class="dashboard-nav-dropdown-item {{ Request::is('reservation-online-consultation') ? 'active' : '' }}">Konsultasi Online</a>
             </div>
         </div>
 
@@ -54,11 +51,9 @@
             </a>
             <div class="dashboard-nav-dropdown-menu">
                 <a href="{{ route('doctor.data.index') }}"
-                    class="dashboard-nav-dropdown-item {{ Request::is('doctor/data') ? 'active' : '' }}">Data
-                    Dokter</a>
+                    class="dashboard-nav-dropdown-item {{ Request::is('doctor/data') ? 'active' : '' }}">Data Dokter</a>
                 <a href="{{ route('doctor.polyclinic.index') }}"
-                    class="dashboard-nav-dropdown-item {{ Request::is('doctor/polyclinic') ? 'active' : '' }}">Poliklinik
-                    Dokter</a>
+                    class="dashboard-nav-dropdown-item {{ Request::is('doctor/polyclinic') ? 'active' : '' }}">Poliklinik Dokter</a>
             </div>
         </div>
 
@@ -73,35 +68,24 @@
                 <a href="/master-role"
                     class="dashboard-nav-dropdown-item {{ Request::is('master-role') ? 'active' : '' }}">Role</a>
                 <a href="/master-info-cmh"
-                    class="dashboard-nav-dropdown-item {{ Request::is('master-info-cmh') ? 'active' : '' }}">Informasi
-                    RS</a>
+                    class="dashboard-nav-dropdown-item {{ Request::is('master-info-cmh') ? 'active' : '' }}">Informasi RS</a>
                 <a href="/master-gallery-cmh"
-                    class="dashboard-nav-dropdown-item {{ Request::is('master-gallery-cmh') ? 'active' : '' }}">Galeri
-                    RS</a>
+                    class="dashboard-nav-dropdown-item {{ Request::is('master-gallery-cmh') ? 'active' : '' }}">Galeri RS</a>
             </div>
         </div>
 
         <!-- Skrining -->
-        <div
-            class="dashboard-nav-dropdown {{ Request::is('screening-*') || Request::is('question-categories*') || Request::is('screening_classifications*') ? 'active' : '' }}">
+        <div class="dashboard-nav-dropdown {{ Request::is('screening-*') || Request::is('question-categories*') || Request::is('screening_classifications*') ? 'active' : '' }}">
             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
                 <i class="fas fa-heartbeat"></i> Skrining
             </a>
             <div class="dashboard-nav-dropdown-menu">
                 <a href="{{ route('screening-depretion.index') }}"
-                    class="dashboard-nav-dropdown-item {{ Request::is('screening-depretion') ? 'active' : '' }}">Skrining
-                    Depresi</a>
-
-                <!-- Menambahkan submenu untuk kategori soal -->
+                    class="dashboard-nav-dropdown-item {{ Request::is('screening-depretion') ? 'active' : '' }}">Skrining Depresi</a>
                 <a href="{{ route('question-categories.index') }}"
-                    class="dashboard-nav-dropdown-item {{ Request::is('question-categories*') ? 'active' : '' }}">Kategori
-                    Soal</a>
-
-                <!-- Menambahkan submenu untuk klasifikasi skrining -->
+                    class="dashboard-nav-dropdown-item {{ Request::is('question-categories*') ? 'active' : '' }}">Kategori Soal</a>
                 <a href="{{ route('screening-classifications.index') }}"
-                    class="dashboard-nav-dropdown-item {{ Request::is('screening-classifications*') ? 'active' : '' }}">Klasifikasi
-                    Skrining</a>
-
+                    class="dashboard-nav-dropdown-item {{ Request::is('screening-classifications*') ? 'active' : '' }}">Klasifikasi Skrining</a>
             </div>
         </div>
 
@@ -109,11 +93,11 @@
         <a href="/patient-data" class="dashboard-nav-item {{ Request::is('patient-data') ? 'active' : '' }}">
             <i class="fas fa-user-circle"></i> Pasien
         </a>
+
         <!-- File Sharing -->
-        <a href="/sharing-master" class="dashboard-nav-item {{ Request::is('sharing-master*') ? 'active' : '' }}">
+        <a href="{{ route('file-sharing.index') }}" class="dashboard-nav-item {{ Request::is('sharing-master*') ? 'active' : '' }}">
             <i class="fas fa-archive"></i> File Sharing
         </a>
-
 
         <div class="nav-item-divider"></div>
 

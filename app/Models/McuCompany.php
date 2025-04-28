@@ -25,4 +25,9 @@ class McuCompany extends Model
     {
         return $this->hasMany(McuParticipant::class, 'company_id');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
 }

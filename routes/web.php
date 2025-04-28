@@ -21,6 +21,7 @@ use App\Http\Controllers\ScreeningQuestionController;
 use App\Http\Controllers\ScreeningResultController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\McuController;
+use App\Http\Controllers\FileSharingController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -329,36 +330,41 @@ Route::group(
 
 // MCU FILE SHARING
 
-Route::group(
-    ['middleware' => ['checkrole:HBD,Admin']],
-    function () {
-        Route::get('/mcu-file', [MCUFileSharingController::class, 'index'])->name('mcu.index');
+Route::group([
+    'prefix' => 'file-sharing/HBD/mcu-file-sharing',
+    'as'     => 'mcu.',
+    'middleware' => ['checkrole:HBD,Admin']
+], function () {
+    // 1) Index semua instansi MCU (HBD)
+    Route::get('/', [MCUFileSharingController::class, 'index'])
+        ->name('index');
 
-        // Routes untuk upload CSV
-        Route::get('/mcu/upload-csv', [McuController::class, 'showCsvUploadForm'])->name('mcu.upload_csv');
-        Route::post('/mcu/upload-csv', [McuController::class, 'processCsvUpload'])->name('mcu.process_csv');
+    // 2) Download template CSV untuk upload instansi/peserta
+    Route::get('/template', [MCUFileSharingController::class, 'downloadTemplate'])
+        ->name('template');
 
-        // Routes untuk upload ZIP
-        Route::get('/mcu/upload-zip', [McuController::class, 'showZipUploadForm'])->name('mcu.upload_zip');
-        Route::post('/mcu/upload-zip', [McuController::class, 'processZipUpload'])->name('mcu.process_zip');
 
-        // Route untuk melihat isi folder (contoh: folder peserta)
-        Route::get('/mcu/folder/{id}', [McuController::class, 'viewFolder'])->name('mcu.view_folder');
+    // 1b) Store instansi + peserta dari CSV/XLS
+    Route::post('/', [MCUFileSharingController::class, 'storeCompany'])
+        ->name('company.store');
 
-        // Route untuk download file (file terenkripsi)
-        Route::get('/mcu/download/{id}', [McuController::class, 'downloadEncryptedFile'])->name('mcu.download');
+    // 3) Tampil daftar batch MCU untuk satu instansi, bind by “name” column
+    Route::get('/{company:name}', [MCUFileSharingController::class, 'showCompany'])
+        ->name('company.show');
 
-        // (Opsional) Route untuk melihat log aktivitas akses
-        Route::get('/mcu/access-logs', [McuController::class, 'accessLogs'])->name('mcu.access_logs');
-    }
-);
+    // 4) Tampil daftar folder peserta (patient) untuk satu instansi
+    Route::get('/{company:name}/{patient}', [MCUFileSharingController::class, 'viewFolder'])
+        ->name('view_folder');
+
+    // POST: proses upload ZIP hasil MCU per instansi
+    Route::post('/{company:name}/upload-zip', [MCUFileSharingController::class, 'processZipUpload'])
+        ->name('company.upload_zip');
+});
 
 // SKRINING
 Route::get('/skrining', function () {
     return view('landing-page.contents.skrining');
 });
-
-
 
 
 
@@ -395,29 +401,18 @@ Route::get('/informasi_detail', function () {
     return view('informasi_detail');
 });
 
+Route::get('/file-sharing', [FileSharingController::class, 'index'])
+    ->name('file-sharing.index');
 
-//FILE SHARING 
+// Detail root folder by its name, e.g. /file‑sharing/HBD
+Route::get('/file-sharing/{folderName}', [FileSharingController::class, 'showFolder'])
+    ->name('file-sharing.folder.show');
 
-Route::get('/sharing-master', function () {
-    return view('management-data.file-sharing.index-master');
-});
-
-Route::get('/folder-sharing', function () {
-    return view('management-data.file-sharing.index');
-});
-
-Route::get('/company-folder', function () {
-    return view('management-data.file-sharing.index-folder');
-});
-
-Route::get('/mcu-folder', function () {
-    return view('management-data.file-sharing.index-folder-mcu');
-});
-
-Route::get('/patient-file', function () {
-    return view('management-data.file-sharing.index-file');
-});
-
-Route::get('/patient-mcu-file', function () {
-    return view('landing-page.contents.file-sharing');
-});
+// CRUD folder: tambah, update, dan hapus
+// Route::post('/file-sharing/folder', [FileSharingController::class, 'storeFolder'])->name('file-sharing.folder.store');
+// Route::put('/file-sharing/folder/{id}', [FileSharingController::class, 'updateFolder'])->name('file-sharing.folder.update');
+// Route::delete('/file-sharing/folder/{id}', [FileSharingController::class, 'destroyFolder'])->name('file-sharing.folder.destroy');
+// // Upload file
+// Route::post('/file-sharing/file', [FileSharingController::class, 'storeFile'])->name('file-sharing.file.store');
+// // Download file
+// Route::get('/file-sharing/file/{id}/download', [FileSharingController::class, 'downloadFile'])->name('file-sharing.file.download');
