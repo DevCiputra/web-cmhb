@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\OtpMail;
 use App\Models\EmailVerification;
 use App\Models\User;
+use App\Services\AuthService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -21,6 +22,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         try {
+            // 🔐 Validation
             $validator = Validator::make($request->all(), [
                 'username'     => 'required|string|max:255',
                 'email'    => 'required|unique:users',
@@ -35,25 +37,16 @@ class AuthController extends Controller
                 return ResponseFormater::error(null, $validator->errors()->first(), 400);
             }
 
+            // ⚙️ Service
+            // Didalam result terdapat props user dan token
+            $serviceResult = AuthService::register($request);
 
-            // simpan data user
-            $user = User::create([
-                'username'     => $request->username,
-                'email'    => $request->email,
-                'password' => Hash::make($request->password),
-                'whatsapp' => $request->whatsaap,
-                'role' => $request->role,
-                'gender'     => $request->gender,
-                // 'status_aktif' => $request->status_aktif,
-                'fcm' => $request->fcm
-            ]);
 
-            $tokenResult = $user->createToken('authToken')->plainTextToken;
-
+            // 💬 Response
             return ResponseFormater::success([
-                'access_token' => $tokenResult,
+                'access_token' => $serviceResult["token"],
                 'token_type'   => 'Bearer',
-                'user'         => $user,
+                'user'         => $serviceResult["user"],
                 // 'otp'          => $otp // kalau di production sebaiknya jangan kirim OTP ke response
             ], 'Register Success, kode verifikasi telah dikirim ke email');
         } catch (Exception $error) {
@@ -67,10 +60,12 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         try {
+            // 🔐 Validation
             $request->validate([
                 'email' => 'required|email',
                 'password' => 'required'
             ]);
+
 
             $crendetials = request(['email', 'password']);
 
@@ -80,17 +75,15 @@ class AuthController extends Controller
                 ], 'Unauthorized Failed', 404);
             }
 
-            $user = User::where('email', $request->email)->first();
+            // ⚙️ Service
 
-            if (!Hash::check($request->password, $user->password, [])) {
-                throw new Exception('password is incorrect');
-            }
+            $serviceResult = AuthService::login($request->email, $request->password);
 
-            $tokenResult = $user->createToken('authToken')->plainTextToken;
+            // 💬 Response
             return ResponseFormater::success([
-                'access_token' =>  $tokenResult,
+                'access_token' =>  $serviceResult['token'],
                 'token_type' => 'Bearer',
-                'user' => $user,
+                'user' => $serviceResult['user'],
             ], 'Login Success');
         } catch (Exception $error) {
             return ResponseFormater::error([
@@ -103,9 +96,9 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            // Revoke the token that was used to authenticate the current request
-            $request->user()->currentAccessToken()->delete();
-
+            // ⚙️ Service
+            AuthService::logout($request);
+            // 💬 Response
             return ResponseFormater::success(null, 'Logout Success');
         } catch (Exception $error) {
             return ResponseFormater::error([

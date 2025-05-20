@@ -28,6 +28,8 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:15|regex:/^[a-zA-Z0-9_.-]*$/|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'required|string|max:15|regex:/^[a-zA-Z0-9_.-]*$/|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'whatsapp' => 'required|string|max:20|regex:/^08\d{8,11}$/',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
