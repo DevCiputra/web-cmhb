@@ -13,9 +13,9 @@ class ScreeningResultController extends Controller
 
     public function showForm(Request $request)
     {
-        if (!$request->hasValidSignature()) {
-            abort(403, 'Unauthorized access.');
-        }
+        // if (!$request->hasValidSignature()) {
+        //     abort(403, 'Unauthorized access.');
+        // }
 
         $title = "Form Skrining Depresi";
         $questions = ScreeningQuestion::with('options')->get();
