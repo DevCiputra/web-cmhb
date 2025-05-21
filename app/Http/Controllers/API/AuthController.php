@@ -4,21 +4,20 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ResponseFormater;
 use App\Http\Controllers\Controller;
-use App\Mail\OtpMail;
-use App\Models\EmailVerification;
-use App\Models\User;
-use App\Services\AuthService;
+use App\Services\Contracts\AuthServiceInterface;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    protected $authService;
 
+    public function __construct(AuthServiceInterface $authService)
+    {
+        $this->authService = $authService;
+    }
     public function register(Request $request)
     {
         try {
@@ -39,14 +38,19 @@ class AuthController extends Controller
 
             // ⚙️ Service
             // Didalam result terdapat props user dan token
-            $serviceResult = AuthService::register($request);
-
+            $service = $this->authService->register($request);
 
             // 💬 Response
+            if (!$service->status) {
+                return ResponseFormater::error([
+                    'message' => 'Register Failed',
+                    'error'   => $service->message,
+                ], 'Register Failed', 500);
+            }
             return ResponseFormater::success([
-                'access_token' => $serviceResult["token"],
+                'access_token' => $service->data["token"],
                 'token_type'   => 'Bearer',
-                'user'         => $serviceResult["user"],
+                'user'         => $service->data["user"],
                 // 'otp'          => $otp // kalau di production sebaiknya jangan kirim OTP ke response
             ], 'Register Success, kode verifikasi telah dikirim ke email');
         } catch (Exception $error) {
@@ -77,13 +81,13 @@ class AuthController extends Controller
 
             // ⚙️ Service
 
-            $serviceResult = AuthService::login($request->email, $request->password);
+            $service = $this->authService->login($request->email, $request->password);
 
             // 💬 Response
             return ResponseFormater::success([
-                'access_token' =>  $serviceResult['token'],
+                'access_token' =>  $service->data['token'],
                 'token_type' => 'Bearer',
-                'user' => $serviceResult['user'],
+                'user' => $service->data['user'],
             ], 'Login Success');
         } catch (Exception $error) {
             return ResponseFormater::error([
@@ -97,7 +101,7 @@ class AuthController extends Controller
     {
         try {
             // ⚙️ Service
-            AuthService::logout($request);
+            $this->authService->logout($request);
             // 💬 Response
             return ResponseFormater::success(null, 'Logout Success');
         } catch (Exception $error) {
@@ -111,29 +115,19 @@ class AuthController extends Controller
     public function requestPasswordResetOtp(Request $request)
     {
         try {
+
+            // 🔐 Validation
             $request->validate([
-                'email' => 'required|email|exists:users,email',
+                'email' => 'required|email',
             ]);
 
-            $email = $request->email;
-            $user = User::where('email', $email)->first();
-
-            if (!$user) {
-                return ResponseFormater::error(null, 'Email tidak terdaftar', 404);
+            // ⚙️ Service
+            $serviceResult = $this->authService->requestPasswordResetOtp($request->email);
+            if (!$serviceResult->status) {
+                return ResponseFormater::error(null, $serviceResult->message, 404);
             }
 
-            // Generate OTP (6 digit random number)
-            $otp = random_int(100000, 999999);
-
-            // Save OTP to database (replace any existing OTP)
-            EmailVerification::updateOrCreate(
-                ['email' => $email],
-                ['otp' => $otp, 'created_at' => now()]
-            );
-
-            // Send OTP email
-            Mail::to($email)->send(new OtpMail($otp));
-
+            // 💬 Response
             return ResponseFormater::success([
                 'message' => 'Kode OTP telah dikirim ke email Anda',
             ], 'Permintaan Reset Password Berhasil');
@@ -148,40 +142,21 @@ class AuthController extends Controller
     public function resetPasswordWithOtp(Request $request)
     {
         try {
+            // 🔐 Validation
             $request->validate([
                 'email' => 'required|email',
                 'otp' => 'required',
             ]);
 
-            // Step 1: Verify the OTP
-            $verification = EmailVerification::where('email', $request->email)
-                ->where('otp', $request->otp)
-                ->first();
+            $serviceResult = $this->authService->resetPasswordWithOtp($request->email, $request->otp);
 
-            if (!$verification) {
-                return ResponseFormater::error(null, 'Kode OTP salah atau email tidak ditemukan', 400);
+            // ⚙️ Service
+            if (!$serviceResult->status) {
+                return ResponseFormater::error(null, $serviceResult->message, 400);
             }
 
-            // Memperpanjang waktu kedaluwarsa OTP dari 10 menit menjadi 30 menit
-            // $otpExpiry = 30; // dalam menit
-
-            // // Check if OTP has expired
-            // if (now()->diffInMinutes($verification->created_at) > $otpExpiry) {
-            //     return ResponseFormmater::error(null, 'Kode OTP sudah kedaluwarsa', 400);
-            // }
-
-            // Step 2: Find user with the email
-            $user = User::where('email', $request->email)->first();
-            if (!$user) {
-                return ResponseFormater::error(null, 'User tidak ditemukan', 404);
-            }
-
-            // Step 4: Delete the OTP after successful password reset
-            $verification->delete();
-
-            return ResponseFormater::success([
-                'message' => 'Silahkan melanjutkan Reset Password',
-            ], 'OTP VALID');
+            // 💬 Response
+            return ResponseFormater::success($serviceResult->data, $serviceResult->message);
         } catch (Exception $error) {
             return ResponseFormater::error([
                 'message' => 'OTP TIDAK VALID',
@@ -192,31 +167,22 @@ class AuthController extends Controller
 
     public function updatePassword(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        try {
+            // 🔐 Validation
+            $request->validate([
+                'password' => 'required|string',
+            ]);
+            // ⚙️ Service
+            $serviceResult = $this->authService->updatePassword($id, $request->password);
 
-        $existingData = User::where('email', $request->email)->where('id', '!=', $id)->first();
+            // 💬 Response
+            if (!$serviceResult->status) {
+                return ResponseFormater::error(null, $serviceResult->message);
+            }
 
-        if ($existingData) {
-            return ResponseFormater::error(
-                null,
-                'Email sudah dimiliki orang lain',
-                505
-            );
+            return ResponseFormater::success(null, $serviceResult->message);
+        } catch (\Throwable $th) {
+            return ResponseFormater::error(null, $th->getMessage(), 500);
         }
-
-        $data = $request->all();
-
-        if ($request->input('password')) {
-            $data['password'] = Hash::make($data['password']);
-        } else {
-            $data = Arr::except($data, ['password']);
-        }
-
-
-        $user->update($data);
-        return ResponseFormater::success(
-            $user,
-            'Data User berhasil diupdate'
-        );
     }
 }

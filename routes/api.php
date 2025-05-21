@@ -17,6 +17,7 @@ use App\Http\Controllers\API\AuthController;
 
 Route::post('v1/register', [AuthController::class, 'register']);
 Route::post('v1/login', [AuthController::class, 'login']);
+Route::post('v1/updatePassword/{id}', [AuthController::class, 'updatePassword']);
 Route::post('v1/requestOTP', [AuthController::class, 'requestPasswordResetOtp']);
 Route::post('v1/requestReset', [AuthController::class, 'resetPasswordWithOtp']);
 
@@ -24,5 +25,4 @@ Route::post('v1/requestReset', [AuthController::class, 'resetPasswordWithOtp']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('v1/logout', [AuthController::class, 'logout']);
-    Route::post('v1/updateUser/{id}', [AuthController::class, 'updateUser']);
 });

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\HospitalInformation;
+use App\Services\AuthService;
+use App\Services\Contracts\AuthServiceInterface;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -14,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(AuthServiceInterface::class, AuthService::class);
     }
 
     /**
