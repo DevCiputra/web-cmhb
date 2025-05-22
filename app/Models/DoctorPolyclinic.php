@@ -11,7 +11,7 @@ class DoctorPolyclinic extends Model
 
     protected $table = 'doctor_polyclinics';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'icon'];
 
     // Relasi ke tabel Doctor
     public function doctors()
@@ -23,6 +23,4 @@ class DoctorPolyclinic extends Model
     {
         return self::where('name', 'LIKE', "%{$query}%"); // Pencarian berdasarkan nama poliklinik
     }
-    
-    
 }
