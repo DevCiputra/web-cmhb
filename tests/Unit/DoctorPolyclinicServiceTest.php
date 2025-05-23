@@ -114,25 +114,54 @@ class DoctorPolyclinicServiceTest extends TestCase
         $this->assertDatabaseCount('doctor_polyclinics', 1);
     }
 
-    public function test_update_succesfully()
+    public function test_update_saves_new_file_and_deletes_old_one()
     {
-        $mockIcon = Mockery::mock(UploadedFile::class);
-        $mockIcon->shouldReceive('isValid')->once()->andReturn(true);
-        $mockIcon->shouldReceive('getClientOriginalExtension')->once()->andReturn('svg');
-        $mockIcon->shouldReceive('getMimeType')->once()->andReturn('image/svg+xml');
-        $mockIcon->shouldReceive('storeAs')->once()->andReturn('doctor_polyclinics/test.svg');
+        Storage::fake('public');
 
-        // Gunakan fake DB alih-alih mocking alias model
+        // Buat file lama
+        $oldFile = UploadedFile::fake()->create('lama.svg', 10, 'image/svg+xml');
+        $oldFileName = 'lama.svg';
+        $oldFile->storeAs('public/doctor_polyclinics', $oldFileName);
+
+        $doctorPolyclinic = DoctorPolyclinic::factory()->create([
+            'name' => 'Poli Umum',
+            'icon' => $oldFileName,
+        ]);
+
+        $newFile = UploadedFile::fake()->create('baru.svg', 10, 'image/svg+xml');
+
         $service = new DoctorPolyclinicService();
-        $name = 'Poli Umum';
-        $icon = 'poli-umum.svg';
+        $response = $service->update($doctorPolyclinic->id, 'Poli Baru', $newFile);
 
-        $doctorPolyclinic = DoctorPolyclinic::factory()->create(['name' => $name, 'icon' => $icon]);
-        $id = $doctorPolyclinic->id;
+        $this->assertTrue($response->status);
+        $this->assertEquals('Poliklinik Dokter Berhasil Diubah', $response->message);
+        $this->assertDatabaseHas('doctor_polyclinics', [
+            'name' => 'Poli Baru',
+            'icon' => 'baru.svg',
+        ]);
+    }
 
-        $newName = 'Poli Umum Baru';
-        $icon = 'poli-umum-baru.svg';
+    public function test_update_with_file_null()
+    {
+        Storage::fake('public');
 
-        $service->update($id);
+        // Buat file lama
+        $file = UploadedFile::fake()->create('poli.svg', 10, 'image/svg+xml');
+        $fileName = 'poli.svg';
+        $file->storeAs('public/doctor_polyclinics', $file);
+
+        $doctorPolyclinic = DoctorPolyclinic::factory()->create([
+            'name' => 'Poli Umum',
+        ]);
+
+
+        $service = new DoctorPolyclinicService();
+        $response = $service->update($doctorPolyclinic->id, 'Poli Baru');
+
+        $this->assertTrue($response->status);
+        $this->assertEquals('Poliklinik Dokter Berhasil Diubah', $response->message);
+        $this->assertDatabaseHas('doctor_polyclinics', [
+            'name' => 'Poli Baru',
+        ]);
     }
 }

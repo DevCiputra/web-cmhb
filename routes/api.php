@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\DoctorPolyclinicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,15 @@ Route::post('v1/requestReset', [AuthController::class, 'resetPasswordWithOtp']);
 
 
 
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('v1/logout', [AuthController::class, 'logout']);
+Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+    Route::post('logout', [AuthController::class, 'logout'])->name('api.logout');
+
+    // RESTful routes for DoctorPolyclinic
+    Route::prefix('doctor_polyclinic')->name('api.doctor_polyclinic.')->group(function () {
+        Route::get('/', [DoctorPolyclinicController::class, 'index'])->name('index');         // GET all
+        Route::get('{id}', [DoctorPolyclinicController::class, 'show'])->name('show');        // GET by ID
+        Route::post('/', [DoctorPolyclinicController::class, 'store'])->name('store');        // POST new
+        Route::post('{id}', [DoctorPolyclinicController::class, 'update'])->name('update');    // PUT update
+        Route::delete('{id}', [DoctorPolyclinicController::class, 'destroy'])->name('destroy'); // DELETE
+    });
 });

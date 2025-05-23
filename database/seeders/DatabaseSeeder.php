@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ServiceCategorySeeder::class);
 
         $this->call([
+            DoctorPolyclinicSeeder::class,
             RolesTableSeeder::class,
             UsersTableSeeder::class,
             ReservationStatusesTableSeeder::class,
