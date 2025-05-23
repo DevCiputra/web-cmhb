@@ -19,16 +19,20 @@ class DoctorPolyclinicController extends Controller
         $this->doctorPolyclinicService = $doctorPolyclinicService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
             // ⚙️ Service
-            $response = $this->doctorPolyclinicService->get();
+            $page = $request->has('page');
+            $response = $this->doctorPolyclinicService->get($page);
 
             if (!$response->status) {
                 return ResponseFormater::error(null, $response->message, 400);
             }
-            return ResponseFormater::success($response->data, $response->message);
+            return ResponseFormater::success(
+                $response->data,
+                $response->message
+            );
             // 💬 Response
         } catch (\Throwable $th) {
             return ResponseFormater::error($th->getMessage(), "Data Poliklinik Gagal Diambil", 500);
@@ -38,6 +42,7 @@ class DoctorPolyclinicController extends Controller
     public function show($id)
     {
         try {
+
             // ⚙️ Service
             $response = $this->doctorPolyclinicService->get($id);
 

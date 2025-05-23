@@ -13,6 +13,14 @@ class DoctorPolyclinic extends Model
 
     protected $fillable = ['name', 'icon'];
 
+    public function getIconAttribute($value)
+    {
+        if ($value) {
+            return secure_url('storage/doctor_polyclinics/' . $value);
+        }
+        return null;
+    }
+
     // Relasi ke tabel Doctor
     public function doctors()
     {

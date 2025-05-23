@@ -34,17 +34,23 @@ class DoctorPolyclinicService implements DoctorPolyclinicInterface
         return ServiceResponse::success("Poliklinik Dokter Berhasil Dibuat", null);
     }
 
-    public function get(?int $id = null): ServiceResponse
+    public function getById(Int $id): ServiceResponse
     {
-        if ($id !== null) {
-            $result = DoctorPolyclinic::find($id);
-            if (!$result) {
-                return ServiceResponse::error('Data Polyclinic Tidak Ditemukan');
-            }
-            return ServiceResponse::success('Data Polyclinic Ditemukan', $result);
+        $result = DoctorPolyclinic::find($id);
+        if (!$result) {
+            return ServiceResponse::error('Data Polyclinic Tidak Ditemukan');
         }
-        $result = DoctorPolyclinic::all();
-        return ServiceResponse::success('List Semua Polyclinic', $result);
+        return ServiceResponse::success('Data Polyclinic Ditemukan', $result);
+    }
+
+    public function get(bool $page = true): ServiceResponse
+    {
+
+        $result = $page ? DoctorPolyclinic::query()->paginate(10) : DoctorPolyclinic::all();
+        return ServiceResponse::success(
+            'List Semua Polyclinic',
+            $result
+        );
     }
 
 
