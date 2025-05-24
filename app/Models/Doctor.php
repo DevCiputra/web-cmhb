@@ -13,6 +13,7 @@ class Doctor extends Model
 
     protected $fillable = [
         'name',
+        'user_id',
         'specialization_name',  // Data denormalisasi
         'doctor_polyclinic_id', // Foreign key
         'address',

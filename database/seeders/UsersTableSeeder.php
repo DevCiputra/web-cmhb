@@ -10,19 +10,47 @@ use Illuminate\Support\Facades\Hash;
 class UsersTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Jalankan seeder user.
      */
     public function run(): void
     {
-        DB::table('users')->insert([
-            [
-                'username' => 'AuthWebHMC',
-                'email' => 'auth@ciputramitrahospital.id',
-                'password' => Hash::make('Pqwerasd4321'), // Ganti dengan password yang aman
-                'role' => 'Admin',
-                'whatsapp' => '081298765431',
-                'profile_picture' => null, // Profile picture dikosongkan
-            ]
-        ]);
+        $users = [
+        [
+            'username' => 'admin',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password'), // mudah untuk testing
+            'role' => 'Admin',
+            'whatsapp' => '081234567890',
+            'profile_picture' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ],
+        
+        [
+            'username' => 'patient1',
+            'email' => 'patient@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'Patient',
+            'whatsapp' => '081234567892',
+            'profile_picture' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]
+    ];
+        for ($i = 1; $i <= 10; $i++) {
+            $users[] = [
+                'username' => "doctor{$i}",
+                'email' => "doctor{$i}@example.com",
+                'password' => Hash::make('password'), // Mudah diingat untuk testing
+                'role' => 'Doctor',
+                'whatsapp' => "0812345678{$i}",
+                'profile_picture' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+        DB::table('users')->insert($users);
     }
 }
+
+
