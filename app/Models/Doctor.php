@@ -52,6 +52,11 @@ class Doctor extends Model
         return $this->hasMany(DoctorMedia::class, 'doctor_id');
     }
 
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id');
+    }
+
     public static function search($query)
     {
         return self::with(['polyclinic', 'education'])

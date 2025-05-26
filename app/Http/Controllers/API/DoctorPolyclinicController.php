@@ -75,6 +75,8 @@ class DoctorPolyclinicController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            // 🔐 validation
+
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:100'],
                 'icon' => ['file', 'mimes:svg', 'max:512'], // max:512 artinya 512 KB
