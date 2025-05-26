@@ -18,12 +18,12 @@ class DoctorsSeeder extends Seeder
         $faker = Faker::create();
 
         // id_user dari 16-25 (10 user doctor)
-        foreach (range(16, 25) as $userId) {
+        foreach (range(3, 12) as $userId) {
             Doctor::create([
                 'user_id' => $userId,
                 'name' => $faker->name,
                 'specialization_name' => 'Spesialis ' . $faker->word,
-                'doctor_polyclinic_id' => rand(1, 15), // 1-15 poli, acak, bisa sama
+                'doctor_polyclinic_id' => rand(6, 15), // 1-15 poli, acak, bisa sama
                 'address' => $faker->address,
                 'consultation_fee' => rand(100000, 500000),
                 'email' => $faker->unique()->safeEmail,

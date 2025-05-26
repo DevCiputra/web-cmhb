@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\DoctorController;
 use App\Http\Controllers\API\DoctorPolyclinicController;
 
 /*
@@ -34,5 +35,14 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
         Route::post('/', [DoctorPolyclinicController::class, 'store'])->name('store');        // POST new
         Route::post('{id}', [DoctorPolyclinicController::class, 'update'])->name('update');    // PUT update
         Route::delete('{id}', [DoctorPolyclinicController::class, 'destroy'])->name('destroy'); // DELETE
+    });
+
+    // RESTful routes for Doctor
+    Route::prefix('doctors')->name('api.doctors.')->group(function () {
+        Route::get('/', [DoctorController::class, 'index'])->name('index');         // GET all
+        Route::get('{id}', [DoctorController::class, 'show'])->name('show');        // GET by ID
+        Route::post('/', [DoctorController::class, 'store'])->name('store');        // POST new
+        Route::post('{id}', [DoctorController::class, 'update'])->name('update');    // PUT update
+        Route::delete('{id}', [DoctorController::class, 'destroy'])->name('destroy'); // DELETE
     });
 });

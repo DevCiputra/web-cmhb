@@ -25,7 +25,7 @@ class DoctorEducationsSeeder extends Seeder
 
         $now = Carbon::now();
 
-        foreach (range(11, 20) as $index => $doctorId) {
+        foreach (range(2, 11) as $index => $doctorId) {
             DB::table('doctor_educations')->insert([
                 'doctor_id'   => $doctorId,
                 'name'        => $educations[$index],
