@@ -12,8 +12,7 @@ class DoctorService implements DoctorServiceInterface
     public function create(Request $data): ServiceResponse
     {
 
-        $user = Doctor::query()->where('user_id', "=", $data->user_id)->get();
-        dd($user);
+        $user = Doctor::query()->where('user_id', "=", $data->user_id)->exists();
         if ($user) {
             return ServiceResponse::error("Dokter sudah memiliki akun user", null);
         }
@@ -80,11 +79,25 @@ class DoctorService implements DoctorServiceInterface
 
     public function update(Int $id, Request $data): ServiceResponse
     {
+
         $doctor = Doctor::find($id);
         if (!$doctor) {
             return ServiceResponse::error("Data Doktor Tidak Ditemukan");
         }
-        $doctor->update($data);
+
+        $doctor->update(
+            [
+                'name' => $data->name,
+                'specialization_name' => $data->specialization_name,
+                'doctor_polyclinic_id' => $data->doctor_polyclinic_id,
+                'address' => $data->address,
+                'consultation_fee' => $data->consultation_fee,
+                'email' => $data->email,
+                'is_published' => $data->is_published,
+                'is_open_reservation' => $data->is_open_reservation,
+                'is_open_consultation' => $data->is_open_consultation
+            ]
+        );
         return ServiceResponse::success("Data Doktor Berhasil Disimpan");
     }
 }
