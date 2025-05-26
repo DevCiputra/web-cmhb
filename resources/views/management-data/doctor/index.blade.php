@@ -139,14 +139,14 @@
     });
 </script>
 
-<script>
+{{-- <script>
     function confirmPublish() {
         let isPublished = "{{ $doctor->is_published ? 'Terbitkan' : 'Batalkan terbitan' }}";
         if (confirm(`Apakah Anda yakin ingin ${isPublished} dokter ini?`)) {
             document.getElementById('publishForm').submit();
         }
     }
-</script>
+</script> --}}
 @endpush
 
 @push('styles')

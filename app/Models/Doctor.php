@@ -30,6 +30,11 @@ class Doctor extends Model
         return $this->belongsTo(DoctorPolyclinic::class, 'doctor_polyclinic_id');
     }
 
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     // Relasi ke tabel DoctorPhoto
     public function photos()
     {

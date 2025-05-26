@@ -70,7 +70,8 @@
                 <a href="/master-info-cmh"
                     class="dashboard-nav-dropdown-item {{ Request::is('master-info-cmh') ? 'active' : '' }}">Informasi RS</a>
                 <a href="/master-gallery-cmh"
-                    class="dashboard-nav-dropdown-item {{ Request::is('master-gallery-cmh') ? 'active' : '' }}">Galeri RS</a>
+                    class="dashboard-nav-dropdown-item {{ Request::is('category-polyclinic') ? 'active' : '' }}">Galeri RS</a>
+
             </div>
         </div>
 

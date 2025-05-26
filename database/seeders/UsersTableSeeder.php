@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ],
-        
+
         [
             'username' => 'patient1',
             'email' => 'patient@example.com',

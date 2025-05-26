@@ -36,6 +36,7 @@
                         <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan Nama Poliklinik" required>
                     </div>
 
+
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-success" style="background-color: #007858; color: #fff; border-radius: 10px; padding: 8px 12px;">
                             Simpan

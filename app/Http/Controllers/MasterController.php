@@ -6,6 +6,7 @@ use App\Models\HospitalGallery;
 use App\Models\HospitalInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 
 class MasterController extends Controller
@@ -208,5 +209,41 @@ class MasterController extends Controller
         return redirect()->route('gallery.data.index')->with('success', 'Gallery deleted successfully.');
     }
 
-    //
+    // Kategor Poliklinik
+    public function indexKategoriPoliklinik(Request $request)
+    {
+         $request->validate([
+            'name' => 'required|string|max:255',
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Simpan logo jika ada
+        if ($request->hasFile('icon')) {
+            $iconPath = $request->file('icon')->store('icons', 'public');
+        } else {
+            $iconPath = null;
+        }
+
+
+
+        // Simpan data
+        DB::table('doctor_polyclinics')->insert([
+            'name' => $request->input('name'),
+            'logo' => $iconPath,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('category-polyclinic.data.index')->with('success', 'Polyclinic created successfully.');
+    }
+
+    public function createKategoriPoliklinik(Request $request)
+    {
+
+    }
+
+    public function destroyKategoriPoliklinik(Request $request, $id)
+    {
+
+    }
 }

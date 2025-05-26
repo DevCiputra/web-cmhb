@@ -14,18 +14,38 @@ class DoctorPolyclinicService implements DoctorPolyclinicInterface
 
     public function create(String $name, UploadedFile $icon): ServiceResponse
     {
-        // Validasi File SVG
-        if (!$icon->isValid() || $icon->getClientOriginalExtension() !== 'svg') {
-            return ServiceResponse::error('File Harus Berupa SVG');
+        // ✅ Validasi Multiple Image Types
+        if (!$icon->isValid()) {
+            return ServiceResponse::error('File tidak valid');
         }
 
-        if ($icon->getMimeType() !== 'image/svg+xml') {
-            return ServiceResponse::error('File bukan SVG asli');
+        // ✅ Check allowed extensions
+        $allowedExtensions = ['svg', 'png', 'jpg', 'jpeg'];
+        $extension = strtolower($icon->getClientOriginalExtension());
+
+        if (!in_array($extension, $allowedExtensions)) {
+            return ServiceResponse::error('File harus berupa SVG, PNG, JPG, atau JPEG');
         }
 
-        $filename =  Str::uuid() . '.svg';
+        // ✅ Check MIME types
+        $allowedMimeTypes = [
+            'image/svg+xml',        // SVG
+            'image/png',            // PNG
+            'image/jpeg',           // JPG/JPEG
+            'image/jpg',            // JPG alternative
+        ];
 
+        if (!in_array($icon->getMimeType(), $allowedMimeTypes)) {
+            return ServiceResponse::error('Tipe file tidak diizinkan');
+        }
+
+        // ✅ Generate filename with correct extension
+        $filename = Str::uuid() . '.' . $extension;
+
+        // ✅ Store file
         $path = $icon->storeAs('public/doctor_polyclinics', $filename);
+
+        // ✅ Save to database
         $result = DoctorPolyclinic::create([
             'name' => $name,
             'icon' => $filename,
@@ -66,31 +86,56 @@ class DoctorPolyclinicService implements DoctorPolyclinicInterface
 
     public function update(Int $id, String $name, UploadedFile $icon = null): ServiceResponse
     {
-        // Validasi File SVG
-        $docterPolyclinic = DoctorPolyclinic::find($id);
-        if (!$docterPolyclinic) {
+        // Find existing record
+        $doctorPolyclinic = DoctorPolyclinic::find($id);
+        if (!$doctorPolyclinic) {
             return ServiceResponse::error('Polyclinic Tidak Ditemukan');
         }
 
+        // ✅ Process icon if provided
         if ($icon) {
-            if (!$icon->isValid() || $icon->getClientOriginalExtension() !== 'svg') {
-                return ServiceResponse::error('File Harus Berupa SVG');
+            // Validate file
+            if (!$icon->isValid()) {
+                return ServiceResponse::error('File tidak valid');
             }
 
-            if ($icon->getMimeType() !== 'image/svg+xml') {
-                return ServiceResponse::error('File bukan SVG asli');
+            // ✅ Check allowed extensions
+            $allowedExtensions = ['svg', 'png', 'jpg', 'jpeg'];
+            $extension = strtolower($icon->getClientOriginalExtension());
+
+            if (!in_array($extension, $allowedExtensions)) {
+                return ServiceResponse::error('File harus berupa SVG, PNG, JPG, atau JPEG');
             }
 
-            $oldFile = 'doctor_polyclinics/' . $docterPolyclinic->icon;
-            if ($docterPolyclinic->icon && Storage::disk('public')->exists($oldFile)) Storage::disk('public')->delete($oldFile);
+            // ✅ Check MIME types
+            $allowedMimeTypes = [
+                'image/svg+xml',        // SVG
+                'image/png',            // PNG
+                'image/jpeg',           // JPG/JPEG
+                'image/jpg',            // JPG alternative
+            ];
 
-            $filename =  Str::uuid() . '.svg';
+            if (!in_array($icon->getMimeType(), $allowedMimeTypes)) {
+                return ServiceResponse::error('Tipe file tidak diizinkan');
+            }
+
+            // ✅ Delete old file if exists
+            $oldFile = 'doctor_polyclinics/' . $doctorPolyclinic->icon;
+            if ($doctorPolyclinic->icon && Storage::disk('public')->exists($oldFile)) {
+                Storage::disk('public')->delete($oldFile);
+            }
+
+            // ✅ Generate new filename with correct extension
+            $filename = Str::uuid() . '.' . $extension;
+
+            // ✅ Store new file
             $icon->storeAs('public/doctor_polyclinics', $filename);
-            $docterPolyclinic->icon = $filename;
+            $doctorPolyclinic->icon = $filename;
         }
 
-        $docterPolyclinic->name = $name;
-        $docterPolyclinic->save();
+        // Update name
+        $doctorPolyclinic->name = $name;
+        $doctorPolyclinic->save();
 
         return ServiceResponse::success("Poliklinik Dokter Berhasil Diubah", null);
     }
