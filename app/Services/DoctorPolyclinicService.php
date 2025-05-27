@@ -14,18 +14,24 @@ class DoctorPolyclinicService implements DoctorPolyclinicInterface
 
     public function create(String $name, UploadedFile $icon): ServiceResponse
     {
-        // Validasi File SVG
-        if (!$icon->isValid() || $icon->getClientOriginalExtension() !== 'svg') {
-            return ServiceResponse::error('File Harus Berupa SVG');
+        // Validasi File: hanya SVG atau PNG
+        $allowedExtensions = ['svg', 'png'];
+        $allowedMimeTypes = ['image/svg+xml', 'image/png'];
+
+        $extension = strtolower($icon->getClientOriginalExtension());
+        $mimeType = $icon->getMimeType();
+
+        if (!$icon->isValid() || !in_array($extension, $allowedExtensions)) {
+            return ServiceResponse::error('File harus berupa SVG atau PNG');
         }
 
-        if ($icon->getMimeType() !== 'image/svg+xml') {
-            return ServiceResponse::error('File bukan SVG asli');
+        if (!in_array($mimeType, $allowedMimeTypes)) {
+            return ServiceResponse::error('File bukan gambar SVG atau PNG yang valid');
         }
 
-        $filename =  Str::uuid() . '.svg';
+        $filename = Str::uuid() . '.' . $extension;
+        $icon->storeAs('public/doctor_polyclinics', $filename);
 
-        $path = $icon->storeAs('public/doctor_polyclinics', $filename);
         $result = DoctorPolyclinic::create([
             'name' => $name,
             'icon' => $filename,
@@ -33,6 +39,7 @@ class DoctorPolyclinicService implements DoctorPolyclinicInterface
 
         return ServiceResponse::success("Poliklinik Dokter Berhasil Dibuat", null);
     }
+
 
     public function getById(Int $id): ServiceResponse
     {
@@ -66,25 +73,34 @@ class DoctorPolyclinicService implements DoctorPolyclinicInterface
 
     public function update(Int $id, String $name, UploadedFile $icon = null): ServiceResponse
     {
-        // Validasi File SVG
         $docterPolyclinic = DoctorPolyclinic::find($id);
         if (!$docterPolyclinic) {
             return ServiceResponse::error('Polyclinic Tidak Ditemukan');
         }
 
         if ($icon) {
-            if (!$icon->isValid() || $icon->getClientOriginalExtension() !== 'svg') {
-                return ServiceResponse::error('File Harus Berupa SVG');
+            // Validasi File: hanya SVG atau PNG
+            $allowedExtensions = ['svg', 'png'];
+            $allowedMimeTypes = ['image/svg+xml', 'image/png'];
+
+            $extension = strtolower($icon->getClientOriginalExtension());
+            $mimeType = $icon->getMimeType();
+
+            if (!$icon->isValid() || !in_array($extension, $allowedExtensions)) {
+                return ServiceResponse::error('File harus berupa SVG atau PNG');
             }
 
-            if ($icon->getMimeType() !== 'image/svg+xml') {
-                return ServiceResponse::error('File bukan SVG asli');
+            if (!in_array($mimeType, $allowedMimeTypes)) {
+                return ServiceResponse::error('File bukan gambar SVG atau PNG yang valid');
             }
 
+            // Hapus file lama jika ada
             $oldFile = 'doctor_polyclinics/' . $docterPolyclinic->icon;
-            if ($docterPolyclinic->icon && Storage::disk('public')->exists($oldFile)) Storage::disk('public')->delete($oldFile);
+            if ($docterPolyclinic->icon && Storage::disk('public')->exists($oldFile)) {
+                Storage::disk('public')->delete($oldFile);
+            }
 
-            $filename =  Str::uuid() . '.svg';
+            $filename = Str::uuid() . '.' . $extension;
             $icon->storeAs('public/doctor_polyclinics', $filename);
             $docterPolyclinic->icon = $filename;
         }
