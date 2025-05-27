@@ -79,7 +79,7 @@ class DoctorPolyclinicController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:100'],
-                'icon' => ['file', 'mimes:svg', 'max:512'], // max:512 artinya 512 KB
+                'icon' => ['file', 'mimes:svg,png', 'max:512'], // max:512 artinya 512 KB
             ], [
                 'name.required' => 'Nama ikon wajib diisi.',
                 'name.string' => 'Nama ikon harus berupa teks.',
@@ -115,7 +115,7 @@ class DoctorPolyclinicController extends Controller
             // 🔐 validation
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:100'],
-                'icon' => ['required', 'file', 'mimes:svg', 'max:512'], // max:512 artinya 512 KB
+                'icon' => ['required', 'file', 'mimes:svg,png', 'max:512'], // max:512 artinya 512 KB
             ], [
                 'name.required' => 'Nama ikon wajib diisi.',
                 'name.string' => 'Nama ikon harus berupa teks.',

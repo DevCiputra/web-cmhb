@@ -54,14 +54,14 @@ class DoctorService implements DoctorServiceInterface
         }
 
         // Pagination atau ambil semua
-        $result = $query->paginate(10);
+        $result = $query->with('polyclinic', 'photos')->paginate(10);
 
         return ServiceResponse::success('Data Dokter Berhasil Diambil', $result);
     }
 
     public function getById(Int $id): ServiceResponse
     {
-        $result = Doctor::find($id);
+        $result = Doctor::with(['polyclinic', 'photos', 'schedules', 'education'])->find($id);
         if (!$result) {
             return ServiceResponse::error("Data Doktor Tidak Ditemukan");
         }

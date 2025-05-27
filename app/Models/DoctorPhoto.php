@@ -16,6 +16,14 @@ class DoctorPhoto extends Model
         'mime_type',
     ];
 
+    public function getNameAttribute($value)
+    {
+        if ($value) {
+            return secure_url("storage/doctor/photos/$this->doctor_id/$value");
+        }
+        return null;
+    }
+
     // Relasi ke model Doctor
     public function doctor()
     {
