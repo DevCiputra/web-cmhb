@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorPhoto extends Model
 {
@@ -21,4 +22,13 @@ class DoctorPhoto extends Model
     {
         return $this->belongsTo(Doctor::class, 'doctor_id');
     }
+
+    public function getNameAttribute($value)
+    {
+        if ($value) {
+            return Storage::url("/doctor/photos/$this->doctor_id/$value");
+        }
+        return null;
+    }
+
 }

@@ -44,4 +44,5 @@
     <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 
-</html><?php /**PATH C:\xampp\htdocs\web-cmhb\resources\views/management-data/layouts/app.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\xampp\htdocs\web-cmhb\resources\views/management-data/layouts/app.blade.php ENDPATH**/ ?>

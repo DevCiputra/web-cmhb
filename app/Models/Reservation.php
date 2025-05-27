@@ -16,11 +16,21 @@ class Reservation extends Model
         'service_category_id',
         'status_pembayaran',
         'code',
+        'doctor_id',
+        'complaint',
+        'solution',
+        'reservation_date',
+        'reservation_time'
     ];
 
     public function patient()
     {
         return $this->belongsTo(Patient::class);
+    }
+
+    public function userPatient()
+    {
+        return $this->patient?->user?->email;
     }
 
     public function status()
@@ -41,6 +51,11 @@ class Reservation extends Model
     public function invoice()
     {
         return $this->hasOne(Invoice::class, 'reservation_id');
+    }
+
+    public function dokters()
+    {
+        return $this->belongsTo(Doctor::class, 'doctor_id');
     }
 
     // Cascade soft delete untuk relasi terkait

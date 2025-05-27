@@ -55,12 +55,13 @@
         </div>
         <?php endif; ?>
 
+
         <div class="row cards-container">
             <?php $__currentLoopData = $doctors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="col-md-3 mb-4">
                 <div class="card">
                     <img class="card-img-top"
-                        src="<?php echo e(asset('storage/doctor/photos/' . $doctor->id . '/' . ($doctor->photos->first()->name ?? 'dokter_placeholder.jpg'))); ?>"
+                        src="<?php echo e(asset($doctor->photos->first()->name)); ?>"
                         alt="<?php echo e($doctor->name); ?>"
                         style="width: 100%; height: 200px; object-fit: cover; object-position: 50% 20%;">
 

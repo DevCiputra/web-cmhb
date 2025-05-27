@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\DoctorController;
 use App\Http\Controllers\API\DoctorPolyclinicController;
+use App\Http\Controllers\API\ServiceCategoryController;
+use App\Http\Controllers\API\ReservationController;
+use App\Http\Controllers\API\ReservationStatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +25,7 @@ Route::post('v1/login', [AuthController::class, 'login']);
 Route::post('v1/updatePassword/{id}', [AuthController::class, 'updatePassword']);
 Route::post('v1/requestOTP', [AuthController::class, 'requestPasswordResetOtp']);
 Route::post('v1/requestReset', [AuthController::class, 'resetPasswordWithOtp']);
+
 
 
 
@@ -45,4 +49,7 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
         Route::post('{id}', [DoctorController::class, 'update'])->name('update');    // PUT update
         Route::delete('{id}', [DoctorController::class, 'destroy'])->name('destroy'); // DELETE
     });
+
+    Route::get('serviceCategory', [ServiceCategoryController::class, 'getServiceCategory']);
+    Route::get('reservationStatus', [ReservationStatusController::class, 'getReservationStatus']);
 });

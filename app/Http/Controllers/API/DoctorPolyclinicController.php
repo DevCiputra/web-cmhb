@@ -74,12 +74,12 @@ class DoctorPolyclinicController extends Controller
 
     public function update(Request $request, $id)
     {
-        try {
+         try {
             // 🔐 validation
 
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:100'],
-                'icon' => ['file', 'mimes:svg,png,jpeg,jpg', 'max:2048'], // max:512 artinya 512 KB
+                'icon' => ['file', 'mimes:svg,png', 'max:512'], // max:512 artinya 512 KB
             ], [
                 'name.required' => 'Nama ikon wajib diisi.',
                 'name.string' => 'Nama ikon harus berupa teks.',
@@ -115,7 +115,7 @@ class DoctorPolyclinicController extends Controller
             // 🔐 validation
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:100'],
-                'icon' => ['required', 'file', 'mimes:svg,png,jpeg,jpg', 'max:2048'], // max:512 artinya 512 KB
+                'icon' => ['required', 'file', 'mimes:svg,png', 'max:512'], // 512 KB
             ], [
                 'name.required' => 'Nama ikon wajib diisi.',
                 'name.string' => 'Nama ikon harus berupa teks.',
@@ -123,9 +123,10 @@ class DoctorPolyclinicController extends Controller
 
                 'icon.required' => 'File ikon wajib diunggah.',
                 'icon.file' => 'File ikon harus berupa file yang valid.',
-                'icon.mimes' => 'File ikon harus berupa file SVG.',
+                'icon.mimes' => 'File ikon harus berupa file SVG atau PNG.', // ✅ diperbaiki di sini
                 'icon.max' => 'Ukuran file ikon maksimal 512KB.',
             ]);
+
 
             if ($validator->fails()) {
                 return ResponseFormater::error($validator->errors(), "Input Tidak Sesuai: " . $validator->errors()->first(), 422);

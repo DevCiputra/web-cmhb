@@ -12,8 +12,7 @@ class DoctorService implements DoctorServiceInterface
     public function create(Request $data): ServiceResponse
     {
 
-        $user = Doctor::query()->where('user_id', "=", $data->user_id)->get();
-        dd($user);
+        $user = Doctor::query()->where('user_id', "=", $data->user_id)->exists();
         if ($user) {
             return ServiceResponse::error("Dokter sudah memiliki akun user", null);
         }
@@ -32,7 +31,7 @@ class DoctorService implements DoctorServiceInterface
             'is_open_consultation' => $data->is_open_consultation
         ]);
 
-        return ServiceResponse::success("Data Dokter Berhasil Disimpan", null);
+        return ServiceResponse::success("Data Dokter Berhasil Disimpan", $result);
     }
 
     public function get(
@@ -55,14 +54,14 @@ class DoctorService implements DoctorServiceInterface
         }
 
         // Pagination atau ambil semua
-        $result = $query->paginate(10);
+        $result = $query->with('polyclinic', 'photos')->paginate(10);
 
         return ServiceResponse::success('Data Dokter Berhasil Diambil', $result);
     }
 
     public function getById(Int $id): ServiceResponse
     {
-        $result = Doctor::find($id);
+        $result = Doctor::with(['polyclinic', 'photos','schedules', 'education'])->find($id);
         if (!$result) {
             return ServiceResponse::error("Data Doktor Tidak Ditemukan");
         }
@@ -80,11 +79,25 @@ class DoctorService implements DoctorServiceInterface
 
     public function update(Int $id, Request $data): ServiceResponse
     {
+
         $doctor = Doctor::find($id);
         if (!$doctor) {
             return ServiceResponse::error("Data Doktor Tidak Ditemukan");
         }
-        $doctor->update($data);
+
+        $doctor->update(
+            [
+                'name' => $data->name,
+                'specialization_name' => $data->specialization_name,
+                'doctor_polyclinic_id' => $data->doctor_polyclinic_id,
+                'address' => $data->address,
+                'consultation_fee' => $data->consultation_fee,
+                'email' => $data->email,
+                'is_published' => $data->is_published,
+                'is_open_reservation' => $data->is_open_reservation,
+                'is_open_consultation' => $data->is_open_consultation
+            ]
+        );
         return ServiceResponse::success("Data Doktor Berhasil Disimpan");
     }
 }

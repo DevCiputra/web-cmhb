@@ -56,12 +56,13 @@
         </div>
         @endif
 
+
         <div class="row cards-container">
             @foreach ($doctors as $doctor)
             <div class="col-md-3 mb-4">
                 <div class="card">
                     <img class="card-img-top"
-                        src="{{ asset('storage/doctor/photos/' . $doctor->id . '/' . ($doctor->photos->first()->name ?? 'dokter_placeholder.jpg')) }}"
+                        src="{{ asset($doctor->photos->first()->name) }}"
                         alt="{{ $doctor->name }}"
                         style="width: 100%; height: 200px; object-fit: cover; object-position: 50% 20%;">
 
