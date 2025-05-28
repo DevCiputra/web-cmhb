@@ -26,7 +26,7 @@ class DoctorPhoto extends Model
     public function getNameAttribute($value)
     {
         if ($value) {
-            return Storage::url("/doctor/photos/$this->doctor_id/$value");
+            return Storage::url("doctor/photos/$this->doctor_id/$value");
         }
         return null;
     }

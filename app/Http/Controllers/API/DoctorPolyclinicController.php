@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ResponseFormater;
 use App\Http\Controllers\Controller;
+use App\Models\DoctorPolyclinic;
 use App\Services\Contracts\DoctorPolyclinicInterface;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -142,6 +144,57 @@ class DoctorPolyclinicController extends Controller
             return ResponseFormater::success(null, $response->message);
         } catch (\Throwable $th) {
             return ResponseFormater::error($th->getMessage(), "Data Poliklinik Gagal Disimpan", 500);
+        }
+    }
+
+    public function storeNew(Request $request)
+    {
+         $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'icon' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $cek = DoctorPolyclinic::where('name', $request->name);
+
+        if($cek->first()) {
+            return redirect()->back()->with('failed', 'Kategori Poliklinik Ini Sudah pernah anda buat');
+        }
+
+        $input = $request->all();
+
+
+
+        if($request->file('icon')->isValid()) {
+            $photoCategoryPoly = $request->file('icon');
+            $extensions = $photoCategoryPoly->getClientOriginalExtension();
+            $categoryPolyUpload = "polyclinic/".date('YmdHis').".".$extensions;
+            $categoryPolyPath = \env('UPLOAD_PATH'). "/polyclinic";
+            $request->file('icon')->move($categoryPolyPath, $categoryPolyUpload);
+            $input['icon'] = $categoryPolyUpload;
+        }
+
+
+        $input['name'] = strtoupper($request->name);
+        $doctorPolyclinic = DoctorPolyclinic::create($input);
+
+        try {
+            $doctorPolyclinic->save();
+            return ResponseFormater::success(
+                $doctorPolyclinic,
+                'Data Doctor Polyclinic  Berhasil di tambahkan'
+            );
+        }
+
+        catch(Exception $error) {
+            return ResponseFormater::error(
+                $error->getMessage(),
+                'Data Doctor Polyclinic  tidak ada',
+                404
+            );
         }
     }
 }

@@ -22,6 +22,7 @@ class UsersTableSeeder extends Seeder
             'role' => 'Admin',
             'whatsapp' => '081234567890',
             'profile_picture' => null,
+            'fcm' => 'random',
             'created_at' => now(),
             'updated_at' => now(),
         ],
@@ -33,6 +34,7 @@ class UsersTableSeeder extends Seeder
             'role' => 'Patient',
             'whatsapp' => '081234567892',
             'profile_picture' => null,
+            'fcm' => 'random',
             'created_at' => now(),
             'updated_at' => now(),
         ]
@@ -44,6 +46,7 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('password'), // Mudah diingat untuk testing
                 'role' => 'Doctor',
                 'whatsapp' => "0812345678{$i}",
+                'fcm' => 'random',
                 'profile_picture' => null,
                 'created_at' => now(),
                 'updated_at' => now(),

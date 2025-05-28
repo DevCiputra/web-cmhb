@@ -20,7 +20,7 @@ class AuthService implements AuthServiceInterface
                 'username'     => $data->username,
                 'email'        => $data->email,
                 'password'     => Hash::make($data->password),
-                'whatsapp'     => $data->whatsaap,
+                'whatsapp'     => $data->whatsapp,
                 'role'         => $data->role,
                 'gender'       => $data->gender,
                 'fcm'          => $data->fcm

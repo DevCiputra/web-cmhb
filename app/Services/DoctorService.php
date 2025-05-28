@@ -37,6 +37,8 @@ class DoctorService implements DoctorServiceInterface
     public function get(
         string $name = null,
         int $doctorPolyclinicId = null,
+        int $is_published = null,
+        string $schedule = null
     ): ServiceResponse {
         $query = Doctor::query();
 
@@ -52,6 +54,18 @@ class DoctorService implements DoctorServiceInterface
         if ($doctorPolyclinicId) {
             $query->where('doctor_polyclinic_id', $doctorPolyclinicId);
         }
+
+        if($is_published) {
+            $query->where('is_published', $is_published);
+        }
+
+         // ✅ FIXED: Field name corrected from 'schedules' to 'schedule'
+        if ($schedule) {
+            $query->whereHas('schedules', function ($q) use ($schedule) {
+                $q->where('schedule', 'LIKE', "%{$schedule}%"); // ✅ Fixed field name
+            });
+        }
+
 
         // Pagination atau ambil semua
         $result = $query->with('polyclinic', 'photos')->paginate(10);

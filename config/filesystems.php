@@ -30,6 +30,11 @@ return [
 
     'disks' => [
 
+        'upload' => [
+            'driver' => 'local',
+            'root' => env('UPLOAD_PATH'),
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

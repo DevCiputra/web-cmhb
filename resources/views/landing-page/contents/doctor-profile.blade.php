@@ -24,7 +24,7 @@
             <div class="doctor-photo">
                 @php
                 $photoUrl = $doctor->photos->isNotEmpty()
-                ? asset('storage/doctor/photos/' . $doctor->id . '/' . $doctor->photos->first()->name)
+                ? asset($doctor->photos->first()->name)
                 : asset('images/userplaceholder.png');
                 @endphp
                 <img src="{{ $photoUrl }}" alt="{{ $doctor->name ?? 'Default Doctor' }}" class="img-fluid">

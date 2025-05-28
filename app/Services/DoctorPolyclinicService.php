@@ -30,7 +30,7 @@ class DoctorPolyclinicService implements DoctorPolyclinicInterface
         }
 
         $filename = Str::uuid() . '.' . $extension;
-        $icon->storeAs('public/doctor_polyclinics', $filename);
+        $icon->storeAs('doctor_polyclinics', $filename);
 
         $result = DoctorPolyclinic::create([
             'name' => $name,

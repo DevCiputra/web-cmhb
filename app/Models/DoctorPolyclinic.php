@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorPolyclinic extends Model
 {
@@ -13,12 +14,17 @@ class DoctorPolyclinic extends Model
 
     protected $fillable = ['name', 'icon'];
 
+    // public function getIconAttribute($value)
+    // {
+    //     if ($value) {
+    //         return  Storage::url("doctor_polyclinics/" . $value);
+    //     }
+    //     return null;
+    // }
+
     public function getIconAttribute($value)
     {
-        if ($value) {
-            return secure_url('storage/doctor_polyclinics/' . $value);
-        }
-        return null;
+        return env('ASSET_URL'). "/uploads/".$value;
     }
 
     // Relasi ke tabel Doctor

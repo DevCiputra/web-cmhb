@@ -28,8 +28,10 @@ class DoctorController extends Controller
             $page = $request->has('page');
             $name = $request->get('name');
             $doctorPolyclinicId = $request->get('doctor_polyclinic_id');
+            $is_published = $request->get('is_published');
+            $schedule = $request->get('schedule');
 
-            $response = $this->doctorService->get($name, $doctorPolyclinicId);
+            $response = $this->doctorService->get($name, $doctorPolyclinicId, $is_published, $schedule);
 
             if (!$response->status) {
                 return ResponseFormater::error(null, $response->message, 400);

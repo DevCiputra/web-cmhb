@@ -42,7 +42,7 @@
 
                     <!-- Foto Dokter, dari photos -->
                     <div class="doctor-photo" style="margin-top: 2rem;">
-                        <img src="{{ asset('storage/doctor/photos/' . $doctor->id . '/' . ($doctor->photos->first()->name ?? 'dokter_placeholder.jpg')) }}"
+                        <img src="{{asset($doctor->photos->first()->name )}}"
                             alt="Doctor Photo"
                             style="width: 200px; height: auto; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     </div>
