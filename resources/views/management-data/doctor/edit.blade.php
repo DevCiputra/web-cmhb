@@ -30,6 +30,22 @@
                     @csrf
                     @method('PUT')
 
+                     <!-- User Selection -->
+                    <div class="mb-3">
+                        <label for="user_id" class="form-label">Pilih User</label>
+                        <select class="form-control" id="user_id" name="user_id" required>
+                            <option value="">-- Pilih User --</option>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}" {{ old('user_id', $doctor->user_id) == $user->id ? 'selected' : '' }}>
+                                    {{ $user->username }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('user_id')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama Dokter</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $doctor->name) }}" placeholder="Masukkan Nama Dokter" required>

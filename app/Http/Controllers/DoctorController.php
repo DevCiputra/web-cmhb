@@ -8,8 +8,10 @@ use App\Models\DoctorMedia;
 use App\Models\DoctorPhoto;
 use App\Models\DoctorPolyclinic;
 use App\Models\DoctorSchedule;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class DoctorController extends Controller
 {
@@ -57,8 +59,9 @@ class DoctorController extends Controller
         // Mengambil semua data dari tabel DoctorEducation dan DoctorPolyclinic
         $educations = DoctorEducation::all();
         $polyclinics = DoctorPolyclinic::all();
+        $users = User::all();
 
-        return view('management-data.doctor.create', compact('educations', 'polyclinics'));
+        return view('management-data.doctor.create', compact('educations', 'polyclinics', 'users'));
     }
 
     // Menyimpan data dokter baru
@@ -66,6 +69,7 @@ class DoctorController extends Controller
     {
 
         $request->validate([
+            'user_id' => 'required|exists:users,id|unique:doctors,user_id',
             'name' => 'required|string|max:255',
             'specialization_name' => 'required|string|max:255',
             'doctor_polyclinic_id' => 'required|exists:doctor_polyclinics,id', // Validasi poliklinik
@@ -76,9 +80,12 @@ class DoctorController extends Controller
             'is_open_consultation' => 'nullable|string',
             'is_open_reservation' => 'nullable|string',
             'doctor_schedule' => 'nullable|string',  // Validasi jadwal sebagai teks bebas
+        ], [
+            'user_id.unique' => 'User ini sudah memiliki profil dokter. Silakan pilih user lain.',
         ]);
 
         $doctor = Doctor::create([
+            'user_id' => $request->input('user_id'),
             'name' => $request->input('name'),
             'specialization_name' => $request->input('specialization_name'),
             'doctor_polyclinic_id' => $request->input('doctor_polyclinic_id'),
@@ -159,7 +166,15 @@ class DoctorController extends Controller
         $educations = DoctorEducation::all();
         $polyclinics = DoctorPolyclinic::all();
 
-        return view('management-data.doctor.edit', compact('doctor', 'educations', 'polyclinics', 'schedule'));
+        // Filter users: yang belum punya profil dokter + user dari dokter yang sedang diedit
+        $users = User::where(function($query) use ($doctor) {
+            $query->whereNotIn('id', function($subQuery) {
+                $subQuery->select('user_id')->from('doctors');
+            })
+            ->orWhere('id', $doctor->user_id); // Kecuali user dari dokter yang sedang diedit
+        })->get();
+
+        return view('management-data.doctor.edit', compact('doctor', 'educations', 'polyclinics', 'schedule', 'users'));
     }
 
 
@@ -169,6 +184,7 @@ class DoctorController extends Controller
 
         // Validasi input, tanpa email dan is_published
         $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id|unique:doctors,user_id,' . $id,
             'name' => 'required|string|max:255',
             'specialization_name' => 'required|string|max:255',
             'education' => 'required|string|max:500', // Validasi untuk textarea pendidikan
@@ -177,11 +193,15 @@ class DoctorController extends Controller
             'doctor_photos' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'doctor_medias' => 'nullable|file|mimes:pdf,doc,docx|max:2048','consultation_fee' => 'required|numeric|min:0',
             'doctor_schedule' => 'nullable|string',  // Validasi jadwal sebagai teks bebas
+        ], [
+            'user_id.unique' => 'User ini sudah memiliki profil dokter. Silakan pilih user lain.',
+            'user_id.exists' => 'User yang dipilih tidak valid.',
         ]);
 
         // Mengupdate data dokter
         $doctor = Doctor::findOrFail($id);
         $doctor->update([
+            'user_id' => $validatedData['user_id'],
             'name' => $validatedData['name'],
             'specialization_name' => $validatedData['specialization_name'],
             'doctor_polyclinic_id' => $validatedData['doctor_polyclinic_id'],

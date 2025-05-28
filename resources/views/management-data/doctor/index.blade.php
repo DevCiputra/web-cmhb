@@ -87,12 +87,13 @@
 
                                 </form>
 
-                                <div>
-                                                                    <!-- Tombol untuk mengubah status publikasi -->
-                                <form action="{{ route('doctor.data.updatePublished', $doctor->id) }}" method="POST" style="display:inline-block;" id="publishForm">
+                               <div>
+                                <form action="{{ route('doctor.data.updatePublished', $doctor->id) }}" method="POST"
+                                    style="display:inline-block;"
+                                    onsubmit="return confirm('Apakah Anda yakin ingin {{ $doctor->is_published ? 'menyembunyikan' : 'menampilkan' }} dokter ini?');">
                                     @csrf
-                                    <button type="button" class="btn btn-toggle-published" onclick="confirmPublish()"
-                                        style="background-color: {{ $doctor->is_published ? '#28a745' : '#dc3545' }}; color: white; border-radius: 5px; padding: 8px 12px; font-size: 14px;">
+                                    <button type="submit" class="btn btn-toggle-published"
+                                            style="background-color: {{ $doctor->is_published ? '#28a745' : '#dc3545' }}; color: white; border-radius: 5px; padding: 8px 12px; font-size: 14px;">
                                         {{ $doctor->is_published ? 'Tampil' : 'Sembunyikan' }}
                                     </button>
                                 </form>
@@ -117,6 +118,7 @@
 </div>
 @endsection
 
+<!-- Script di bagian @push('scripts') - ganti script yang lama -->
 @push('scripts')
 <script>
     const mobileScreen = window.matchMedia("(max-width: 990px )");
@@ -138,13 +140,12 @@
             }
         });
     });
-</script>
 
-<script>
-    function confirmPublish() {
-        let isPublished = "{{ $doctor->is_published ? 'Terbitkan' : 'Batalkan terbitan' }}";
-        if (confirm(`Apakah Anda yakin ingin ${isPublished} dokter ini?`)) {
-            document.getElementById('publishForm').submit();
+    // Function untuk confirm publish dengan parameter dinamis
+    function confirmPublish(doctorId, isPublished) {
+        let action = isPublished ? 'Sembunyikan' : 'Tampilkan';
+        if (confirm(`Apakah Anda yakin ingin ${action} dokter ini?`)) {
+            document.getElementById('publishForm_' + doctorId).submit();
         }
     }
 </script>

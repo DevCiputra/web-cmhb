@@ -32,6 +32,22 @@
             <div class="card-form" style="padding: 2rem;">
                 <form action="{{ route('doctor.data.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+
+                    <div class="mb-3">
+                        <label for="user_id" class="form-label">Nama Dokter</label>
+                        <select class="form-control" id="user_id" name="user_id" required>
+                            <option value="">-- Pilih Dokter --</option>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                    {{ $user->username }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('user_id')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama Dokter</label>
                         <input type="text" class="form-control" id="name" name="name"

@@ -65,7 +65,7 @@
                 </button>
 
                 @elseif(optional($reservation->status)->name === 'Konfirmasi Jadwal' && is_null($reservation->status_pembayaran)
-                {{-- Jika status reservasi = Konfirmasi Jadwal dan status pembayaran = null --}}
+                // {{-- Jika status reservasi = Konfirmasi Jadwal dan status pembayaran = null --}}
                 )
                 <form action="{{ route('reservation.schedule', $reservation->id) }}" method="POST" class="d-inline">
                     @csrf
@@ -78,7 +78,7 @@
                 </button>
 
                 @elseif(optional($reservation->status)->name === 'Jadwal Dikonfirmasi' && is_null($reservation->status_pembayaran)
-                {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = null --}}
+                // {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = null --}}
                 )
                 <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
@@ -97,7 +97,7 @@
                 </button>
 
                 @elseif(optional($reservation->status)->name === 'Jadwal Dikonfirmasi' && $reservation->status_pembayaran === 'Lunas'
-                {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = Lunas --}}
+                // {{-- Jika status reservasi = Jadwal Dikonfirmasi dan status pembayaran = Lunas --}}
                 )
                 <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#approveModal" onclick="return confirm('Apakah Anda yakin ingin menyetujui pesanan ini?')">
                     <i class="fas fa-check-circle me-1"></i> Approve Order
@@ -107,14 +107,14 @@
                 </button>
 
                 @elseif(optional($reservation->status)->name === 'Berhasil' && $reservation->status_pembayaran === 'Lunas'
-                {{-- Jika status reservasi = Berhasil dan status pembayaran = Lunas --}}
+                // {{-- Jika status reservasi = Berhasil dan status pembayaran = Lunas --}}
                 )
                 <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
                     <i class="fas fa-times-circle me-1"></i> Cancel Order
                 </button>
 
                 @elseif($reservation->status_pembayaran === 'Menunggu Konfirmasi'
-                {{-- Jika status pembayaran = Menunggu Konfirmasi --}}
+                // {{-- Jika status pembayaran = Menunggu Konfirmasi --}}
                 )
                 <form action="{{ route('reservation.confirm-paymet', $reservation->id) }}" method="POST" class="d-inline">
                     @csrf
