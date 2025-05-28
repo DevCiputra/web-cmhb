@@ -29,6 +29,7 @@ class User extends Authenticatable
         'role',
         'gender',
         'whatsapp',
+        'status_activity',
         'fcm',
         'profile_picture',
     ];

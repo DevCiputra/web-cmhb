@@ -65,7 +65,7 @@
                         <div class="doctor-card">
                             @php
                             $photoUrl = $doctor->photos->isNotEmpty()
-                            ? asset('storage/doctor/photos/' . $doctor->id . '/' . $doctor->photos->first()->name)
+                            ? asset($doctor->photos->first()->name)
                             : asset('images/userplaceholder.png'); // Default image jika tidak ada foto
                             @endphp
 

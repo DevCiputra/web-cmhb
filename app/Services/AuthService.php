@@ -23,7 +23,8 @@ class AuthService implements AuthServiceInterface
                 'whatsapp'     => $data->whatsapp,
                 'role'         => $data->role,
                 'gender'       => $data->gender,
-                'fcm'          => $data->fcm
+                'fcm'          => $data->fcm,
+                'status_activity' => 'offline'
             ]);
 
             $token = $user->createToken('authToken')->plainTextToken;
@@ -46,12 +47,28 @@ class AuthService implements AuthServiceInterface
                 return ServiceResponse::error('Email atau password salah');
             }
 
+            // VALIDASI SINGLE DEVICE LOGIN
+            if ($user->status_activity === 'online') {
+                return ServiceResponse::error(
+                    'Akun Anda sedang aktif di perangkat lain. Silakan logout terlebih dahulu.',
+                    null,
+                    409 // Conflict status code
+                );
+            }
+
+            // Update status user menjadi online
+            $user->update([
+                'status_activity' => 'online'
+            ]);
+
+            // Create new token
             $token = $user->createToken('authToken')->plainTextToken;
 
             return ServiceResponse::success('Login berhasil', [
-                'user'  => $user,
+                'user'  => $user->fresh(),
                 'token' => $token
             ]);
+
         } catch (Exception $e) {
             return ServiceResponse::error('Login gagal', $e->getMessage());
         }
@@ -60,11 +77,22 @@ class AuthService implements AuthServiceInterface
     public function logout(Request $request): ServiceResponse
     {
         try {
-            if (!$request->user()) {
-                return ServiceResponse::error('Logout gagal', null);
+            $user = $request->user();
+
+            if (!$user) {
+                return ServiceResponse::error('Logout gagal - User tidak ditemukan');
             }
+
+            // Update status user menjadi offline
+            $user->update([
+                'status_activity' => 'offline'
+            ]);
+
+            // Delete current token
             $request->user()->currentAccessToken()->delete();
+
             return ServiceResponse::success('Logout berhasil');
+
         } catch (Exception $e) {
             return ServiceResponse::error('Logout gagal', $e->getMessage());
         }
