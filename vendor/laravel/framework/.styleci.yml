@@ -1,0 +1,13 @@
+php:
+  preset: laravel
+  version: 8.1
+  enabled:
+    - nullable_type_declarations
+  finder:
+    not-name:
+      - bad-syntax-strategy.php
+js:
+  finder:
+    not-name:
+      - webpack.mix.js
+css: true

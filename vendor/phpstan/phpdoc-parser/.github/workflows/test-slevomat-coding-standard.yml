@@ -1,0 +1,74 @@
+# https://help.github.com/en/categories/automating-your-workflow-with-github-actions
+
+name: "Test Slevomat Coding Standard"
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "2.1.x"
+
+jobs:
+  tests:
+    name: "Tests"
+    runs-on: "ubuntu-latest"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - "7.4"
+          - "8.0"
+          - "8.1"
+          - "8.2"
+          - "8.3"
+          - "8.4"
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+
+      - name: "Checkout Slevomat Coding Standard"
+        uses: actions/checkout@v4
+        with:
+          repository: slevomat/coding-standard
+          path: slevomat-cs
+          ref: 88602f9ae5450a933133108d052eeb2edee0a4b7
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "none"
+          php-version: "${{ matrix.php-version }}"
+
+      - name: "Unset platform"
+        working-directory: slevomat-cs
+        run: "composer config --unset platform"
+
+      - name: "Install dependencies"
+        working-directory: slevomat-cs
+        run: "composer install --no-interaction --no-progress"
+
+      - name: "Remove stable phpdoc-parser"
+        working-directory: slevomat-cs
+        run: "rm -r vendor/phpstan/phpdoc-parser/src"
+
+      - name: "Remove top-level phpcs.xml"
+        run: "rm phpcs.xml"
+
+      - name: "Copy phpdoc-parser"
+        run: "cp -r src/ slevomat-cs/vendor/phpstan/phpdoc-parser/src"
+
+      - name: "Tests"
+        working-directory: slevomat-cs
+        run: "bin/phpunit --no-coverage"
+
+      - name: "PHPStan"
+        if: matrix.php-version == '8.0' || matrix.php-version == '8.1' || matrix.php-version == '8.2'
+        working-directory: slevomat-cs
+        run: "bin/phpstan analyse -c build/PHPStan/phpstan.neon"
+
+      - name: "PHPStan in tests"
+        if: matrix.php-version == '8.0' || matrix.php-version == '8.1' || matrix.php-version == '8.2'
+        working-directory: slevomat-cs
+        run: "bin/phpstan analyse -c build/PHPStan/phpstan.tests.neon"

@@ -8,6 +8,7 @@ use App\Http\Controllers\API\DoctorPolyclinicController;
 use App\Http\Controllers\API\ServiceCategoryController;
 use App\Http\Controllers\API\ReservationController;
 use App\Http\Controllers\API\ReservationStatusController;
+use App\Http\Controllers\API\ReviewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,11 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
         Route::post('{id}', [DoctorController::class, 'update'])->name('update');    // PUT update
         Route::delete('{id}', [DoctorController::class, 'destroy'])->name('destroy'); // DELETE
     });
+
+    // Reviews
+    Route::post('reviews', [ReviewsController::class, 'storeReviews']);
+    Route::get('reviews', [ReviewsController::class, 'fetchReviews']);
+    Route::post('reviews/{id}', [ReviewsController::class, 'deleteReviews']);
 
     Route::get('serviceCategory', [ServiceCategoryController::class, 'getServiceCategory']);
     Route::get('reservationStatus', [ReservationStatusController::class, 'getReservationStatus']);
