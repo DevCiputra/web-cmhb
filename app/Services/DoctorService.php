@@ -75,7 +75,11 @@ class DoctorService implements DoctorServiceInterface
 
     public function getById(Int $id): ServiceResponse
     {
-        $result = Doctor::with(['polyclinic', 'photos','schedules', 'education'])->find($id);
+        $result = Doctor::with(['polyclinic', 'photos','schedules', 'education'])
+        ->withCount('reviews') // ✅ Tambahkan count reviews
+        ->find($id);
+
+
         if (!$result) {
             return ServiceResponse::error("Data Doktor Tidak Ditemukan");
         }

@@ -52,6 +52,11 @@ class Doctor extends Model
         return $this->hasMany(DoctorMedia::class, 'doctor_id');
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'doctor_id');
+    }
+
     public function user()
     {
         return $this->hasOne(User::class, 'id');
