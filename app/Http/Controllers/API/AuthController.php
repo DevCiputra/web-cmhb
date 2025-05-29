@@ -64,7 +64,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-       try {
+        try {
             // 🔐 Validation
             $request->validate([
                 'email' => 'required|email',
@@ -98,11 +98,19 @@ class AuthController extends Controller
             // ⚙️ Service (sekarang pasti berhasil)
             $service = $this->authService->login($request->email, $request->password);
 
-            // 💬 Response
+            if (!$service->status) {
+                return ResponseFormater::error([
+                    'message' => $service->message
+                ], 'Login Failed', 401);
+            }
+
+            // 💬 Response dengan token expiration info
             return ResponseFormater::success([
                 'access_token' => $service->data['token'],
-                'token_type' => 'Bearer',
-                'user' => $service->data['user'],
+                'token_type'   => 'Bearer',
+                'expires_at'   => $service->data['expires_at'],
+                'expires_in'   => $service->data['expires_in'],
+                'user'         => $service->data['user'],
             ], 'Login Success');
 
         } catch (Exception $error) {
@@ -115,17 +123,25 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        try {
+            try {
             // ⚙️ Service
-            $this->authService->logout($request);
+            $service = $this->authService->logout($request);
+
+            if (!$service->status) {
+                return ResponseFormater::error([
+                    'message' => $service->message
+                ], 'Logout Failed', 400);
+            }
+
             // 💬 Response
             return ResponseFormater::success(null, 'Logout Success');
-        } catch (Exception $error) {
-            return ResponseFormater::error([
-                'message' => 'Logout Failed',
-                'error'   => $error->getMessage()
-            ], 'Logout Failed', 500);
-        }
+
+            } catch (Exception $error) {
+                return ResponseFormater::error([
+                    'message' => 'Logout Failed',
+                    'error'   => $error->getMessage()
+                ], 'Logout Failed', 500);
+            }
     }
 
     public function requestPasswordResetOtp(Request $request)
@@ -239,4 +255,32 @@ class AuthController extends Controller
 
         return trim($cleaned);
     }
+
+    public function refreshToken(Request $request)
+    {
+        try {
+            $user = $request->user();
+
+            // Revoke current token
+            $user->currentAccessToken()->delete();
+
+            // ✅ Create new token 3 hari
+            $tokenData = $user->createToken('authToken', ['*'], now()->addDays(3));
+
+            return ResponseFormater::success([
+                'access_token' => $tokenData->plainTextToken,
+                'token_type' => 'Bearer',
+                'expires_at' => $tokenData->accessToken->expires_at->timestamp,
+                'expires_in' => 259200, // ✅ 3 hari dalam detik
+                'user' => $user
+            ], 'Token refreshed successfully');
+
+        } catch (Exception $e) {
+            return ResponseFormater::error([
+                'message' => 'Token refresh failed',
+                'error' => $e->getMessage()
+            ], 'Refresh Failed', 401);
+        }
+    }
+
 }

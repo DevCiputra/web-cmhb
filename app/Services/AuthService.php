@@ -47,17 +47,22 @@ class AuthService implements AuthServiceInterface
                 return ServiceResponse::error('Email atau password salah');
             }
 
-            // Update status user menjadi online (tidak perlu cek lagi karena sudah dicek di controller)
+            // Revoke token lama untuk single session
+            $user->tokens()->delete();
+
+            // Update status user menjadi online
             $user->update([
                 'status_activity' => 'online'
             ]);
 
-            // Create new token
-            $token = $user->createToken('authToken')->plainTextToken;
+            // Create new token dengan expiration
+            $tokenData = $user->createToken('authToken', ['*'], now()->addDays(3));
 
             return ServiceResponse::success('Login berhasil', [
-                'user'  => $user->fresh(),
-                'token' => $token
+                'user'       => $user->fresh(),
+                'token'      => $tokenData->plainTextToken,
+                'expires_at' => $tokenData->accessToken->expires_at->timestamp, // Timestamp untuk Android
+                'expires_in' => 259200 // ✅ 3 hari = 3 × 24 × 60 × 60 detik
             ]);
 
         } catch (Exception $e) {
@@ -65,22 +70,22 @@ class AuthService implements AuthServiceInterface
         }
     }
 
+
+
     public function logout(Request $request): ServiceResponse
     {
         try {
             $user = $request->user();
 
-            if (!$user) {
-                return ServiceResponse::error('Logout gagal - User tidak ditemukan');
+            if ($user) {
+                // Update status menjadi offline
+                $user->update([
+                    'status_activity' => 'offline'
+                ]);
+
+                // Revoke current token
+                $user->currentAccessToken()->delete();
             }
-
-            // Update status user menjadi offline
-            $user->update([
-                'status_activity' => 'offline'
-            ]);
-
-            // Delete current token
-            $request->user()->currentAccessToken()->delete();
 
             return ServiceResponse::success('Logout berhasil');
 

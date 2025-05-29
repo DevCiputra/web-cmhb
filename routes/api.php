@@ -30,7 +30,7 @@ Route::post('v1/requestReset', [AuthController::class, 'resetPasswordWithOtp']);
 
 
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+Route::middleware(['auth:sanctum', 'check.token'])->prefix('v1')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('api.logout');
     Route::post('poly', [DoctorPolyclinicController::class, 'storeNew']);
 
@@ -41,8 +41,6 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
         Route::post('{id}', [DoctorPolyclinicController::class, 'update'])->name('update');    // PUT update
         Route::delete('{id}', [DoctorPolyclinicController::class, 'destroy'])->name('destroy'); // DELETE
     });
-
-
 
     // RESTful routes for Doctor
     Route::prefix('doctors')->name('api.doctors.')->group(function () {
@@ -63,4 +61,9 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
 
     Route::get('serviceCategory', [ServiceCategoryController::class, 'getServiceCategory']);
     Route::get('reservationStatus', [ReservationStatusController::class, 'getReservationStatus']);
+});
+
+// Refresh Token
+Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+    Route::post('refreshToken', [AuthController::class, 'refreshToken']);
 });
