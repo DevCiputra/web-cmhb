@@ -47,16 +47,7 @@ class AuthService implements AuthServiceInterface
                 return ServiceResponse::error('Email atau password salah');
             }
 
-            // VALIDASI SINGLE DEVICE LOGIN
-            if ($user->status_activity === 'online') {
-                return ServiceResponse::error(
-                    'Akun Anda sedang aktif di perangkat lain. Silakan logout terlebih dahulu.',
-                    null,
-                    409 // Conflict status code
-                );
-            }
-
-            // Update status user menjadi online
+            // Update status user menjadi online (tidak perlu cek lagi karena sudah dicek di controller)
             $user->update([
                 'status_activity' => 'online'
             ]);

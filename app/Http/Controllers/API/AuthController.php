@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ResponseFormater;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Services\Contracts\AuthServiceInterface;
 use Exception;
 use Illuminate\Http\Request;
@@ -63,37 +64,52 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        try {
+       try {
             // 🔐 Validation
             $request->validate([
                 'email' => 'required|email',
                 'password' => 'required'
             ]);
 
+            // 🔍 Cek user dan status sebelum attempt
+            $user = User::where('email', $request->email)->first();
 
-            $crendetials = request(['email', 'password']);
-
-            if (!Auth::attempt($crendetials)) {
+            if (!$user) {
                 return ResponseFormater::error([
-                    'message' => 'Unauthorized'
-                ], 'Unauthorized Failed', 404);
+                    'message' => 'Email tidak ditemukan'
+                ], 'Login Failed', 404);
             }
 
-            // ⚙️ Service
+            // 🚫 Cek status sebelum verify password
+            if ($user->status_activity === 'online') {
+                return ResponseFormater::error([
+                    'message' => 'Akun Anda sedang aktif di perangkat lain. Silakan logout terlebih dahulu.'
+                ], 'Already Logged In', 409);
+            }
 
+            // 🔐 Baru cek credentials
+            $credentials = request(['email', 'password']);
+            if (!Auth::attempt($credentials)) {
+                return ResponseFormater::error([
+                    'message' => 'Email atau password salah'
+                ], 'Unauthorized Failed', 401);
+            }
+
+            // ⚙️ Service (sekarang pasti berhasil)
             $service = $this->authService->login($request->email, $request->password);
 
             // 💬 Response
             return ResponseFormater::success([
-                'access_token' =>  $service->data['token'],
+                'access_token' => $service->data['token'],
                 'token_type' => 'Bearer',
                 'user' => $service->data['user'],
             ], 'Login Success');
+
         } catch (Exception $error) {
             return ResponseFormater::error([
                 'message' => 'Login Failed',
-                'error' => $error
-            ], 'Login Failed', 404);
+                'error' => $error->getMessage()
+            ], 'Login Failed', 500);
         }
     }
 
