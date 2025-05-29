@@ -201,4 +201,42 @@ class AuthController extends Controller
             return ResponseFormater::error(null, $th->getMessage(), 500);
         }
     }
+
+    public function fetchUser($id) {
+    $user = User::with(['patient'])->find($id);
+
+        if($user) {
+            // Clean patient data jika ada
+            if ($user->patient) {
+                $user->patient->address = $this->cleanText($user->patient->address);
+                $user->patient->name = $this->cleanText($user->patient->name);
+            }
+
+            return ResponseFormater::success(
+                $user,
+                'Data User berhasil diambil'
+            );
+        }
+        else {
+            return ResponseFormater::error(
+                null,
+                'User tidak ada',
+                404
+            );
+        }
+    }
+
+// Helper method di controller
+    private function cleanText($text)
+    {
+        if (!$text) return $text;
+
+        // Hapus \r\n, \n, \r
+        $cleaned = str_replace(["\r\n", "\r", "\n"], ' ', $text);
+
+        // Hapus multiple spaces
+        $cleaned = preg_replace('/\s+/', ' ', $cleaned);
+
+        return trim($cleaned);
+    }
 }

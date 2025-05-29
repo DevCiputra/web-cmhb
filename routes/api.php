@@ -58,6 +58,9 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::get('reviews', [ReviewsController::class, 'fetchReviews']);
     Route::post('reviews/{id}', [ReviewsController::class, 'deleteReviews']);
 
+    // Get User by Profile
+    Route::get('users/{id}', [AuthController::class, 'fetchUser']);
+
     Route::get('serviceCategory', [ServiceCategoryController::class, 'getServiceCategory']);
     Route::get('reservationStatus', [ReservationStatusController::class, 'getReservationStatus']);
 });
