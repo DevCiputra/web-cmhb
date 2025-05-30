@@ -19,7 +19,7 @@ class DoctorPhoto extends Model
     public function getNameAttribute($value)
     {
         if ($value) {
-            return secure_url("storage/doctor/photos/$this->doctor_id/$value");
+            return url("storage/doctor/photos/$this->doctor_id/$value");
         }
         return null;
     }

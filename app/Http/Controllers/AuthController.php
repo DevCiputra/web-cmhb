@@ -61,20 +61,20 @@ class AuthController extends Controller
         // Validasi email dan nomor WhatsApp unik
         if (User::where('email', $request->email)->exists()) {
             return redirect()->back()
-            ->with('error', 'Alamat email sudah terdaftar. Silakan gunakan alamat email lain.')
-            ->withInput();
+                ->with('error', 'Alamat email sudah terdaftar. Silakan gunakan alamat email lain.')
+                ->withInput();
         }
 
         if (User::where('whatsapp', $request->whatsapp)->exists()) {
             return redirect()->back()
-            ->with('error', 'Nomor WhatsApp sudah terdaftar. Silakan gunakan nomor lain.')
-            ->withInput();
+                ->with('error', 'Nomor WhatsApp sudah terdaftar. Silakan gunakan nomor lain.')
+                ->withInput();
         }
 
         // Sanitasi data dan simpan user
         $profilePicture = $request->hasFile('profile_picture')
-        ? $request->file('profile_picture')->store('profiles', 'public')
-        : null;
+            ? $request->file('profile_picture')->store('profiles', 'public')
+            : null;
 
         $user = User::create([
             'username' => htmlspecialchars($request->username, ENT_QUOTES, 'UTF-8'),
@@ -228,6 +228,4 @@ class AuthController extends Controller
 
         return redirect()->route('login')->with('success', 'Kata sandi telah berhasil direset. Silakan login.');
     }
-
-
 }

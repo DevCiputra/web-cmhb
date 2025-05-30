@@ -229,14 +229,14 @@ class LandingPageController extends Controller
 
         // Ambil 3 artikel lain sebagai rekomendasi
         $recommendedArticles = Information::where('information_category_id', 1)
-        ->where('is_published', 1)
-        ->where('id', '!=', $id) // Pastikan artikel yang ditampilkan bukan artikel yang sedang dibuka
-        ->inRandomOrder()
-        ->take(3)
-        ->get();
+            ->where('is_published', 1)
+            ->where('id', '!=', $id) // Pastikan artikel yang ditampilkan bukan artikel yang sedang dibuka
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
 
         // Return the view for the article detail, passing the $article variable
-        return view('landing-page.contents.information-detail', compact('article', 'title','recommendedArticles'));
+        return view('landing-page.contents.information-detail', compact('article', 'title', 'recommendedArticles'));
     }
 
 
